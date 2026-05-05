@@ -80,7 +80,7 @@
     "swagger-jsdoc": "^6.2.8",
     "ts-jest": "^29.1.0",
     "typedoc": "^0.25.0",
-    "typescript": "^5.3.0",
+    "typescript": "~5.4.5",
     "vite": "^5.0.0",
     "vitest": "^1.0.0",
     "vue": "^3.4.0",

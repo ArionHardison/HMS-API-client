@@ -231,32 +231,3 @@ export class AgentsModuleApiClient extends BaseApiClient {
     return this.get<AgentsProtocolIntegrationResource[]>('/api/protocol/agents/all', undefined, opts);
   }
 }
-
-// =============================================================================
-// Integration note (do not delete — referenced by sdk/CLAUDE.md):
-//
-// To surface this client from the package root, add the following lines to
-// `src/index.ts` in the next root-barrel update (the TDD slice owner does
-// NOT modify the barrel directly):
-//
-//   export { AgentsModuleApiClient } from './api/modules-agents-api-client';
-//   export type {
-//     AgentId,
-//     ToolId,
-//     AgentResource,
-//     AgentExecutionResource,
-//     AgentStatisticsResource,
-//     AgentsProtocolIntegrationResource,
-//     CreateAgentInput,
-//     UpdateAgentInput,
-//     CloneAgentInput,
-//     ExecuteProtocolInput,
-//     ResumeExecutionInput,
-//     AgentExecutionStatus,
-//     IntelligentResponse,
-//     IdentifyEntityInput,
-//     ProcessIntentInput,
-//     BatchIntentInput,
-//     IntelligentSearchInput,
-//   } from './types/modules-agents';
-// =============================================================================

@@ -171,34 +171,3 @@ export class KPIModuleApiClient extends BaseApiClient {
     return this.post<WithingsDeviceResource>('/api/withings/webhook', body, opts);
   }
 }
-
-// =============================================================================
-// Integration note (do not delete — referenced by sdk/CLAUDE.md):
-//
-// To surface this client from the package root, add the following lines to
-// `src/index.ts` in the next root-barrel update (the TDD slice owner does
-// NOT modify the barrel directly):
-//
-//   export { KPIModuleApiClient } from './api/modules-kpi-api-client';
-//   export type {
-//     ChainId,
-//     ProtocolId,
-//     KPIRuleId,
-//     KPITaskResource,
-//     KPISettingsPreparedResource,
-//     KPISettingsResource,
-//     KPIRoundResultsResource,
-//     KPIParameterValidationResource,
-//     ProtocolOnboardingResource,
-//     WithingsDeviceResource,
-//     SaveKPIInput,
-//     SaveKPISetupInput,
-//     SaveRoundResultsInput,
-//     ValidateParametersInput,
-//     SaveOnboardingInput,
-//     WithingsWebhookInput,
-//     KPISetupData,
-//     KPIRuleData,
-//     UserDeviceData,
-//   } from './types/modules-kpi';
-// =============================================================================

@@ -111,6 +111,842 @@ export {
 export type { ApiErrorInit } from './api/error-handling';
 
 // =============================================================================
+// Round 2 + Round 3 slice clients.
+// -----------------------------------------------------------------------------
+// Each "slice" mirrors one Laravel module (or a tightly-coupled cluster).
+// Renames + dedupes documented inline:
+//   - `EmptyOk` and `PaginatedPayload` are structurally identical across the
+//     auth-user, protocol, and programs-team slices. We export them ONCE
+//     from `auth-user-api-client` and skip the duplicates from the other
+//     two slices.
+//   - `tenancy-api-client` and `communications-api-client` already expose
+//     their helpers under slice-prefixed names.
+//   - `admin-api-client` exposes `AdminEmptyOk` / `AdminPaginatedPayload`
+//     (renamed at the source) plus `AdminUserData as AdminApiUserData` to
+//     avoid the auth-user collision.
+//   - `programs-team-api-client.ProgramData` collides with the legacy
+//     `ProgramData` in `hms-api-client.ts`; we re-export it as
+//     `ProgramsTeamProgramData`.
+//   - `programs-team-api-client.ProgramTagData` collides with admin's
+//     differently-shaped `ProgramTagData`; we keep the programs-team one
+//     and re-export admin's as `AdminProgramTagData`.
+//   - `programs-team-api-client.TeamSearchRequest` collides with admin's
+//     `TeamSearchRequest`; we keep the programs-team one and re-export
+//     admin's as `AdminTeamSearchRequest`.
+//   - `protocol-api-client.ProtocolApiClient` (new) collides with the
+//     legacy `ProtocolApiClient` class re-exported from `hms-api-client`;
+//     we re-export the new one as `ProtocolDomainApiClient`.
+//   - `modules-order.ChainId` and `modules-kpi.ChainId` are structurally
+//     identical (`number | string`); we export `ChainId` once from
+//     `modules-kpi` and skip the duplicate from `modules-order`.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Auth + user
+// -----------------------------------------------------------------------------
+export { AuthUserApiClient } from './api/auth-user-api-client';
+export type {
+  AdminLoginBySocialTokenResponse,
+  AdminUpdateUserRequest,
+  AdminUserData,
+  BasicUserSummary,
+  ChangeUserCoverRequest,
+  ChangeUserPhotoRequest,
+  CurrentUserData,
+  DashboardAuthBySocialTokenRequest,
+  DashboardJoinByTokenRequest,
+  DashboardJoinRequest,
+  DashboardLoginRequest,
+  DashboardLoginResponse,
+  DeleteRoleRequest,
+  DeleteUserRequest,
+  EmptyOk,
+  FinishCodifyRegistrationRequest,
+  FinishSocialRegistrationRequest,
+  GetCodeRequest,
+  HandleUserTagRequest,
+  InvitedUserSummary,
+  NewPasswordRequest,
+  PaginatedPayload,
+  PublicUserProfile,
+  ResetPasswordRequest,
+  RestrictUserRequest,
+  RestrictedUserSummary,
+  RoleRecord,
+  SetRoleRequest,
+  SetTimezoneRequest,
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  UpdateBillingInfoRequest,
+  UpdatePasswordRequest,
+  UpdatePhoneRequest,
+  UpdatePricingRequest,
+  UpdateUserRequest,
+  UsersChangeCoverRequest,
+  UsersChangePhotoRequest,
+} from './api/auth-user-api-client';
+
+// -----------------------------------------------------------------------------
+// Tenancy
+// -----------------------------------------------------------------------------
+export { TenancyApiClient } from './api/tenancy-api-client';
+export type {
+  AuthenticateAtTenantData,
+  CompleteTenantClaimRequest,
+  ConfirmSubprojectAdminAccountRequest,
+  ContactData,
+  CreateCreatorRequest,
+  CreateDocumentationRequest,
+  CreateDomainInterfaceRequest,
+  CreateSeoPageRequest,
+  CreateWorldLocationCityRequest,
+  CreateWorldLocationCountryRequest,
+  CreateWorldLocationStateRequest,
+  CreatorActivityData,
+  CreatorData,
+  CreatorRequestData,
+  DocumentationItem,
+  DomainInterface,
+  EmptyOk as TenancyEmptyOk,
+  FindClaimableSubprojectRequest,
+  FindContactsRequest,
+  FrontendData,
+  GovDirectoryItem,
+  ImportContactsRequest,
+  InitiateTenantClaimRequest,
+  ListContactsRequest,
+  LoadTenantResult,
+  PaginatedPayload as TenancyPaginatedPayload,
+  PublicCountryData,
+  PublicTenantLogoData,
+  RegisterSubprojectAdministratorRequest,
+  SaveContactRequest,
+  SaveFeaturedCreatorsRequest,
+  SaveFeaturedProgramsRequest,
+  SaveFrontendRequest,
+  SeoPageData,
+  StartSubprojectClaimRequest,
+  SubprojectAdminLoginRequest,
+  SubprojectClientData,
+  SubprojectDashboardDefaultData,
+  SubprojectDetailData,
+  SubprojectHasContactsRequest,
+  SubprojectInterfaceData,
+  SubprojectLeaderData,
+  SubprojectListItem,
+  SubprojectSearchRequest,
+  SubprojectSectionPayload,
+  SubprojectSendInvitesRequest,
+  SubprojectUpdatePermissionsRequest,
+  TenantClaimData,
+  TenantClaimSearchItem,
+  TenantClaimStatusData,
+  TenantInterfaceBlockItem,
+  TenantInterfaceItem,
+  TenantInterfacePageItem,
+  TenantRegistrationFee,
+  UpdateCreatorRequest,
+  UpdateDocumentationRequest,
+  UpdateDomainInterfaceRequest,
+  UpdateSeoPageRequest,
+  VerifyTenantClaimRequest,
+  WorldLocationCity,
+  WorldLocationCountry,
+  WorldLocationState,
+} from './api/tenancy-api-client';
+
+// -----------------------------------------------------------------------------
+// Programs + team
+// -----------------------------------------------------------------------------
+export { ProgramsTeamApiClient } from './api/programs-team-api-client';
+export type {
+  AdditionalProtocolValidationResult,
+  AllProgramData,
+  BuyProgramResult,
+  DetachProgramProtocolRequest,
+  DetachProgramProtocolResult,
+  HandleTeamRoleRequest,
+  InviteTeamMemberRequest,
+  NetworkSearchRequest,
+  NetworkSearchResult,
+  ProgramAddTagRequest,
+  ProgramBookmarkRequest,
+  ProgramBookmarkResult,
+  ProgramBuyRequest,
+  ProgramChainStepUsersData,
+  ProgramData as ProgramsTeamProgramData,
+  ProgramDataToUse,
+  ProgramHomeSearchResult,
+  ProgramInstanceData,
+  ProgramSaleData,
+  ProgramSalePriceData,
+  ProgramSimulationData,
+  ProgramTagData,
+  ProgramUserSummary,
+  ProgramValidationResult,
+  ProgramsFilterRequest,
+  PublishProgramData,
+  PublishProgramRequest,
+  RoleResource,
+  RunPersonalProgramRequest,
+  RunPersonalProgramResult,
+  SearchProgramRequest,
+  SubprojectPermissionsData,
+  SubprojectRoleData,
+  TeamMemberIdRequest,
+  TeamSearchRequest,
+  UpdateProgramRequest,
+  UpdateSubprojectRoleRequest,
+  UserAllTeamMember,
+  UserInviteListItem,
+  UserPotentialTeamInviteData,
+  UserTeamAvailableRole,
+  UserTeamListItem,
+  UserTeamResult,
+  UserTeamSearchResult,
+  ValidateAdditionalProtocolRequest,
+  ValidateProgramRequest,
+} from './api/programs-team-api-client';
+
+// -----------------------------------------------------------------------------
+// Protocol (new domain client; renamed to avoid collision with the legacy
+// `ProtocolApiClient` re-exported from `hms-api-client`).
+// -----------------------------------------------------------------------------
+export { ProtocolApiClient as ProtocolDomainApiClient } from './api/protocol-api-client';
+export type {
+  AddProtocolPlanBranchItemResource,
+  ChainItemMemberResource,
+  CodifyPipelineStartedResource,
+  CodifyPipelineStatusResource,
+  ConfirmPlanResource,
+  ConfirmProtocolPlanRequest,
+  CreateProtocolCategoryRequest,
+  EditProtocolPlanBranchItemRequest,
+  EditProtocolPlanBranchResource,
+  EditProtocolPlanModuleItemRequest,
+  EditProtocolPlanModuleResource,
+  EtlProtocolIntegrationItem,
+  ModuleValidationResource,
+  ProtocolAiCreationResource,
+  ProtocolAiCreateItemRequest,
+  ProtocolAiCreateWholeRequest,
+  ProtocolAiPlanResource,
+  ProtocolBranchPlanRequest,
+  ProtocolCategoryResource,
+  ProtocolGlobalModuleResource,
+  ProtocolGlobalModuleShowResource,
+  ProtocolIntegrationItem,
+  ProtocolModuleSummary,
+  ProtocolResource,
+  ProtocolSaleResource,
+  ProtocolSettingsResource,
+  ProtocolStepResource,
+  ProtocolStoreSettingsRequest,
+  ProtocolSwitchMemberRequest,
+  StartCodifyPipelineRequest,
+  StoreGlobalModuleRequest,
+  StoreProtocolRequest,
+  StoreSaleRequest,
+  UpdateGlobalModuleRequest,
+  UpdateProtocolCategoryRequest,
+  UpdateProtocolRequest,
+  UpdateSaleRequest,
+  ValidateBranchModuleRequest,
+  ValidateModuleRequest,
+} from './api/protocol-api-client';
+
+// -----------------------------------------------------------------------------
+// Personal-chain wizard (codify pipeline polling envelope)
+// -----------------------------------------------------------------------------
+export { PersonalChainWizardApiClient } from './api/personal-chain-wizard-api-client';
+export type {
+  CancelInvitationRequestBody,
+  CodifyAck,
+  CodifyJobState,
+  CodifyRunRequestBody,
+  CodifySaveAnswerRequestBody,
+  CodifyStartSessionRequestBody,
+  CodifyStateRaw,
+  FindUsersToInviteRequestBody,
+  FinishedNotRatedProgramSummary,
+  InviteUserToPersonalChainRequestBody,
+  LastChainSummary,
+  PersonalChainAck,
+  ProgramFeedbackData,
+  ProtocolPersonalChainSummary,
+  ProtocolStepData,
+  StartProgramRequestBody,
+  StoreFeedbackRequestBody,
+  WizardCodifyRequestBody,
+} from './api/personal-chain-wizard-api-client';
+
+// -----------------------------------------------------------------------------
+// Communications (chat / notifications / Stripe Connect / webhook)
+// -----------------------------------------------------------------------------
+export { CommunicationsApiClient } from './api/communications-api-client';
+export type {
+  BroadcastingAuthRequest,
+  BroadcastingAuthResponse,
+  ChatBroadcastMessageRequest,
+  ChatGetRoomRequest,
+  ChatMessageData,
+  ChatRoomData,
+  ChatSendMessageRequest,
+  ChatStartRequest,
+  EmptyOk as CommunicationsEmptyOk,
+  NotificationData,
+  NotificationStartTaskRequest,
+  PaginatedPayload as CommunicationsPaginatedPayload,
+  PaymentMethodData,
+  PaymentMethodSaveRequest,
+  ProgramPurchaseData,
+  PurchasedItemData,
+  SetupPaymentMethodData,
+  StripeAccountStatusData,
+  StripeConnectData,
+  StripePaymentWebhookRequest,
+  StripePaymentWebhookResponse,
+  StripeTransactionsData,
+  StripeWithdrawData,
+  SubscriptionData,
+  SubscriptionListItem,
+  SubscriptionRollupData,
+} from './api/communications-api-client';
+
+// -----------------------------------------------------------------------------
+// Admin
+// -----------------------------------------------------------------------------
+export { AdminApiClient } from './api/admin-api-client';
+export type {
+  AdministratorData,
+  AdminCreateUserRequest,
+  AdminEmptyOk,
+  AdminPaginatedPayload,
+  AdminSearchRequest,
+  AdminUserData as AdminApiUserData,
+  AiInstallationStatusData,
+  AiLogData,
+  AiLogRequest,
+  AiModelData,
+  AiPolicyData,
+  AiPolicyRequest,
+  AiPromptData,
+  AiSettingsData,
+  AttachPromptToPolicyRequest,
+  CreateAdministratorRequest,
+  CreateAiPromptRequest,
+  CreateProgramCategoryRequest,
+  CreateProgramSubCategoryRequest,
+  DomainSettingsData,
+  FeeSettingsData,
+  FindFeeUsersRequest,
+  ProgramCategoryData,
+  ProgramSubCategoryData,
+  ProgramTagData as AdminProgramTagData,
+  ProgramTagRequest,
+  ProjectRoleData,
+  ProjectRoleRequest,
+  ProviderData,
+  ProviderRolesData,
+  RolesToAssignData,
+  SaveAiSettingsRequest,
+  SaveDashboardSettingsRequest,
+  SaveFeeSettingsRequest,
+  StatisticData,
+  StatisticRequest,
+  TeamSearchRequest as AdminTeamSearchRequest,
+  UpdateAdministratorRequest,
+  UpdateAiPromptRequest,
+  UpdateProgramCategoryRequest,
+  UpdateProgramSubCategoryRequest,
+  UserFeeSettingsData,
+  UserFeeSettingsRequest,
+} from './api/admin-api-client';
+
+// -----------------------------------------------------------------------------
+// Module slice clients (Round 3 fan-out — one client per Laravel module)
+// -----------------------------------------------------------------------------
+
+// modules/agents
+export { AgentsModuleApiClient } from './api/modules-agents-api-client';
+export type {
+  AgentId,
+  ToolId,
+  AgentResource,
+  AgentExecutionResource,
+  AgentStatisticsResource,
+  AgentsProtocolIntegrationResource,
+  CreateAgentInput,
+  UpdateAgentInput,
+  CloneAgentInput,
+  ExecuteProtocolInput,
+  ResumeExecutionInput,
+  AgentExecutionStatus,
+  IntelligentResponse,
+  IdentifyEntityInput,
+  ProcessIntentInput,
+  BatchIntentInput,
+  IntelligentSearchInput,
+} from './types/modules-agents';
+
+// modules/kpi
+export { KPIModuleApiClient } from './api/modules-kpi-api-client';
+export type {
+  ChainId,
+  ProtocolId,
+  KPIRuleId,
+  KPITaskResource,
+  KPISettingsPreparedResource,
+  KPISettingsResource,
+  KPIRoundResultsResource,
+  KPIParameterValidationResource,
+  ProtocolOnboardingResource,
+  WithingsDeviceResource,
+  SaveKPIInput,
+  SaveKPISetupInput,
+  SaveRoundResultsInput,
+  ValidateParametersInput,
+  SaveOnboardingInput,
+  WithingsWebhookInput,
+  KPISetupData,
+  KPIRuleData,
+  UserDeviceData,
+} from './types/modules-kpi';
+
+// modules/activity
+export { ActivityModuleApiClient } from './api/modules-activity-api-client';
+export type {
+  ActivityLocationId,
+  ActivityId,
+  ActivityBookingId,
+  LocationId,
+  ServiceId,
+  DateString,
+  ActivityLocationResource,
+  ActivityResource,
+  ActivityBookingResource,
+  BookedEventsResponse,
+  BookingWindowResource,
+  ProviderResource,
+  ServiceLocationResource,
+  PendingAmountResource,
+  CreateActivityLocationInput,
+  CreateCreatorActivityInput,
+  ConfirmBookingInput,
+  HandleEventInput,
+  ResetReservationInput,
+  SetReservationInput,
+  RunningActivityInput,
+  CreateServiceLocationInput,
+  FindServiceLocationInput,
+  UpdateServiceLocationInput,
+  ActivityProtocolIntegrationResource,
+} from './types/modules-activity';
+
+// modules/assessments
+export { AssessmentsModuleApiClient } from './api/modules-assessments-api-client';
+export type {
+  AssessmentId,
+  AttendId,
+  QuestionId,
+  ResponseId,
+  ChoiceId,
+  ChainOrTaskId,
+  AssessmentResource,
+  AttendResource,
+  QuestionResource,
+  ResponseResource,
+  AssessmentItemInstanceResource,
+  RunAssessmentResponse,
+  CreateAssessmentInput,
+  CreateAttendInput,
+  CreateQuestionInput,
+  CreateResponseInput,
+  AssessmentsProtocolIntegrationResource,
+} from './types/modules-assessments';
+
+// modules/challenge
+export { ChallengeModuleApiClient } from './api/modules-challenge-api-client';
+export type {
+  ChallengeId,
+  AttachedChallengeId,
+  ChallengeResultId,
+  ChallengeTaskOrChainId,
+  ChallengeResource,
+  AttachedChallengeResource,
+  ChallengeTaskResource,
+  ChallengeResultResource,
+  RunChallengeResponse,
+  CreateChallengeInput,
+  RunChallengeInput,
+  RunGlobalChallengeInput,
+  StartChallengeTaskInput,
+  SetChallengeResultInput,
+  RecordVideoInput,
+  ChallengeProtocolIntegrationResource,
+} from './types/modules-challenge';
+
+// modules/followups
+export { FollowUpsModuleApiClient } from './api/modules-followups-api-client';
+export type {
+  FollowUpId,
+  FollowUpChainId,
+  FollowUpInstanceId,
+  RecommendationId,
+  RecommendationStatus,
+  FollowUpResource,
+  FollowUpRecommendationResource,
+  FollowUpTimelineEntry,
+  FollowUpPaymentResource,
+  VoiceFinalizeResource,
+  CreateFollowUpInput,
+  VoiceRecordInput,
+  VoiceFinalizeInput,
+} from './types/modules-followups';
+
+// modules/order
+// (`ChainId` exported once via `modules-kpi`; identical type here.)
+export { OrderModuleApiClient } from './api/modules-order-api-client';
+export type {
+  OrderId,
+  AttachedOrderItemId,
+  TaskId,
+  AttachedOrderStatus,
+  OrderResource,
+  OrderWithItemsAndCollectionsResource,
+  RunningOrderResource,
+  CanceledOrderResource,
+  ConfirmedOrderResource,
+  AttachedOrderItemsResource,
+  AttachedOrderResource,
+  OrderPaymentResource,
+  OrderFetchShopItemResource,
+  AttachedOrderListResource,
+  AttachedOrderInstanceResource,
+  OrderProtocolIntegrationResource,
+  CreateOrderInput,
+  UpdateOrderInput,
+  UpdateOrderItemInput,
+  CancelOrderInput,
+  StartCheckoutInput,
+  CheckoutItemInput,
+  ConfirmOrderInput,
+  ConfirmPaymentInput,
+  GetShopItemInput,
+  ValidateOrderItemInput,
+  PutPriceOrderInput,
+  OrderDeliveryStartedInput,
+} from './types/modules-order';
+
+// modules/items
+export { ItemsModuleApiClient } from './api/modules-items-api-client';
+export type {
+  ItemId,
+  UserItemId,
+  CollectionId,
+  CollectionItemId,
+  ItemFindType,
+  ItemResource,
+  UserItemResource,
+  FoodCategoryResource,
+  CollectionResource,
+  CollectionWithItemsResource,
+  CollectionItemResource,
+  CollectionListResource,
+  CreateCollectionInput,
+  UpdateCollectionInput,
+  CollectionItemEntry,
+  AddItemToCollectionInput,
+  CreateUserItemInput,
+  UpdateUserItemInput,
+  ItemMutationInput,
+} from './types/modules-items';
+
+// modules/appeal
+export { AppealModuleApiClient } from './api/modules-appeal-api-client';
+export type {
+  AppealId,
+  AppealTaskId,
+  AppealChainId,
+  AppealResource,
+  AppealRunResource,
+  AppealStoreInput,
+  AppealUpdateInput,
+  AppealSubmitInput,
+  AppealSubmitResource,
+} from './types/modules-appeal';
+
+// modules/application
+export { ApplicationModuleApiClient } from './api/modules-application-api-client';
+export type {
+  ApplicationId,
+  ApplicationTaskId,
+  ApplicationChainId,
+  ApplicationResource,
+  ApplicationRunResource,
+  ApplicationStoreInput,
+  ApplicationUpdateInput,
+  ApplicationSubmitInput,
+  ApplicationSubmitResource,
+} from './types/modules-application';
+
+// modules/disbursement
+export { DisbursementModuleApiClient } from './api/modules-disbursement-api-client';
+export type {
+  DisbursementId,
+  DisbursementTaskId,
+  DisbursementChainId,
+  DisbursementResource,
+  DisbursementRunResource,
+  DisbursementStoreInput,
+  DisbursementUpdateInput,
+  DisbursementConfirmInput,
+  DisbursementConfirmResource,
+} from './types/modules-disbursement';
+
+// modules/referral
+export { ReferralModuleApiClient } from './api/modules-referral-api-client';
+export type {
+  ReferralId,
+  ReferralTaskId,
+  ReferralChainId,
+  ReferralResource,
+  ReferralRunResource,
+  ReferralStoreInput,
+  ReferralUpdateInput,
+  ReferralConfirmInput,
+  ReferralConfirmResource,
+} from './types/modules-referral';
+
+// modules/report
+export { ReportModuleApiClient } from './api/modules-report-api-client';
+export type {
+  ReportId,
+  ReportTaskId,
+  ReportChainId,
+  ReportResource,
+  ReportRunResource,
+  ReportStoreInput,
+  ReportUpdateInput,
+  ReportSubmitInput,
+  ReportSubmitResource,
+} from './types/modules-report';
+
+// modules/verification
+export { VerificationModuleApiClient } from './api/modules-verification-api-client';
+export type {
+  VerificationId,
+  VerificationTaskId,
+  VerificationChainId,
+  VerificationResource,
+  VerificationRunResource,
+  VerificationStoreInput,
+  VerificationUpdateInput,
+  VerificationSubmitInput,
+  VerificationSubmitResource,
+} from './types/modules-verification';
+
+// modules/connector
+export { ConnectorModuleApiClient } from './api/modules-connector-api-client';
+export type {
+  ConnectorId,
+  ConnectorChainId,
+  ConnectorTaskId,
+  ConnectorResource,
+  ConnectorExecuteResult,
+  ConnectorDiscoverResult,
+  CreateConnectorInput,
+  UpdateConnectorInput,
+  ExecuteConnectorInput,
+} from './types/modules-connector';
+
+// modules/etl
+export { ETLModuleApiClient } from './api/modules-etl-api-client';
+export type {
+  PipelineId,
+  ETLProtocolIntegrationResource,
+  ETLPipelineResource,
+  ETLStatusResource,
+  ETLComponentsResource,
+  ETLCancelResource,
+  ETLProcessInput,
+  ETLAgentProcessInput,
+  ETLSearchAnalyzeInput,
+} from './types/modules-etl';
+
+// modules/workflow
+export { WorkflowModuleApiClient } from './api/modules-workflow-api-client';
+export type {
+  CodifyPipelineSessionId,
+  CodifyPipelineStateResource,
+  CodifyPipelineStopResource,
+  CodifyPipelineSaveResponseResource,
+  WorkflowProtocolIntegrationResource,
+  StartCodifyPipelineInput,
+  SaveCodifyPipelineResponseInput,
+} from './types/modules-workflow';
+
+// modules/services
+export { ServicesModuleApiClient } from './api/modules-services-api-client';
+export type {
+  ServiceChainId,
+  ServiceResolutionSource,
+  ResolveServiceInput,
+  ReserveServiceSlotInput,
+  ReleaseServiceSlotInput,
+  ResolveServiceResource,
+  ServiceReservationResource,
+} from './types/modules-services';
+
+// modules/nudge
+export { NudgeModuleApiClient } from './api/modules-nudge-api-client';
+export type {
+  NudgeId,
+  NudgeSecret,
+  NudgeResource,
+  NudgeProtocolIntegrationResource,
+  CreateNudgeInput,
+  UpdateNudgeInput,
+  NudgeCheckinEmailInput,
+  NudgeCheckinSmsInput,
+} from './types/modules-nudge';
+
+// modules/coinbase (public webhook — instantiate with `getDomain: () => null`
+// and pass `{ auth: false }` per-call; see client header for details).
+export { CoinbaseModuleApiClient } from './api/modules-coinbase-api-client';
+export type {
+  CoinbaseEventId,
+  CoinbaseWebhookInput,
+  CoinbaseWebhookResource,
+} from './types/modules-coinbase';
+
+// -----------------------------------------------------------------------------
+// Gap-fill slice clients (Round 3 follow-up)
+// -----------------------------------------------------------------------------
+
+// chain
+export { ChainApiClient } from './api/chain-api-client';
+export type {
+  ChainRecord,
+  CreateChainRequest,
+  SwitchChainParentRequest,
+  UpdateChainRequest,
+} from './api/chain-api-client';
+
+// schedule
+export { ScheduleApiClient } from './api/schedule-api-client';
+export type {
+  CreateScheduleCallRequest,
+  CreateScheduleRequest,
+  ScheduleCallRecord,
+  ScheduleRecord,
+  UpdateScheduleCallRequest,
+  UpdateScheduleRequest,
+} from './api/schedule-api-client';
+
+// agent communication
+export { AgentCommunicationApiClient } from './api/agent-communication-api-client';
+export type {
+  AgentChainStatus,
+  AgentConfirmCodeRequest,
+  AgentFinishRegistrationRequest,
+  AgentListMessagesRequest,
+  AgentRecord,
+  AgentSendMessageRequest,
+} from './api/agent-communication-api-client';
+
+// subproject admin
+export { SubprojectAdminApiClient } from './api/subproject-admin-api-client';
+export type {
+  SubprojectContentRequest,
+  SubprojectDomainsRequest,
+  SubprojectLayoutRequest,
+  SubprojectSectionResponse,
+  SubprojectSeoRequest,
+  SubprojectTeamRequest,
+  SubprojectTemplateRequest,
+} from './api/subproject-admin-api-client';
+
+// gap-fill clients (wired post-integration)
+export { MiscCoreApiClient } from './api/misc-core-api-client';
+export type {
+  AdminUpdateUserBody,
+  ChangeForcedPasswordRequest,
+  CreateLoginTransactionDashboardBody,
+  CreateLoginTransactionPublicBody,
+  GovCitiesQuery,
+  GovCityAgenciesQuery,
+  GovStatesQuery,
+  GovSubprojectsQuery,
+  InterfaceGetSmsBody,
+  InterfaceVerifyCodeBody,
+  MiscCoreResponse,
+  PublicAuthBySocialTokenBody,
+  PublicContactBody,
+  PublicCreatorsFilterBody,
+  PublicSubprojectsSearchBody,
+  PublicVerifySocialTokenBody,
+  SaveFrontendBody,
+  SetProgramStatusBody,
+  UpdateAiLogRequest,
+  UpdateAiPolicyRequest,
+  UpdateBillingInfoBody,
+  UpdateCreatorBody,
+  UpdateCreatorRequestBody,
+  UpdateDomainInterfaceBody,
+  UpdateFeeRequest,
+  UpdatePhoneBody,
+  UpdateProgramBody,
+  UpdateProgramTagRequest,
+  UpdateProjectRoleRequest,
+  UpdateProtocolBody,
+  UpdateProtocolSaleBody,
+  UpdateRoleBody,
+  UpdateSeoPageBody,
+  UpdateStatisticRequest,
+  UpdateSubscriptionBody,
+  UpdateUserBody,
+  UpdateUserPasswordBody,
+  VerifyCodeRequest,
+} from './api/misc-core-api-client';
+
+export { WizardSetupApiClient } from './api/wizard-setup-api-client';
+export type {
+  WizardCompleteProfileRequest,
+  WizardConfirmAccountRequest,
+  WizardConfirmCodeRequest,
+  WizardConfirmPreviewRequest,
+  WizardCreatorRequestPayload,
+  WizardFindMembersRequest,
+  WizardInviteMembersRequest,
+  WizardInviteUsersRequest,
+  WizardPublishProgramRequest,
+  WizardSetAgentRequest,
+  WizardSetDistributionTypeRequest,
+  WizardSetFinancesRequest,
+  WizardSetupResponse,
+  WizardValidateEmailRequest,
+} from './api/wizard-setup-api-client';
+
+export { ProjectSettingsApiClient } from './api/project-settings-api-client';
+export type {
+  ProjectSettingsContentRequest,
+  ProjectSettingsDomainsRequest,
+} from './api/project-settings-api-client';
+
+export { DashboardProgramApiClient } from './api/dashboard-program-api-client';
+export type {
+  CreateDashboardProgramRequest,
+  DashboardProgramRecord,
+  DashboardSettingsResponse,
+  ProtocolCategoryRecord,
+  UpdateDashboardProgramRequest,
+} from './api/dashboard-program-api-client';
+
+export { SubprojectWizardApiClient } from './api/subproject-wizard-api-client';
+
+// =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).
 // =============================================================================

@@ -6,3 +6,9 @@ coverage/
 
 # Claude Code agent worktrees
 .claude/
+
+# Codegen output — regenerated via `npm run generate` from spec/openapi.json.
+# Module clients consume this, but it is recreated on every build.
+src/generated/
+docs/api.html
+docs/client/

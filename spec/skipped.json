@@ -1,0 +1,236 @@
+[
+  {
+    "uri": "/api/ai/log",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\AiLogsController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/ai/log/{log}",
+    "method": "PUT",
+    "controller": "App\\Http\\Controllers\\Core\\AiLogsController@update",
+    "reason": "Resource/route declares this action but the controller does not implement update(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/authenticate-at/{tenant}",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\UsersController@authenticateAtTenant",
+    "reason": "Resource/route declares this action but the controller does not implement authenticateAtTenant(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/chain",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\ProtocolChainController@index",
+    "reason": "Resource/route declares this action but the controller does not implement index(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/challenge/record-video",
+    "method": "POST",
+    "controller": "Modules\\Challenge\\Http\\Controllers\\AttachedChallengeController@recordVideo",
+    "reason": "Resource/route declares this action but the controller does not implement recordVideo(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/coinbase/webhook",
+    "method": "POST",
+    "controller": "Shakurov\\Coinbase\\Http\\Controllers\\WebhookController",
+    "reason": "Vendor (shakurov/coinbase) controller; not in our class map. Webhook receiver verifies Coinbase signature via VerifySignature middleware. Treated as a public webhook receiver \u2014 no SDK call should send to it."
+  },
+  {
+    "uri": "/api/creator",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\Dashboard\\CreatorsController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/creator/{creator}",
+    "method": "DELETE",
+    "controller": "App\\Http\\Controllers\\Core\\Dashboard\\CreatorsController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/dashboard-program",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\Dashboard\\ProgramsController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/dashboard-program/{dashboard_program}",
+    "method": "DELETE",
+    "controller": "App\\Http\\Controllers\\Core\\Dashboard\\ProgramsController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/dashboard/auth/{token}",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\Auth\\SocialLoginController@adminAuthRegistration",
+    "reason": "Resource/route declares this action but the controller does not implement adminAuthRegistration(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/follow-up",
+    "method": "GET",
+    "controller": "Modules\\FollowUps\\Http\\Controllers\\FollowUpsController@index",
+    "reason": "Resource/route declares this action but the controller does not implement index(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/follow-up",
+    "method": "POST",
+    "controller": "Modules\\FollowUps\\Http\\Controllers\\FollowUpsController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/follow-up/{follow_up}",
+    "method": "GET",
+    "controller": "Modules\\FollowUps\\Http\\Controllers\\FollowUpsController@show",
+    "reason": "Resource/route declares this action but the controller does not implement show(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/follow-up/{follow_up}",
+    "method": "PUT",
+    "controller": "Modules\\FollowUps\\Http\\Controllers\\FollowUpsController@update",
+    "reason": "Resource/route declares this action but the controller does not implement update(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/follow-up/{follow_up}",
+    "method": "DELETE",
+    "controller": "Modules\\FollowUps\\Http\\Controllers\\FollowUpsController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/mcp/connector",
+    "method": "GET",
+    "controller": "Closure",
+    "reason": "Laravel MCP `Mcp::*` route registers a JSON-RPC tool/connector handler from config/mcp.php; surface as a single \"MCP connector\" SDK method (POST + GET). Body is dynamic JSON-RPC envelope, not a typed Laravel controller \u2014 manual review."
+  },
+  {
+    "uri": "/api/mcp/connector",
+    "method": "POST",
+    "controller": "Closure",
+    "reason": "Laravel MCP `Mcp::*` route registers a JSON-RPC tool/connector handler from config/mcp.php; surface as a single \"MCP connector\" SDK method (POST + GET). Body is dynamic JSON-RPC envelope, not a typed Laravel controller \u2014 manual review."
+  },
+  {
+    "uri": "/api/order-item/{item}",
+    "method": "DELETE",
+    "controller": "Modules\\Order\\Http\\Controllers\\OrderController@deleteItemFromOrder",
+    "reason": "Resource/route declares this action but the controller does not implement deleteItemFromOrder(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/program-sale",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\ProgramSaleController@index",
+    "reason": "Resource/route declares this action but the controller does not implement index(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/program-sale",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\ProgramSaleController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/program-sale/{program_sale}",
+    "method": "PUT",
+    "controller": "App\\Http\\Controllers\\Core\\ProgramSaleController@update",
+    "reason": "Resource/route declares this action but the controller does not implement update(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/program-sale/{program_sale}",
+    "method": "DELETE",
+    "controller": "App\\Http\\Controllers\\Core\\ProgramSaleController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/question",
+    "method": "GET",
+    "controller": "Modules\\Assessments\\Http\\Controllers\\QuestionController@index",
+    "reason": "Resource/route declares this action but the controller does not implement index(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/question/all",
+    "method": "GET",
+    "controller": "Modules\\Assessments\\Http\\Controllers\\QuestionController@all",
+    "reason": "Resource/route declares this action but the controller does not implement all(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/role",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\RolesController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/role/{role}",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\RolesController@show",
+    "reason": "Resource/route declares this action but the controller does not implement show(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/role/{role}",
+    "method": "PUT",
+    "controller": "App\\Http\\Controllers\\Core\\RolesController@update",
+    "reason": "Resource/route declares this action but the controller does not implement update(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/role/{role}",
+    "method": "DELETE",
+    "controller": "App\\Http\\Controllers\\Core\\RolesController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule-call",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleCallController@store",
+    "reason": "Resource/route declares this action but the controller does not implement store(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule-call/{schedule_call}",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleCallController@show",
+    "reason": "Resource/route declares this action but the controller does not implement show(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule-call/{schedule_call}",
+    "method": "PUT",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleCallController@update",
+    "reason": "Resource/route declares this action but the controller does not implement update(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule-call/{schedule_call}",
+    "method": "DELETE",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleCallController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule/{schedule}",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleController@show",
+    "reason": "Resource/route declares this action but the controller does not implement show(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule/{schedule}",
+    "method": "PUT",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleController@update",
+    "reason": "Resource/route declares this action but the controller does not implement update(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/schedule/{schedule}",
+    "method": "DELETE",
+    "controller": "App\\Http\\Controllers\\Core\\ScheduleController@destroy",
+    "reason": "Resource/route declares this action but the controller does not implement destroy(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/subproject-types",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\CodifySubprojects\\SubprojectsController@getTypes",
+    "reason": "Resource/route declares this action but the controller does not implement getTypes(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/subscription/get/my-subscribers",
+    "method": "GET",
+    "controller": "App\\Http\\Controllers\\Core\\SubscriptionController@getMySubscribers",
+    "reason": "Resource/route declares this action but the controller does not implement getMySubscribers(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  },
+  {
+    "uri": "/api/users/become-creator/{user}",
+    "method": "POST",
+    "controller": "App\\Http\\Controllers\\Core\\UsersController@requestBecomeCreator",
+    "reason": "Resource/route declares this action but the controller does not implement requestBecomeCreator(). Phantom route \u2014 request will hit Laravel\u2019s routing but error at controller dispatch (BadMethodCallException). Spec note: skip in SDK code-gen unless re-implemented."
+  }
+]

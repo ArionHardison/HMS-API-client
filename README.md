@@ -317,6 +317,63 @@ const response = await hmsApiClient.auth.login({
 
 For more information on the HMS API client, see the previous documentation.
 
+## Publishing
+
+This package is published to **GitHub Packages** as `@arionhardison/wizard-api-client`.
+
+### Trigger
+
+Publishes are driven by `.github/workflows/publish.yml` and fire on either:
+
+- A tag push matching `v*.*.*` (the canonical path)
+- `workflow_dispatch` — manual ad-hoc rerun via the Actions tab
+
+The workflow runs `npm ci`, `npm run test`, `npm run build`, then publishes to
+`https://npm.pkg.github.com` using the built-in `GITHUB_TOKEN` — no extra
+secrets to configure on the repo.
+
+### Cutting a release
+
+```bash
+# 1. Bump the version in package.json (semver: patch / minor / major).
+#    Edit "version" in package.json directly, or:
+npm version patch --no-git-tag-version
+
+# 2. Commit the bump.
+git add package.json package-lock.json
+git commit -m "release: vX.Y.Z"
+
+# 3. Tag and push.
+git tag vX.Y.Z
+git push origin main --tags
+```
+
+The tag push triggers the workflow; on success the new version appears at
+`https://github.com/ArionHardison/HMS-API-client/packages`.
+
+### Consuming the package
+
+GitHub Packages requires authenticated reads. Consumers need:
+
+1. An `.npmrc` (project-level or `~/.npmrc`) routing the scope to GH Packages:
+
+   ```ini
+   @arionhardison:registry=https://npm.pkg.github.com
+   //npm.pkg.github.com/:_authToken=${NPM_TOKEN}
+   ```
+
+2. An `NPM_TOKEN` env var holding a GitHub Personal Access Token (classic)
+   with the `read:packages` scope. In CI/CD, inject it via the platform's
+   secret store. Inside GitHub Actions in the same org, `secrets.GITHUB_TOKEN`
+   is sufficient; for cross-org or Vercel deployments, set `NPM_TOKEN` as a
+   project env var.
+
+3. Then:
+
+   ```bash
+   npm install @arionhardison/wizard-api-client
+   ```
+
 ## License
 
 MIT

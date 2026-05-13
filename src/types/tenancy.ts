@@ -52,17 +52,37 @@ export interface SubprojectClientData {
   extra: unknown;
   slug: unknown;
   placeholders: unknown;
+  // CI-WWW homepage hero overrides — surface-prefixed `www_*` because
+  // they only drive the public www.codify.<tld> hero rendered by ci-www
+  // (not the shared title/description/tagline used by gov/app/sys).
+  // Edited from gov/'s "CI-WWW Homepage Hero" admin panel; backed by the
+  // www_hero_* columns added in
+  // api/database/migrations/2026_05_06_120000_add_www_hero_fields_to_subprojects_table.php.
+  // www_hero_video_type is server-resolved (`youtube` | `mp4`) from the
+  // URL when not stored explicitly, so consumers can render the right tag.
+  www_hero_video_url: string | null;
+  www_hero_video_type: 'youtube' | 'mp4' | null;
+  www_hero_title: string | null;
+  www_hero_description: string | null;
+  www_hero_cta_label: string | null;
+  www_hero_cta_url: string | null;
 }
 
 /**
  * `loadTenant()` returns a discriminated union: either a `200 OK` envelope
  * carrying `SubprojectClientData`, or a `404 Not Found` indicator (CI-WWW
- * has to render a "tenant not found" page without throwing). The 404 branch
- * preserves the parsed envelope verbatim when the API supplies one.
+ * has to render a "subproject not found" page without throwing). The 404
+ * branch preserves the parsed envelope verbatim when the API supplies one.
  */
-export type LoadTenantResult =
+export type LoadSubprojectResult =
   | { status: 200; ok: true; data: SubprojectClientData }
   | { status: 404; ok: false; data: null };
+
+/**
+ * @deprecated Use `LoadSubprojectResult`. Alias kept for callers that
+ * still import the old name.
+ */
+export type LoadTenantResult = LoadSubprojectResult;
 
 /** GET /api/board → `SubprojectDashboardDefaultDataResource`. */
 export interface SubprojectDashboardDefaultData {

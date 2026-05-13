@@ -50,6 +50,7 @@ import type {
   ImportContactsRequest,
   InitiateTenantClaimRequest,
   ListContactsRequest,
+  LoadSubprojectResult,
   LoadTenantResult,
   PaginatedPayload,
   PublicCountryData,
@@ -116,6 +117,7 @@ export type {
   ImportContactsRequest,
   InitiateTenantClaimRequest,
   ListContactsRequest,
+  LoadSubprojectResult,
   LoadTenantResult,
   PaginatedPayload,
   PublicCountryData,
@@ -172,29 +174,39 @@ export class TenancyApiClient extends BaseApiClient {
   // ===========================================================================
 
   /**
-   * GET /api/load — load tenant boot data. Public (no Bearer).
+   * GET /api/load — load the active subproject's boot data. Public
+   * (no Bearer). Special-cased: 404 must NOT throw — CI-WWW renders a
+   * "subproject not found" page from the false branch. Returns a
+   * discriminated union so callers can switch on `.ok`.
    *
-   * Special-cased: 404 must NOT throw — CI-WWW renders a "tenant not found"
-   * page from the false branch. Returns a discriminated union so callers
-   * can switch on `.ok`.
+   * Discriminator is *presence of `data`*, not a `success` flag. The
+   * Laravel side emits `{"data": {…}}` on hit (via JsonResource or
+   * manual wrap for the apex root) and `{"error": "Subproject not
+   * found"}` with no `data` field on miss. An earlier version of this
+   * method gated on `env.success && env.data`, but that field is not
+   * present on the actual envelope — every call returned `ok: false`
+   * and the CI-WWW homepage never received its tenant payload.
    */
-  async loadTenant(): Promise<LoadTenantResult> {
+  async loadSubproject(): Promise<LoadSubprojectResult> {
     const res = await this.request<SubprojectClientData>(
       '/api/load',
       { method: 'GET' },
       { auth: false, validateStatus: () => true },
     );
-    // `request<T>` returns `parsed as ApiResponse<T>`; the parsed envelope
-    // either has `data` populated (200) or null (404). Discriminate purely
-    // on the response status the SDK saw — but `request` doesn't surface
-    // status. The cheapest reliable signal we have is `success`: Laravel
-    // emits `{ success: false }` on the 404 branch and `{ success: true }`
-    // on the 200 branch. If `data` is present we treat it as a hit.
-    const env = res as unknown as { success?: boolean; data?: SubprojectClientData | null };
-    if (env && env.success && env.data) {
+    const env = res as unknown as { data?: SubprojectClientData | null; error?: string };
+    if (env && env.data) {
       return { status: 200, ok: true, data: env.data };
     }
     return { status: 404, ok: false, data: null };
+  }
+
+  /**
+   * @deprecated Use `loadSubproject()` — we don't have "tenants", we
+   * have subprojects. Kept as an alias so existing callers in `app/`,
+   * `gov/`, and `sys/` keep working until they migrate.
+   */
+  async loadTenant(): Promise<LoadSubprojectResult> {
+    return this.loadSubproject();
   }
 
   /** GET /api/board — public dashboard defaults. */

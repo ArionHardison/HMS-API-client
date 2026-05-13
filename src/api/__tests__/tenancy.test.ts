@@ -80,6 +80,65 @@ describe('TenancyApiClient', () => {
       if (res.ok) expect((res.data as any).id).toBe(1);
     });
 
+    it('loadTenant() — surfaces www_hero_* fields when present in payload', async () => {
+      // CI-WWW homepage hero overrides — surface-prefixed `www_*` fields
+      // edited from gov/'s "CI-WWW Homepage Hero" admin panel and rendered
+      // by ci-www's pages/index.vue. The SDK's job is just to type them
+      // and pass them through; the type extension lets consumers reach
+      // for them with full inference rather than `as any`.
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () => ({
+          success: true,
+          message: '',
+          data: {
+            id: 1,
+            name: 'phm',
+            www_hero_video_url: 'https://www.youtube.com/embed/abc123',
+            www_hero_video_type: 'youtube',
+            www_hero_title: 'Welcome to PHM',
+            www_hero_description: 'Multi-role healthcare marketplace',
+            www_hero_cta_label: 'Get Started',
+            www_hero_cta_url: '/signup',
+          },
+        })),
+      );
+      const res = await makePublicClient().loadTenant();
+      expect(res.ok).toBe(true);
+      if (res.ok) {
+        expect(res.data.www_hero_video_url).toBe('https://www.youtube.com/embed/abc123');
+        expect(res.data.www_hero_video_type).toBe('youtube');
+        expect(res.data.www_hero_title).toBe('Welcome to PHM');
+        expect(res.data.www_hero_description).toBe('Multi-role healthcare marketplace');
+        expect(res.data.www_hero_cta_label).toBe('Get Started');
+        expect(res.data.www_hero_cta_url).toBe('/signup');
+      }
+    });
+
+    it('loadTenant() — www_hero_* fields are nullable (back-compat)', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () => ({
+          success: true,
+          message: '',
+          data: {
+            id: 2,
+            name: 'phm',
+            www_hero_video_url: null,
+            www_hero_video_type: null,
+            www_hero_title: null,
+            www_hero_description: null,
+            www_hero_cta_label: null,
+            www_hero_cta_url: null,
+          },
+        })),
+      );
+      const res = await makePublicClient().loadTenant();
+      expect(res.ok).toBe(true);
+      if (res.ok) {
+        expect(res.data.www_hero_video_url).toBeNull();
+        expect(res.data.www_hero_video_type).toBeNull();
+      }
+    });
+
     it('loadTenant() — GET /api/load returns ok=false on 404 without throwing', async () => {
       server.use(
         mockEndpoint('get', `${BASE}/api/load`, () =>

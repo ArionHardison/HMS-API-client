@@ -216,6 +216,7 @@ export type {
   ImportContactsRequest,
   InitiateTenantClaimRequest,
   ListContactsRequest,
+  LoadSubprojectResult,
   LoadTenantResult,
   PaginatedPayload as TenancyPaginatedPayload,
   PublicCountryData,

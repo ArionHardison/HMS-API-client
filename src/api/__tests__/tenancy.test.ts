@@ -153,6 +153,94 @@ describe('TenancyApiClient', () => {
       expect(res.status).toBe(404);
     });
 
+    it('constructor — opens no WebSocket / Pusher / Echo on instantiation', () => {
+      // Regression net for the prod incident captured in
+      // `fix(wizard-api-client): disable auto WebSocket /ws/jobs on
+      // construction` (6467141). The wizard client used to open a WS in
+      // its constructor; sys/ shipped that to ycaas.ai and every wizard
+      // page printed `wss://ycaas.ai/ws/jobs` failures. TenancyApiClient
+      // must NOT replicate that mistake — `GET /api/load` is a one-shot
+      // boot call, no realtime side effects.
+      const RealWebSocket = (globalThis as any).WebSocket;
+      let constructed = 0;
+      // Polyfill a WebSocket spy even if the test env lacks one (jsdom does
+      // not provide WebSocket by default).
+      class WebSocketSpy {
+        constructor(..._args: unknown[]) {
+          constructed += 1;
+        }
+        close() {}
+        addEventListener() {}
+        removeEventListener() {}
+      }
+      (globalThis as any).WebSocket = WebSocketSpy as unknown as typeof WebSocket;
+      try {
+        // Instantiate both flavors that real consumers would use.
+        // eslint-disable-next-line no-new
+        new TenancyApiClient({ baseURL: BASE, getDomain: () => DOMAIN });
+        // eslint-disable-next-line no-new
+        new TenancyApiClient({
+          baseURL: BASE,
+          getToken: () => TOKEN,
+          getDomain: () => DOMAIN,
+        });
+        expect(constructed).toBe(0);
+      }
+      finally {
+        if (RealWebSocket === undefined) {
+          delete (globalThis as any).WebSocket;
+        }
+        else {
+          (globalThis as any).WebSocket = RealWebSocket;
+        }
+      }
+    });
+
+    it('loadTenant() — GET /api/load returns ok=false on 401 without throwing', async () => {
+      // The /api/load endpoint is `auth=public` per the Laravel route
+      // group, so a 401 here means the upstream auth middleware rejected
+      // a bearer for an unrelated reason (e.g., the consumer accidentally
+      // attached a bad token while we were behind a proxy). Either way,
+      // `validateStatus: () => true` keeps the call from throwing so the
+      // CI-WWW / sys-tenant-bootstrap caller can show a graceful error
+      // page rather than a Vite overlay.
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () =>
+          HttpResponse.json(
+            { success: false, message: 'Unauthenticated.', data: null },
+            { status: 401 },
+          ),
+        ),
+      );
+      const res = await makePublicClient().loadTenant();
+      expect(res.ok).toBe(false);
+      // The discriminated union collapses every non-200 onto the
+      // `status: 404, data: null` branch — see the loadSubproject()
+      // jsdoc for the rationale. Consumers that need the raw HTTP
+      // status should read it off their own fetch wrapper.
+      expect(res.status).toBe(404);
+      expect(res.data).toBeNull();
+    });
+
+    it('loadTenant() — GET /api/load returns ok=false on 5xx without throwing', async () => {
+      // Same contract as the 401 case: structured error path, no throw.
+      // Mirrors the sys/ tenant.store 5xx test (`loadTenant on 5xx
+      // propagates the error message`) at the SDK layer so we lock
+      // the no-throw guarantee at the boundary, not just downstream.
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () =>
+          HttpResponse.json(
+            { success: false, message: 'Server error', data: null },
+            { status: 500 },
+          ),
+        ),
+      );
+      const res = await makePublicClient().loadTenant();
+      expect(res.ok).toBe(false);
+      expect(res.status).toBe(404);
+      expect(res.data).toBeNull();
+    });
+
     it('loadBoard() — GET /api/board', async () => {
       server.use(
         mockEndpoint('get', `${BASE}/api/board`, ({ request }) => {

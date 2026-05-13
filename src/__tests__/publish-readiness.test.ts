@@ -22,8 +22,14 @@ describe('package.json — publish readiness', () => {
     expect(pkg.name).toBe('@arionhardison/wizard-api-client');
   });
 
-  it('is pinned at version 1.1.5 for the first GH Packages publish', () => {
-    expect(pkg.version).toBe('1.1.5');
+  it('declares a published semver version in the 1.x line', () => {
+    // Used to pin 1.1.5 — the first GH Packages publish. The pin
+    // turned into a regression trip-wire every time the version
+    // bumped, so it's loosened to "a valid 1.x semver" instead. The
+    // git tag that drives the publish workflow is the source of truth
+    // for what gets released; this assertion just guards against the
+    // version field being deleted or set to a non-semver string.
+    expect(pkg.version).toMatch(/^1\.\d+\.\d+(-[\w.]+)?$/);
   });
 
   it('declares axios as a runtime dependency in the ^1.x range', () => {

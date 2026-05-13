@@ -319,14 +319,23 @@ export class WizardApiClient extends BaseApiClient {
   /**
    * Create a new wizard API client
    * @param config API client configuration
+   *
+   * Note: WebSocket connection is NOT auto-opened. Consumer code that
+   * cares about real-time job/deal events must register a listener via
+   * `addJobListener()` / `addDealListener()`, which internally calls
+   * `initWebSocket()` lazily.
+   *
+   * Background: the original constructor opened a WebSocket to
+   * `${window.location.host}/ws/jobs` unconditionally on any browser
+   * environment. The SDK is consumed by multi-tenant frontends where
+   * most tenant subdomains (codify.<tld>, codify.<city>, agency
+   * apexes) do NOT have a Cloudflare/Nginx route for /ws/jobs, so
+   * every page load printed "WebSocket connection to
+   * wss://<tenant>/ws/jobs failed" and triggered a 5 s reconnect loop
+   * forever. Pinned by tests/api/__tests__/wizard-api-client.websocket.test.ts.
    */
   constructor(config: ApiClientConfig) {
     super(config);
-    
-    // Initialize WebSocket connection if in browser environment
-    if (typeof window !== 'undefined') {
-      this.initWebSocket();
-    }
   }
   
   /**

@@ -65,8 +65,16 @@ describe('package.json — publish readiness', () => {
     );
   });
 
-  it('publishConfig.registry targets GitHub Packages', () => {
-    expect(pkg.publishConfig?.registry).toBe('https://npm.pkg.github.com');
+  it('publishConfig.registry targets npmjs.org (public anonymous install)', () => {
+    // History: this used to assert GitHub Packages
+    // (`https://npm.pkg.github.com`). It was migrated to npmjs.org in
+    // commit 03e9791 ("ops: publish to npmjs.org (public) instead of
+    // GH Packages — v1.2.2") so consumers (Vercel projects, fresh
+    // clones) wouldn't need a `_authToken` env var to install. The
+    // CLAUDE.md "no NPM_TOKEN env var" rule depends on staying on
+    // npmjs.org. The trailing slash matches Vercel's npmrc renderer
+    // and `npm config get registry` default formatting.
+    expect(pkg.publishConfig?.registry).toBe('https://registry.npmjs.org/');
   });
 
   it('publishConfig.access is public', () => {

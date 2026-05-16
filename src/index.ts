@@ -188,7 +188,21 @@ export type {
 } from './api/auth-user-api-client';
 
 // -----------------------------------------------------------------------------
-// Tenancy
+// Subproject (hierarchy-aware) — the canonical multi-tenant boot +
+// subproject lifecycle client. `TenancyApiClient` (below) is a
+// `@deprecated` alias retained for one minor; removed in 2.0.0.
+// -----------------------------------------------------------------------------
+export { SubprojectApiClient } from './api/subproject-api-client';
+export type {
+  DpgInstance,
+  DpgInstanceMode,
+  Subproject,
+  SubprojectLoadResponse,
+} from './types/subproject';
+export { resolveInherited } from './utils/resolve-inherited';
+
+// -----------------------------------------------------------------------------
+// Tenancy (deprecated alias — use SubprojectApiClient)
 // -----------------------------------------------------------------------------
 export { TenancyApiClient } from './api/tenancy-api-client';
 export type {

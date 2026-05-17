@@ -5,6 +5,45 @@ here. Format roughly follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning
 follows SemVer.
 
+## [1.4.0] — 2026-05-17
+
+### Added
+
+- **`IntakeModuleApiClient`** — new client for the `/api/v1/intake/*` patient
+  intake module surface (8 endpoints):
+  - `start()` — kick off a new intake session.
+  - `exchange()` — redeem a single-use handoff token from another subproject
+    for the receiving subproject's session (public, no Bearer).
+  - `voiceRecord()` / `voiceFinalize()` — capture and finalize voice notes
+    for asynchronous transcription.
+  - `submitAnswers()` — replace the answers payload.
+  - `setAudience()` — set the intake audience (`patient` / `family_member` /
+    `caregiver`).
+  - `initiateHandoff()` — mint a handoff token + URL another subproject can
+    exchange.
+  - `getStatus()` — lightweight poll for intake state changes.
+- **`AuthUserApiClient.getAccessibleSubprojects()`** —
+  `GET /api/me/accessible-subprojects`, lists subprojects the current user
+  has access to (for subproject switcher UIs).
+- **`MiscCoreApiClient.submitErrorReport()`** —
+  `POST /api/support/error-report`, anonymous error reporting from the
+  tenant-error pages.
+- **`WizardSetupApiClient.startWizard()`** — `POST /api/wizard/start`, the
+  canonical entry point for the YCaaS wizard flow.
+- **`SubprojectApiClient.getCurrentSubprojectSystem()`** —
+  `GET /api/v1/subprojects/current/system` + new `SubprojectSystemData`
+  interface for the system-config payload.
+
+### Notes
+
+- Tracks `codify_p2x_sdk` v0.2.0 (Dart sibling shipped the same Intake
+  surface + auth/payment/items/schedule/services/follow_ups/chat/notification
+  client expansions).
+- Hand-written; OpenAPI codegen Tier 2 still deferred.
+- 1064/1066 tests pass; the 1 failing test (`publish-readiness.test.ts >
+  no-missing-deps`) is a pre-existing issue scanning stale `dist/` artifacts,
+  unrelated to this release.
+
 ## [1.3.0] — 2026-05-16
 
 ### Added

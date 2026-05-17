@@ -130,6 +130,16 @@ export type {
   SubprojectLoadResponse,
 } from '../types/subproject';
 
+/**
+ * Open-shape payload for `GET /api/v1/subprojects/current/system`. The
+ * Systems module is still maturing its DPG-config response, so we don't
+ * lock the shape; callers can cast through `unknown` to a stricter type
+ * once the upstream spec stabilizes.
+ */
+export interface SubprojectSystemData {
+  [key: string]: unknown;
+}
+
 // Re-export legacy types so consumers migrating from TenancyApiClient
 // can pull everything from the new module.
 export type {
@@ -348,6 +358,25 @@ export class SubprojectApiClient extends BaseApiClient {
   async getDpgInstances(id: number | string): Promise<ApiResponse<DpgInstance[]>> {
     return this.get<DpgInstance[]>(
       `/api/subprojects/${encodeURIComponent(String(id))}/dpg-instances`,
+    );
+  }
+
+  /**
+   * GET /api/v1/subprojects/current/system — read-only DPG / system
+   * config for the X-Domain-resolved subproject. Public endpoint (no
+   * Bearer required); the data exposed is non-sensitive (DNS-derived).
+   * The Systems module owns this route on the backend — see
+   * `api/Modules/Systems/Routes/api.php` and `SubprojectSystemsController`.
+   *
+   * Shape is left open (`SubprojectSystemData`) because the upstream
+   * controller is still maturing; consumers should cast to a stricter
+   * type at the call site if they need one.
+   */
+  async getCurrentSubprojectSystem(): Promise<ApiResponse<SubprojectSystemData>> {
+    return this.get<SubprojectSystemData>(
+      '/api/v1/subprojects/current/system',
+      undefined,
+      { auth: false },
     );
   }
 

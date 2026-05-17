@@ -961,6 +961,17 @@ export type {
 
 export { SubprojectWizardApiClient } from './api/subproject-wizard-api-client';
 
+export { IntakeModuleApiClient } from './api/modules-intake-api-client';
+export type {
+  IntakeAnswersBody,
+  IntakeAudienceBody,
+  IntakeExchangeResponse,
+  IntakeHandoffBody,
+  IntakeResponse,
+  IntakeStartBody,
+  IntakeStartResponse,
+} from './api/modules-intake-api-client';
+
 // =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).

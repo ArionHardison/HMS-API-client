@@ -1018,6 +1018,19 @@ export class MiscCoreApiClient extends BaseApiClient {
       NO_AUTH,
     );
   }
+
+  /**
+   * POST /api/support/error-report — anonymous error reporting from the
+   * tenant-error pages. No Bearer required. Body shape is open-ended:
+   * the controller stores the entire payload as the report context, so
+   * callers can include arbitrary diagnostic fields (URL, user agent,
+   * stack trace, app version, etc.).
+   */
+  async submitErrorReport(
+    body: Record<string, unknown>,
+  ): Promise<ApiResponse<MiscCoreResponse>> {
+    return this.post<MiscCoreResponse>('/api/support/error-report', body, NO_AUTH);
+  }
 }
 
 // =============================================================================

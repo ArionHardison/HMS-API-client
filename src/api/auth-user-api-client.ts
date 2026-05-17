@@ -487,4 +487,19 @@ export class AuthUserApiClient extends BaseApiClient {
   ): Promise<ApiResponse<EmptyOk>> {
     return this.patch<EmptyOk>(`/api/users/update/${user}`, body);
   }
+
+  /**
+   * GET /api/me/accessible-subprojects — tenant switcher: subprojects the
+   * authenticated user can pivot into. Computed from the auth context
+   * server-side; not subproject-scoped (works across X-Domain).
+   *
+   * Bearer required (auth:api). Returns a flat list of subproject
+   * summaries — the calling UI typically renders these as a switcher
+   * menu. Shape is left open (`EmptyOk[]`) since the spec is not yet
+   * frozen; consumers should cast through `unknown` if they need a
+   * stricter type.
+   */
+  async getAccessibleSubprojects(): Promise<ApiResponse<EmptyOk[]>> {
+    return this.get<EmptyOk[]>('/api/me/accessible-subprojects');
+  }
 }

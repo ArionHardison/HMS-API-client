@@ -335,6 +335,26 @@ export class WizardSetupApiClient extends BaseApiClient {
   ): Promise<ApiResponse<WizardSetupResponse>> {
     return this.post<WizardSetupResponse>('/api/wizard/validate-email', body);
   }
+
+  /**
+   * POST /api/wizard/start — single-payload subproject create / gov-shape
+   * 5-step flow kickoff. Routed to `WizardStartController` (a single
+   * invokable controller) on the backend, NOT the per-step
+   * `WizardController` that owns the other `/api/wizard/*` endpoints.
+   *
+   * Bearer required (auth:api). The payload shape is intentionally
+   * open: the gov front-end submits the entire 5-step questionnaire
+   * (organization name, mission, contacts, etc.) in one POST and the
+   * controller decides what to persist where. Callers should treat
+   * the response payload as the boot context for the newly-created
+   * subproject — typically including its `id`, `domain`, and seed
+   * settings.
+   */
+  async startWizard(
+    body: Record<string, unknown>,
+  ): Promise<ApiResponse<WizardSetupResponse>> {
+    return this.post<WizardSetupResponse>('/api/wizard/start', body);
+  }
 }
 
 // =============================================================================

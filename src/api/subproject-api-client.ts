@@ -69,6 +69,7 @@ import type {
   CreatorRequestData,
   DocumentationItem,
   DomainInterface,
+  DomainInterfaceByDomainResponse,
   EmptyOk,
   FindClaimableSubprojectRequest,
   FindContactsRequest,
@@ -119,6 +120,7 @@ import type {
 import type {
   DpgInstance,
   Subproject,
+  SubprojectBaseInterface,
   SubprojectLoadResponse,
 } from '../types/subproject';
 
@@ -127,6 +129,7 @@ export type {
   DpgInstance,
   DpgInstanceMode,
   Subproject,
+  SubprojectBaseInterface,
   SubprojectLoadResponse,
 } from '../types/subproject';
 
@@ -159,6 +162,7 @@ export type {
   CreatorRequestData,
   DocumentationItem,
   DomainInterface,
+  DomainInterfaceByDomainResponse,
   EmptyOk,
   FindClaimableSubprojectRequest,
   FindContactsRequest,
@@ -1020,11 +1024,35 @@ export class SubprojectApiClient extends BaseApiClient {
     return this.post<DomainInterface>('/api/domain-interfaces', body);
   }
 
-  /** GET /api/domain-interfaces/by-domain/{domain} */
-  async getDomainInterfaceByDomain(domain: string): Promise<ApiResponse<DomainInterface>> {
-    return this.get<DomainInterface>(
+  /**
+   * GET /api/domain-interfaces/by-domain/{domain}.
+   *
+   * Returns the `{base, others}` envelope as api/ writes it (no
+   * wrapping `data` field — the controller emits the two keys at the
+   * top level). 404 from api/ (no rows mapped for the host) is
+   * normalized to `{base: null, others: []}` so callers don't have to
+   * try/catch around the lookup; the legitimate "no mapping" answer
+   * and the "endpoint unreachable" answer are kept distinct: the
+   * latter still throws via `ApiError`.
+   */
+  async getDomainInterfaceByDomain(
+    domain: string,
+  ): Promise<DomainInterfaceByDomainResponse> {
+    const res = await this.request<unknown>(
       `/api/domain-interfaces/by-domain/${encodeURIComponent(domain)}`,
+      { method: 'GET' },
+      { validateStatus: (status) => (status >= 200 && status < 300) || status === 404 },
     );
+    const env = res as unknown as { base?: unknown; others?: unknown };
+    if (!env || (env.base === undefined && env.others === undefined)) {
+      return { base: null, others: [] };
+    }
+    return {
+      base: (env.base ?? null) as DomainInterface | null,
+      others: Array.isArray(env.others)
+        ? (env.others as DomainInterface[])
+        : [],
+    };
   }
 
   /** GET /api/domain-interfaces/{id} */

@@ -197,6 +197,7 @@ export type {
   DpgInstance,
   DpgInstanceMode,
   Subproject,
+  SubprojectBaseInterface,
   SubprojectLoadResponse,
 } from './types/subproject';
 export { resolveInherited } from './utils/resolve-inherited';

@@ -38,7 +38,8 @@ import {
   mockEndpoint,
 } from '../../__tests__/helpers/factories';
 import { SubprojectApiClient } from '../subproject-api-client';
-import type { Subproject, DpgInstance } from '../../types/subproject';
+import type { Subproject, SubprojectBaseInterface, DpgInstance } from '../../types/subproject';
+import type { DomainInterface, DomainInterfaceByDomainResponse } from '../../types/tenancy';
 import { resolveInherited } from '../../utils/resolve-inherited';
 import { TenancyApiClient } from '../tenancy-api-client';
 
@@ -345,6 +346,150 @@ describe('SubprojectApiClient', () => {
       // smoke check so the test isn't a no-op when the type loosens.
       const modes: Array<DpgInstance['mode']> = ['native', 'domain', 'hybrid'];
       expect(modes).toEqual(['native', 'domain', 'hybrid']);
+    });
+  });
+
+  // ===========================================================================
+  // base_interface — surfaces the sys/ render-at-root target on /api/load
+  // ===========================================================================
+
+  describe('loadSubproject() — base_interface', () => {
+    it('surfaces base_interface when api/ projects it on /api/load', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () => ({
+          data: {
+            id: 99,
+            name: 'Codify Sales',
+            parent_subproject_id: null,
+            chain: [],
+            base_interface: {
+              id: 5,
+              interface_id: '/sidebar/dashboards/sales',
+              page_route: '/sales',
+              is_base: true,
+            } satisfies SubprojectBaseInterface,
+          },
+        })),
+      );
+      const res = await makePublicClient().loadSubproject();
+      expect(res.ok).toBe(true);
+      if (res.ok) {
+        expect(res.data.base_interface).not.toBeNull();
+        expect(res.data.base_interface?.interface_id).toBe('/sidebar/dashboards/sales');
+        expect(res.data.base_interface?.is_base).toBe(true);
+      }
+    });
+
+    it('base_interface=null is preserved through normalization', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () => ({
+          data: {
+            id: 100,
+            name: 'No-Interface Subproject',
+            parent_subproject_id: null,
+            chain: [],
+            base_interface: null,
+          },
+        })),
+      );
+      const res = await makePublicClient().loadSubproject();
+      expect(res.ok).toBe(true);
+      if (res.ok) {
+        expect(res.data.base_interface).toBeNull();
+      }
+    });
+
+    it('omitted base_interface is undefined, not throwing', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, () => ({
+          data: {
+            id: 101,
+            name: 'Pre-base-interface api/',
+            parent_subproject_id: null,
+            chain: [],
+          },
+        })),
+      );
+      const res = await makePublicClient().loadSubproject();
+      expect(res.ok).toBe(true);
+      if (res.ok) {
+        expect(res.data.base_interface).toBeUndefined();
+      }
+    });
+  });
+
+  // ===========================================================================
+  // getDomainInterfaceByDomain — {base, others} envelope (no ApiResponse wrap)
+  // ===========================================================================
+
+  describe('getDomainInterfaceByDomain(domain)', () => {
+    it('returns the {base, others} shape api/ writes', async () => {
+      server.use(
+        mockEndpoint(
+          'get',
+          `${BASE}/api/domain-interfaces/by-domain/codify.sales`,
+          ({ request }) => {
+            captured.current = request;
+            return {
+              base: {
+                id: 1,
+                subproject_id: 99,
+                domain: 'codify.sales',
+                interface_id: '/sidebar/dashboards/sales',
+                is_base: true,
+                enabled: true,
+              } satisfies DomainInterface,
+              others: [
+                {
+                  id: 2,
+                  subproject_id: 99,
+                  domain: 'codify.sales',
+                  interface_id: '/sidebar/modals/quick-find',
+                  is_base: false,
+                  enabled: true,
+                } satisfies DomainInterface,
+              ],
+            } satisfies DomainInterfaceByDomainResponse;
+          },
+        ),
+      );
+      const res = await makeClient().getDomainInterfaceByDomain('codify.sales');
+      expectAuthHeader(captured.current!, TOKEN);
+      expect(res.base).not.toBeNull();
+      expect(res.base?.interface_id).toBe('/sidebar/dashboards/sales');
+      expect(res.others).toHaveLength(1);
+      expect(res.others[0].is_base).toBe(false);
+    });
+
+    it('normalizes a 404 to {base: null, others: []} without throwing', async () => {
+      server.use(
+        mockEndpoint(
+          'get',
+          `${BASE}/api/domain-interfaces/by-domain/unmapped.example`,
+          () => new Response(JSON.stringify({ message: 'No interfaces mapped' }), {
+            status: 404,
+            headers: { 'Content-Type': 'application/json' },
+          }),
+        ),
+      );
+      const res = await makeClient().getDomainInterfaceByDomain('unmapped.example');
+      expect(res.base).toBeNull();
+      expect(res.others).toEqual([]);
+    });
+
+    it('encodes the domain so dotted hostnames stay intact', async () => {
+      server.use(
+        mockEndpoint(
+          'get',
+          `${BASE}/api/domain-interfaces/by-domain/app.codify.education`,
+          ({ request }) => {
+            captured.current = request;
+            return { base: null, others: [] };
+          },
+        ),
+      );
+      await makeClient().getDomainInterfaceByDomain('app.codify.education');
+      expect(captured.current).not.toBeNull();
     });
   });
 

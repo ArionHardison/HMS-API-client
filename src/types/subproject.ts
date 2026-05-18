@@ -28,6 +28,26 @@
 // =============================================================================
 
 /**
+ * Pointer to the sys/ "interface" route this subproject's primary host
+ * should mount at `/`. Set by the api/ `domain_interfaces` table
+ * (subproject_id + domain + is_base=true, enabled=true).
+ *
+ * `interface_id` is the load-bearing field — it's the sys/ route path
+ * (e.g. `/sidebar/dashboards/sales`) sys/ dynamically imports + renders
+ * AT `/` so the URL never changes.
+ *
+ * `null` on the parent (subproject.base_interface) means no row was
+ * seeded for this host; sys/ falls back to
+ * `resolveSystemContextRoute(system_context)` for backwards-compat.
+ */
+export interface SubprojectBaseInterface {
+  id: number;
+  interface_id: string;
+  page_route?: string | null;
+  is_base: true;
+}
+
+/**
  * One subproject node. Recursive via `chain` — but `chain` carries the
  * FLATTENED ancestor list (leaf -> root, leaf NOT included) rather than
  * a nested tree, so each ancestor's own `chain` is `[]` by convention.
@@ -64,6 +84,13 @@ export interface Subproject {
   logo?: string | null;
   /** Optional primary color — example of an inherited field. */
   primary_color?: string | null;
+
+  /**
+   * Pointer to the sys/ interface that should render at `/` for this
+   * host. Null when no row was seeded — sys/ then falls back to
+   * `system_context`-based routing.
+   */
+  base_interface?: SubprojectBaseInterface | null;
 
   /** Anything else api/ projects for this row. */
   [key: string]: unknown;

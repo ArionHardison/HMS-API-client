@@ -284,19 +284,56 @@ export interface TenantRegistrationFee {
 // Domain interfaces
 // =============================================================================
 
+/**
+ * Concrete fields from api/'s `DomainInterfaceResource`. Everything beyond
+ * `interface_id` / `is_base` is non-load-bearing for sys/'s routing; the
+ * index signature absorbs forward-compat additions on the api/ side.
+ */
 export interface DomainInterface {
-  id?: number | string;
+  id?: number;
+  subproject_id?: number;
   domain?: string;
+  /** The sys/ route slug, e.g. `/sidebar/dashboards/sales`. */
+  interface_id?: string;
+  /** True when this is the front-door interface for (subproject_id, domain). */
+  is_base?: boolean;
+  page_route?: string | null;
+  page_file?: string | null;
+  block_name?: string | null;
+  block_file?: string | null;
+  purpose?: string | null;
+  data_sources?: string[];
+  agent_use_cases?: string[];
+  tags?: string[];
+  enabled?: boolean;
+  created_at?: string | null;
+  updated_at?: string | null;
   [key: string]: unknown;
+}
+
+/**
+ * Response shape for `GET /api/domain-interfaces/by-domain/{domain}`.
+ * The api/ controller returns `{ base, others }` top-level (no envelope),
+ * not the legacy `ApiResponse<DomainInterface>` shape this method used to
+ * be typed as. `base` is null when no `is_base=true` row exists for the
+ * host (legal — sys/ then falls back to system_context routing).
+ */
+export interface DomainInterfaceByDomainResponse {
+  base: DomainInterface | null;
+  others: DomainInterface[];
 }
 
 export interface CreateDomainInterfaceRequest {
   domain: string;
+  interface_id?: string;
+  is_base?: boolean;
   [key: string]: unknown;
 }
 
 export interface UpdateDomainInterfaceRequest {
   domain?: string;
+  interface_id?: string;
+  is_base?: boolean;
   [key: string]: unknown;
 }
 

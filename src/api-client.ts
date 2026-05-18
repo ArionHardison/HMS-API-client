@@ -53,7 +53,20 @@ export interface ApiMetaData {
  * client SSR-safe and let frontends inject their auth + tenancy strategies.
  */
 export interface ApiClientConfig {
-  baseURL: string;
+  /**
+   * The host root the client targets (no trailing `/api` — endpoint paths
+   * already include it). Optional. When omitted, the client resolves the
+   * base URL lazily per request via:
+   *
+   *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom),
+   *      so a deploy at `https://ycaas.ai` issues same-origin requests
+   *      that a Vercel rewrite can proxy to `https://codify.inc/api/*`.
+   *   2. `https://codify.inc` as the SSR / Node fallback.
+   *
+   * Resolution is lazy on purpose — the constructor must not touch `window`
+   * (see the SSR safety contract test). An explicit value always wins.
+   */
+  baseURL?: string;
   timeout?: number;
   withCredentials?: boolean;
   headers?: Record<string, string>;
@@ -108,6 +121,25 @@ export interface ApiRequestOptions {
  * (read auth token from localStorage iff `window` exists; dispatch
  * `auth:unauthorized` on 401).
  */
+/**
+ * Default base URL when no `baseURL` is configured.
+ *
+ * In a browser context (real or simulated via happy-dom/jsdom) the SDK uses
+ * the current page origin, which keeps requests same-origin so cookies and
+ * Vercel `vercel.json` rewrites both work without CORS. In Node / SSR there
+ * is no window, so the canonical Laravel host `https://codify.inc` is used
+ * (a sibling DNS name, `api.codify.inc`, points at the same install — both
+ * routes work).
+ *
+ * Resolution is lazy / per-request so the SSR safety contract is preserved.
+ */
+function resolveDefaultBaseURL(): string {
+  const w = (globalThis as { window?: { location?: { origin?: unknown } } }).window;
+  const origin = w?.location?.origin;
+  if (typeof origin === 'string' && origin.length > 0) return origin;
+  return 'https://codify.inc';
+}
+
 export class BaseApiClient {
   protected readonly baseURL: string;
   protected readonly timeout: number;
@@ -117,7 +149,10 @@ export class BaseApiClient {
 
   constructor(config: ApiClientConfig) {
     this.config = config;
-    this.baseURL = config.baseURL;
+    // Stored verbatim — empty/undefined means "resolve per-request" (see
+    // `resolveDefaultBaseURL`). We do NOT eager-resolve here because the
+    // SSR safety contract forbids touching `window` during construction.
+    this.baseURL = config.baseURL ?? '';
     this.timeout = config.timeout || 30000;
     this.withCredentials = config.withCredentials || false;
     this.defaultHeaders = {
@@ -217,7 +252,8 @@ export class BaseApiClient {
     opts: ApiRequestOptions = {},
   ): Promise<ApiResponse<T>> {
     // ---- URL + method override -------------------------------------------
-    let url = `${this.baseURL}${endpoint}`;
+    const base = this.baseURL || resolveDefaultBaseURL();
+    let url = `${base}${endpoint}`;
     let method = (init.method || 'GET').toUpperCase();
     let body = init.body;
 

@@ -47432,27 +47432,65 @@
           "subproject_id": {
             "type": "number"
           },
-          "domain": {},
+          "domain": {
+            "type": "string"
+          },
           "interface_id": {
-            "type": "number"
+            "type": "string"
           },
           "is_base": {
             "type": "boolean"
           },
-          "page_route": {},
-          "page_file": {},
-          "block_name": {},
-          "block_file": {},
-          "purpose": {},
-          "data_sources": {},
-          "agent_use_cases": {},
-          "tags": {},
-          "enabled": {},
+          "page_route": {
+            "type": "string",
+            "nullable": true
+          },
+          "page_file": {
+            "type": "string",
+            "nullable": true
+          },
+          "block_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "block_file": {
+            "type": "string",
+            "nullable": true
+          },
+          "purpose": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "agent_use_cases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
           "created_at": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "updated_at": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "required": [

@@ -41,9 +41,9 @@ npx vitest run -t "wizard codifies a problem"                    # single test b
 npm run type-check         # vue-tsc --noEmit
 npm run lint               # eslint --fix across vue/ts/js
 
-# OpenAPI codegen (currently broken — input path wrong; fix in Phase 1)
+# OpenAPI codegen (working since 2026-05-19 — spec lives at spec/openapi.json)
 npm run generate           # generate:client + generate:types + generate:docs
-npm run generate:client    # openapi-generator-cli (typescript-axios) -> src/generated/
+npm run generate:client    # openapi-typescript-codegen (axios) -> src/generated/client/
 npm run generate:types     # openapi-typescript -> src/generated/api-types.ts
 
 # Docs
@@ -136,7 +136,7 @@ High-level grouping (full counts in the investigation report):
 
 The user mandate is **strict TDD + strict TS, every endpoint covered, no exceptions.**
 
-1. **Spec first.** Phase 1 step 1 is generating an OpenAPI spec from `../api` (e.g., `l5-swagger` or `scribe`) and committing it into this repo (`spec/openapi.json`). Until that lands, codegen is broken — the configured input `../public/docs/api-spec.json` doesn't exist.
+1. **Spec is committed at `spec/openapi.json`.** The 1.3 MB spec landed on 2026-05-19 and is hand-maintained (no backend stub generator yet — that's a separate Phase 1 follow-up to keep the spec in lockstep with `../api`'s actual routes). Until backend codegen lands, treat `spec/openapi.json` as the contract: edit it when api/ adds or changes routes, then re-run `npm run generate` to rebuild `src/generated/`.
 2. **Test before code.** Every endpoint method gets a Vitest test using **MSW** (preferred over `axios-mock-adapter` so the same mocks work in Node and browser test envs) that asserts: URL, method, headers (`Authorization`, `X-Domain`, `Content-Type`), request body shape, and response decoding. Add the test, watch it fail, then add the method.
 3. **Generated, not hand-written, where possible.** `npm run generate` should produce `src/generated/` types and a thin client. Hand-written wrappers live in `src/api/*-api-client.ts` and consume the generated layer for type safety. The current 80KB `hms-api-client.ts` is the prior-art hand-written approach — keep it working until generated equivalents pass the same tests, then replace.
 4. **Coverage gate.** Add a vitest coverage threshold (target ≥90% lines/branches on `src/api/**` once codegen lands) and run it in `prepublishOnly`.

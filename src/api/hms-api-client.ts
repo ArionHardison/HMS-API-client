@@ -1866,7 +1866,18 @@ export class ChatApiClient extends BaseApiClient {
     const endpoint = search ? `/chat/get-list/${search}` : '/chat/get-list';
     return this.client.get(endpoint);
   }
-  
+
+  /**
+   * List conversations (alias for getChatList). Added 2026-05-21 (v1.6.0)
+   * so sys/src/stores/chat.ts can drop its raw HTTP TODO and call the
+   * SDK with the name the consumer expects. Same wire path as getChatList.
+   *
+   * @param search - Search query
+   */
+  async listConversations(search?: string): Promise<AxiosResponse<ApiResponse<ChatRoomData[]>>> {
+    return this.getChatList(search);
+  }
+
   /**
    * Get chat room
    * @param userId - User ID (to create or get a 1:1 chat)
@@ -1874,7 +1885,7 @@ export class ChatApiClient extends BaseApiClient {
   async getChatRoom(userId: number): Promise<AxiosResponse<ApiResponse<ChatRoomData>>> {
     return this.client.post('/chat/get-room', { user_id: userId });
   }
-  
+
   /**
    * Get chat room by ID
    * @param roomId - Room ID
@@ -1882,7 +1893,7 @@ export class ChatApiClient extends BaseApiClient {
   async getChatRoomById(roomId: number): Promise<AxiosResponse<ApiResponse<ChatRoomData>>> {
     return this.client.get(`/chat/get-room-by-id/${roomId}`);
   }
-  
+
   /**
    * Get messages for a chat
    * @param chatId - Chat ID
@@ -1891,6 +1902,17 @@ export class ChatApiClient extends BaseApiClient {
   async getMessages(chatId: number, search?: string): Promise<AxiosResponse<ApiResponse<ChatMessageData[]>>> {
     const endpoint = search ? `/chat/messages/${chatId}/${search}` : `/chat/messages/${chatId}`;
     return this.client.get(endpoint);
+  }
+
+  /**
+   * List messages for a conversation (alias for getMessages). Added
+   * 2026-05-21 (v1.6.0) — matches the name sys/'s chat store expects.
+   *
+   * @param conversationId - Conversation (chat) ID
+   * @param search - Search query
+   */
+  async listMessages(conversationId: number, search?: string): Promise<AxiosResponse<ApiResponse<ChatMessageData[]>>> {
+    return this.getMessages(conversationId, search);
   }
   
   /**

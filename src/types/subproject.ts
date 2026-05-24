@@ -33,7 +33,7 @@
  * (subproject_id + domain + is_base=true, enabled=true).
  *
  * `interface_id` is the load-bearing field — it's the sys/ route path
- * (e.g. `/s/dashboards/sales`) sys/ dynamically imports + renders
+ * (e.g. `/s/d/sales`) sys/ dynamically imports + renders
  * AT `/` so the URL never changes.
  *
  * `null` on the parent (subproject.base_interface) means no row was

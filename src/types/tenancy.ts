@@ -293,7 +293,7 @@ export interface DomainInterface {
   id?: number;
   subproject_id?: number;
   domain?: string;
-  /** The sys/ route slug, e.g. `/s/dashboards/sales`. */
+  /** The sys/ route slug, e.g. `/s/d/sales`. */
   interface_id?: string;
   /** True when this is the front-door interface for (subproject_id, domain). */
   is_base?: boolean;

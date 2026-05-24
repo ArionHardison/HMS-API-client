@@ -364,7 +364,7 @@ describe('SubprojectApiClient', () => {
             chain: [],
             base_interface: {
               id: 5,
-              interface_id: '/sidebar/dashboards/sales',
+              interface_id: '/s/dashboards/sales',
               page_route: '/sales',
               is_base: true,
             } satisfies SubprojectBaseInterface,
@@ -375,7 +375,7 @@ describe('SubprojectApiClient', () => {
       expect(res.ok).toBe(true);
       if (res.ok) {
         expect(res.data.base_interface).not.toBeNull();
-        expect(res.data.base_interface?.interface_id).toBe('/sidebar/dashboards/sales');
+        expect(res.data.base_interface?.interface_id).toBe('/s/dashboards/sales');
         expect(res.data.base_interface?.is_base).toBe(true);
       }
     });
@@ -435,7 +435,7 @@ describe('SubprojectApiClient', () => {
                 id: 1,
                 subproject_id: 99,
                 domain: 'codify.sales',
-                interface_id: '/sidebar/dashboards/sales',
+                interface_id: '/s/dashboards/sales',
                 is_base: true,
                 enabled: true,
               } satisfies DomainInterface,
@@ -444,7 +444,7 @@ describe('SubprojectApiClient', () => {
                   id: 2,
                   subproject_id: 99,
                   domain: 'codify.sales',
-                  interface_id: '/sidebar/modals/quick-find',
+                  interface_id: '/s/modals/quick-find',
                   is_base: false,
                   enabled: true,
                 } satisfies DomainInterface,
@@ -456,7 +456,7 @@ describe('SubprojectApiClient', () => {
       const res = await makeClient().getDomainInterfaceByDomain('codify.sales');
       expectAuthHeader(captured.current!, TOKEN);
       expect(res.base).not.toBeNull();
-      expect(res.base?.interface_id).toBe('/sidebar/dashboards/sales');
+      expect(res.base?.interface_id).toBe('/s/dashboards/sales');
       expect(res.others).toHaveLength(1);
       expect(res.others[0].is_base).toBe(false);
     });

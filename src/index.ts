@@ -850,6 +850,17 @@ export type {
   UpdateChainRequest,
 } from './api/chain-api-client';
 
+// systems — tenant-agnostic catalog of every codify-* non-generic system
+// (powers sys/ MFE's sidebar Systems submenu) + the legacy tenant-scoped
+// per-vertical endpoints.
+export { SystemsApiClient } from './api/systems-api-client';
+export type {
+  SystemCatalogEntry,
+  SystemComponent,
+  SystemDetail,
+  SystemHomeCard,
+} from './api/systems-api-client';
+
 // schedule
 export { ScheduleApiClient } from './api/schedule-api-client';
 export type {

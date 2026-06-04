@@ -90,6 +90,7 @@ export type {
   StepResultData,
   JobStatusData,
   DefineProblemInput,
+  DefineDealInput,
   CodifySolutionInput,
   SetupProgramInput,
   ExecuteProgramInput,

@@ -212,6 +212,37 @@ export interface DefineProblemInput {
   metadata?: Record<string, any>;
 }
 
+/**
+ * Input for `WizardApiClient.defineDeal()` — wraps
+ * `POST /api/wizard/deal/define` (DealWizardController). The api validates:
+ *   - statement: required string, 1–8000 chars
+ *   - subproject_id: optional integer (api falls back to X-Domain resolution)
+ *   - tld: optional string up to 64 chars, normalized to `codify.<tld>`
+ *
+ * Anything else passed through is forwarded as-is into the orchestrator's
+ * payload (e.g., `problem.intent_slug` override) — see CHAT_DEAL_WIRE.md.
+ */
+export interface DefineDealInput {
+  /** The user's free-text problem statement (1–8000 chars). */
+  statement: string;
+  /** Optional explicit subproject binding; api defaults to X-Domain resolution. */
+  subproject_id?: number;
+  /**
+   * Codify TLD slug — bare (`accountants`) or prefixed (`codify.accountants`).
+   * api/ normalizes both forms to `codify.<tld>` before persisting.
+   */
+  tld?: string;
+  /** Optional partial-override of the problem block (intent_slug, classification, …). */
+  problem?: {
+    intent_slug?: string | null;
+    classification?: unknown;
+    ontology_class?: string | null;
+    required_info?: unknown;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
 export interface CodifySolutionInput {
   solution_options: SolutionOptionData[];
   selected_solution?: number;
@@ -461,6 +492,28 @@ export class WizardApiClient extends BaseApiClient {
    */
   async startWizard(data: DefineProblemInput): Promise<AxiosResponse<ApiResponse<StepResultData>>> {
     return this.client.post('/wizard/start', data);
+  }
+
+  /**
+   * Create a new Deal from a problem statement — the canonical entry point
+   * for the YCaaS apex chat surface (and any other caller that wants to
+   * kick off the deal lifecycle from free text). Wraps
+   * `POST /api/wizard/deal/define` (Modules\Deals\Http\Controllers\DealWizardController::define).
+   *
+   * api/ resolves the subproject from the explicit `subproject_id` body OR
+   * the `X-Domain` header on the request (already injected by BaseApiClient).
+   * api/ also classifies the problem against an LLM and computes the deal's
+   * `required_info` before persisting — those fields come back on the
+   * response.
+   *
+   * Returns the new Deal in state=analyzing, wizard_step=1. Subsequent
+   * lifecycle calls go through the other `/wizard/deal/{id}/*` methods
+   * on this client (defineProblems, codifySolution, etc.).
+   *
+   * See `api/docs/CHAT_DEAL_WIRE.md` for the multi-session chat→deal plan.
+   */
+  async defineDeal(data: DefineDealInput): Promise<AxiosResponse<ApiResponse<DealData>>> {
+    return this.client.post('/wizard/deal/define', data);
   }
   
   /**

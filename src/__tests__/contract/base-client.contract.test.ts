@@ -463,7 +463,7 @@ describe('BaseApiClient — contract', () => {
   // When the SDK is instantiated with no baseURL the resolution order is:
   //
   //   1. globalThis.window?.location?.origin  (browser / happy-dom / jsdom)
-  //   2. 'https://codify.inc'                  (Node / SSR fallback)
+  //   2. 'https://api.project20x.com'          (Node / SSR fallback)
   //
   // Resolution is lazy (per request) so the SSR safety contract is preserved
   // — the constructor must not read `window`. An explicit `baseURL` always
@@ -491,12 +491,12 @@ describe('BaseApiClient — contract', () => {
       }
     });
 
-    it('falls back to https://codify.inc when window is absent (SSR/Node)', async () => {
+    it('falls back to https://api.project20x.com when window is absent (SSR/Node)', async () => {
       const originalWindow = (globalThis as any).window;
       delete (globalThis as any).window;
       try {
         server.use(
-          mockEndpoint('get', 'https://codify.inc/api/load', ({ request }) => {
+          mockEndpoint('get', 'https://api.project20x.com/api/load', ({ request }) => {
             captured.current = request;
             return { success: true, message: '', data: {} };
           }),
@@ -504,7 +504,7 @@ describe('BaseApiClient — contract', () => {
         const client = new TestClient({} as any);
         await client.g('/api/load');
         expect(captured.current).not.toBeNull();
-        expect(captured.current!.url).toBe('https://codify.inc/api/load');
+        expect(captured.current!.url).toBe('https://api.project20x.com/api/load');
       }
       finally {
         if (originalWindow !== undefined) (globalThis as any).window = originalWindow;

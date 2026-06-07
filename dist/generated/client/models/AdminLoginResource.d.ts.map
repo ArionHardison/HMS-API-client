@@ -1,0 +1,1 @@
+{"version":3,"file":"AdminLoginResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/AdminLoginResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,kBAAkB,GAAG;IAC/B,WAAW,EAAE,GAAG,CAAC;IACjB,EAAE,EAAE,MAAM,CAAC;IACX,SAAS,EAAE,MAAM,CAAC;IAClB,MAAM,EAAE,GAAG,CAAC;IACZ,KAAK,EAAE,GAAG,CAAC;IACX,WAAW,EAAE,GAAG,CAAC;CAClB,CAAC"}

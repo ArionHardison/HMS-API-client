@@ -1,0 +1,1 @@
+{"version":3,"file":"ChatListAllRoomsResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ChatListAllRoomsResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,wBAAwB,GAAG;IACrC,EAAE,EAAE,MAAM,CAAC;IACX,SAAS,EAAE,GAAG,CAAC;IACf,OAAO,EAAE,GAAG,CAAC;IACb,MAAM,EAAE,GAAG,CAAC;IACZ,IAAI,EAAE,GAAG,CAAC;IACV,WAAW,EAAE,GAAG,CAAC;CAClB,CAAC"}

@@ -1,0 +1,34 @@
+export type ChainResource = {
+    id: number;
+    protocolId: number;
+    nodeComponent: any;
+    parentId: number;
+    data: any;
+    chainItemId: number;
+    moduleId: number;
+    moduleItemId: number;
+    isRecurring: any;
+    dynamic: any;
+    prompt: any;
+    reason: any;
+    recurringModuleId: number;
+    moduleRules: any;
+    name: any;
+    nextStepCondition: any;
+    previousTaskStatus: any;
+    rules: any;
+    target: any;
+    targetProvider: any;
+    multiWays: any;
+    timeBased: any;
+    scoreBased: any;
+    containItems: any;
+    selectedItemName: any;
+    moduleResource: any;
+    targetRole: any;
+    roleTargeted: any;
+    description: any;
+    type: any;
+    targetRoleTags: any;
+};
+//# sourceMappingURL=ChainResource.d.ts.map

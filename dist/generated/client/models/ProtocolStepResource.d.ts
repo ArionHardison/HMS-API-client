@@ -1,0 +1,33 @@
+export type ProtocolStepResource = {
+    is_attached: boolean;
+    is_attached_to: boolean;
+    round: any;
+    require_setup: any;
+    program_id: number;
+    program_name: any;
+    program_image: any;
+    is_personal: boolean;
+    required_time: any;
+    required_time_range: any;
+    author: any;
+    level: any;
+    frozen: any;
+    until: any;
+    id: number;
+    setup_started: any;
+    type: any;
+    required_role: any;
+    module: any;
+    module_item_id: number;
+    title: any;
+    reason: any;
+    desc: any;
+    status: any;
+    target: any;
+    started_at: string;
+    last_step_time: any;
+    auto_fail: any;
+    user: any;
+    authenticatedUser: any;
+};
+//# sourceMappingURL=ProtocolStepResource.d.ts.map

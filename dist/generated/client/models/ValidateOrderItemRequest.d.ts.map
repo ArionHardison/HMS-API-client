@@ -1,0 +1,1 @@
+{"version":3,"file":"ValidateOrderItemRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ValidateOrderItemRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,wBAAwB,GAAG;IACrC,GAAG,EAAE,MAAM,CAAC;IACZ,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;IACd,QAAQ,EAAE,MAAM,CAAC;CAClB,CAAC"}

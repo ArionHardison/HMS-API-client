@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateReferralRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/CreateReferralRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,qBAAqB,GAAG;IAClC,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,qBAAqB,CAAC,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;IACnC,aAAa,CAAC,EAAE,GAAG,CAAC;IACpB,gBAAgB,CAAC,EAAE,OAAO,CAAC;CAC5B,CAAC"}

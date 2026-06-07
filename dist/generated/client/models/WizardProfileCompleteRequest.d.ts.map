@@ -1,0 +1,1 @@
+{"version":3,"file":"WizardProfileCompleteRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/WizardProfileCompleteRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,4BAA4B,GAAG;IACzC,UAAU,EAAE,MAAM,CAAC;IACnB,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,GAAG,EAAE,MAAM,CAAC;CACb,CAAC"}

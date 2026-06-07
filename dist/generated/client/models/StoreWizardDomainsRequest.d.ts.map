@@ -1,0 +1,1 @@
+{"version":3,"file":"StoreWizardDomainsRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/StoreWizardDomainsRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,yBAAyB,GAAG;IACtC,QAAQ,CAAC,EAAE,GAAG,CAAC;IACf,OAAO,CAAC,EAAE,GAAG,CAAC;IACd,UAAU,CAAC,EAAE,GAAG,CAAC;IACjB,MAAM,EAAE,MAAM,CAAC;IACf,OAAO,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;CACrB,CAAC"}

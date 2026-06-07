@@ -1,0 +1,1 @@
+{"version":3,"file":"StoreSaleRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/StoreSaleRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,gBAAgB,GAAG;IAC7B,WAAW,CAAC,EAAE,GAAG,CAAC;IAClB,MAAM,EAAE,MAAM,CAAC;IACf,MAAM,EAAE,MAAM,CAAC,MAAM,EAAE,GAAG,CAAC,CAAC;CAC7B,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateSubCategoryRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateSubCategoryRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,wBAAwB,GAAG;IACrC,EAAE,EAAE,MAAM,CAAC;IACX,WAAW,EAAE,MAAM,CAAC;IACpB,iBAAiB,EAAE,MAAM,CAAC;IAC1B,wBAAwB,EAAE,MAAM,CAAC;CAClC,CAAC"}

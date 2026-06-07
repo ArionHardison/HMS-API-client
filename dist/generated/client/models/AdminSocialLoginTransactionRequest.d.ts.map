@@ -1,0 +1,1 @@
+{"version":3,"file":"AdminSocialLoginTransactionRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/AdminSocialLoginTransactionRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,kCAAkC,GAAG;IAC/C,MAAM,EAAE,MAAM,CAAC;IACf,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,YAAY,CAAC,EAAE,MAAM,CAAC;CACvB,CAAC"}

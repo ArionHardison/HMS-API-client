@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateServiceRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateServiceRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,oBAAoB,GAAG;IACjC,WAAW,EAAE,MAAM,CAAC;IACpB,YAAY,EAAE,MAAM,CAAC;IACrB,mBAAmB,EAAE,MAAM,CAAC;IAC5B,UAAU,EAAE,OAAO,CAAC;IACpB,aAAa,EAAE,MAAM,CAAC;IACtB,aAAa,EAAE,MAAM,CAAC;CACvB,CAAC"}

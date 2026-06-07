@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateUserItemRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/CreateUserItemRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,qBAAqB,GAAG;IAClC,IAAI,EAAE,MAAM,CAAC;IACb,SAAS,CAAC,EAAE,OAAO,CAAC;IACpB,gBAAgB,CAAC,EAAE,MAAM,CAAC;CAC3B,CAAC"}

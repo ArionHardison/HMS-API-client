@@ -1,0 +1,1 @@
+{"version":3,"file":"ETLProtocolIntegrationResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ETLProtocolIntegrationResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,8BAA8B,GAAG;IAC3C,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,GAAG,CAAC;IACV,WAAW,EAAE,GAAG,CAAC;IACjB,QAAQ,EAAE,GAAG,CAAC;IACd,MAAM,EAAE,GAAG,CAAC;CACb,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateAttendRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateAttendRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,mBAAmB,GAAG;IAChC,EAAE,EAAE,MAAM,CAAC;IACX,SAAS,EAAE,MAAM,CAAC;IAClB,WAAW,EAAE,MAAM,CAAC;CACrB,CAAC"}

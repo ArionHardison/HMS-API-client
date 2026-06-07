@@ -1,0 +1,1 @@
+{"version":3,"file":"LastChainResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/LastChainResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,iBAAiB,GAAG;IAC9B,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,GAAG,CAAC;IACV,MAAM,EAAE,GAAG,CAAC;IACZ,aAAa,EAAE,GAAG,CAAC;IACnB,aAAa,EAAE,GAAG,CAAC;IACnB,mBAAmB,EAAE,GAAG,CAAC;IACzB,KAAK,EAAE,GAAG,CAAC;CACZ,CAAC"}

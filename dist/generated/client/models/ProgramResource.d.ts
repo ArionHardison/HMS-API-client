@@ -1,0 +1,33 @@
+export type ProgramResource = {
+    id: number;
+    name: any;
+    description: any;
+    category_id: number;
+    sub_category_id: number;
+    protocol_id: number;
+    program_image: any;
+    category: any;
+    subCategory: any;
+    team: any;
+    protocol: any;
+    sale: any;
+    feedback_avg_rating: any;
+    ratings: any;
+    subscriptionSale: any;
+    tags: any;
+    access_type: any;
+    level: any;
+    modules: any;
+    price_signs: any;
+    required_time: any;
+    required_time_range: any;
+    created_at: string;
+    author: any;
+    subscribed: any;
+    purchase: any;
+    borken: any;
+    bookmarked: any;
+    balance: any;
+    attachedProtocols: any;
+};
+//# sourceMappingURL=ProgramResource.d.ts.map

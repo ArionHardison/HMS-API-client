@@ -1,0 +1,1 @@
+{"version":3,"file":"SubscribeResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/SubscribeResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,iBAAiB,GAAG;IAC9B,SAAS,EAAE,GAAG,CAAC;IACf,eAAe,EAAE,GAAG,CAAC;IACrB,OAAO,EAAE,MAAM,CAAC;IAChB,QAAQ,EAAE,GAAG,CAAC;IACd,YAAY,EAAE,GAAG,CAAC;IAClB,MAAM,EAAE,MAAM,CAAC;IACf,QAAQ,EAAE,GAAG,CAAC;CACf,CAAC"}

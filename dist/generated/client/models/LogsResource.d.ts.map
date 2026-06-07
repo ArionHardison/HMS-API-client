@@ -1,0 +1,1 @@
+{"version":3,"file":"LogsResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/LogsResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,YAAY,GAAG;IACzB,EAAE,EAAE,MAAM,CAAC;IACX,OAAO,EAAE,GAAG,CAAC;IACb,MAAM,EAAE,GAAG,CAAC;IACZ,QAAQ,EAAE,GAAG,CAAC;IACd,UAAU,EAAE,GAAG,CAAC;IAChB,aAAa,EAAE,MAAM,CAAC;IACtB,UAAU,EAAE,MAAM,CAAC;CACpB,CAAC"}

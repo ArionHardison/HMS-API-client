@@ -1,0 +1,1 @@
+{"version":3,"file":"SubprojectTeamResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/SubprojectTeamResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,sBAAsB,GAAG;IACnC,EAAE,EAAE,MAAM,CAAC;IACX,UAAU,EAAE,GAAG,CAAC;IAChB,QAAQ,EAAE,OAAO,CAAC;IAClB,KAAK,EAAE,GAAG,CAAC;IACX,OAAO,EAAE,GAAG,CAAC;IACb,WAAW,EAAE,GAAG,CAAC;CAClB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"UserSearchResultsResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UserSearchResultsResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,yBAAyB,GAAG;IACtC,EAAE,EAAE,MAAM,CAAC;IACX,QAAQ,EAAE,GAAG,CAAC;IACd,SAAS,EAAE,GAAG,CAAC;IACf,eAAe,EAAE,GAAG,CAAC;IACrB,OAAO,EAAE,GAAG,CAAC;CACd,CAAC"}

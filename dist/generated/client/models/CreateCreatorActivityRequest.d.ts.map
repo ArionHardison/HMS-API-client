@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateCreatorActivityRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/CreateCreatorActivityRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,4BAA4B,GAAG;IACzC,KAAK,EAAE,MAAM,CAAC;IACd,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,aAAa,EAAE,MAAM,CAAC;CACvB,CAAC"}

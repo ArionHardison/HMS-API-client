@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateBillingInformationRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateBillingInformationRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,+BAA+B,GAAG;IAC5C,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;IACb,OAAO,EAAE,MAAM,CAAC;IAChB,KAAK,EAAE,MAAM,CAAC;IACd,GAAG,CAAC,EAAE,GAAG,CAAC;CACX,CAAC"}

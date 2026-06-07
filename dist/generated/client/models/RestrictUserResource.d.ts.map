@@ -1,0 +1,1 @@
+{"version":3,"file":"RestrictUserResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/RestrictUserResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,oBAAoB,GAAG;IACjC,EAAE,EAAE,MAAM,CAAC;IACX,OAAO,EAAE,MAAM,CAAC;IAChB,QAAQ,EAAE,GAAG,CAAC;IACd,SAAS,EAAE,GAAG,CAAC;IACf,eAAe,EAAE,GAAG,CAAC;CACtB,CAAC"}

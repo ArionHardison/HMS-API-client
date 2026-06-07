@@ -1,0 +1,1 @@
+{"version":3,"file":"ChatMessagesResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ChatMessagesResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,oBAAoB,GAAG;IACjC,EAAE,EAAE,MAAM,CAAC;IACX,OAAO,EAAE,GAAG,CAAC;IACb,IAAI,EAAE,GAAG,CAAC;IACV,WAAW,EAAE,GAAG,CAAC;IACjB,UAAU,EAAE,MAAM,CAAC;CACpB,CAAC"}

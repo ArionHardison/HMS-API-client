@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateUIItemRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateUIItemRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,mBAAmB,GAAG;IAChC,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,CAAC,EAAE,MAAM,CAAC;CACtB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateFrontendRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateFrontendRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,qBAAqB,GAAG;IAClC,YAAY,EAAE,MAAM,CAAC;IACrB,yBAAyB,EAAE,MAAM,CAAC;IAClC,aAAa,EAAE,MAAM,CAAC;IACtB,mBAAmB,EAAE,MAAM,CAAC;IAC5B,WAAW,EAAE,MAAM,CAAC;IACpB,YAAY,CAAC,EAAE,MAAM,CAAC;CACvB,CAAC"}

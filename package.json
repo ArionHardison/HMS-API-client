@@ -17,6 +17,7 @@
     }
   },
   "scripts": {
+    "prepare": "[ -d node_modules/typescript ] && npm run build:lib || true",
     "build": "npm run build:lib && npm run build:vue",
     "build:lib": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc -p tsconfig.json",

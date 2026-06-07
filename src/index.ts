@@ -985,6 +985,32 @@ export type {
   IntakeStartResponse,
 } from './api/modules-intake-api-client';
 
+// Codify-domain client + types + Mermaid helper. Powers consumers that
+// render the domain → intent → deal-template → comments surface
+// (CI-MYC's /agent/:tld page being the first). dealTemplateToMermaid
+// emits a sequenceDiagram string consumed by any Mermaid-rendering
+// component.
+export { CodifyDomainApiClient } from './api/codify-domain-api-client';
+export type {
+  AgentComment,
+  CodifyDealTemplate,
+  CodifyIntent,
+  CodifyIntentParameter,
+  CreateCommentRequest,
+  CreateCommentResponse,
+  DealTemplateFinancialModel,
+  DealTemplatePipelineStep,
+  DealTemplateStakeholder,
+  DealTemplateSuccessCriterion,
+  DealTemplateSystem,
+  DomainAgentProfile,
+  DomainStakeholder,
+  IntentOutcomeRollup,
+  ListCommentsResponse,
+  ListIntentsResponse,
+} from './types/codify-domain';
+export { dealTemplateToMermaid } from './utils/deal-template-to-mermaid';
+
 // =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).

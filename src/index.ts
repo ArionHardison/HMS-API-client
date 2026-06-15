@@ -877,6 +877,77 @@ export type {
 } from './types/modules-coinbase';
 
 // -----------------------------------------------------------------------------
+// Phase 2 small-module slice clients (one client per Laravel module)
+// -----------------------------------------------------------------------------
+
+// H5i (i5h messaging protocol — deal runtime)
+export { H5iApiClient } from './api/h5i-api-client';
+export type {
+  H5iChannelResponse,
+  H5iMessage,
+  H5iMessageKind,
+  H5iMessagePriority,
+  H5iPublicBroadcastAuthRequest,
+  H5iPublicBroadcastAuthResponse,
+  H5iPublicMessagesResponse,
+  H5iSeedDemoResponse,
+  H5iShowMessageResponse,
+  InboxH5iMessageQuery,
+  InboxH5iMessageResponse,
+  StoreH5iMessageRequest,
+  StoreH5iMessageResponse,
+} from './api/h5i-api-client';
+
+// RLHF (CI-RLHF peer-service proxy)
+export { RlhfApiClient } from './api/rlhf-api-client';
+export type {
+  RlhfGradeRequest,
+  RlhfProxyResponse,
+  RlhfSubmissionRequest,
+} from './api/rlhf-api-client';
+
+// Fail (failure-recovery event log)
+export { FailApiClient } from './api/fail-api-client';
+export type {
+  FailEventResource,
+  FailEventShowResponse,
+  FailEventSummaryResponse,
+  FailEventsListResponse,
+  FailEventsQuery,
+  FailRecoveryActionResource,
+} from './api/fail-api-client';
+
+// Hitl (human-in-the-loop staffing / escalation)
+export { HitlApiClient } from './api/hitl-api-client';
+export type {
+  HitlDecision,
+  HitlRequestedRequest,
+  HitlRequestedResponse,
+  HitlResumeRequest,
+  HitlResumeResponse,
+} from './api/hitl-api-client';
+
+// Hrm (codify-careers HRM relay)
+export { HrmApiClient } from './api/hrm-api-client';
+export type { HrmRelayRequest, HrmRelayResponse } from './api/hrm-api-client';
+
+// Lms (Teachify grading webhook)
+export { LmsApiClient } from './api/lms-api-client';
+export type { LmsGradingResponse, StoreLmsGradingRequest } from './api/lms-api-client';
+
+// Facilities (CriticalAsset venue / location proxy)
+export { FacilitiesApiClient } from './api/facilities-api-client';
+export type {
+  FacilitiesPortfolioRollupResponse,
+  FacilitiesRollupCell,
+  FacilitiesRollupRow,
+  FacilitiesSystemGroup,
+  FacilitiesThemeSignal,
+  FacilitiesThemeSignalsResponse,
+  FacilitiesThemeTimeSeriesBucket,
+} from './api/facilities-api-client';
+
+// -----------------------------------------------------------------------------
 // Gap-fill slice clients (Round 3 follow-up)
 // -----------------------------------------------------------------------------
 

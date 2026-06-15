@@ -100,6 +100,44 @@ export type {
 } from './api/wizard-api-client';
 
 // =============================================================================
+// Deal Runtime Wizard client — route-accurate fetch-based companion covering
+// the 17 `/api/wizard/deal/*` routes (define → verify). Preferred over the
+// legacy `WizardApiClient` for new consumers.
+// =============================================================================
+export { DealWizardApiClient } from './api/deal-wizard-api-client';
+export type {
+  ComputeDepositAmountCents,
+  ComputeDepositRequest,
+  ComputeDepositResponse,
+  DealApplicantType,
+  DealBudgetTier,
+  DealEvent,
+  DealEventsQuery,
+  DealEventsResponse,
+  DealFileResource,
+  DealFileType,
+  DealFinancing,
+  DealMutationResponse,
+  DealPathTier,
+  DealProblem,
+  DealRequiredInfoEntry,
+  DealResource,
+  DealSolution,
+  DealStakeholder,
+  DefineDealRequest,
+  MissingRequiredInfoError,
+  MissingWizardDataError,
+  PatchDetailsRequest,
+  PatchMetadataRequest,
+  PatchPathRequest,
+  RequiredInfoRequest,
+  SelectSolutionRequest,
+  SolutionGenerationError,
+  UploadFileRequest,
+  VerifyOutcomeResponse,
+} from './api/deal-wizard-api-client';
+
+// =============================================================================
 // Error handling — `ApiError` is a class; `processApiError` etc. are helpers.
 // =============================================================================
 export {

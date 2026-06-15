@@ -105,6 +105,14 @@ export interface ApiRequestOptions {
   validateStatus?: (status: number) => boolean;
   /** AbortSignal for cancellation. */
   signal?: AbortSignal;
+  /**
+   * Extra request headers merged on top of the default + method-derived
+   * headers (the call's own header wins on collision). The primary use is
+   * the `Idempotency-Key` header that the P2X write endpoints expect on
+   * POST/PUT/PATCH so retries are safe. Purely additive — callers that
+   * omit it keep the legacy behavior.
+   */
+  headers?: Record<string, string>;
 }
 
 
@@ -266,9 +274,12 @@ export class BaseApiClient {
     }
 
     // ---- Header assembly --------------------------------------------------
+    // Per-call `opts.headers` (e.g. Idempotency-Key) win over both the
+    // default headers and any method-derived `init.headers`.
     const headers: Record<string, string> = {
       ...this.defaultHeaders,
       ...((init.headers as Record<string, string>) || {}),
+      ...(opts.headers || {}),
     };
 
     // Authorization (unless explicitly opted out).

@@ -1049,6 +1049,69 @@ export type {
 } from './types/codify-domain';
 export { dealTemplateToMermaid } from './utils/deal-template-to-mermaid';
 
+// Codify (codification surface) client — the admin HITL CRUD/approval
+// workflow + public list/kind-render/lookup helpers that the public-read
+// `CodifyDomainApiClient` does not cover. Distinct class name to avoid the
+// existing `CodifyDomainApiClient` collision.
+export { CodifyApiClient } from './api/codify-api-client';
+export type {
+  AdminCodifyDomain,
+  AdminCodifyDomainQuery,
+  AdminCodifyIntent,
+  AdminCodifyIntentQuery,
+  AdminListCodifyDomainsResponse,
+  AdminListCodifyIntentsResponse,
+  BulkStoreDealTemplateEntry,
+  BulkStoreDealTemplatesRequest,
+  BulkStoreIntentEntry,
+  BulkStoreIntentsRequest,
+  BulkStoreResponse,
+  CodifyDomainListItem,
+  CodifyDomainShape,
+  CodifyStatus,
+  CreateCodifyDomainRequest,
+  KindRenderQuery,
+  KindRenderResponse,
+  ListCodifyDomainsResponse,
+  LookupQuery,
+  LookupResponse,
+  LookupResponseMeta,
+  LookupResult,
+  UpdateCodifyDomainRequest,
+  UpdateCodifyIntentRequest,
+} from './types/codify';
+
+// Integrations (subproject federation) client — the machine-to-machine glue
+// IBD/PHM/MOB/NIO + codify-careers HRM use to write events into P2X. Writes
+// carry the subproject:writer ability + an Idempotency-Key; the two token-
+// mint endpoints (nioFirebaseLogin, mobGuestRegister) are unauthenticated.
+export { IntegrationsApiClient } from './api/integrations-api-client';
+export type {
+  CareersUserUpsertRequest,
+  CareersUserUpsertResponse,
+  EventLogAcceptedResponse,
+  IbdApplicationRequest,
+  IbdKpiEventRequest,
+  IssuedToken,
+  MobActivityLocationBatchRequest,
+  MobActivityPoint,
+  MobGuestRegisterRequest,
+  MobGuestRegisterResponse,
+  MobGuestUser,
+  MobRunCompleteRequest,
+  NioAssessmentResponseRequest,
+  NioCoinGrantRequest,
+  NioCoinSpendRequest,
+  NioCoinTransactionResponse,
+  NioFirebaseLoginRequest,
+  NioFirebaseLoginResponse,
+  NioFirebaseUser,
+  NioOrderRequest,
+  NioOrderSource,
+  UserUpsertRequest as IntegrationsUserUpsertRequest,
+  UserUpsertResponse,
+} from './types/integrations';
+
 // =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).

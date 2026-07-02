@@ -6,6 +6,14 @@
  */
 import { AxiosInstance, AxiosResponse } from 'axios';
 /**
+ * Decide whether a failed request may be retried. Only idempotent methods
+ * (GET/HEAD/OPTIONS/DELETE/PUT) are retried automatically; non-idempotent
+ * POST/PATCH are retried ONLY when the caller supplied an `Idempotency-Key`,
+ * so a create/charge is never silently duplicated. A `status` of `undefined`
+ * means a network error (no response).
+ */
+export declare function isRetryableRequest(method: string | undefined, status: number | undefined, hasIdempotencyKey: boolean): boolean;
+/**
  * Base API response structure
  */
 export interface ApiResponse<T = any> {
@@ -1012,6 +1020,8 @@ export declare class BaseApiClient {
     protected readonly client: AxiosInstance;
     protected readonly config: ApiClientConfig;
     constructor(config: ApiClientConfig);
+    /** Logging is honored only when explicitly enabled AND not in production. */
+    private get loggingEnabled();
     /**
      * Setup request and response interceptors
      */

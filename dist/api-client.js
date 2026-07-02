@@ -30,6 +30,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createApiClient = exports.AuthApiClient = exports.ItemsApiClient = exports.ItemStatus = exports.BaseApiClient = void 0;
 const error_handling_1 = require("./api/error-handling");
+const url_safety_1 = require("./api/url-safety");
 // =============================================================================
 // BaseApiClient
 // =============================================================================
@@ -64,6 +65,9 @@ function resolveDefaultBaseURL() {
 }
 class BaseApiClient {
     constructor(config) {
+        // Refuse a cleartext non-local baseURL (token would travel over http).
+        // String-only check — touches no browser globals, so SSR-safe.
+        (0, url_safety_1.assertSecureBaseURL)(config.baseURL);
         this.config = config;
         // Stored verbatim — empty/undefined means "resolve per-request" (see
         // `resolveDefaultBaseURL`). We do NOT eager-resolve here because the
@@ -176,9 +180,12 @@ class BaseApiClient {
             method = 'POST';
         }
         // ---- Header assembly --------------------------------------------------
+        // Per-call `opts.headers` (e.g. Idempotency-Key) win over both the
+        // default headers and any method-derived `init.headers`.
         const headers = {
             ...this.defaultHeaders,
             ...(init.headers || {}),
+            ...(opts.headers || {}),
         };
         // Authorization (unless explicitly opted out).
         if (opts.auth !== false) {

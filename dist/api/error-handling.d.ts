@@ -100,6 +100,12 @@ export declare class ApiError extends Error {
      * Get simplified validation errors as a Record of field to first error message
      */
     getSimplifiedValidationErrors(): Record<string, string>;
+    /**
+     * Serialization guard: `JSON.stringify(apiError)` and most error reporters
+     * will only ever see these safe fields — never `originalError` or any request
+     * headers — so an accidental serialize cannot leak the bearer token.
+     */
+    toJSON(): Record<string, unknown>;
 }
 /**
  * Process an error and convert it to an ApiError if possible

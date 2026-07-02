@@ -26,6 +26,12 @@ UserApiClient, TeamApiClient, ProgramsApiClient, ProtocolApiClient, KPIApiClient
 // =============================================================================
 export { WizardApiClient, WizardStepExecutor, wizardSteps, wizardApiClient } from './api/wizard-api-client';
 // =============================================================================
+// Deal Runtime Wizard client — route-accurate fetch-based companion covering
+// the 17 `/api/wizard/deal/*` routes (define → verify). Preferred over the
+// legacy `WizardApiClient` for new consumers.
+// =============================================================================
+export { DealWizardApiClient } from './api/deal-wizard-api-client';
+// =============================================================================
 // Error handling — `ApiError` is a class; `processApiError` etc. are helpers.
 // =============================================================================
 export { ApiError, processApiError, handleApiCall, createFormErrors, getErrorMessage, } from './api/error-handling';
@@ -141,6 +147,23 @@ export { NudgeModuleApiClient } from './api/modules-nudge-api-client';
 // and pass `{ auth: false }` per-call; see client header for details).
 export { CoinbaseModuleApiClient } from './api/modules-coinbase-api-client';
 // -----------------------------------------------------------------------------
+// Phase 2 small-module slice clients (one client per Laravel module)
+// -----------------------------------------------------------------------------
+// H5i (i5h messaging protocol — deal runtime)
+export { H5iApiClient } from './api/h5i-api-client';
+// RLHF (CI-RLHF peer-service proxy)
+export { RlhfApiClient } from './api/rlhf-api-client';
+// Fail (failure-recovery event log)
+export { FailApiClient } from './api/fail-api-client';
+// Hitl (human-in-the-loop staffing / escalation)
+export { HitlApiClient } from './api/hitl-api-client';
+// Hrm (codify-careers HRM relay)
+export { HrmApiClient } from './api/hrm-api-client';
+// Lms (Teachify grading webhook)
+export { LmsApiClient } from './api/lms-api-client';
+// Facilities (CriticalAsset venue / location proxy)
+export { FacilitiesApiClient } from './api/facilities-api-client';
+// -----------------------------------------------------------------------------
 // Gap-fill slice clients (Round 3 follow-up)
 // -----------------------------------------------------------------------------
 // chain
@@ -169,6 +192,16 @@ export { IntakeModuleApiClient } from './api/modules-intake-api-client';
 // component.
 export { CodifyDomainApiClient } from './api/codify-domain-api-client';
 export { dealTemplateToMermaid } from './utils/deal-template-to-mermaid';
+// Codify (codification surface) client — the admin HITL CRUD/approval
+// workflow + public list/kind-render/lookup helpers that the public-read
+// `CodifyDomainApiClient` does not cover. Distinct class name to avoid the
+// existing `CodifyDomainApiClient` collision.
+export { CodifyApiClient } from './api/codify-api-client';
+// Integrations (subproject federation) client — the machine-to-machine glue
+// IBD/PHM/MOB/NIO + codify-careers HRM use to write events into P2X. Writes
+// carry the subproject:writer ability + an Idempotency-Key; the two token-
+// mint endpoints (nioFirebaseLogin, mobGuestRegister) are unauthenticated.
+export { IntegrationsApiClient } from './api/integrations-api-client';
 // =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).

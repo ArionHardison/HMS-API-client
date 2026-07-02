@@ -52,7 +52,17 @@ export class ApiError extends Error {
         this.name = 'ApiError';
         if (isAxios) {
             const err = input;
-            this.originalError = err;
+            // Do NOT retain the live AxiosError: its `config.headers` holds the
+            // `Authorization: Bearer <token>` and response headers can carry
+            // Set-Cookie. Keep only a sanitized, serialization-safe snapshot so
+            // JSON.stringify / error reporters cannot exfiltrate credentials.
+            this.originalError = {
+                status: err.response?.status,
+                statusText: err.response?.statusText,
+                url: err.config?.url,
+                method: err.config?.method,
+                data: err.response?.data,
+            };
             this.status = err.response?.status || 0;
             this.data = err.response?.data?.data;
             // Extract validation errors. Two shapes seen in the wild:
@@ -143,6 +153,19 @@ export class ApiError extends Error {
             }
             return result;
         }, {});
+    }
+    /**
+     * Serialization guard: `JSON.stringify(apiError)` and most error reporters
+     * will only ever see these safe fields — never `originalError` or any request
+     * headers — so an accidental serialize cannot leak the bearer token.
+     */
+    toJSON() {
+        return {
+            name: this.name,
+            message: this.message,
+            status: this.status,
+            validationErrors: this.validationErrors,
+        };
     }
 }
 /**

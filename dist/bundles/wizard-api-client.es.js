@@ -1,22 +1,28 @@
-import D from "axios";
-function x(s) {
-  if (!s || typeof s != "object") return !1;
-  const e = s;
+import O from "axios";
+function J(r) {
+  if (!r || typeof r != "object") return !1;
+  const e = r;
   return e.isAxiosError === !0 ? !0 : (typeof e.status == "number" && !e.response, !1);
 }
-class k extends Error {
+class z extends Error {
   /**
    * Create a new ApiError. Accepts either an AxiosError (legacy) or a
    * normalized init object (modern fetch path).
    */
   constructor(e) {
-    var r, o, i, c, p, g, C, S, w, P, $;
-    const t = x(e), n = t ? ((o = (r = e.response) == null ? void 0 : r.data) == null ? void 0 : o.message) || e.message || "Unknown API error" : e.message || "Unknown API error";
+    var s, o, i, p, l, u, g, $, U, w, b, E, y, f, T, N;
+    const t = J(e), n = t ? ((o = (s = e.response) == null ? void 0 : s.data) == null ? void 0 : o.message) || e.message || "Unknown API error" : e.message || "Unknown API error";
     if (super(n), this.isApiError = !0, this.name = "ApiError", t) {
       const m = e;
-      this.originalError = m, this.status = ((i = m.response) == null ? void 0 : i.status) || 0, this.data = (p = (c = m.response) == null ? void 0 : c.data) == null ? void 0 : p.data;
-      const y = (S = (C = (g = m.response) == null ? void 0 : g.data) == null ? void 0 : C.data) == null ? void 0 : S.errors, f = (P = (w = m.response) == null ? void 0 : w.data) == null ? void 0 : P.errors, b = y ?? f;
-      (($ = m.response) == null ? void 0 : $.status) === 422 && b && (this.errors = b, this.validationErrors = b);
+      this.originalError = {
+        status: (i = m.response) == null ? void 0 : i.status,
+        statusText: (p = m.response) == null ? void 0 : p.statusText,
+        url: (l = m.config) == null ? void 0 : l.url,
+        method: (u = m.config) == null ? void 0 : u.method,
+        data: (g = m.response) == null ? void 0 : g.data
+      }, this.status = (($ = m.response) == null ? void 0 : $.status) || 0, this.data = (w = (U = m.response) == null ? void 0 : U.data) == null ? void 0 : w.data;
+      const q = (y = (E = (b = m.response) == null ? void 0 : b.data) == null ? void 0 : E.data) == null ? void 0 : y.errors, H = (T = (f = m.response) == null ? void 0 : f.data) == null ? void 0 : T.errors, F = q ?? H;
+      ((N = m.response) == null ? void 0 : N.status) === 422 && F && (this.errors = F, this.validationErrors = F);
     } else {
       const m = e;
       this.originalError = m.originalError ?? m, this.status = m.status ?? 0, this.data = m.data, m.validationErrors && (this.errors = m.validationErrors, this.validationErrors = m.validationErrors);
@@ -79,28 +85,41 @@ class k extends Error {
   getSimplifiedValidationErrors() {
     return this.errors ? Object.entries(this.errors).reduce((e, [t, n]) => (n && n.length > 0 && (e[t] = n[0]), e), {}) : {};
   }
+  /**
+   * Serialization guard: `JSON.stringify(apiError)` and most error reporters
+   * will only ever see these safe fields — never `originalError` or any request
+   * headers — so an accidental serialize cannot leak the bearer token.
+   */
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      status: this.status,
+      validationErrors: this.validationErrors
+    };
+  }
 }
-function E(s) {
-  return s && s.isApiError ? s : s && s.isAxiosError ? new k(s) : new k({
+function M(r) {
+  return r && r.isApiError ? r : r && r.isAxiosError ? new z(r) : new z({
     status: 0,
-    message: (s == null ? void 0 : s.message) ?? "Unknown error",
-    originalError: s
+    message: (r == null ? void 0 : r.message) ?? "Unknown error",
+    originalError: r
   });
 }
-async function ge(s, e) {
+async function Fe(r, e) {
   try {
-    return await s();
+    return await r();
   } catch (t) {
-    const n = E(t);
+    const n = M(t);
     throw e && e(n), n;
   }
 }
-function de(s) {
-  const e = E(s);
+function Le(r) {
+  const e = M(r);
   return e.isValidationError() ? e.getSimplifiedValidationErrors() : {};
 }
-function he(s) {
-  const e = E(s);
+function ze(r) {
+  const e = M(r);
   if (e.isAuthError())
     return "Your session has expired. Please log in again.";
   if (e.isForbiddenError())
@@ -112,19 +131,36 @@ function he(s) {
   if (e.isValidationError()) {
     const t = e.getValidationErrors();
     return `Validation errors:
-${Object.entries(t).map(([r, o]) => `${r}: ${o.join(", ")}`).join(`
+${Object.entries(t).map(([s, o]) => `${s}: ${o.join(", ")}`).join(`
 `)}`;
   }
   return e.message;
 }
-function L() {
-  var t;
-  const s = globalThis.window, e = (t = s == null ? void 0 : s.location) == null ? void 0 : t.origin;
-  return typeof e == "string" && e.length > 0 ? e : "https://codify.inc";
+function Q(r) {
+  const e = r.toLowerCase().replace(/^\[|\]$/g, "");
+  return !!(e === "localhost" || e === "127.0.0.1" || e === "0.0.0.0" || e === "::1" || e.endsWith(".local") || e.endsWith(".localhost") || /^10\./.test(e) || /^192\.168\./.test(e) || /^172\.(1[6-9]|2\d|3[01])\./.test(e));
 }
-let l = class {
+function G(r) {
+  if (!r) return;
+  let e;
+  try {
+    e = new URL(r);
+  } catch {
+    return;
+  }
+  if (e.protocol === "http:" && !Q(e.hostname))
+    throw new Error(
+      `[wizard-api-client] Refusing to use insecure baseURL "${r}": a bearer token would be sent over cleartext HTTP. Use https:// (local hosts such as localhost/127.0.0.1/*.local are exempt).`
+    );
+}
+function K() {
+  var t;
+  const r = globalThis.window, e = (t = r == null ? void 0 : r.location) == null ? void 0 : t.origin;
+  return typeof e == "string" && e.length > 0 ? e : "https://api.project20x.com";
+}
+let c = class {
   constructor(e) {
-    this.config = e, this.baseURL = e.baseURL ?? "", this.timeout = e.timeout || 3e4, this.withCredentials = e.withCredentials || !1, this.defaultHeaders = {
+    G(e.baseURL), this.config = e, this.baseURL = e.baseURL ?? "", this.timeout = e.timeout || 3e4, this.withCredentials = e.withCredentials || !1, this.defaultHeaders = {
       "Content-Type": "application/json",
       Accept: "application/json",
       ...e.headers
@@ -163,29 +199,29 @@ let l = class {
    * `field[0][nested]=value` bracket notation. Booleans become `'1'`/`'0'`.
    */
   toFormData(e) {
-    const t = new FormData(), n = (r, o) => {
+    const t = new FormData(), n = (s, o) => {
       if (o != null) {
         if (o instanceof Blob) {
-          t.append(r, o);
+          t.append(s, o);
           return;
         }
         if (Array.isArray(o)) {
-          o.forEach((i, c) => n(`${r}[${c}]`, i));
+          o.forEach((i, p) => n(`${s}[${p}]`, i));
           return;
         }
         if (typeof o == "object") {
-          for (const [i, c] of Object.entries(o))
-            n(`${r}[${i}]`, c);
+          for (const [i, p] of Object.entries(o))
+            n(`${s}[${i}]`, p);
           return;
         }
         if (typeof o == "boolean") {
-          t.append(r, o ? "1" : "0");
+          t.append(s, o ? "1" : "0");
           return;
         }
-        t.append(r, String(o));
+        t.append(s, String(o));
       }
     };
-    for (const [r, o] of Object.entries(e)) n(r, o);
+    for (const [s, o] of Object.entries(e)) n(s, o);
     return t;
   }
   /**
@@ -196,55 +232,56 @@ let l = class {
    * etc. through if they need to.
    */
   async request(e, t = {}, n = {}) {
-    let o = `${this.baseURL || L()}${e}`, i = (t.method || "GET").toUpperCase(), c = t.body;
+    let o = `${this.baseURL || K()}${e}`, i = (t.method || "GET").toUpperCase(), p = t.body;
     if (i === "PUT" || i === "PATCH") {
       const f = o.includes("?") ? "&" : "?";
       o = `${o}${f}_method=${i}`, i = "POST";
     }
-    const p = {
+    const l = {
       ...this.defaultHeaders,
-      ...t.headers || {}
+      ...t.headers || {},
+      ...n.headers || {}
     };
     if (n.auth !== !1) {
       const f = this.resolveToken();
-      f && (p.Authorization = `Bearer ${f}`);
+      f && (l.Authorization = `Bearer ${f}`);
     }
-    const g = this.resolveDomain();
-    g && (p["X-Domain"] = g), c instanceof FormData && delete p["Content-Type"];
-    const C = new AbortController(), S = setTimeout(() => C.abort(), this.timeout);
-    n.signal && (n.signal.aborted ? C.abort() : n.signal.addEventListener("abort", () => C.abort(), { once: !0 }));
-    const w = this.config.fetch ?? fetch, P = n.validateStatus ?? ((f) => f >= 200 && f < 300);
-    let $;
+    const u = this.resolveDomain();
+    u && (l["X-Domain"] = u), p instanceof FormData && delete l["Content-Type"];
+    const g = new AbortController(), $ = setTimeout(() => g.abort(), this.timeout);
+    n.signal && (n.signal.aborted ? g.abort() : n.signal.addEventListener("abort", () => g.abort(), { once: !0 }));
+    const U = this.config.fetch ?? fetch, w = n.validateStatus ?? ((f) => f >= 200 && f < 300);
+    let b;
     try {
-      $ = await w(o, {
+      b = await U(o, {
         ...t,
         method: i,
-        headers: p,
-        body: c,
+        headers: l,
+        body: p,
         credentials: this.withCredentials ? "include" : "omit",
-        signal: C.signal
+        signal: g.signal
       });
     } catch (f) {
-      if (clearTimeout(S), n.safe)
+      if (clearTimeout($), n.safe)
         return null;
       throw f;
     }
-    clearTimeout(S);
-    const m = $.headers.get("content-type") ?? "";
+    clearTimeout($);
+    const E = b.headers.get("content-type") ?? "";
     let y = null;
-    if (m.includes("application/json"))
+    if (E.includes("application/json"))
       try {
-        y = await $.json();
+        y = await b.json();
       } catch {
         y = null;
       }
     else
       try {
-        y = await $.text();
+        y = await b.text();
       } catch {
         y = null;
       }
-    if ($.status === 401) {
+    if (b.status === 401) {
       if (this.config.onUnauthorized)
         this.config.onUnauthorized();
       else if (typeof window < "u" && typeof window.dispatchEvent == "function")
@@ -253,18 +290,18 @@ let l = class {
         } catch {
         }
     }
-    if ($.status === 422) {
+    if (b.status === 422) {
       const f = this.extractValidationErrors(y);
       f && this.config.onValidationError && this.config.onValidationError(f);
     }
-    if (!P($.status)) {
-      const f = y && typeof y == "object" && y.message || `HTTP error ${$.status}`, b = this.extractValidationErrors(y);
-      throw new k({
-        status: $.status,
+    if (!w(b.status)) {
+      const f = y && typeof y == "object" && y.message || `HTTP error ${b.status}`, T = this.extractValidationErrors(y);
+      throw new z({
+        status: b.status,
         message: f,
         data: y && typeof y == "object" ? y.data : y,
-        validationErrors: b,
-        originalError: $
+        validationErrors: T,
+        originalError: b
       });
     }
     return y;
@@ -273,8 +310,8 @@ let l = class {
   extractValidationErrors(e) {
     var o;
     if (!e || typeof e != "object") return;
-    const t = (o = e == null ? void 0 : e.data) == null ? void 0 : o.errors, n = e == null ? void 0 : e.errors, r = t ?? n;
-    if (r && typeof r == "object") return r;
+    const t = (o = e == null ? void 0 : e.data) == null ? void 0 : o.errors, n = e == null ? void 0 : e.errors, s = t ?? n;
+    if (s && typeof s == "object") return s;
   }
   /**
    * Build the request body + headers based on the supplied data. Used by
@@ -288,32 +325,32 @@ let l = class {
   // backward-compatible with the original fetch client.
   // ---------------------------------------------------------------------------
   async get(e, t, n) {
-    let r = e;
+    let s = e;
     if (t) {
       const o = new URLSearchParams();
-      for (const [c, p] of Object.entries(t))
-        p != null && o.append(c, String(p));
+      for (const [p, l] of Object.entries(t))
+        l != null && o.append(p, String(l));
       const i = o.toString();
-      i && (r += (r.includes("?") ? "&" : "?") + i);
+      i && (s += (s.includes("?") ? "&" : "?") + i);
     }
-    return this.request(r, { method: "GET" }, n);
+    return this.request(s, { method: "GET" }, n);
   }
   async post(e, t, n) {
-    const { body: r } = this.serializeBody(t);
-    return this.request(e, { method: "POST", body: r }, n);
+    const { body: s } = this.serializeBody(t);
+    return this.request(e, { method: "POST", body: s }, n);
   }
   async put(e, t, n) {
-    const { body: r } = this.serializeBody(t);
-    return this.request(e, { method: "PUT", body: r }, n);
+    const { body: s } = this.serializeBody(t);
+    return this.request(e, { method: "PUT", body: s }, n);
   }
   async patch(e, t, n) {
-    const { body: r } = this.serializeBody(t);
-    return this.request(e, { method: "PATCH", body: r }, n);
+    const { body: s } = this.serializeBody(t);
+    return this.request(e, { method: "PATCH", body: s }, n);
   }
   async delete(e, t) {
     return this.request(e, { method: "DELETE" }, t);
   }
-}, z = class extends l {
+}, Y = class extends c {
   async getItems(e) {
     return this.get("/items", e);
   }
@@ -329,7 +366,7 @@ let l = class {
   async deleteItem(e) {
     return this.delete(`/items/${e}`);
   }
-}, M = class extends l {
+}, X = class extends c {
   async login(e) {
     const t = await this.post("/auth/login", e);
     if (t.success && t.data.token && typeof window < "u" && typeof localStorage < "u")
@@ -369,16 +406,55 @@ let l = class {
     }
   }
 };
-function Ce(s) {
+function Be(r) {
   return {
-    items: new z(s),
-    auth: new M(s)
+    items: new Y(r),
+    auth: new X(r)
   };
 }
-var T = /* @__PURE__ */ ((s) => (s.ACTIVE = "active", s.INACTIVE = "inactive", s.PENDING = "pending", s.DELETED = "deleted", s))(T || {});
-class d {
+function Z(r, e, t) {
+  const n = ["get", "head", "options", "delete", "put"].includes((r || "").toLowerCase());
+  return (e === void 0 || e >= 500) && (n || t);
+}
+var _ = /* @__PURE__ */ ((r) => (r.ACTIVE = "active", r.INACTIVE = "inactive", r.PENDING = "pending", r.DELETED = "deleted", r))(_ || {});
+const ee = ["authorization", "cookie", "set-cookie", "x-tenant-id"], te = [
+  "password",
+  "password_confirmation",
+  "current_password",
+  "token",
+  "access_token",
+  "refresh_token",
+  "secret",
+  "client_secret",
+  "api_key"
+];
+function ne() {
+  try {
+    return typeof process < "u" && !!process.env && process.env.NODE_ENV === "production";
+  } catch {
+    return !1;
+  }
+}
+function re(r) {
+  if (!r || typeof r != "object") return r;
+  const e = {};
+  for (const [t, n] of Object.entries(r))
+    e[t] = ee.includes(t.toLowerCase()) ? "[redacted]" : n;
+  return e;
+}
+function k(r, e = 0) {
+  if (e > 4 || !r || typeof r != "object") return r;
+  const t = Object.getPrototypeOf(r);
+  if (!Array.isArray(r) && t !== Object.prototype && t !== null) return "[object]";
+  if (Array.isArray(r)) return r.map((s) => k(s, e + 1));
+  const n = {};
+  for (const [s, o] of Object.entries(r))
+    n[s] = te.includes(s.toLowerCase()) ? "[redacted]" : k(o, e + 1);
+  return n;
+}
+class h {
   constructor(e) {
-    this.config = e, this.client = D.create({
+    G(e.baseURL), this.config = e, this.client = O.create({
       baseURL: e.baseURL,
       timeout: e.timeout || 3e4,
       withCredentials: e.withCredentials || !1,
@@ -389,6 +465,10 @@ class d {
       }
     }), this.setupInterceptors();
   }
+  /** Logging is honored only when explicitly enabled AND not in production. */
+  get loggingEnabled() {
+    return !!this.config.enableLogging && !ne();
+  }
   /**
    * Setup request and response interceptors
    */
@@ -396,24 +476,24 @@ class d {
     this.client.interceptors.request.use(
       (e) => {
         var n;
-        const t = localStorage.getItem("auth_token");
-        return t && (e.headers.Authorization = `Bearer ${t}`), this.config.tenantId && (e.headers["X-Tenant-ID"] = this.config.tenantId), this.config.environment && (e.headers["X-Client-Environment"] = this.config.environment), this.config.enableLogging && console.log(`[HMS API] ${(n = e.method) == null ? void 0 : n.toUpperCase()} ${e.url}`, {
-          headers: e.headers,
-          data: e.data
+        const t = typeof localStorage < "u" ? localStorage.getItem("auth_token") : null;
+        return t && (e.headers.Authorization = `Bearer ${t}`), this.config.tenantId && (e.headers["X-Tenant-ID"] = this.config.tenantId), this.config.environment && (e.headers["X-Client-Environment"] = this.config.environment), this.loggingEnabled && console.log(`[HMS API] ${(n = e.method) == null ? void 0 : n.toUpperCase()} ${e.url}`, {
+          headers: re(e.headers),
+          data: k(e.data)
         }), e;
       },
       (e) => Promise.reject(e)
     ), this.client.interceptors.response.use(
-      (e) => (this.config.enableLogging && console.log("[HMS API] Response:", {
+      (e) => (this.loggingEnabled && console.log("[HMS API] Response:", {
         status: e.status,
-        data: e.data
+        data: k(e.data)
       }), e),
       async (e) => {
-        var t, n, r;
-        return ((t = e.response) == null ? void 0 : t.status) === 401 && typeof window < "u" && window.dispatchEvent(new CustomEvent("auth:unauthorized")), this.config.enableRetry && this.shouldRetry(e) ? this.retryRequest(e) : (this.config.enableLogging && console.error("[HMS API] Error:", {
+        var t, n, s;
+        return ((t = e.response) == null ? void 0 : t.status) === 401 && typeof window < "u" && window.dispatchEvent(new CustomEvent("auth:unauthorized")), this.config.enableRetry && this.shouldRetry(e) ? this.retryRequest(e) : (this.loggingEnabled && console.error("[HMS API] Error:", {
           status: (n = e.response) == null ? void 0 : n.status,
           message: e.message,
-          data: (r = e.response) == null ? void 0 : r.data
+          data: k((s = e.response) == null ? void 0 : s.data)
         }), Promise.reject(e));
       }
     );
@@ -422,7 +502,11 @@ class d {
    * Determine if a request should be retried
    */
   shouldRetry(e) {
-    return !e.config || e.config._retryCount >= (this.config.maxRetries || 3) ? !1 : !e.response || e.response.status >= 500;
+    var s;
+    if (!e.config || e.config._retryCount >= (this.config.maxRetries || 3))
+      return !1;
+    const t = e.config.headers || {}, n = !!(t["Idempotency-Key"] || t["idempotency-key"]);
+    return Z(e.config.method, (s = e.response) == null ? void 0 : s.status, n);
   }
   /**
    * Retry a failed request with exponential backoff
@@ -431,10 +515,10 @@ class d {
     const t = e.config;
     t._retryCount = t._retryCount || 0, t._retryCount++;
     const n = Math.pow(2, t._retryCount) * 1e3;
-    return await new Promise((r) => setTimeout(r, n)), this.client(t);
+    return await new Promise((s) => setTimeout(s, n)), this.client(t);
   }
 }
-class _ extends d {
+class se extends h {
   /**
    * Login with email and password
    * @param data - Login credentials
@@ -489,7 +573,7 @@ class _ extends d {
     return !!localStorage.getItem("auth_token");
   }
 }
-class B extends d {
+class oe extends h {
   /**
    * Update user profile
    * @param userId - User ID
@@ -519,11 +603,11 @@ class B extends d {
    * @param newPassword - New password
    * @param newPasswordConfirmation - New password confirmation
    */
-  async updatePassword(e, t, n, r) {
+  async updatePassword(e, t, n, s) {
     return this.client.patch(`/users/update-password/${e}`, {
       current_password: t,
       password: n,
-      password_confirmation: r
+      password_confirmation: s
     });
   }
   /**
@@ -587,7 +671,7 @@ class B extends d {
     return this.client.get("/user/get-wallet");
   }
 }
-class N extends d {
+class ie extends h {
   /**
    * Get all team members
    */
@@ -679,7 +763,7 @@ class N extends d {
     return this.client.delete(`/public/team/reject-invite/${e}`);
   }
 }
-class q extends d {
+class ae extends h {
   /**
    * Get all items
    * @param params - Query parameters
@@ -766,7 +850,7 @@ class q extends d {
     return this.client.delete(`/collection-item/${e}`);
   }
 }
-class W extends d {
+class ce extends h {
   /**
    * Get featured programs
    */
@@ -835,7 +919,7 @@ class W extends d {
     return this.client.get("/public/get-program-categories");
   }
 }
-let G = class extends d {
+let pe = class extends h {
   /**
    * Get protocol by ID
    * @param id - Protocol ID
@@ -873,7 +957,7 @@ let G = class extends d {
     return this.client.get("/protocol-category/all");
   }
 };
-class V extends d {
+class le extends h {
   /**
    * Get user devices
    */
@@ -916,7 +1000,7 @@ class V extends d {
     return this.client.post("/kpi/save-round-results", e);
   }
 }
-class H extends d {
+class ue extends h {
   /**
    * Get chat list
    * @param search - Search query
@@ -975,8 +1059,8 @@ class H extends d {
   async sendMessage(e) {
     if (e.attachments && e.attachments.length > 0) {
       const t = new FormData();
-      return t.append("room_id", e.roomId.toString()), t.append("message", e.message), e.attachments.forEach((n, r) => {
-        t.append(`attachments[${r}]`, n);
+      return t.append("room_id", e.roomId.toString()), t.append("message", e.message), e.attachments.forEach((n, s) => {
+        t.append(`attachments[${s}]`, n);
       }), this.client.post("/chat/send-message", t, {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -1010,7 +1094,7 @@ class H extends d {
     return this.client.delete(`/chat/delete-сhat/${e}`);
   }
 }
-class J extends d {
+class de extends h {
   /**
    * Get notifications
    */
@@ -1031,7 +1115,7 @@ class J extends d {
     return this.client.delete(`/notification/delete-notification/${e}`);
   }
 }
-class O extends d {
+class ge extends h {
   /**
    * Connect to Stripe
    */
@@ -1063,7 +1147,7 @@ class O extends d {
     return this.client.delete("/stripe/delete-account");
   }
 }
-class Q extends d {
+class he extends h {
   /**
    * Check nudge secret (Public endpoint - no authentication required)
    * @param secret - Nudge secret
@@ -1212,7 +1296,7 @@ class Q extends d {
     return this.client.get(`/nudge/chain/${e}`);
   }
 }
-class K extends d {
+class me extends h {
   /**
    * Run follow-up
    * @param chainId - Chain ID
@@ -1241,10 +1325,10 @@ class K extends d {
    * @param metadata - Additional metadata
    */
   async recordVoice(e, t, n) {
-    const r = new FormData();
-    return r.append("audio", e), r.append("followup_id", t.toString()), n && Object.entries(n).forEach(([o, i]) => {
-      r.append(o, i.toString());
-    }), this.client.post("/follow-up/voice-record", r, {
+    const s = new FormData();
+    return s.append("audio", e), s.append("followup_id", t.toString()), n && Object.entries(n).forEach(([o, i]) => {
+      s.append(o, i.toString());
+    }), this.client.post("/follow-up/voice-record", s, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
@@ -1372,7 +1456,7 @@ class K extends d {
     return this.client.delete(`/follow-up/voice-recording/${e}`);
   }
 }
-class X extends d {
+class ye extends h {
   /**
    * Get running activities
    * @param data - Activity query parameters
@@ -1542,7 +1626,7 @@ class X extends d {
     return this.client.get(`/activity/${e}/available-slots/${t}`);
   }
 }
-class Y extends d {
+class fe extends h {
   /**
    * Run assessment
    * @param assessmentId - Assessment ID
@@ -1685,7 +1769,7 @@ class Y extends d {
     return this.client.post(`/assessment/${e}/submit`, { responses: t });
   }
 }
-class Z extends d {
+class Ce extends h {
   /**
    * Run challenge
    * @param data - Challenge run data
@@ -1723,10 +1807,10 @@ class Z extends d {
    * @param metadata - Additional metadata
    */
   async recordVideo(e, t, n) {
-    const r = new FormData();
-    return r.append("video", e), r.append("challenge_id", t.toString()), n && Object.entries(n).forEach(([o, i]) => {
-      r.append(o, i.toString());
-    }), this.client.post("/challenge/record-video", r, {
+    const s = new FormData();
+    return s.append("video", e), s.append("challenge_id", t.toString()), n && Object.entries(n).forEach(([o, i]) => {
+      s.append(o, i.toString());
+    }), this.client.post("/challenge/record-video", s, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
@@ -1789,7 +1873,7 @@ class Z extends d {
     return this.client.post(`/challenge/complete-task/${e}`, t || {});
   }
 }
-class ee extends d {
+class $e extends h {
   /**
    * Run order execution
    * @param orderId - Order ID
@@ -1854,7 +1938,7 @@ class ee extends d {
     return this.client.delete(`/order/${e}`);
   }
 }
-class te extends d {
+class ve extends h {
   /**
    * Get payment history for subscriptions
    */
@@ -1900,7 +1984,7 @@ class te extends d {
     return this.client.delete(`/payment/delete-payment-method/${e}`);
   }
 }
-class ne extends d {
+class Se extends h {
   /**
    * Get domain configuration by hostname
    * @param hostname - Domain hostname
@@ -1959,46 +2043,46 @@ class ne extends d {
     return this.client.patch(`/domains/${e}/status`, { status: t });
   }
 }
-function A(s) {
+function x(r) {
   return {
     // Authentication & User Management
-    auth: new _(s),
-    user: new B(s),
-    team: new N(s),
+    auth: new se(r),
+    user: new oe(r),
+    team: new ie(r),
     // Core Business Logic
-    items: new q(s),
-    programs: new W(s),
-    protocols: new G(s),
-    domains: new ne(s),
+    items: new ae(r),
+    programs: new ce(r),
+    protocols: new pe(r),
+    domains: new Se(r),
     // Module-Specific Clients (New implementations)
-    order: new ee(s),
-    nudge: new Q(s),
-    challenge: new Z(s),
-    assessments: new Y(s),
-    activity: new X(s),
-    followUps: new K(s),
+    order: new $e(r),
+    nudge: new he(r),
+    challenge: new Ce(r),
+    assessments: new fe(r),
+    activity: new ye(r),
+    followUps: new me(r),
     // Analytics & Monitoring
-    kpi: new V(s),
+    kpi: new le(r),
     // Communication
-    chat: new H(s),
-    notifications: new J(s),
+    chat: new ue(r),
+    notifications: new de(r),
     // Payment & Financial
-    stripe: new O(s),
-    payment: new te(s)
+    stripe: new ge(r),
+    payment: new ve(r)
   };
 }
-function re(s) {
+function be(r) {
   const e = {
     baseURL: typeof window < "u" ? window.location.hostname === "localhost" ? "http://localhost:8000/api" : "/api" : "https://api.hms-platform.com/api",
     environment: "gov",
     enableLogging: process.env.NODE_ENV === "development",
     enableRetry: !0,
     maxRetries: 3,
-    ...s
+    ...r
   };
-  return A(e);
+  return x(e);
 }
-function se(s) {
+function Re(r) {
   const e = {
     baseURL: typeof window < "u" ? window.location.hostname === "localhost" ? "http://localhost:8000/api" : "/api/mkt" : "https://api.hms-platform.com/api/mkt",
     environment: "mkt",
@@ -2006,11 +2090,11 @@ function se(s) {
     enableRetry: !0,
     maxRetries: 2,
     // Slightly lower retry for marketing APIs
-    ...s
+    ...r
   };
-  return A(e);
+  return x(e);
 }
-function oe(s) {
+function Ie(r) {
   const e = {
     baseURL: typeof window < "u" ? window.location.hostname === "localhost" ? "http://localhost:8000/api" : "/api/mfe" : "https://api.hms-platform.com/api/mfe",
     environment: "mfe",
@@ -2020,16 +2104,16 @@ function oe(s) {
     maxRetries: 2,
     timeout: 15e3,
     // Shorter timeout for micro-frontends
-    ...s
+    ...r
   };
-  return A(e);
+  return x(e);
 }
-const u = A({
+const d = x({
   baseURL: typeof window < "u" ? window.location.hostname === "localhost" ? "http://localhost:8000/api" : "/api" : "https://api.hms-platform.com/api",
   enableLogging: process.env.NODE_ENV === "development",
   enableRetry: !0
-}), ve = re(), Se = se(), be = oe();
-class ie extends d {
+}), Ge = be(), Ve = Re(), qe = Ie();
+class Ue extends h {
   /**
    * Create a new wizard API client
    * @param config API client configuration
@@ -2059,16 +2143,16 @@ class ie extends d {
     try {
       this.socket = new WebSocket(`${e}//${t}/ws/jobs`), this.socket.onmessage = (n) => {
         try {
-          const r = JSON.parse(n.data);
-          r.event === "job.status.updated" ? this.notifyJobListeners(r.data) : r.event === "deal.status.updated" && this.notifyDealListeners(r.data);
-        } catch (r) {
-          console.error("WebSocket message parsing error:", r);
+          const s = JSON.parse(n.data);
+          s.event === "job.status.updated" ? this.notifyJobListeners(s.data) : s.event === "deal.status.updated" && this.notifyDealListeners(s.data);
+        } catch (s) {
+          console.error("WebSocket message parsing error:", s);
         }
       }, this.socket.onclose = () => {
         setTimeout(() => this.initWebSocket(), 5e3);
       }, this.socket.onerror = (n) => {
-        var r;
-        console.error("WebSocket error:", n), (r = this.socket) == null || r.close();
+        var s;
+        console.error("WebSocket error:", n), (s = this.socket) == null || s.close();
       };
     } catch (n) {
       console.error("WebSocket initialization error:", n);
@@ -2082,8 +2166,8 @@ class ie extends d {
     (this.jobListeners[e.id] || []).forEach((n) => {
       try {
         n(e);
-      } catch (r) {
-        console.error("Error in job listener:", r);
+      } catch (s) {
+        console.error("Error in job listener:", s);
       }
     });
   }
@@ -2095,8 +2179,8 @@ class ie extends d {
     (this.dealListeners[e.id] || []).forEach((n) => {
       try {
         n(e);
-      } catch (r) {
-        console.error("Error in deal listener:", r);
+      } catch (s) {
+        console.error("Error in deal listener:", s);
       }
     });
   }
@@ -2204,29 +2288,29 @@ class ie extends d {
    * @param timeout Timeout in milliseconds
    */
   async pollJobStatus(e, t = 1e3, n = 3e5) {
-    const r = Date.now();
+    const s = Date.now();
     return new Promise((o, i) => {
-      const c = async () => {
+      const p = async () => {
         try {
-          const g = (await this.getJobStatus(e)).data.data;
-          if (g.status === "completed") {
-            o(g);
+          const u = (await this.getJobStatus(e)).data.data;
+          if (u.status === "completed") {
+            o(u);
             return;
           }
-          if (g.status === "failed") {
-            i(new Error(g.error || "Job failed"));
+          if (u.status === "failed") {
+            i(new Error(u.error || "Job failed"));
             return;
           }
-          if (Date.now() - r >= n) {
+          if (Date.now() - s >= n) {
             i(new Error("Job polling timed out"));
             return;
           }
-          setTimeout(c, t);
-        } catch (p) {
-          i(p);
+          setTimeout(p, t);
+        } catch (l) {
+          i(l);
         }
       };
-      c();
+      p();
     });
   }
   /**
@@ -2286,10 +2370,10 @@ class ie extends d {
     return this.client.post(`/wizard/deal/${e}/snapshot`, { comment: t });
   }
 }
-const v = new ie({
+const R = new Ue({
   baseURL: typeof window < "u" ? window.location.hostname === "localhost" ? "http://localhost:8000/api" : "/api" : "https://api.example.com/api"
 });
-class R {
+class P {
   constructor(e, t) {
     this.client = e, this.stepFunction = t;
   }
@@ -2300,49 +2384,259 @@ class R {
    * @param onProgress Progress callback
    * @param onDealUpdate Deal update callback
    */
-  async process(e, t, n, r) {
+  async process(e, t, n, s) {
     const i = (await this.stepFunction(e, t)).data.data;
     if (!i.is_async)
       return i.deal;
     if (!i.job_id)
       throw new Error("Asynchronous job ID not provided");
-    let c, p;
-    n && (c = this.client.addJobListener(i.job_id, (g) => {
-      n(g.progress);
-    })), r && (p = this.client.addDealListener(e, (g) => {
-      r(g);
+    let p, l;
+    n && (p = this.client.addJobListener(i.job_id, (u) => {
+      n(u.progress);
+    })), s && (l = this.client.addDealListener(e, (u) => {
+      s(u);
     }));
     try {
-      const g = await this.client.pollJobStatus(i.job_id);
+      const u = await this.client.pollJobStatus(i.job_id);
       return (await this.client.getDeal(e)).data.data;
     } finally {
-      c && c(), p && p();
+      p && p(), l && l();
     }
   }
 }
-const Re = {
-  defineProblems: new R(
-    v,
-    (s, e) => v.defineProblems(s, e)
+const He = {
+  defineProblems: new P(
+    R,
+    (r, e) => R.defineProblems(r, e)
   ),
-  codifySolution: new R(
-    v,
-    (s, e) => v.codifySolution(s, e)
+  codifySolution: new P(
+    R,
+    (r, e) => R.codifySolution(r, e)
   ),
-  setupProgram: new R(
-    v,
-    (s, e) => v.setupProgram(s, e)
+  setupProgram: new P(
+    R,
+    (r, e) => R.setupProgram(r, e)
   ),
-  executeProgram: new R(
-    v,
-    (s, e) => v.executeProgram(s, e)
+  executeProgram: new P(
+    R,
+    (r, e) => R.executeProgram(r, e)
   ),
-  verifyOutcome: new R(
-    v,
-    (s, e) => v.verifyOutcome(s, e)
+  verifyOutcome: new P(
+    R,
+    (r, e) => R.verifyOutcome(r, e)
   )
 };
-class Ie extends l {
+function S(r, e) {
+  return r ? {
+    ...e ?? {},
+    headers: { ...(e == null ? void 0 : e.headers) ?? {}, "Idempotency-Key": r }
+  } : e;
+}
+class Oe extends c {
+  // ---------------------------------------------------------------------------
+  // Step 1 — define + read snapshots
+  // ---------------------------------------------------------------------------
+  /**
+   * POST /api/wizard/deal/define — create a Deal from a free-text statement.
+   *
+   * api validates `statement` (1–8000 chars) + optional `tld`; resolves the
+   * tenant from the explicit `tld` / `X-Domain` header, classifies the problem
+   * (LLM) and computes `required_info` before persisting. Returns the new Deal
+   * in `state=analyzing`, `wizard_step=1` with a top-level `id` alias.
+   */
+  async defineDeal(e, t, n) {
+    return this.post(
+      "/api/wizard/deal/define",
+      e,
+      S(t, n)
+    );
+  }
+  /** GET /api/wizard/deal/{deal_id}/status — full DealResource snapshot. */
+  async getStatus(e) {
+    return this.get(
+      `/api/wizard/deal/${encodeURIComponent(e)}/status`
+    );
+  }
+  /**
+   * GET /api/wizard/deal/{deal_id}/events — paginated append-only audit log.
+   * `per_page` is clamped server-side to 1–200 (default 50).
+   */
+  async getEvents(e, t) {
+    const n = (t == null ? void 0 : t.per_page) === void 0 ? void 0 : { per_page: t.per_page };
+    return this.get(
+      `/api/wizard/deal/${encodeURIComponent(e)}/events`,
+      n
+    );
+  }
+  // ---------------------------------------------------------------------------
+  // Step 1 continuation → Step 2 (codify) → Step 3 (setup) → Step 4 (start)
+  // ---------------------------------------------------------------------------
+  /**
+   * POST /api/wizard/deal/{deal_id}/required-info — submit answers to the
+   * Step-1 follow-up questions. Advances `analyzing` → `codified`. Returns a
+   * 422 `{error:'missing_required_info', missing:[...]}` when a declared key
+   * is unanswered.
+   */
+  async submitRequiredInfo(e, t, n, s) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/required-info`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/codify — Step 2 solution generation.
+   * No request body (LLM-driven). Requires `state=codified`. When the
+   * `deals.step2_strict_schema` flag is on, a generation failure returns
+   * 502 `{error:'solution_generation_failed', message}`.
+   */
+  async codify(e, t, n) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/codify`,
+      void 0,
+      S(t, n)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/select-solution — pick one of the
+   * generated solutions by zero-based index. Does not advance state.
+   */
+  async selectSolution(e, t, n, s) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/select-solution`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/setup — Step 3. Materializes pipeline
+   * steps and advances `codified` → `setup`. No request body.
+   */
+  async setup(e, t, n) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/setup`,
+      void 0,
+      S(t, n)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/start — Step 3→4 transition. Advances
+   * `setup` → `executing`. No request body.
+   */
+  async start(e, t, n) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/start`,
+      void 0,
+      S(t, n)
+    );
+  }
+  // ---------------------------------------------------------------------------
+  // Intake (F1/F2) steps — metadata / details / files / path / submit
+  // ---------------------------------------------------------------------------
+  /**
+   * PATCH /api/wizard/deal/{deal_id}/metadata — intake step 1: title,
+   * description (≥50 chars), applicant_type, optional related_industries.
+   * Caller must be the deal creator/owner (403 otherwise). PATCH is sent as
+   * POST + `?_method=PATCH`.
+   */
+  async patchMetadata(e, t, n, s) {
+    return this.patch(
+      `/api/wizard/deal/${encodeURIComponent(e)}/metadata`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * PATCH /api/wizard/deal/{deal_id}/details — intake step 2: customer,
+   * program window, budget_tier. Creator/owner only.
+   */
+  async patchDetails(e, t, n, s) {
+    return this.patch(
+      `/api/wizard/deal/${encodeURIComponent(e)}/details`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/files — intake step 3: multipart upload.
+   * `file` (≤10 MB) + `file_type` in {document,image,logo}. The `File`/`Blob`
+   * in the body auto-promotes the request to `multipart/form-data` via
+   * `BaseApiClient`. Returns 201 with the new `deal_files` row. Creator/owner
+   * only.
+   */
+  async uploadFile(e, t, n, s) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/files`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * DELETE /api/wizard/deal/{deal_id}/files/{file_id} — mid-wizard file
+   * removal. Idempotent: 204 on delete/no-op, 404 if the file is unknown.
+   * Creator/owner only. A real DELETE on the wire.
+   */
+  async deleteFile(e, t, n, s) {
+    return this.delete(
+      `/api/wizard/deal/${encodeURIComponent(e)}/files/${encodeURIComponent(String(t))}`,
+      S(n, s)
+    );
+  }
+  /**
+   * PATCH /api/wizard/deal/{deal_id}/path — intake step 4: path_tier in
+   * {pink,green,blue,red,black}. Creator/owner only.
+   */
+  async patchPath(e, t, n, s) {
+    return this.patch(
+      `/api/wizard/deal/${encodeURIComponent(e)}/path`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/submit — intake step 5: finalize and
+   * transition to `awaiting_compute`. Gates on applicant_type/title/
+   * description/budget_tier/path_tier being present (422
+   * `{error:'missing_wizard_data', missing:[...]}` otherwise). No request
+   * body. Creator/owner only.
+   */
+  async submit(e, t, n) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/submit`,
+      void 0,
+      S(t, n)
+    );
+  }
+  // ---------------------------------------------------------------------------
+  // Compute deposit (F3) + Step 5 outcome verification
+  // ---------------------------------------------------------------------------
+  /**
+   * POST /api/wizard/deal/{deal_id}/compute-deposit — mint a Stripe
+   * PaymentIntent for the 5-tier deposit ladder. `amount_cents` must be one of
+   * 100 / 1000 / 10000 / 100000 / 1000000. Returns `{ client_secret }`.
+   */
+  async computeDeposit(e, t, n, s) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/compute-deposit`,
+      t,
+      S(n, s)
+    );
+  }
+  /**
+   * POST /api/wizard/deal/{deal_id}/verify/{execution_id} — Step 5 synchronous
+   * outcome verification. Empty body. `execution_id` is numeric (api route
+   * constraint `[0-9]+`). Returns `{ deal_id, state, outcome_score,
+   * outcome_class, outcome_report }`. Illegal state transitions return 409.
+   */
+  async verifyOutcome(e, t, n, s) {
+    return this.post(
+      `/api/wizard/deal/${encodeURIComponent(e)}/verify/${encodeURIComponent(String(t))}`,
+      void 0,
+      S(n, s)
+    );
+  }
+}
+class Je extends c {
   // ---------------------------------------------------------------------------
   // Public auth (no Bearer token required — uses { auth: false })
   // ---------------------------------------------------------------------------
@@ -2629,10 +2923,10 @@ class Ie extends l {
     return this.get("/api/me/accessible-subprojects");
   }
 }
-function h(s) {
-  return s == null || s === "" ? "" : `/${encodeURIComponent(String(s))}`;
+function C(r) {
+  return r == null || r === "" ? "" : `/${encodeURIComponent(String(r))}`;
 }
-class ae extends l {
+class we extends c {
   // ===========================================================================
   // CI-WWW boot endpoints (hierarchy-aware loadSubproject lives here)
   // ===========================================================================
@@ -2952,34 +3246,34 @@ class ae extends l {
   /** DELETE /api/subproject-team/delete-invite/{id}/{subproject?} */
   async deleteSubprojectTeamInvite(e, t) {
     return this.delete(
-      `/api/subproject-team/delete-invite/${encodeURIComponent(String(e))}${h(t)}`
+      `/api/subproject-team/delete-invite/${encodeURIComponent(String(e))}${C(t)}`
     );
   }
   /** GET /api/subproject-team/get-invites/{subproject?} */
   async getSubprojectTeamInvites(e) {
-    return this.get(`/api/subproject-team/get-invites${h(e)}`);
+    return this.get(`/api/subproject-team/get-invites${C(e)}`);
   }
   /** POST /api/subproject-team/renew-token/{subproject?} */
   async renewSubprojectTeamToken(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/subproject-team/renew-token${h(r)}`,
+      `/api/subproject-team/renew-token${C(s)}`,
       o
     );
   }
   /** POST /api/subproject-team/send-invites/{subproject?} */
   async sendSubprojectTeamInvites(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/subproject-team/send-invites${h(r)}`,
+      `/api/subproject-team/send-invites${C(s)}`,
       o
     );
   }
   /** POST /api/subproject-team/update-permissions/{subproject?} */
   async updateSubprojectTeamPermissions(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/subproject-team/update-permissions${h(r)}`,
+      `/api/subproject-team/update-permissions${C(s)}`,
       o
     );
   }
@@ -3041,62 +3335,62 @@ class ae extends l {
   // ===========================================================================
   /** GET /api/project-settings/content/show/{subproject?} */
   async getProjectSettingsContent(e) {
-    return this.get(`/api/project-settings/content/show${h(e)}`);
+    return this.get(`/api/project-settings/content/show${C(e)}`);
   }
   /** POST /api/project-settings/content/{subproject?} */
   async saveProjectSettingsContent(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/project-settings/content${h(r)}`,
+      `/api/project-settings/content${C(s)}`,
       o
     );
   }
   /** GET /api/project-settings/domain-settings/{subproject?} */
   async getProjectSettingsDomainSettings(e) {
-    return this.get(`/api/project-settings/domain-settings${h(e)}`);
+    return this.get(`/api/project-settings/domain-settings${C(e)}`);
   }
   /** GET /api/project-settings/domains/show/{subproject?} */
   async getProjectSettingsDomains(e) {
-    return this.get(`/api/project-settings/domains/show${h(e)}`);
+    return this.get(`/api/project-settings/domains/show${C(e)}`);
   }
   /** POST /api/project-settings/domains/{subproject?} */
   async saveProjectSettingsDomains(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/project-settings/domains${h(r)}`,
+      `/api/project-settings/domains${C(s)}`,
       o
     );
   }
   /** GET /api/project-settings/layout/show/{subproject?} */
   async getProjectSettingsLayout(e) {
-    return this.get(`/api/project-settings/layout/show${h(e)}`);
+    return this.get(`/api/project-settings/layout/show${C(e)}`);
   }
   /** POST /api/project-settings/layout/{subproject?} */
   async saveProjectSettingsLayout(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/project-settings/layout${h(r)}`,
+      `/api/project-settings/layout${C(s)}`,
       o
     );
   }
   /** GET /api/project-settings/seo/show/{subproject?} */
   async getProjectSettingsSeo(e) {
-    return this.get(`/api/project-settings/seo/show${h(e)}`);
+    return this.get(`/api/project-settings/seo/show${C(e)}`);
   }
   /** POST /api/project-settings/seo/{subproject?} */
   async saveProjectSettingsSeo(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
-    return this.post(`/api/project-settings/seo${h(r)}`, o);
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
+    return this.post(`/api/project-settings/seo${C(s)}`, o);
   }
   /** GET /api/project-settings/template/show/{subproject?} */
   async getProjectSettingsTemplate(e) {
-    return this.get(`/api/project-settings/template/show${h(e)}`);
+    return this.get(`/api/project-settings/template/show${C(e)}`);
   }
   /** POST /api/project-settings/template/{subproject?} */
   async saveProjectSettingsTemplate(e, t) {
-    const n = typeof e == "number" || typeof e == "string", r = n ? e : void 0, o = n ? t ?? {} : e;
+    const n = typeof e == "number" || typeof e == "string", s = n ? e : void 0, o = n ? t ?? {} : e;
     return this.post(
-      `/api/project-settings/template${h(r)}`,
+      `/api/project-settings/template${C(s)}`,
       o
     );
   }
@@ -3201,7 +3495,7 @@ class ae extends l {
     const n = await this.request(
       `/api/domain-interfaces/by-domain/${encodeURIComponent(e)}`,
       { method: "GET" },
-      { validateStatus: (r) => r >= 200 && r < 300 || r === 404 }
+      { validateStatus: (s) => s >= 200 && s < 300 || s === 404 }
     );
     return !n || n.base === void 0 && n.others === void 0 ? { base: null, others: [] } : {
       base: n.base ?? null,
@@ -3456,7 +3750,7 @@ class ae extends l {
   }
   /** POST /api/contacts/find/{subproject?} */
   async findContacts(e, t) {
-    return this.post(`/api/contacts/find${h(t)}`, e);
+    return this.post(`/api/contacts/find${C(t)}`, e);
   }
   /** GET /api/contacts/has-contacts */
   async getContactsHasContacts() {
@@ -3509,38 +3803,38 @@ class ae extends l {
     );
   }
 }
-function Ue(s, e) {
-  const t = s[e];
+function Qe(r, e) {
+  const t = r[e];
   if (t != null)
     return t;
-  const n = s.chain;
+  const n = r.chain;
   if (Array.isArray(n)) {
-    for (const r of n)
-      if (r && typeof r == "object" && e in r) {
-        const o = r[e];
+    for (const s of n)
+      if (s && typeof s == "object" && e in s) {
+        const o = s[e];
         if (o != null)
           return o;
       }
   }
   return null;
 }
-const F = Symbol.for("@arionhardison/wizard-api-client/tenancy-deprecation-warned");
-function ce(s) {
-  return s[F] === !0;
+const V = Symbol.for("@arionhardison/wizard-api-client/tenancy-deprecation-warned");
+function Pe(r) {
+  return r[V] === !0;
 }
-function pe(s) {
-  s[F] = !0;
+function Ae(r) {
+  r[V] = !0;
 }
-class we extends ae {
+class Ke extends we {
   constructor(e) {
     super(e);
     const t = console.warn;
-    ce(t) || (pe(t), t(
+    Pe(t) || (Ae(t), t(
       "[@arionhardison/wizard-api-client] `TenancyApiClient` is deprecated and will be removed in 2.0.0. Use `SubprojectApiClient` instead — the surface is identical plus the new hierarchy-aware methods (`getDpgInstances`, hierarchy fields on `loadSubproject()`)."
     ));
   }
 }
-class Pe extends l {
+class Ye extends c {
   // ===========================================================================
   // /api/program-sale/* — purchase + listing flow
   // ===========================================================================
@@ -3844,7 +4138,7 @@ class Pe extends l {
     return this.post("/api/team/search-users", e);
   }
 }
-class Ae extends l {
+class Xe extends c {
   // ---------------------------------------------------------------------------
   // /api/protocol — base CRUD
   // ---------------------------------------------------------------------------
@@ -4295,22 +4589,22 @@ class Ae extends l {
     );
   }
 }
-function le(s) {
-  const e = s.finished === !0, t = s.running === !0, n = s.successfully === !0;
+function je(r) {
+  const e = r.finished === !0, t = r.running === !0, n = r.successfully === !0;
   return e && n ? {
     status: "completed",
-    codify: s.codify,
-    preferredSubproject: s.preferred_subproject,
-    raw: s
-  } : e ? { status: "failed", raw: s } : t ? {
+    codify: r.codify,
+    preferredSubproject: r.preferred_subproject,
+    raw: r
+  } : e ? { status: "failed", raw: r } : t ? {
     status: "running",
-    step: s.step,
-    questions: s.questions,
-    preparationFinished: s.preparation_finished,
-    raw: s
-  } : { status: "pending", raw: s };
+    step: r.step,
+    questions: r.questions,
+    preparationFinished: r.preparation_finished,
+    raw: r
+  } : { status: "pending", raw: r };
 }
-class je extends l {
+class Ze extends c {
   // ---------------------------------------------------------------------------
   // /api/personal-chain/* — authenticated unless flagged otherwise
   // ---------------------------------------------------------------------------
@@ -4493,7 +4787,7 @@ class je extends l {
    */
   async readCodifyJobState(e) {
     const t = await this.getCodifyState(e);
-    return le(t.data);
+    return je(t.data);
   }
   // ---------------------------------------------------------------------------
   // /api/wizard/codify/{protocol} — Bearer required (auth=api)
@@ -4516,10 +4810,10 @@ class je extends l {
     );
   }
 }
-function j(s) {
-  return s == null || s === "" ? "" : `/${encodeURIComponent(String(s))}`;
+function L(r) {
+  return r == null || r === "" ? "" : `/${encodeURIComponent(String(r))}`;
 }
-class ke extends l {
+class et extends c {
   // ===========================================================================
   // Broadcasting (Pusher channel auth)
   //
@@ -4554,7 +4848,7 @@ class ke extends l {
   /** GET /api/chat/broadcast-messages/{type}/{program?} */
   async chatBroadcastMessages(e, t) {
     return this.get(
-      `/api/chat/broadcast-messages/${encodeURIComponent(e)}${j(t)}`
+      `/api/chat/broadcast-messages/${encodeURIComponent(e)}${L(t)}`
     );
   }
   /** DELETE /api/chat/delete-message/{message} */
@@ -4583,7 +4877,7 @@ class ke extends l {
   }
   /** GET /api/chat/get-list/{search?} */
   async chatGetList(e) {
-    return this.get(`/api/chat/get-list${j(e)}`);
+    return this.get(`/api/chat/get-list${L(e)}`);
   }
   /** GET /api/chat/get-new-chat/{room} */
   async chatGetNewChat(e) {
@@ -4604,7 +4898,7 @@ class ke extends l {
   /** GET /api/chat/messages/{chat}/{search?} */
   async chatMessages(e, t) {
     return this.get(
-      `/api/chat/messages/${encodeURIComponent(String(e))}${j(t)}`
+      `/api/chat/messages/${encodeURIComponent(String(e))}${L(t)}`
     );
   }
   /** GET /api/chat/programs */
@@ -4778,7 +5072,7 @@ class ke extends l {
     );
   }
 }
-class Ee extends l {
+class tt extends c {
   // ===========================================================================
   // Search (admin / team search)
   // ===========================================================================
@@ -5206,7 +5500,7 @@ class Ee extends l {
     return this.post("/api/user", e);
   }
 }
-class Te extends l {
+class nt extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -5326,14 +5620,14 @@ class Te extends l {
     return this.get("/api/protocol/agents/all", void 0, e);
   }
 }
-class Fe extends l {
+class rt extends c {
   // ---------------------------------------------------------------------------
   // KPI core
   // ---------------------------------------------------------------------------
   /** GET `/api/kpi/get-setup/{chain}/{protocol}`. (`get.api.kpi.get-setup.item.item`) */
   getSetup(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/kpi/get-setup/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/kpi/get-setup/${s}/${o}`, void 0, n);
   }
   /**
    * GET `/api/kpi/get/{chain}`. (`get.api.kpi.get.item`)
@@ -5377,8 +5671,8 @@ class Fe extends l {
   }
   /** POST `/api/onboarding/save/{protocol}`. (`post.api.onboarding.save.item`) */
   saveOnboarding(e, t, n) {
-    const r = encodeURIComponent(String(e));
-    return this.post(`/api/onboarding/save/${r}`, t, n);
+    const s = encodeURIComponent(String(e));
+    return this.post(`/api/onboarding/save/${s}`, t, n);
   }
   // ---------------------------------------------------------------------------
   // Device listing
@@ -5409,7 +5703,7 @@ class Fe extends l {
     return this.post("/api/withings/webhook", e, t);
   }
 }
-class De extends l {
+class st extends c {
   // ---------------------------------------------------------------------------
   // activity-location resource — `activity-location.{index,store,show,update,destroy}`
   // ---------------------------------------------------------------------------
@@ -5489,9 +5783,9 @@ class De extends l {
    * 2-segment Laravel route also matches.
    * (`get.api.activity.get-booking-windows.item.item.item`)
    */
-  getBookingWindows(e, t, n, r) {
+  getBookingWindows(e, t, n, s) {
     const o = `/api/activity/get-booking-windows/${encodeURIComponent(String(e))}/${encodeURIComponent(String(t))}`, i = n === void 0 ? o : `${o}/${encodeURIComponent(String(n))}`;
-    return this.get(i, void 0, r);
+    return this.get(i, void 0, s);
   }
   /** GET `/api/activity/get-pending-amount`. (`get.api.activity.get-pending-amount`) */
   getPendingAmount(e) {
@@ -5621,7 +5915,7 @@ class De extends l {
     );
   }
 }
-class xe extends l {
+class ot extends c {
   // ---------------------------------------------------------------------------
   // assessment resource
   // ---------------------------------------------------------------------------
@@ -5796,7 +6090,7 @@ class xe extends l {
     return this.delete(`/api/response/${encodeURIComponent(String(e))}`, t);
   }
 }
-class Le extends l {
+class it extends c {
   // ---------------------------------------------------------------------------
   // challenge resource
   // ---------------------------------------------------------------------------
@@ -5916,7 +6210,7 @@ class Le extends l {
     return this.get("/api/protocol/challenge/all", void 0, e);
   }
 }
-class ze extends l {
+class at extends c {
   // ---------------------------------------------------------------------------
   // follow-up resource
   // ---------------------------------------------------------------------------
@@ -6018,7 +6312,7 @@ class ze extends l {
     return this.post("/api/follow-up/voice-record", e, t);
   }
 }
-class Me extends l {
+class ct extends c {
   // ---------------------------------------------------------------------------
   // Order CRUD
   // ---------------------------------------------------------------------------
@@ -6155,7 +6449,7 @@ class Me extends l {
     return this.get("/api/protocol/order/all", void 0, e);
   }
 }
-class _e extends l {
+class pt extends c {
   // ---------------------------------------------------------------------------
   // Catalog items (`/api/items/*`)
   // ---------------------------------------------------------------------------
@@ -6281,7 +6575,7 @@ class _e extends l {
     return this.delete(`/api/collection-item/${encodeURIComponent(String(e))}`, t);
   }
 }
-class Be extends l {
+class lt extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6317,13 +6611,13 @@ class Be extends l {
   // ---------------------------------------------------------------------------
   /** GET `/api/appeal/run-global/{appeal}/{task}`. (`get.api.appeal.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/appeal/run-global/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/appeal/run-global/${s}/${o}`, void 0, n);
   }
   /** GET `/api/appeal/run/{appeal}/{chain}`. (`get.api.appeal.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/appeal/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/appeal/run/${s}/${o}`, void 0, n);
   }
   // ---------------------------------------------------------------------------
   // Protocol integration
@@ -6333,7 +6627,7 @@ class Be extends l {
     return this.get("/api/protocol/appeal/all", void 0, e);
   }
 }
-class Ne extends l {
+class ut extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6380,13 +6674,13 @@ class Ne extends l {
   // ---------------------------------------------------------------------------
   /** GET `/api/application/run-global/{application}/{task}`. (`get.api.application.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/application/run-global/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/application/run-global/${s}/${o}`, void 0, n);
   }
   /** GET `/api/application/run/{application}/{chain}`. (`get.api.application.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/application/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/application/run/${s}/${o}`, void 0, n);
   }
   // ---------------------------------------------------------------------------
   // Protocol integration
@@ -6396,7 +6690,7 @@ class Ne extends l {
     return this.get("/api/protocol/application/all", void 0, e);
   }
 }
-class qe extends l {
+class dt extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6443,13 +6737,13 @@ class qe extends l {
   // ---------------------------------------------------------------------------
   /** GET `/api/disbursement/run-global/{disbursement}/{task}`. (`get.api.disbursement.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/disbursement/run-global/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/disbursement/run-global/${s}/${o}`, void 0, n);
   }
   /** GET `/api/disbursement/run/{disbursement}/{chain}`. (`get.api.disbursement.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/disbursement/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/disbursement/run/${s}/${o}`, void 0, n);
   }
   // ---------------------------------------------------------------------------
   // Protocol integration
@@ -6459,7 +6753,7 @@ class qe extends l {
     return this.get("/api/protocol/disbursement/all", void 0, e);
   }
 }
-class We extends l {
+class gt extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6506,13 +6800,13 @@ class We extends l {
   // ---------------------------------------------------------------------------
   /** GET `/api/referral/run-global/{referral}/{task}`. (`get.api.referral.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/referral/run-global/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/referral/run-global/${s}/${o}`, void 0, n);
   }
   /** GET `/api/referral/run/{referral}/{chain}`. (`get.api.referral.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/referral/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/referral/run/${s}/${o}`, void 0, n);
   }
   // ---------------------------------------------------------------------------
   // Protocol integration
@@ -6522,7 +6816,7 @@ class We extends l {
     return this.get("/api/protocol/referral/all", void 0, e);
   }
 }
-class Ge extends l {
+class ht extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6569,13 +6863,13 @@ class Ge extends l {
   // ---------------------------------------------------------------------------
   /** GET `/api/report/run-global/{report}/{task}`. (`get.api.report.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/report/run-global/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/report/run-global/${s}/${o}`, void 0, n);
   }
   /** GET `/api/report/run/{report}/{chain}`. (`get.api.report.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/report/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/report/run/${s}/${o}`, void 0, n);
   }
   // ---------------------------------------------------------------------------
   // Protocol integration
@@ -6585,7 +6879,7 @@ class Ge extends l {
     return this.get("/api/protocol/report/all", void 0, e);
   }
 }
-class Ve extends l {
+class mt extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6632,17 +6926,17 @@ class Ve extends l {
   // ---------------------------------------------------------------------------
   /** GET `/api/verification/run-global/{verification}/{task}`. (`get.api.verification.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
     return this.get(
-      `/api/verification/run-global/${r}/${o}`,
+      `/api/verification/run-global/${s}/${o}`,
       void 0,
       n
     );
   }
   /** GET `/api/verification/run/{verification}/{chain}`. (`get.api.verification.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/verification/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/verification/run/${s}/${o}`, void 0, n);
   }
   // ---------------------------------------------------------------------------
   // Protocol integration
@@ -6652,7 +6946,7 @@ class Ve extends l {
     return this.get("/api/protocol/verification/all", void 0, e);
   }
 }
-class He extends l {
+class yt extends c {
   // ---------------------------------------------------------------------------
   // CRUD
   // ---------------------------------------------------------------------------
@@ -6671,8 +6965,8 @@ class He extends l {
   }
   /** PUT `/api/connector/{connector}` — sent as POST + `?_method=PUT`. (`connector.update`) */
   update(e, t, n) {
-    const r = encodeURIComponent(String(e));
-    return this.put(`/api/connector/${r}`, t, n);
+    const s = encodeURIComponent(String(e));
+    return this.put(`/api/connector/${s}`, t, n);
   }
   /** DELETE `/api/connector/{connector}`. (`connector.destroy`) */
   destroy(e, t) {
@@ -6688,13 +6982,13 @@ class He extends l {
   }
   /** GET `/api/connector/run-global/{connector}/{task}`. (`get.api.connector.run-global.item.item`) */
   runGlobal(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/connector/run-global/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/connector/run-global/${s}/${o}`, void 0, n);
   }
   /** GET `/api/connector/run/{connector}/{chain}`. (`get.api.connector.run.item.item`) */
   run(e, t, n) {
-    const r = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
-    return this.get(`/api/connector/run/${r}/${o}`, void 0, n);
+    const s = encodeURIComponent(String(e)), o = encodeURIComponent(String(t));
+    return this.get(`/api/connector/run/${s}/${o}`, void 0, n);
   }
   /** GET `/api/connector/{connector}/discover` — list tools available on the connector. (`get.api.connector.item.discover`) */
   discover(e, t) {
@@ -6709,7 +7003,7 @@ class He extends l {
     return this.get("/api/protocol/connector/all", void 0, e);
   }
 }
-class Je extends l {
+class ft extends c {
   // ---------------------------------------------------------------------------
   // Protocol integration (unversioned)
   // ---------------------------------------------------------------------------
@@ -6763,7 +7057,7 @@ class Je extends l {
     return this.get("/api/v1/etl/components", void 0, e);
   }
 }
-class Oe extends l {
+class Ct extends c {
   // ---------------------------------------------------------------------------
   // Protocol integration (auth:api)
   // ---------------------------------------------------------------------------
@@ -6837,7 +7131,7 @@ class Oe extends l {
     );
   }
 }
-class Qe extends l {
+class $t extends c {
   // ---------------------------------------------------------------------------
   // Resolver
   // ---------------------------------------------------------------------------
@@ -6868,7 +7162,7 @@ class Qe extends l {
     return this.post("/api/v1/services/release", e, t);
   }
 }
-class Ke extends l {
+class vt extends c {
   // ---------------------------------------------------------------------------
   // CRUD (auth:api)
   // ---------------------------------------------------------------------------
@@ -6887,8 +7181,8 @@ class Ke extends l {
   }
   /** PUT `/api/nudge/{nudge}` — sent as POST + `?_method=PUT`. (`nudge.update`) */
   update(e, t, n) {
-    const r = encodeURIComponent(String(e));
-    return this.put(`/api/nudge/${r}`, t, n);
+    const s = encodeURIComponent(String(e));
+    return this.put(`/api/nudge/${s}`, t, n);
   }
   /** DELETE `/api/nudge/{nudge}`. (`nudge.destroy`) */
   destroy(e, t) {
@@ -6937,7 +7231,7 @@ class Ke extends l {
     );
   }
 }
-class Xe extends l {
+class St extends c {
   /**
    * POST `/api/coinbase/webhook` — Coinbase Commerce webhook receiver.
    * `auth:public`, tenant-context-free. (`coinbase-webhook`)
@@ -6951,7 +7245,244 @@ class Xe extends l {
     return this.post("/api/coinbase/webhook", e, t);
   }
 }
-class Ye extends l {
+class bt extends c {
+  /**
+   * POST /api/h5i/msg — send a new i5h message.
+   *
+   * The broker dedupes on the optional client `id`: 201 on first-write,
+   * 200 on a replay (both surface `newly_created`). The `meta.kind_*`
+   * render hints are `prohibited` server-side — the broker stamps them.
+   */
+  async sendMessage(e, t) {
+    return this.post("/api/h5i/msg", e, t);
+  }
+  /**
+   * GET /api/h5i/msg/inbox — pull unread messages for an agent on a channel.
+   * `agent` + `channel` are required query params; `limit` (1..500) optional.
+   */
+  async getInbox(e) {
+    const t = {
+      agent: e.agent,
+      channel: e.channel
+    };
+    return e.limit !== void 0 && (t.limit = e.limit), this.get("/api/h5i/msg/inbox", t);
+  }
+  /**
+   * GET /api/h5i/msg/channel/{channel} — full channel history.
+   * `limit` (1..500) is clamped server-side (default 100).
+   */
+  async getChannel(e, t) {
+    const n = t === void 0 ? void 0 : { limit: t };
+    return this.get(
+      `/api/h5i/msg/channel/${encodeURIComponent(e)}`,
+      n
+    );
+  }
+  /** GET /api/h5i/msg/{id} — fetch one message by its 16-hex id. */
+  async getMessage(e) {
+    return this.get(
+      `/api/h5i/msg/${encodeURIComponent(e)}`
+    );
+  }
+  /**
+   * POST /api/h5i/dev/seed-demo/{guid} — DEV/QA helper (SuperAdmin only,
+   * throttled 6/min). Publishes the deal channel + emits 4 demo messages.
+   * `guid` is a strict UUID v4.
+   */
+  async seedDemo(e, t) {
+    return this.post(
+      `/api/h5i/dev/seed-demo/${encodeURIComponent(e)}`,
+      void 0,
+      t
+    );
+  }
+  /**
+   * GET /api/h5i/deals/{guid}/public-messages — anonymous redacted history
+   * for a published deal. The gate is an active PublicDealChannel row keyed
+   * by the request HOSTNAME, NOT a Bearer token — sent with `{ auth: false }`.
+   * `guid` is a strict UUID v4.
+   */
+  async getPublicMessages(e, t) {
+    const n = t === void 0 ? void 0 : { limit: t };
+    return this.get(
+      `/api/h5i/deals/${encodeURIComponent(e)}/public-messages`,
+      n,
+      { auth: !1 }
+    );
+  }
+  /**
+   * POST /api/broadcasting/public-auth — anonymous Pusher auth for the
+   * `public-deal-{hash}` channel family. All denial paths collapse to a
+   * uniform 403 `{error:'forbidden'}`. Sent with `{ auth: false }`.
+   */
+  async publicBroadcastAuth(e) {
+    return this.post(
+      "/api/broadcasting/public-auth",
+      e,
+      { auth: !1 }
+    );
+  }
+}
+function B(r, e) {
+  return r ? {
+    ...e ?? {},
+    headers: { ...(e == null ? void 0 : e.headers) ?? {}, "Idempotency-Key": r }
+  } : e;
+}
+class Rt extends c {
+  /**
+   * POST /api/v1/rlhf/submissions → upstream POST /api/mobile/v1/submissions.
+   * Body forwarded verbatim. Pass an `idempotencyKey` so the upstream cache
+   * key matches api/'s IdempotencyMiddleware. Requires `rlhf:writer`.
+   */
+  async submit(e, t, n) {
+    return this.post(
+      "/api/v1/rlhf/submissions",
+      e,
+      B(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/rlhf/grades/{course_id}/{assignment_id} → upstream
+   * POST /api/courses/:c/assignments/:a/grades. Requires `rlhf:writer`.
+   */
+  async grade(e, t, n, s, o) {
+    return this.post(
+      `/api/v1/rlhf/grades/${encodeURIComponent(String(e))}/${encodeURIComponent(String(t))}`,
+      n,
+      B(s, o)
+    );
+  }
+  /**
+   * GET /api/v1/rlhf/rubrics/{question_id} → upstream GET
+   * /api/questions/:id/rubric. Read-only; requires `rlhf:reader`.
+   */
+  async getRubric(e) {
+    return this.get(
+      `/api/v1/rlhf/rubrics/${encodeURIComponent(String(e))}`
+    );
+  }
+}
+class It extends c {
+  /**
+   * GET /api/fail/events — paginated, newest first. Optional filters:
+   * `per_page` (1..100, default 25), `root_cause_code`, `protocol_id`.
+   * The resource array lands on `ApiResponse.data`; pagination `links`/`meta`
+   * ride on the envelope.
+   */
+  async listEvents(e) {
+    const t = {};
+    return (e == null ? void 0 : e.per_page) !== void 0 && (t.per_page = e.per_page), (e == null ? void 0 : e.root_cause_code) !== void 0 && (t.root_cause_code = e.root_cause_code), (e == null ? void 0 : e.protocol_id) !== void 0 && (t.protocol_id = e.protocol_id), this.get(
+      "/api/fail/events",
+      Object.keys(t).length > 0 ? t : void 0
+    );
+  }
+  /** GET /api/fail/events/summary — total + per-root-cause counts. */
+  async getSummary() {
+    return this.get("/api/fail/events/summary");
+  }
+  /** GET /api/fail/events/{id} — single event with eager-loaded recovery actions. */
+  async getEvent(e) {
+    return this.get(`/api/fail/events/${e}`);
+  }
+}
+function W(r, e) {
+  return r ? {
+    ...e ?? {},
+    headers: { ...(e == null ? void 0 : e.headers) ?? {}, "Idempotency-Key": r }
+  } : e;
+}
+class Ut extends c {
+  /**
+   * POST /api/v1/integrations/hitl/requested — register a pending HITL
+   * approval (emr-mcp and other agent runtimes). `args` is `present`+`array`
+   * server-side, so send `{}` / `[]` when there are none. Returns 202.
+   */
+  async requestApproval(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/hitl/requested",
+      e,
+      W(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/hitl/resume — record a reviewer's
+   * approve/reject/escalate decision against a pending approval. A 404 means
+   * the approval_id is unknown for the resolved tenant; an already-resolved
+   * approval returns the cached decision (202). Returns 202.
+   */
+  async resume(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/hitl/resume",
+      e,
+      W(t, n)
+    );
+  }
+}
+function ke(r, e) {
+  return r ? {
+    ...e ?? {},
+    headers: { ...(e == null ? void 0 : e.headers) ?? {}, "Idempotency-Key": r }
+  } : e;
+}
+class wt extends c {
+  /**
+   * POST /api/v1/integrations/hrm/relay — relay a codify-careers/HRM domain
+   * event onto the workforce/training topic exchange. `event` must match
+   * `/^(workforce|training|hrm)\./`. Returns 202 with the resolved `exchange`.
+   */
+  async relay(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/hrm/relay",
+      e,
+      ke(t, n)
+    );
+  }
+}
+function Ee(r, e) {
+  return r ? {
+    ...e ?? {},
+    headers: { ...(e == null ? void 0 : e.headers) ?? {}, "Idempotency-Key": r }
+  } : e;
+}
+class Pt extends c {
+  /**
+   * POST /api/v1/integrations/lms/grading — record a Teachify
+   * course-completion event. `score` is `between:0,1`. Returns 202;
+   * `status` is `accepted` on first write, `replayed` on a duplicate
+   * `external_enrollment_id`.
+   */
+  async submitGrading(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/lms/grading",
+      e,
+      Ee(t, n)
+    );
+  }
+}
+class At extends c {
+  /**
+   * GET /api/facilities/portfolio/rollup — the 25-row × 5-column heatmap.
+   * Always returns exactly 25 rows (padded with `{building: null}` rows when
+   * fewer buildings have signals).
+   */
+  async getPortfolioRollup() {
+    return this.get(
+      "/api/facilities/portfolio/rollup"
+    );
+  }
+  /**
+   * GET /api/facilities/themes/{theme}/signals — signals + day-bucketed
+   * time-series for one facility Path theme (`restroom`, `comfort`,
+   * `safe-path`, `rain-drainage`). Unknown / unseeded themes 404.
+   */
+  async getThemeSignals(e) {
+    return this.get(
+      `/api/facilities/themes/${encodeURIComponent(e)}/signals`
+    );
+  }
+}
+class jt extends c {
   /** GET /api/chain — list. */
   async listChains() {
     return this.get("/api/chain");
@@ -6987,7 +7518,7 @@ class Ye extends l {
     );
   }
 }
-class Ze extends l {
+class kt extends c {
   /**
    * GET /api/v1/systems/catalog — every non-generic system grouped by
    * vertical. Tenant-agnostic; `X-Domain` not required but harmless.
@@ -7025,7 +7556,7 @@ class Ze extends l {
     );
   }
 }
-class et extends l {
+class Et extends c {
   // ---------------------------------------------------------------------------
   // /api/schedule  (resource — index, store, show, update, destroy)
   // ---------------------------------------------------------------------------
@@ -7087,7 +7618,7 @@ class et extends l {
     );
   }
 }
-class tt extends l {
+class Tt extends c {
   // ---------------------------------------------------------------------------
   // /api/agent/account/*
   // ---------------------------------------------------------------------------
@@ -7173,7 +7704,7 @@ class tt extends l {
     );
   }
 }
-class nt extends l {
+class Dt extends c {
   // ---------------------------------------------------------------------------
   // /api/subproject-admin/create/subproject/{section} — fresh subproject flow.
   // ---------------------------------------------------------------------------
@@ -7267,7 +7798,7 @@ class nt extends l {
   }
 }
 const a = { auth: !1 };
-class rt extends l {
+class xt extends c {
   // ===========================================================================
   // admin-side single-resource updates
   // ===========================================================================
@@ -7935,7 +8466,7 @@ class rt extends l {
     return this.post("/api/support/error-report", e, a);
   }
 }
-class st extends l {
+class Ft extends c {
   // ---------------------------------------------------------------------------
   // Assessment lookups
   // ---------------------------------------------------------------------------
@@ -8141,24 +8672,24 @@ class st extends l {
     return this.post("/api/wizard/start", e);
   }
 }
-function I(s, e) {
-  return e == null ? `/api/project-settings/${s}` : `/api/project-settings/${s}/${encodeURIComponent(String(e))}`;
+function A(r, e) {
+  return e == null ? `/api/project-settings/${r}` : `/api/project-settings/${r}/${encodeURIComponent(String(e))}`;
 }
-function U(s, e) {
-  return e == null ? `/api/project-settings/${s}/show` : `/api/project-settings/${s}/show/${encodeURIComponent(String(e))}`;
+function j(r, e) {
+  return e == null ? `/api/project-settings/${r}/show` : `/api/project-settings/${r}/show/${encodeURIComponent(String(e))}`;
 }
-class ot extends l {
+class Lt extends c {
   // ---------------------------------------------------------------------------
   // content
   // ---------------------------------------------------------------------------
   /** GET /api/project-settings/content/show/{subproject?} */
   async showContent(e) {
-    return this.get(U("content", e));
+    return this.get(j("content", e));
   }
   /** POST /api/project-settings/content/{subproject?} */
   async saveContent(e, t) {
     return this.post(
-      I("content", t),
+      A("content", t),
       e
     );
   }
@@ -8167,12 +8698,12 @@ class ot extends l {
   // ---------------------------------------------------------------------------
   /** GET /api/project-settings/domains/show/{subproject?} */
   async showDomains(e) {
-    return this.get(U("domains", e));
+    return this.get(j("domains", e));
   }
   /** POST /api/project-settings/domains/{subproject?} */
   async saveDomains(e, t) {
     return this.post(
-      I("domains", t),
+      A("domains", t),
       e
     );
   }
@@ -8181,12 +8712,12 @@ class ot extends l {
   // ---------------------------------------------------------------------------
   /** GET /api/project-settings/layout/show/{subproject?} */
   async showLayout(e) {
-    return this.get(U("layout", e));
+    return this.get(j("layout", e));
   }
   /** POST /api/project-settings/layout/{subproject?} */
   async saveLayout(e, t) {
     return this.post(
-      I("layout", t),
+      A("layout", t),
       e
     );
   }
@@ -8195,12 +8726,12 @@ class ot extends l {
   // ---------------------------------------------------------------------------
   /** GET /api/project-settings/seo/show/{subproject?} */
   async showSeo(e) {
-    return this.get(U("seo", e));
+    return this.get(j("seo", e));
   }
   /** POST /api/project-settings/seo/{subproject?} */
   async saveSeo(e, t) {
     return this.post(
-      I("seo", t),
+      A("seo", t),
       e
     );
   }
@@ -8209,17 +8740,17 @@ class ot extends l {
   // ---------------------------------------------------------------------------
   /** GET /api/project-settings/template/show/{subproject?} */
   async showTemplate(e) {
-    return this.get(U("template", e));
+    return this.get(j("template", e));
   }
   /** POST /api/project-settings/template/{subproject?} */
   async saveTemplate(e, t) {
     return this.post(
-      I("template", t),
+      A("template", t),
       e
     );
   }
 }
-class it extends l {
+class zt extends c {
   // ---------------------------------------------------------------------------
   // /api/dashboard-program (resource — index, store, show, update, destroy)
   // ---------------------------------------------------------------------------
@@ -8273,7 +8804,7 @@ class it extends l {
     );
   }
 }
-class at extends l {
+class Mt extends c {
   /** POST /api/subproject-wizard/content/{id} */
   async wizardContent(e, t) {
     return this.post(
@@ -8317,7 +8848,7 @@ class at extends l {
     );
   }
 }
-class ct extends l {
+class _t extends c {
   // ---------------------------------------------------------------------------
   // Public / guest endpoints
   // ---------------------------------------------------------------------------
@@ -8340,9 +8871,9 @@ class ct extends l {
    * the handoff token IS the credential. Rate-limited 10/min upstream.
    */
   exchange(e, t = {}, n) {
-    const r = encodeURIComponent(e);
+    const s = encodeURIComponent(e);
     return this.post(
-      `/api/v1/intake/handoff/${r}/exchange`,
+      `/api/v1/intake/handoff/${s}/exchange`,
       t,
       { auth: !1, ...n ?? {} }
     );
@@ -8358,9 +8889,9 @@ class ct extends l {
    * automatically by `BaseApiClient` via the `hasBinary` check.
    */
   voiceRecord(e, t, n) {
-    const r = encodeURIComponent(String(e));
+    const s = encodeURIComponent(String(e));
     return this.post(
-      `/api/v1/intake/${r}/voice-record`,
+      `/api/v1/intake/${s}/voice-record`,
       t,
       n
     );
@@ -8372,9 +8903,9 @@ class ct extends l {
    * recording is done.
    */
   voiceFinalize(e, t = {}, n) {
-    const r = encodeURIComponent(String(e));
+    const s = encodeURIComponent(String(e));
     return this.post(
-      `/api/v1/intake/${r}/voice-finalize`,
+      `/api/v1/intake/${s}/voice-finalize`,
       t,
       n
     );
@@ -8384,8 +8915,8 @@ class ct extends l {
    * for the current intake. Bearer required.
    */
   submitAnswers(e, t, n) {
-    const r = encodeURIComponent(String(e));
-    return this.post(`/api/v1/intake/${r}/answers`, t, n);
+    const s = encodeURIComponent(String(e));
+    return this.post(`/api/v1/intake/${s}/answers`, t, n);
   }
   /**
    * POST `/api/v1/intake/{intake}/audience` — set the audience for the
@@ -8393,8 +8924,8 @@ class ct extends l {
    * required.
    */
   setAudience(e, t, n) {
-    const r = encodeURIComponent(String(e));
-    return this.post(`/api/v1/intake/${r}/audience`, t, n);
+    const s = encodeURIComponent(String(e));
+    return this.post(`/api/v1/intake/${s}/audience`, t, n);
   }
   /**
    * POST `/api/v1/intake/{intake}/handoff` — initiate the handoff
@@ -8403,8 +8934,8 @@ class ct extends l {
    * a public context to upgrade to a full user-bearer.
    */
   initiateHandoff(e, t = {}, n) {
-    const r = encodeURIComponent(String(e));
-    return this.post(`/api/v1/intake/${r}/handoff`, t, n);
+    const s = encodeURIComponent(String(e));
+    return this.post(`/api/v1/intake/${s}/handoff`, t, n);
   }
   /**
    * GET `/api/v1/intake/{intake}/status` — current intake progress /
@@ -8415,436 +8946,947 @@ class ct extends l {
     return this.get(`/api/v1/intake/${n}/status`, void 0, t);
   }
 }
-async function pt() {
-  var s, e;
+class Nt extends c {
+  /**
+   * `GET /api/codify-domain/by-tld/{tld}` — merged CodifyDomain payload
+   * (vocabulary + policy_boundary + substrate_systems + about_copy +
+   * kind_render). Returns 404 when the TLD has no live domain row.
+   */
+  async getDomain(e) {
+    return this.get(
+      `/api/codify-domain/by-tld/${encodeURIComponent(e)}`
+    );
+  }
+  /**
+   * `GET /api/codify-domain/{tld}/intents` — live intents for the TLD
+   * (with parent-TLD inheritance: city overlays merge their parent
+   * vertical's catalogue). The api/ envelope wraps the list as
+   * `{ intents: [...] }`; this method returns the raw envelope so the
+   * caller can choose to unwrap or treat the whole thing as the result.
+   */
+  async getIntents(e) {
+    return this.get(
+      `/api/codify-domain/${encodeURIComponent(e)}/intents`
+    );
+  }
+  /**
+   * `GET /api/codify-domain/{tld}/deal-template/{intent_slug}` — full
+   * deal template for one intent. 404 when no live template matches
+   * (the API falls back to the parent vertical's template first).
+   */
+  async getDealTemplate(e, t) {
+    return this.get(
+      `/api/codify-domain/${encodeURIComponent(e)}/deal-template/${encodeURIComponent(t)}`
+    );
+  }
+  /**
+   * `GET /api/codify-domain/{tld}/agent-profile` — bulk one-shot
+   * payload powering CI-MYC's agent page. Domain + intents + deal
+   * templates + outcome rollup + stakeholders + 20 most recent
+   * comments in one round-trip.
+   */
+  async getAgentProfile(e) {
+    return this.get(
+      `/api/codify-domain/${encodeURIComponent(e)}/agent-profile`
+    );
+  }
+  /**
+   * `GET /api/codify-domain/{tld}/comments` — list comments for the
+   * TLD, optionally narrowed to a single intent (returns intent-scoped
+   * comments PLUS domain-level comments, since domain-level notes are
+   * relevant to every intent view).
+   */
+  async listComments(e, t) {
+    const n = `/api/codify-domain/${encodeURIComponent(e)}/comments`, s = t ? `${n}?intent_slug=${encodeURIComponent(t)}` : n;
+    return this.get(s);
+  }
+  /**
+   * `POST /api/codify-domain/{tld}/comments` — author a comment.
+   * Requires sanctum auth on the api/ side; CI-MYC's caller injects
+   * the user's Bearer token via `getToken`. Returns the persisted row
+   * (wrapped as `{ comment: AgentComment }`).
+   *
+   * v1 attributes the comment to the authenticated user; agent-
+   * authored comments (machine token + `author_agent_id`) land in
+   * Phase 4 once api/ wires the agent token guard.
+   */
+  async createComment(e, t) {
+    return this.post(
+      `/api/codify-domain/${encodeURIComponent(e)}/comments`,
+      t
+    );
+  }
+}
+function I(r, e = 80) {
+  const t = (r ?? "").toString().replace(/\s+/g, " ").trim();
+  return t.length <= e ? t.replace(/"/g, "'") : `${t.slice(0, e - 1).replace(/"/g, "'")}…`;
+}
+function D(r) {
+  return r.replace(/[^A-Za-z0-9]/g, "_").replace(/^_+|_+$/g, "").slice(0, 32) || "Actor";
+}
+function Te(r) {
+  const e = /* @__PURE__ */ new Map(), t = (n, s) => {
+    if (!n) return;
+    const o = D(n);
+    e.has(o) || e.set(o, { alias: o, label: n, kind: s });
+  };
+  for (const n of r.required_stakeholders ?? []) {
+    const s = n.role || n.onet_code || "Stakeholder", o = /agent/i.test(s);
+    t(s, o ? "agent" : "human");
+  }
+  for (const n of r.required_systems ?? [])
+    t(n.abbr, "system");
+  for (const n of r.pipeline_steps ?? []) {
+    if (!n.actor) continue;
+    const s = (r.required_systems ?? []).some((i) => i.abbr === n.actor), o = /agent/i.test(n.actor);
+    t(n.actor, s ? "system" : o ? "agent" : "human");
+  }
+  return Array.from(e.values());
+}
+function De(r, e) {
+  const t = r.inputs ?? [];
+  for (const n of t) {
+    const s = n.match(/^step:(\d+)/);
+    if (s) {
+      const o = e.get(Number(s[1]));
+      if (o != null && o.actor) return D(o.actor);
+    }
+  }
+  return null;
+}
+function Bt(r) {
+  var p, l;
+  const e = [];
+  e.push("sequenceDiagram");
+  const t = I(((p = r.problem_classification) == null ? void 0 : p.summary) ?? r.intent_slug ?? "use case", 120), n = Te(r);
+  for (const u of n) {
+    const g = u.kind === "system" ? `<<sys>> ${I(u.label, 24)}` : I(u.label, 32);
+    e.push(`  participant ${u.alias} as ${g}`);
+  }
+  n.length > 0 ? e.push(`  Note over ${n[0].alias}: ${I(t, 120)}`) : e.push(`  Note left of Codify: ${I(t, 120)}`);
+  const s = /* @__PURE__ */ new Map();
+  for (const u of r.pipeline_steps ?? [])
+    typeof u.step == "number" && s.set(u.step, u);
+  const o = (r.pipeline_steps ?? []).slice().sort((u, g) => (u.step ?? 0) - (g.step ?? 0));
+  for (let u = 0; u < o.length; u++) {
+    const g = o[u];
+    if (!g.actor) continue;
+    const $ = D(g.actor), U = De(g, s) ?? (u > 0 ? D(o[u - 1].actor ?? "") : null);
+    U && U !== $ ? e.push(`  ${U}->>${$}: ${I(g.action ?? "action")}`) : U === $ ? e.push(`  ${$}->>${$}: ${I(g.action ?? "action")}`) : e.push(`  ${$}->>${$}: ${I(g.action ?? "action")}`);
+    for (const w of g.policy_checks ?? [])
+      e.push(`  Note right of ${$}: policy: ${I(w, 60)}`);
+  }
+  const i = r.success_criteria;
+  if (i != null && i.primary_metric) {
+    const u = i.verification ? ` (${i.verification})` : "", g = ((l = n[n.length - 1]) == null ? void 0 : l.alias) ?? "Codify";
+    e.push(`  Note over ${g}: ✅ ${I(i.primary_metric, 80)}${u}`);
+  }
+  return e.join(`
+`);
+}
+class Wt extends c {
+  // ===========================================================================
+  // Public helpers
+  // ===========================================================================
+  /**
+   * GET /api/codify-domain/ — list every LIVE codify domain (with live
+   * intent counts), filtered to domains that have ≥1 live intent. Anon-
+   * allowed + per-IP throttled. Body shape: `{ data: CodifyDomainListItem[] }`.
+   */
+  async listDomains() {
+    return this.get("/api/codify-domain/");
+  }
+  /**
+   * GET /api/codify-domain/{tld}/kind-render — resolved kind_render map for a
+   * TLD. `role` is silently dropped for anonymous callers (the server returns
+   * `role: null` + the base-layer map). 404 when the TLD has no live domain.
+   */
+  async getKindRender(e, t) {
+    return this.get(
+      `/api/codify-domain/${encodeURIComponent(e)}/kind-render`,
+      t
+    );
+  }
+  /**
+   * GET /api/codify/lookup/{resolver} — tenant-scoped controlled-input
+   * autocomplete. `q` + `tld` are reserved; any other query key is forwarded
+   * to the resolver backend. Unknown resolver → 404 `resolver_not_registered`;
+   * an external (paid) backend requires auth → 401 `authentication_required`.
+   * Returns `{ results, meta }`.
+   */
+  async lookup(e, t) {
+    return this.get(
+      `/api/codify/lookup/${encodeURIComponent(e)}`,
+      t
+    );
+  }
+  // ===========================================================================
+  // Admin — codify-domain
+  // ===========================================================================
+  /**
+   * GET /api/admin/codify-domain — paginated (50/page) list of domains across
+   * all statuses, optionally filtered by `status` / `tld`. Body:
+   * `{ data: AdminCodifyDomain[], total }`.
+   */
+  async adminListDomains(e) {
+    return this.get(
+      "/api/admin/codify-domain",
+      e
+    );
+  }
+  /** GET /api/admin/codify-domain/{id} — single domain (any status). */
+  async adminShowDomain(e) {
+    return this.get(
+      `/api/admin/codify-domain/${encodeURIComponent(String(e))}`
+    );
+  }
+  /**
+   * POST /api/admin/codify-domain — create a DRAFT domain. Validated against
+   * codify-domain.schema.json (422 on failure). Returns the new row (201) with
+   * `status: 'draft'` + the assigned `version`.
+   */
+  async adminCreateDomain(e) {
+    return this.post(
+      "/api/admin/codify-domain",
+      e
+    );
+  }
+  /**
+   * PUT /api/admin/codify-domain/{id} — partial edit of a DRAFT domain (409
+   * if not a draft). Sent as POST + `?_method=PUT`. The merged row must still
+   * validate (422 otherwise). Returns the refreshed row.
+   */
+  async adminUpdateDomain(e, t) {
+    return this.put(
+      `/api/admin/codify-domain/${encodeURIComponent(String(e))}`,
+      t
+    );
+  }
+  /**
+   * POST /api/admin/codify-domain/{id}/approve — promote a DRAFT to LIVE
+   * (demotes the prior live version to deprecated + fires CodifyDomainApproved).
+   * 409 if the row is not a draft. Returns the now-live row.
+   */
+  async adminApproveDomain(e) {
+    return this.post(
+      `/api/admin/codify-domain/${encodeURIComponent(String(e))}/approve`
+    );
+  }
+  /**
+   * POST /api/admin/codify-domain/{id}/revert — demote a LIVE row and restore
+   * the prior deprecated version to live. 409 if the row is not live or no
+   * prior version exists. Returns the restored (now-live) row.
+   */
+  async adminRevertDomain(e) {
+    return this.post(
+      `/api/admin/codify-domain/${encodeURIComponent(String(e))}/revert`
+    );
+  }
+  // ===========================================================================
+  // Admin — codify-intent
+  // ===========================================================================
+  /**
+   * GET /api/admin/codify-intent — paginated (50/page) list of intents,
+   * optionally filtered by `domain_id` / `tld` / `status` / `slug`. Body:
+   * `{ data: AdminCodifyIntent[], total }`.
+   */
+  async adminListIntents(e) {
+    return this.get(
+      "/api/admin/codify-intent",
+      e
+    );
+  }
+  /** GET /api/admin/codify-intent/{id} — single intent (any status). */
+  async adminShowIntent(e) {
+    return this.get(
+      `/api/admin/codify-intent/${encodeURIComponent(String(e))}`
+    );
+  }
+  /**
+   * PUT /api/admin/codify-intent/{id} — partial edit of a DRAFT intent (409
+   * if not a draft). Sent as POST + `?_method=PUT`. The merged row must still
+   * validate against codify-intent.schema.json (422 otherwise).
+   */
+  async adminUpdateIntent(e, t) {
+    return this.put(
+      `/api/admin/codify-intent/${encodeURIComponent(String(e))}`,
+      t
+    );
+  }
+  /**
+   * POST /api/admin/codify-intent/{id}/approve — promote a DRAFT intent to
+   * LIVE (demotes the prior live (tld, slug) + fires CodifyIntentApproved).
+   * 409 if not a draft.
+   */
+  async adminApproveIntent(e) {
+    return this.post(
+      `/api/admin/codify-intent/${encodeURIComponent(String(e))}/approve`
+    );
+  }
+  /**
+   * POST /api/admin/codify-intent — bulk-create intents. Each entry is
+   * validated against codify-intent.schema.json; the whole batch fails 422 on
+   * the first bad row (or 422 `No intents supplied.` on an empty array).
+   * Returns `{ created: <n> }` (201).
+   */
+  async adminBulkStoreIntents(e) {
+    return this.post(
+      "/api/admin/codify-intent",
+      e
+    );
+  }
+  // ===========================================================================
+  // Admin — codify-deal-template
+  // ===========================================================================
+  /**
+   * POST /api/admin/codify-deal-template — bulk-create deal templates. Each
+   * entry is validated against codify-deal-template.schema.json and its
+   * `(tld, intent_slug)` must resolve to an existing intent (422 otherwise).
+   * Returns `{ created: <n> }` (201).
+   */
+  async adminBulkStoreDealTemplates(e) {
+    return this.post(
+      "/api/admin/codify-deal-template",
+      e
+    );
+  }
+}
+function v(r, e) {
+  return r ? {
+    ...e ?? {},
+    headers: { ...(e == null ? void 0 : e.headers) ?? {}, "Idempotency-Key": r }
+  } : e;
+}
+class Gt extends c {
+  // ===========================================================================
+  // User upsert — IBD / PHM / MOB / NIO (AbstractUserUpsertController)
+  // ===========================================================================
+  /**
+   * POST /api/v1/integrations/ibd/users/upsert — federate an IBD (Crohnie AI)
+   * user. `external_id` is the upstream Mongo `_id`. 202 `{ user_id,
+   * external_id, source: 'ibd', status: 'linked' }`.
+   */
+  async upsertIbdUser(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/ibd/users/upsert",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/phm/users/upsert — federate a PHM user.
+   * `external_id` is the upstream MariaDB integer (as a string). 202 linked.
+   */
+  async upsertPhmUser(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/phm/users/upsert",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/mob/users/upsert — federate a MOB (Run Tracker)
+   * user. `external_id` is the device UUID. 202 linked.
+   */
+  async upsertMobUser(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/mob/users/upsert",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/nio/users/upsert — federate a NIO (NutriScan)
+   * user. `external_id` is the Firebase UID. 202 linked.
+   */
+  async upsertNioUser(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/nio/users/upsert",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/careers/users/upsert — codify-careers HRM
+   * claim-back federation upsert. At least one of `email` / `source_email`
+   * is required. 202 `{ user_id, p2x_user_id, source, status: 'linked' }`.
+   */
+  async upsertCareersUser(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/careers/users/upsert",
+      e,
+      v(t, n)
+    );
+  }
+  // ===========================================================================
+  // IBD Phase 1 event log
+  // ===========================================================================
+  /**
+   * POST /api/v1/integrations/ibd/applications — push an IBD clinical-program
+   * application. 202 `{ id, source: 'ibd', kind: 'application', status:
+   * 'accepted' }`.
+   */
+  async createIbdApplication(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/ibd/applications",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/ibd/kpi-events — push an IBD KPI event
+   * (`metric`, numeric `value`, `dimensions`, `occurred_at`). 202 accepted
+   * (kind `kpi_event`).
+   */
+  async createIbdKpiEvent(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/ibd/kpi-events",
+      e,
+      v(t, n)
+    );
+  }
+  // ===========================================================================
+  // MOB Phase 1 event log
+  // ===========================================================================
+  /**
+   * POST /api/v1/integrations/mob/activity-locations/batch — upload a batch of
+   * GPS points keyed by `device_uuid`. 202 accepted (kind `activity_location`).
+   */
+  async batchMobActivityLocations(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/mob/activity-locations/batch",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/mob/runs/complete — push a run-completion event
+   * (duration, distance, path GeoJSON). 202 accepted (kind `run_complete`).
+   */
+  async completeMobRun(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/mob/runs/complete",
+      e,
+      v(t, n)
+    );
+  }
+  // ===========================================================================
+  // NIO Phase 1 event log
+  // ===========================================================================
+  /**
+   * POST /api/v1/integrations/nio/assessments-responses — submit a completed
+   * NIO assessment (`assessment_key`, `responses`, optional `scoring`). 202
+   * accepted (kind `assessment`).
+   */
+  async createNioAssessmentResponse(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/nio/assessments-responses",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/nio/orders — push a NIO subscription/order event
+   * (`source` in {stripe,appstore,playstore}). 202 accepted (kind `order`).
+   */
+  async createNioOrder(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/nio/orders",
+      e,
+      v(t, n)
+    );
+  }
+  // ===========================================================================
+  // NIO server-authoritative coin economy
+  // ===========================================================================
+  /**
+   * POST /api/v1/integrations/nio/coins/grant — credit the authenticated
+   * user's coin balance. Returns `{ balance, transaction_id }`. The
+   * `Idempotency-Key` makes a grant replay-safe (the ledger's unique index is
+   * the durable backstop beyond the 24h cache window).
+   */
+  async grantNioCoins(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/nio/coins/grant",
+      e,
+      v(t, n)
+    );
+  }
+  /**
+   * POST /api/v1/integrations/nio/coins/spend — debit the authenticated user's
+   * coin balance. Returns `{ balance, transaction_id }`. A spend that would
+   * overdraw returns 422 `{ amount: ['Insufficient coin balance.'] }`.
+   */
+  async spendNioCoins(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/nio/coins/spend",
+      e,
+      v(t, n)
+    );
+  }
+  // ===========================================================================
+  // Token mints — unauthenticated (the endpoint's own check is the auth)
+  // ===========================================================================
+  /**
+   * POST /api/v1/integrations/nio/firebase-login — swap a Firebase ID token
+   * for a P2X Sanctum bearer. Sent WITHOUT an Authorization header by default
+   * (the Firebase signature is the authentication); the tenant still resolves
+   * from `X-Domain`, and `Idempotency-Key` makes a retried swap return the
+   * cached token instead of minting a second. Returns `{ success, message,
+   * data: { user, token } }`. A bad token → 401.
+   */
+  async nioFirebaseLogin(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/nio/firebase-login",
+      e,
+      v(t, { auth: !1, ...n ?? {} })
+    );
+  }
+  /**
+   * POST /api/v1/integrations/mob/guest-register — mint the device's FIRST
+   * Sanctum bearer from a stable `device_uuid`. Unauthenticated (no bearer);
+   * sent with `{ auth: false }` by default. Throttled + idempotent server-side
+   * (a repeat device_uuid resolves the same user). Returns
+   * `{ data: { user, token } }` — 201 on first registration, 200 on a repeat.
+   */
+  async mobGuestRegister(e, t, n) {
+    return this.post(
+      "/api/v1/integrations/mob/guest-register",
+      e,
+      v(t, { auth: !1, ...n ?? {} })
+    );
+  }
+}
+async function Vt() {
+  var r, e;
   try {
-    const t = await u.programs.getFeaturedPrograms();
+    const t = await d.programs.getFeaturedPrograms();
     if (t.data.success) {
       const n = t.data.data;
-      return console.log(`Retrieved ${n.length} featured programs`), n.forEach((r) => {
-        console.log(`Program #${r.id}: ${r.name} by ${r.author.name}`), console.log(`Price: $${r.price} | Status: ${r.status}`), console.log(`Category: ${r.category.name}`), console.log("---");
+      return console.log(`Retrieved ${n.length} featured programs`), n.forEach((s) => {
+        console.log(`Program #${s.id}: ${s.name} by ${s.author.name}`), console.log(`Price: $${s.price} | Status: ${s.status}`), console.log(`Category: ${s.category.name}`), console.log("---");
       }), n;
     } else
       return console.error("Failed to retrieve featured programs:", t.data.message), [];
   } catch (t) {
-    return console.error("Error retrieving featured programs:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message), [];
+    return console.error("Error retrieving featured programs:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message), [];
   }
 }
-async function lt() {
-  var s, e;
+async function qt() {
+  var r, e;
   try {
-    const t = await u.programs.getRecentPrograms();
+    const t = await d.programs.getRecentPrograms();
     if (t.data.success) {
       const n = t.data.data;
-      return console.log(`Retrieved ${n.length} recent programs`), n.forEach((r) => {
-        console.log(`Program #${r.id}: ${r.name} by ${r.author.name}`), console.log(`Created: ${new Date(r.createdAt).toLocaleDateString()}`), console.log("---");
+      return console.log(`Retrieved ${n.length} recent programs`), n.forEach((s) => {
+        console.log(`Program #${s.id}: ${s.name} by ${s.author.name}`), console.log(`Created: ${new Date(s.createdAt).toLocaleDateString()}`), console.log("---");
       }), n;
     } else
       return console.error("Failed to retrieve recent programs:", t.data.message), [];
   } catch (t) {
-    return console.error("Error retrieving recent programs:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message), [];
+    return console.error("Error retrieving recent programs:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message), [];
   }
 }
-async function ut(s) {
+async function Ht(r) {
   var e, t, n;
   try {
-    const r = await u.programs.getProgram(s);
-    if (r.data.success) {
-      const o = r.data.data;
+    const s = await d.programs.getProgram(r);
+    if (s.data.success) {
+      const o = s.data.data;
       return console.log(`Program #${o.id}: ${o.name}`), console.log(`Description: ${o.description}`), console.log(`Price: $${o.price}`), console.log(`Status: ${o.status}`), console.log(`Author: ${o.author.name}`), console.log(`Category: ${o.category.name}`), o;
     } else
-      return console.error("Failed to retrieve program:", r.data.message), null;
-  } catch (r) {
-    return ((e = r.response) == null ? void 0 : e.status) === 404 ? console.error(`Program #${s} not found`) : console.error("Error retrieving program:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), null;
+      return console.error("Failed to retrieve program:", s.data.message), null;
+  } catch (s) {
+    return ((e = s.response) == null ? void 0 : e.status) === 404 ? console.error(`Program #${r} not found`) : console.error("Error retrieving program:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), null;
   }
 }
-async function gt(s) {
+async function Ot(r) {
   var e, t;
   try {
-    const n = await u.programs.getProgramFeedback(s);
+    const n = await d.programs.getProgramFeedback(r);
     if (n.data.success) {
-      const r = n.data.data;
-      return console.log(`Retrieved ${r.length} feedback items for program #${s}`), r.forEach((o) => {
+      const s = n.data.data;
+      return console.log(`Retrieved ${s.length} feedback items for program #${r}`), s.forEach((o) => {
         console.log(`${o.user.name} - ${o.rating}/5 stars`), console.log(`Comment: ${o.comment}`), console.log(`Date: ${new Date(o.createdAt).toLocaleDateString()}`), console.log("---");
-      }), r;
+      }), s;
     } else
       return console.error("Failed to retrieve program feedback:", n.data.message), [];
   } catch (n) {
     return console.error("Error retrieving program feedback:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), [];
   }
 }
-async function dt(s, e) {
+async function Jt(r, e) {
   var t, n;
   try {
-    const r = await u.programs.searchPrograms(s, e);
-    if (r.data.success) {
-      const o = r.data.data;
-      return console.log(`Found ${o.length} programs matching "${s}"`), e && console.log(`Category filter: #${e}`), o.forEach((i) => {
+    const s = await d.programs.searchPrograms(r, e);
+    if (s.data.success) {
+      const o = s.data.data;
+      return console.log(`Found ${o.length} programs matching "${r}"`), e && console.log(`Category filter: #${e}`), o.forEach((i) => {
         console.log(`Program #${i.id}: ${i.name} by ${i.author.name}`), console.log(`Price: $${i.price} | Status: ${i.status}`), console.log("---");
       }), o;
     } else
-      return console.error("Search failed:", r.data.message), [];
-  } catch (r) {
-    return console.error("Error searching programs:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), [];
+      return console.error("Search failed:", s.data.message), [];
+  } catch (s) {
+    return console.error("Error searching programs:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), [];
   }
 }
-async function ht(s) {
+async function Qt(r) {
   var e, t;
   try {
-    const n = await u.programs.toggleBookmark(s);
+    const n = await d.programs.toggleBookmark(r);
     if (n.data.success) {
-      const { bookmarked: r } = n.data.data;
-      return console.log(r ? `Program #${s} has been bookmarked` : `Program #${s} has been unbookmarked`), r;
+      const { bookmarked: s } = n.data.data;
+      return console.log(s ? `Program #${r} has been bookmarked` : `Program #${r} has been unbookmarked`), s;
     } else
       return console.error("Failed to toggle bookmark:", n.data.message), !1;
   } catch (n) {
     return console.error("Error toggling bookmark:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), !1;
   }
 }
-async function mt() {
-  var s, e;
+async function Kt() {
+  var r, e;
   try {
-    const t = await u.programs.getBookmarks();
+    const t = await d.programs.getBookmarks();
     if (t.data.success) {
       const n = t.data.data;
-      return console.log(`Retrieved ${n.length} bookmarked programs`), n.forEach((r) => {
-        console.log(`Program #${r.id}: ${r.name} by ${r.author.name}`), console.log(`Price: $${r.price} | Status: ${r.status}`), console.log("---");
+      return console.log(`Retrieved ${n.length} bookmarked programs`), n.forEach((s) => {
+        console.log(`Program #${s.id}: ${s.name} by ${s.author.name}`), console.log(`Price: $${s.price} | Status: ${s.status}`), console.log("---");
       }), n;
     } else
       return console.error("Failed to retrieve bookmarks:", t.data.message), [];
   } catch (t) {
-    return console.error("Error retrieving bookmarks:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message), [];
+    return console.error("Error retrieving bookmarks:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message), [];
   }
 }
-async function yt() {
-  var s, e;
+async function Yt() {
+  var r, e;
   try {
-    const t = await u.programs.getCategories();
+    const t = await d.programs.getCategories();
     if (t.data.success) {
       const n = t.data.data;
-      console.log(`Retrieved ${n.length} program categories`), n.forEach((r) => {
-        console.log(`Category #${r.id}: ${r.name}`), r.description && console.log(`Description: ${r.description}`), r.parentId && console.log(`Parent Category: #${r.parentId}`), console.log("---");
+      console.log(`Retrieved ${n.length} program categories`), n.forEach((s) => {
+        console.log(`Category #${s.id}: ${s.name}`), s.description && console.log(`Description: ${s.description}`), s.parentId && console.log(`Parent Category: #${s.parentId}`), console.log("---");
       });
     } else
       console.error("Failed to retrieve categories:", t.data.message);
   } catch (t) {
-    console.error("Error retrieving categories:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message);
+    console.error("Error retrieving categories:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message);
   }
 }
-async function ft(s) {
+async function Xt(r) {
   var e, t;
   try {
-    const n = await u.programs.getUserPrograms(s);
+    const n = await d.programs.getUserPrograms(r);
     if (n.data.success) {
-      const r = n.data.data;
-      return console.log(`Retrieved ${r.length} programs by user #${s}`), r.forEach((o) => {
+      const s = n.data.data;
+      return console.log(`Retrieved ${s.length} programs by user #${r}`), s.forEach((o) => {
         console.log(`Program #${o.id}: ${o.name}`), console.log(`Price: $${o.price} | Status: ${o.status}`), console.log("---");
-      }), r;
+      }), s;
     } else
       return console.error("Failed to retrieve user programs:", n.data.message), [];
   } catch (n) {
     return console.error("Error retrieving user programs:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), [];
   }
 }
-async function Ct(s) {
+async function Zt(r) {
   var e, t;
   try {
-    const n = await u.programs.getUserFeaturedPrograms(s);
+    const n = await d.programs.getUserFeaturedPrograms(r);
     if (n.data.success) {
-      const r = n.data.data;
-      return console.log(`Retrieved ${r.length} featured programs by user #${s}`), r.forEach((o) => {
+      const s = n.data.data;
+      return console.log(`Retrieved ${s.length} featured programs by user #${r}`), s.forEach((o) => {
         console.log(`Program #${o.id}: ${o.name}`), console.log(`Price: $${o.price} | Status: ${o.status}`), console.log("---");
-      }), r;
+      }), s;
     } else
       return console.error("Failed to retrieve user featured programs:", n.data.message), [];
   } catch (n) {
     return console.error("Error retrieving user featured programs:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), [];
   }
 }
-async function $t() {
-  var s, e;
+async function en() {
+  var r, e;
   try {
-    const t = await u.items.getItems({
-      status: T.ACTIVE,
+    const t = await d.items.getItems({
+      status: _.ACTIVE,
       page: 1,
       perPage: 20
     });
     if (t.data.success) {
-      const { items: n, pagination: r } = t.data.data;
-      console.log(`Retrieved ${n.length} items (page ${r.currentPage} of ${r.lastPage})`), console.log(`Total items: ${r.total}`), n.forEach((o) => {
+      const { items: n, pagination: s } = t.data.data;
+      console.log(`Retrieved ${n.length} items (page ${s.currentPage} of ${s.lastPage})`), console.log(`Total items: ${s.total}`), n.forEach((o) => {
         console.log(`Item #${o.id}: ${o.name} - $${o.price} (${o.status})`);
       });
     } else
       console.error("Failed to retrieve items:", t.data.message);
   } catch (t) {
-    console.error("Error retrieving items:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message);
+    console.error("Error retrieving items:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message);
   }
 }
-async function vt(s) {
+async function tn(r) {
   var e, t, n;
   try {
-    const r = await u.items.getItem(s);
-    if (r.data.success) {
-      const o = r.data.data;
+    const s = await d.items.getItem(r);
+    if (s.data.success) {
+      const o = s.data.data;
       console.log(`Item #${o.id}: ${o.name}`), console.log(`Description: ${o.description}`), console.log(`Price: $${o.price}`), console.log(`Status: ${o.status}`), console.log(`Created: ${o.createdAt}`);
     } else
-      console.error("Failed to retrieve item:", r.data.message);
-  } catch (r) {
-    ((e = r.response) == null ? void 0 : e.status) === 404 ? console.error(`Item #${s} not found`) : console.error("Error retrieving item:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message);
+      console.error("Failed to retrieve item:", s.data.message);
+  } catch (s) {
+    ((e = s.response) == null ? void 0 : e.status) === 404 ? console.error(`Item #${r} not found`) : console.error("Error retrieving item:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message);
   }
 }
-async function St(s, e, t) {
-  var n, r, o, i;
+async function nn(r, e, t) {
+  var n, s, o, i;
   try {
-    const c = await u.items.createItem({
-      name: s,
+    const p = await d.items.createItem({
+      name: r,
       description: e,
       price: t,
-      status: T.ACTIVE
+      status: _.ACTIVE
     });
-    if (c.data.success) {
-      const p = c.data.data;
-      return console.log(`Created new item #${p.id}: ${p.name}`), p;
+    if (p.data.success) {
+      const l = p.data.data;
+      return console.log(`Created new item #${l.id}: ${l.name}`), l;
     } else
-      return console.error("Failed to create item:", c.data.message), null;
-  } catch (c) {
-    if (((n = c.response) == null ? void 0 : n.status) === 422 && ((r = c.response.data) != null && r.errors)) {
-      const p = c.response.data.errors;
-      Object.entries(p).forEach(([g, C]) => {
-        console.error(`${g}: ${C.join(", ")}`);
+      return console.error("Failed to create item:", p.data.message), null;
+  } catch (p) {
+    if (((n = p.response) == null ? void 0 : n.status) === 422 && ((s = p.response.data) != null && s.errors)) {
+      const l = p.response.data.errors;
+      Object.entries(l).forEach(([u, g]) => {
+        console.error(`${u}: ${g.join(", ")}`);
       });
     } else
-      console.error("Error creating item:", ((i = (o = c.response) == null ? void 0 : o.data) == null ? void 0 : i.message) || c.message);
+      console.error("Error creating item:", ((i = (o = p.response) == null ? void 0 : o.data) == null ? void 0 : i.message) || p.message);
     return null;
   }
 }
-async function bt(s, e) {
-  var t, n, r, o, i;
+async function rn(r, e) {
+  var t, n, s, o, i;
   try {
-    const c = await u.items.updateItem(s, e);
-    if (c.data.success) {
-      const p = c.data.data;
-      return console.log(`Updated item #${p.id}: ${p.name}`), Object.keys(e).forEach((g) => {
-        console.log(`- Updated ${g}: ${p[g]}`);
-      }), p;
+    const p = await d.items.updateItem(r, e);
+    if (p.data.success) {
+      const l = p.data.data;
+      return console.log(`Updated item #${l.id}: ${l.name}`), Object.keys(e).forEach((u) => {
+        console.log(`- Updated ${u}: ${l[u]}`);
+      }), l;
     } else
-      return console.error("Failed to update item:", c.data.message), null;
-  } catch (c) {
-    if (((t = c.response) == null ? void 0 : t.status) === 404)
-      console.error(`Item #${s} not found`);
-    else if (((n = c.response) == null ? void 0 : n.status) === 422 && ((r = c.response.data) != null && r.errors)) {
-      const p = c.response.data.errors;
-      Object.entries(p).forEach(([g, C]) => {
-        console.error(`${g}: ${C.join(", ")}`);
+      return console.error("Failed to update item:", p.data.message), null;
+  } catch (p) {
+    if (((t = p.response) == null ? void 0 : t.status) === 404)
+      console.error(`Item #${r} not found`);
+    else if (((n = p.response) == null ? void 0 : n.status) === 422 && ((s = p.response.data) != null && s.errors)) {
+      const l = p.response.data.errors;
+      Object.entries(l).forEach(([u, g]) => {
+        console.error(`${u}: ${g.join(", ")}`);
       });
     } else
-      console.error("Error updating item:", ((i = (o = c.response) == null ? void 0 : o.data) == null ? void 0 : i.message) || c.message);
+      console.error("Error updating item:", ((i = (o = p.response) == null ? void 0 : o.data) == null ? void 0 : i.message) || p.message);
     return null;
   }
 }
-async function Rt(s) {
+async function sn(r) {
   var e, t, n;
   try {
-    const r = await u.items.deleteItem(s);
-    return r.data.success ? (console.log(`Item #${s} deleted successfully`), !0) : (console.error("Failed to delete item:", r.data.message), !1);
-  } catch (r) {
-    return ((e = r.response) == null ? void 0 : e.status) === 404 ? console.error(`Item #${s} not found`) : console.error("Error deleting item:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), !1;
+    const s = await d.items.deleteItem(r);
+    return s.data.success ? (console.log(`Item #${r} deleted successfully`), !0) : (console.error("Failed to delete item:", s.data.message), !1);
+  } catch (s) {
+    return ((e = s.response) == null ? void 0 : e.status) === 404 ? console.error(`Item #${r} not found`) : console.error("Error deleting item:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), !1;
   }
 }
-async function It(s, e) {
+async function on(r, e) {
   var t, n;
   try {
-    const r = await u.items.searchItems(s, e);
-    if (r.data.success) {
-      const o = r.data.data;
-      return console.log(`Found ${o.length} items matching "${s}" (type: ${e})`), o.forEach((i) => {
+    const s = await d.items.searchItems(r, e);
+    if (s.data.success) {
+      const o = s.data.data;
+      return console.log(`Found ${o.length} items matching "${r}" (type: ${e})`), o.forEach((i) => {
         console.log(`Item #${i.id}: ${i.name} - $${i.price}`);
       }), o;
     } else
-      return console.error("Search failed:", r.data.message), [];
-  } catch (r) {
-    return console.error("Error searching items:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), [];
+      return console.error("Search failed:", s.data.message), [];
+  } catch (s) {
+    return console.error("Error searching items:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), [];
   }
 }
-async function Ut() {
-  var s, e;
+async function an() {
+  var r, e;
   try {
-    const t = await u.items.getCollections();
+    const t = await d.items.getCollections();
     if (t.data.success) {
       const n = t.data.data;
-      return console.log(`Retrieved ${n.length} collections`), n.forEach((r) => {
-        console.log(`Collection #${r.id}: ${r.name} (${r.items.length} items)`);
+      return console.log(`Retrieved ${n.length} collections`), n.forEach((s) => {
+        console.log(`Collection #${s.id}: ${s.name} (${s.items.length} items)`);
       }), n;
     } else
       return console.error("Failed to retrieve collections:", t.data.message), [];
   } catch (t) {
-    return console.error("Error retrieving collections:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message), [];
+    return console.error("Error retrieving collections:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message), [];
   }
 }
-async function wt(s, e) {
+async function cn(r, e) {
   var t, n;
   try {
-    const r = await u.items.createCollection({
-      name: s,
+    const s = await d.items.createCollection({
+      name: r,
       description: e
     });
-    if (r.data.success) {
-      const o = r.data.data;
+    if (s.data.success) {
+      const o = s.data.data;
       return console.log(`Created new collection #${o.id}: ${o.name}`), o;
     } else
-      return console.error("Failed to create collection:", r.data.message), null;
-  } catch (r) {
-    return console.error("Error creating collection:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), null;
+      return console.error("Failed to create collection:", s.data.message), null;
+  } catch (s) {
+    return console.error("Error creating collection:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), null;
   }
 }
-async function Pt(s, e) {
+async function pn(r, e) {
   var t, n;
   try {
-    const r = await u.items.addItemToCollection(s, e);
-    return r.data.success ? (console.log(`Added item #${e} to collection #${s}`), !0) : (console.error("Failed to add item to collection:", r.data.message), !1);
-  } catch (r) {
-    return console.error("Error adding item to collection:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), !1;
+    const s = await d.items.addItemToCollection(r, e);
+    return s.data.success ? (console.log(`Added item #${e} to collection #${r}`), !0) : (console.error("Failed to add item to collection:", s.data.message), !1);
+  } catch (s) {
+    return console.error("Error adding item to collection:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), !1;
   }
 }
-async function At(s) {
+async function ln(r) {
   var e, t;
   try {
-    const n = await u.items.removeItemFromCollection(s);
-    return n.data.success ? (console.log(`Removed item #${s} from collection`), !0) : (console.error("Failed to remove item from collection:", n.data.message), !1);
+    const n = await d.items.removeItemFromCollection(r);
+    return n.data.success ? (console.log(`Removed item #${r} from collection`), !0) : (console.error("Failed to remove item from collection:", n.data.message), !1);
   } catch (n) {
     return console.error("Error removing item from collection:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), !1;
   }
 }
-async function jt(s, e) {
+async function un(r, e) {
   var t, n;
   try {
-    const r = await u.auth.login({
-      email: s,
+    const s = await d.auth.login({
+      email: r,
       password: e,
       rememberMe: !0
     });
-    r.data.success ? (console.log("Login successful!"), console.log("User:", r.data.data.user), console.log("Token expires at:", r.data.data.expiresAt)) : console.error("Login failed:", r.data.message);
-  } catch (r) {
-    console.error("Login error:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message);
+    s.data.success ? (console.log("Login successful!"), console.log("User:", s.data.data.user), console.log("Token expires at:", s.data.data.expiresAt)) : console.error("Login failed:", s.data.message);
+  } catch (s) {
+    console.error("Login error:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message);
   }
 }
-async function kt(s, e, t, n) {
-  var r, o, i, c;
+async function dn(r, e, t, n) {
+  var s, o, i, p;
   try {
-    const p = await u.auth.register({
-      name: s,
+    const l = await d.auth.register({
+      name: r,
       email: e,
       password: t,
       password_confirmation: n,
       terms: !0
       // Accept terms and conditions
     });
-    p.data.success ? (console.log("Registration successful!"), console.log("User:", p.data.data.user)) : console.error("Registration failed:", p.data.message);
-  } catch (p) {
-    if (((r = p.response) == null ? void 0 : r.status) === 422 && ((o = p.response.data) != null && o.errors)) {
-      const g = p.response.data.errors;
-      Object.entries(g).forEach(([C, S]) => {
-        console.error(`${C}: ${S.join(", ")}`);
+    l.data.success ? (console.log("Registration successful!"), console.log("User:", l.data.data.user)) : console.error("Registration failed:", l.data.message);
+  } catch (l) {
+    if (((s = l.response) == null ? void 0 : s.status) === 422 && ((o = l.response.data) != null && o.errors)) {
+      const u = l.response.data.errors;
+      Object.entries(u).forEach(([g, $]) => {
+        console.error(`${g}: ${$.join(", ")}`);
       });
     } else
-      console.error("Registration error:", ((c = (i = p.response) == null ? void 0 : i.data) == null ? void 0 : c.message) || p.message);
+      console.error("Registration error:", ((p = (i = l.response) == null ? void 0 : i.data) == null ? void 0 : p.message) || l.message);
   }
 }
-async function Et() {
-  var s, e, t;
+async function gn() {
+  var r, e, t;
   try {
-    if (!u.auth.isAuthenticated()) {
+    if (!d.auth.isAuthenticated()) {
       console.log("User is not authenticated. Please login first.");
       return;
     }
-    const n = await u.auth.getCurrentUser();
+    const n = await d.auth.getCurrentUser();
     n.data.success ? console.log("Current user:", n.data.data) : console.error("Failed to get current user:", n.data.message);
   } catch (n) {
-    ((s = n.response) == null ? void 0 : s.status) === 401 ? console.error("Authentication error: Your session has expired. Please login again.") : console.error("Error getting current user:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message);
+    ((r = n.response) == null ? void 0 : r.status) === 401 ? console.error("Authentication error: Your session has expired. Please login again.") : console.error("Error getting current user:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message);
   }
 }
-async function Tt() {
-  var s, e;
+async function hn() {
+  var r, e;
   try {
-    const t = await u.auth.logout();
+    const t = await d.auth.logout();
     t.data.success ? console.log("Logout successful!") : console.error("Logout failed:", t.data.message);
   } catch (t) {
-    console.error("Logout error:", ((e = (s = t.response) == null ? void 0 : s.data) == null ? void 0 : e.message) || t.message);
+    console.error("Logout error:", ((e = (r = t.response) == null ? void 0 : r.data) == null ? void 0 : e.message) || t.message);
   }
 }
-async function Ft(s) {
+async function mn(r) {
   var e, t;
   try {
-    const n = await u.auth.requestPasswordReset({ email: s });
+    const n = await d.auth.requestPasswordReset({ email: r });
     n.data.success ? console.log("Password reset email sent!") : console.error("Password reset request failed:", n.data.message);
   } catch (n) {
     console.error("Password reset error:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message);
   }
 }
-async function Dt(s, e, t, n) {
-  var r, o;
+async function yn(r, e, t, n) {
+  var s, o;
   try {
-    const i = await u.auth.setNewPassword({
-      email: s,
+    const i = await d.auth.setNewPassword({
+      email: r,
       token: e,
       password: t,
       password_confirmation: n
     });
     i.data.success ? console.log("Password reset successful!") : console.error("Password reset failed:", i.data.message);
   } catch (i) {
-    console.error("Password reset error:", ((o = (r = i.response) == null ? void 0 : r.data) == null ? void 0 : o.message) || i.message);
+    console.error("Password reset error:", ((o = (s = i.response) == null ? void 0 : s.data) == null ? void 0 : o.message) || i.message);
   }
 }
-async function xt(s) {
+async function fn(r) {
   var e, t;
   try {
-    const n = await u.chat.getChatList(s);
+    const n = await d.chat.getChatList(r);
     if (n.data.success) {
-      const r = n.data.data;
-      return console.log(`Retrieved ${r.length} chat rooms`), r.forEach((o) => {
-        const i = o.participants.map((p) => p.name).join(", "), c = o.lastMessage ? `Last message: ${o.lastMessage.message.substring(0, 30)}${o.lastMessage.message.length > 30 ? "..." : ""}` : "No messages yet";
-        console.log(`Chat #${o.id}: ${i}`), console.log(`Type: ${o.type} | Unread: ${o.unreadCount}`), console.log(c), console.log("---");
-      }), r;
+      const s = n.data.data;
+      return console.log(`Retrieved ${s.length} chat rooms`), s.forEach((o) => {
+        const i = o.participants.map((l) => l.name).join(", "), p = o.lastMessage ? `Last message: ${o.lastMessage.message.substring(0, 30)}${o.lastMessage.message.length > 30 ? "..." : ""}` : "No messages yet";
+        console.log(`Chat #${o.id}: ${i}`), console.log(`Type: ${o.type} | Unread: ${o.unreadCount}`), console.log(p), console.log("---");
+      }), s;
     } else
       return console.error("Failed to retrieve chat rooms:", n.data.message), [];
   } catch (n) {
     return console.error("Error retrieving chat rooms:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), [];
   }
 }
-async function Lt(s) {
+async function Cn(r) {
   var e, t;
   try {
-    const n = await u.chat.getChatRoom(s);
+    const n = await d.chat.getChatRoom(r);
     if (n.data.success) {
-      const r = n.data.data, o = r.participants.map((i) => i.name).join(", ");
-      return console.log(`Chat room #${r.id} with ${o}`), console.log(`Type: ${r.type} | Created: ${new Date(r.createdAt).toLocaleDateString()}`), r;
+      const s = n.data.data, o = s.participants.map((i) => i.name).join(", ");
+      return console.log(`Chat room #${s.id} with ${o}`), console.log(`Type: ${s.type} | Created: ${new Date(s.createdAt).toLocaleDateString()}`), s;
     } else
       return console.error("Failed to retrieve chat room:", n.data.message), null;
   } catch (n) {
     return console.error("Error retrieving chat room:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), null;
   }
 }
-async function zt(s, e) {
+async function $n(r, e) {
   var t, n;
   try {
-    const r = await u.chat.getMessages(s, e);
-    if (r.data.success) {
-      const o = r.data.data;
-      return console.log(`Retrieved ${o.length} messages from chat #${s}`), o.forEach((i) => {
-        var c;
-        console.log(`${i.user.name} (${new Date(i.createdAt).toLocaleString()}):`), console.log(i.message), ((c = i.attachments) == null ? void 0 : c.length) > 0 && console.log(`Attachments: ${i.attachments.length}`), console.log("---");
+    const s = await d.chat.getMessages(r, e);
+    if (s.data.success) {
+      const o = s.data.data;
+      return console.log(`Retrieved ${o.length} messages from chat #${r}`), o.forEach((i) => {
+        var p;
+        console.log(`${i.user.name} (${new Date(i.createdAt).toLocaleString()}):`), console.log(i.message), ((p = i.attachments) == null ? void 0 : p.length) > 0 && console.log(`Attachments: ${i.attachments.length}`), console.log("---");
       }), o;
     } else
-      return console.error("Failed to retrieve chat messages:", r.data.message), [];
-  } catch (r) {
-    return console.error("Error retrieving chat messages:", ((n = (t = r.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || r.message), [];
+      return console.error("Failed to retrieve chat messages:", s.data.message), [];
+  } catch (s) {
+    return console.error("Error retrieving chat messages:", ((n = (t = s.response) == null ? void 0 : t.data) == null ? void 0 : n.message) || s.message), [];
   }
 }
-async function Mt(s, e, t) {
-  var n, r;
+async function vn(r, e, t) {
+  var n, s;
   try {
-    const o = await u.chat.sendMessage({
-      roomId: s,
+    const o = await d.chat.sendMessage({
+      roomId: r,
       message: e,
       attachments: t
     });
@@ -8854,151 +9896,163 @@ async function Mt(s, e, t) {
     } else
       return console.error("Failed to send message:", o.data.message), null;
   } catch (o) {
-    return console.error("Error sending message:", ((r = (n = o.response) == null ? void 0 : n.data) == null ? void 0 : r.message) || o.message), null;
+    return console.error("Error sending message:", ((s = (n = o.response) == null ? void 0 : n.data) == null ? void 0 : s.message) || o.message), null;
   }
 }
-async function _t(s) {
+async function Sn(r) {
   var e, t;
   try {
-    const n = await u.chat.findUserToChat(s);
+    const n = await d.chat.findUserToChat(r);
     if (n.data.success) {
-      const r = n.data.data;
-      return console.log(`Found ${r.length} users matching "${s}"`), r.forEach((o) => {
+      const s = n.data.data;
+      return console.log(`Found ${s.length} users matching "${r}"`), s.forEach((o) => {
         console.log(`User #${o.id}: ${o.name} (${o.email})`);
-      }), r;
+      }), s;
     } else
       return console.error("Failed to find users:", n.data.message), [];
   } catch (n) {
     return console.error("Error finding users:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), [];
   }
 }
-async function Bt(s) {
+async function bn(r) {
   var e, t;
   try {
-    const n = await u.chat.deleteMessage(s);
-    return n.data.success ? (console.log(`Message #${s} deleted successfully`), !0) : (console.error("Failed to delete message:", n.data.message), !1);
+    const n = await d.chat.deleteMessage(r);
+    return n.data.success ? (console.log(`Message #${r} deleted successfully`), !0) : (console.error("Failed to delete message:", n.data.message), !1);
   } catch (n) {
     return console.error("Error deleting message:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), !1;
   }
 }
-async function Nt(s) {
+async function Rn(r) {
   var e, t;
   try {
-    const n = await u.chat.deleteChat(s);
-    return n.data.success ? (console.log(`Chat #${s} deleted successfully`), !0) : (console.error("Failed to delete chat:", n.data.message), !1);
+    const n = await d.chat.deleteChat(r);
+    return n.data.success ? (console.log(`Chat #${r} deleted successfully`), !0) : (console.error("Failed to delete chat:", n.data.message), !1);
   } catch (n) {
     return console.error("Error deleting chat:", ((t = (e = n.response) == null ? void 0 : e.data) == null ? void 0 : t.message) || n.message), !1;
   }
 }
 export {
-  X as ActivityApiClient,
-  De as ActivityModuleApiClient,
-  Ee as AdminApiClient,
-  tt as AgentCommunicationApiClient,
-  Te as AgentsModuleApiClient,
-  k as ApiError,
-  Be as AppealModuleApiClient,
-  Ne as ApplicationModuleApiClient,
-  Y as AssessmentsApiClient,
-  xe as AssessmentsModuleApiClient,
-  M as AuthApiClient,
-  Ie as AuthUserApiClient,
-  l as BaseApiClient,
-  Ye as ChainApiClient,
-  Z as ChallengeApiClient,
-  Le as ChallengeModuleApiClient,
-  H as ChatApiClient,
-  Xe as CoinbaseModuleApiClient,
-  ke as CommunicationsApiClient,
-  He as ConnectorModuleApiClient,
-  it as DashboardProgramApiClient,
-  qe as DisbursementModuleApiClient,
-  ne as DomainApiClient,
-  Je as ETLModuleApiClient,
-  K as FollowUpsApiClient,
-  ze as FollowUpsModuleApiClient,
-  ct as IntakeModuleApiClient,
-  z as ItemsApiClient,
-  _e as ItemsModuleApiClient,
-  V as KPIApiClient,
-  Fe as KPIModuleApiClient,
-  rt as MiscCoreApiClient,
-  J as NotificationApiClient,
-  Q as NudgeApiClient,
-  Ke as NudgeModuleApiClient,
-  ee as OrderApiClient,
-  Me as OrderModuleApiClient,
-  te as PaymentApiClient,
-  je as PersonalChainWizardApiClient,
-  W as ProgramsApiClient,
-  Pe as ProgramsTeamApiClient,
-  ot as ProjectSettingsApiClient,
-  G as ProtocolApiClient,
-  Ae as ProtocolDomainApiClient,
-  We as ReferralModuleApiClient,
-  Ge as ReportModuleApiClient,
-  et as ScheduleApiClient,
-  Qe as ServicesModuleApiClient,
-  O as StripeApiClient,
-  nt as SubprojectAdminApiClient,
-  ae as SubprojectApiClient,
-  at as SubprojectWizardApiClient,
-  Ze as SystemsApiClient,
-  N as TeamApiClient,
-  we as TenancyApiClient,
-  B as UserApiClient,
-  Ve as VerificationModuleApiClient,
-  ie as WizardApiClient,
-  st as WizardSetupApiClient,
-  R as WizardStepExecutor,
-  Oe as WorkflowModuleApiClient,
-  Pt as addItemToCollectionExample,
-  Ce as createApiClient,
-  wt as createCollectionExample,
-  de as createFormErrors,
-  re as createGovApiClient,
-  A as createHmsApiClient,
-  St as createItemExample,
-  oe as createMfeApiClient,
-  se as createMktApiClient,
-  Nt as deleteChatExample,
-  Rt as deleteItemExample,
-  Bt as deleteMessageExample,
-  _t as findUserToChatExample,
-  mt as getBookmarksExample,
-  xt as getChatListExample,
-  zt as getChatMessagesExample,
-  Lt as getChatRoomExample,
-  Ut as getCollectionsExample,
-  Et as getCurrentUserExample,
-  he as getErrorMessage,
-  pt as getFeaturedProgramsExample,
-  vt as getItemExample,
-  $t as getItemsExample,
-  yt as getProgramCategoriesExample,
-  ut as getProgramExample,
-  gt as getProgramFeedbackExample,
-  lt as getRecentProgramsExample,
-  Ct as getUserFeaturedProgramsExample,
-  ft as getUserProgramsExample,
-  ve as govApiClient,
-  ge as handleApiCall,
-  u as hmsApiClient,
-  jt as loginExample,
-  Tt as logoutExample,
-  be as mfeApiClient,
-  Se as mktApiClient,
-  E as processApiError,
-  kt as registerExample,
-  At as removeItemFromCollectionExample,
-  Ft as requestPasswordResetExample,
-  Ue as resolveInherited,
-  It as searchItemsExample,
-  dt as searchProgramsExample,
-  Mt as sendMessageExample,
-  Dt as setNewPasswordExample,
-  ht as toggleBookmarkExample,
-  bt as updateItemExample,
-  v as wizardApiClient,
-  Re as wizardSteps
+  ye as ActivityApiClient,
+  st as ActivityModuleApiClient,
+  tt as AdminApiClient,
+  Tt as AgentCommunicationApiClient,
+  nt as AgentsModuleApiClient,
+  z as ApiError,
+  lt as AppealModuleApiClient,
+  ut as ApplicationModuleApiClient,
+  fe as AssessmentsApiClient,
+  ot as AssessmentsModuleApiClient,
+  X as AuthApiClient,
+  Je as AuthUserApiClient,
+  c as BaseApiClient,
+  jt as ChainApiClient,
+  Ce as ChallengeApiClient,
+  it as ChallengeModuleApiClient,
+  ue as ChatApiClient,
+  Wt as CodifyApiClient,
+  Nt as CodifyDomainApiClient,
+  St as CoinbaseModuleApiClient,
+  et as CommunicationsApiClient,
+  yt as ConnectorModuleApiClient,
+  zt as DashboardProgramApiClient,
+  Oe as DealWizardApiClient,
+  dt as DisbursementModuleApiClient,
+  Se as DomainApiClient,
+  ft as ETLModuleApiClient,
+  At as FacilitiesApiClient,
+  It as FailApiClient,
+  me as FollowUpsApiClient,
+  at as FollowUpsModuleApiClient,
+  bt as H5iApiClient,
+  Ut as HitlApiClient,
+  wt as HrmApiClient,
+  _t as IntakeModuleApiClient,
+  Gt as IntegrationsApiClient,
+  Y as ItemsApiClient,
+  pt as ItemsModuleApiClient,
+  le as KPIApiClient,
+  rt as KPIModuleApiClient,
+  Pt as LmsApiClient,
+  xt as MiscCoreApiClient,
+  de as NotificationApiClient,
+  he as NudgeApiClient,
+  vt as NudgeModuleApiClient,
+  $e as OrderApiClient,
+  ct as OrderModuleApiClient,
+  ve as PaymentApiClient,
+  Ze as PersonalChainWizardApiClient,
+  ce as ProgramsApiClient,
+  Ye as ProgramsTeamApiClient,
+  Lt as ProjectSettingsApiClient,
+  pe as ProtocolApiClient,
+  Xe as ProtocolDomainApiClient,
+  gt as ReferralModuleApiClient,
+  ht as ReportModuleApiClient,
+  Rt as RlhfApiClient,
+  Et as ScheduleApiClient,
+  $t as ServicesModuleApiClient,
+  ge as StripeApiClient,
+  Dt as SubprojectAdminApiClient,
+  we as SubprojectApiClient,
+  Mt as SubprojectWizardApiClient,
+  kt as SystemsApiClient,
+  ie as TeamApiClient,
+  Ke as TenancyApiClient,
+  oe as UserApiClient,
+  mt as VerificationModuleApiClient,
+  Ue as WizardApiClient,
+  Ft as WizardSetupApiClient,
+  P as WizardStepExecutor,
+  Ct as WorkflowModuleApiClient,
+  pn as addItemToCollectionExample,
+  Be as createApiClient,
+  cn as createCollectionExample,
+  Le as createFormErrors,
+  be as createGovApiClient,
+  x as createHmsApiClient,
+  nn as createItemExample,
+  Ie as createMfeApiClient,
+  Re as createMktApiClient,
+  Bt as dealTemplateToMermaid,
+  Rn as deleteChatExample,
+  sn as deleteItemExample,
+  bn as deleteMessageExample,
+  Sn as findUserToChatExample,
+  Kt as getBookmarksExample,
+  fn as getChatListExample,
+  $n as getChatMessagesExample,
+  Cn as getChatRoomExample,
+  an as getCollectionsExample,
+  gn as getCurrentUserExample,
+  ze as getErrorMessage,
+  Vt as getFeaturedProgramsExample,
+  tn as getItemExample,
+  en as getItemsExample,
+  Yt as getProgramCategoriesExample,
+  Ht as getProgramExample,
+  Ot as getProgramFeedbackExample,
+  qt as getRecentProgramsExample,
+  Zt as getUserFeaturedProgramsExample,
+  Xt as getUserProgramsExample,
+  Ge as govApiClient,
+  Fe as handleApiCall,
+  d as hmsApiClient,
+  un as loginExample,
+  hn as logoutExample,
+  qe as mfeApiClient,
+  Ve as mktApiClient,
+  M as processApiError,
+  dn as registerExample,
+  ln as removeItemFromCollectionExample,
+  mn as requestPasswordResetExample,
+  Qe as resolveInherited,
+  on as searchItemsExample,
+  Jt as searchProgramsExample,
+  vn as sendMessageExample,
+  yn as setNewPasswordExample,
+  Qt as toggleBookmarkExample,
+  rn as updateItemExample,
+  R as wizardApiClient,
+  He as wizardSteps
 };

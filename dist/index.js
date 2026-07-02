@@ -27,8 +27,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AssessmentsModuleApiClient = exports.ActivityModuleApiClient = exports.KPIModuleApiClient = exports.AgentsModuleApiClient = exports.AdminApiClient = exports.CommunicationsApiClient = exports.PersonalChainWizardApiClient = exports.ProtocolDomainApiClient = exports.ProgramsTeamApiClient = exports.TenancyApiClient = exports.resolveInherited = exports.SubprojectApiClient = exports.AuthUserApiClient = exports.getErrorMessage = exports.createFormErrors = exports.handleApiCall = exports.processApiError = exports.ApiError = exports.wizardApiClient = exports.wizardSteps = exports.WizardStepExecutor = exports.WizardApiClient = exports.PaymentApiClient = exports.OrderApiClient = exports.ChallengeApiClient = exports.AssessmentsApiClient = exports.ActivityApiClient = exports.FollowUpsApiClient = exports.NudgeApiClient = exports.StripeApiClient = exports.NotificationApiClient = exports.ChatApiClient = exports.KPIApiClient = exports.ProtocolApiClient = exports.ProgramsApiClient = exports.TeamApiClient = exports.UserApiClient = exports.DomainApiClient = exports.mfeApiClient = exports.mktApiClient = exports.govApiClient = exports.hmsApiClient = exports.createMfeApiClient = exports.createMktApiClient = exports.createGovApiClient = exports.createHmsApiClient = exports.createApiClient = exports.ItemsApiClient = exports.AuthApiClient = exports.BaseApiClient = void 0;
-exports.dealTemplateToMermaid = exports.CodifyDomainApiClient = exports.IntakeModuleApiClient = exports.SubprojectWizardApiClient = exports.DashboardProgramApiClient = exports.ProjectSettingsApiClient = exports.WizardSetupApiClient = exports.MiscCoreApiClient = exports.SubprojectAdminApiClient = exports.AgentCommunicationApiClient = exports.ScheduleApiClient = exports.SystemsApiClient = exports.ChainApiClient = exports.CoinbaseModuleApiClient = exports.NudgeModuleApiClient = exports.ServicesModuleApiClient = exports.WorkflowModuleApiClient = exports.ETLModuleApiClient = exports.ConnectorModuleApiClient = exports.VerificationModuleApiClient = exports.ReportModuleApiClient = exports.ReferralModuleApiClient = exports.DisbursementModuleApiClient = exports.ApplicationModuleApiClient = exports.AppealModuleApiClient = exports.ItemsModuleApiClient = exports.OrderModuleApiClient = exports.FollowUpsModuleApiClient = exports.ChallengeModuleApiClient = void 0;
+exports.ActivityModuleApiClient = exports.KPIModuleApiClient = exports.AgentsModuleApiClient = exports.AdminApiClient = exports.CommunicationsApiClient = exports.PersonalChainWizardApiClient = exports.ProtocolDomainApiClient = exports.ProgramsTeamApiClient = exports.TenancyApiClient = exports.resolveInherited = exports.SubprojectApiClient = exports.AuthUserApiClient = exports.getErrorMessage = exports.createFormErrors = exports.handleApiCall = exports.processApiError = exports.ApiError = exports.DealWizardApiClient = exports.wizardApiClient = exports.wizardSteps = exports.WizardStepExecutor = exports.WizardApiClient = exports.PaymentApiClient = exports.OrderApiClient = exports.ChallengeApiClient = exports.AssessmentsApiClient = exports.ActivityApiClient = exports.FollowUpsApiClient = exports.NudgeApiClient = exports.StripeApiClient = exports.NotificationApiClient = exports.ChatApiClient = exports.KPIApiClient = exports.ProtocolApiClient = exports.ProgramsApiClient = exports.TeamApiClient = exports.UserApiClient = exports.DomainApiClient = exports.mfeApiClient = exports.mktApiClient = exports.govApiClient = exports.hmsApiClient = exports.createMfeApiClient = exports.createMktApiClient = exports.createGovApiClient = exports.createHmsApiClient = exports.createApiClient = exports.ItemsApiClient = exports.AuthApiClient = exports.BaseApiClient = void 0;
+exports.IntegrationsApiClient = exports.CodifyApiClient = exports.dealTemplateToMermaid = exports.CodifyDomainApiClient = exports.IntakeModuleApiClient = exports.SubprojectWizardApiClient = exports.DashboardProgramApiClient = exports.ProjectSettingsApiClient = exports.WizardSetupApiClient = exports.MiscCoreApiClient = exports.SubprojectAdminApiClient = exports.AgentCommunicationApiClient = exports.ScheduleApiClient = exports.SystemsApiClient = exports.ChainApiClient = exports.FacilitiesApiClient = exports.LmsApiClient = exports.HrmApiClient = exports.HitlApiClient = exports.FailApiClient = exports.RlhfApiClient = exports.H5iApiClient = exports.CoinbaseModuleApiClient = exports.NudgeModuleApiClient = exports.ServicesModuleApiClient = exports.WorkflowModuleApiClient = exports.ETLModuleApiClient = exports.ConnectorModuleApiClient = exports.VerificationModuleApiClient = exports.ReportModuleApiClient = exports.ReferralModuleApiClient = exports.DisbursementModuleApiClient = exports.ApplicationModuleApiClient = exports.AppealModuleApiClient = exports.ItemsModuleApiClient = exports.OrderModuleApiClient = exports.FollowUpsModuleApiClient = exports.ChallengeModuleApiClient = exports.AssessmentsModuleApiClient = void 0;
 // =============================================================================
 // Core fetch-based client (the one the contract suite locks).
 // =============================================================================
@@ -74,6 +74,13 @@ Object.defineProperty(exports, "WizardApiClient", { enumerable: true, get: funct
 Object.defineProperty(exports, "WizardStepExecutor", { enumerable: true, get: function () { return wizard_api_client_1.WizardStepExecutor; } });
 Object.defineProperty(exports, "wizardSteps", { enumerable: true, get: function () { return wizard_api_client_1.wizardSteps; } });
 Object.defineProperty(exports, "wizardApiClient", { enumerable: true, get: function () { return wizard_api_client_1.wizardApiClient; } });
+// =============================================================================
+// Deal Runtime Wizard client — route-accurate fetch-based companion covering
+// the 17 `/api/wizard/deal/*` routes (define → verify). Preferred over the
+// legacy `WizardApiClient` for new consumers.
+// =============================================================================
+var deal_wizard_api_client_1 = require("./api/deal-wizard-api-client");
+Object.defineProperty(exports, "DealWizardApiClient", { enumerable: true, get: function () { return deal_wizard_api_client_1.DealWizardApiClient; } });
 // =============================================================================
 // Error handling — `ApiError` is a class; `processApiError` etc. are helpers.
 // =============================================================================
@@ -224,6 +231,30 @@ Object.defineProperty(exports, "NudgeModuleApiClient", { enumerable: true, get: 
 var modules_coinbase_api_client_1 = require("./api/modules-coinbase-api-client");
 Object.defineProperty(exports, "CoinbaseModuleApiClient", { enumerable: true, get: function () { return modules_coinbase_api_client_1.CoinbaseModuleApiClient; } });
 // -----------------------------------------------------------------------------
+// Phase 2 small-module slice clients (one client per Laravel module)
+// -----------------------------------------------------------------------------
+// H5i (i5h messaging protocol — deal runtime)
+var h5i_api_client_1 = require("./api/h5i-api-client");
+Object.defineProperty(exports, "H5iApiClient", { enumerable: true, get: function () { return h5i_api_client_1.H5iApiClient; } });
+// RLHF (CI-RLHF peer-service proxy)
+var rlhf_api_client_1 = require("./api/rlhf-api-client");
+Object.defineProperty(exports, "RlhfApiClient", { enumerable: true, get: function () { return rlhf_api_client_1.RlhfApiClient; } });
+// Fail (failure-recovery event log)
+var fail_api_client_1 = require("./api/fail-api-client");
+Object.defineProperty(exports, "FailApiClient", { enumerable: true, get: function () { return fail_api_client_1.FailApiClient; } });
+// Hitl (human-in-the-loop staffing / escalation)
+var hitl_api_client_1 = require("./api/hitl-api-client");
+Object.defineProperty(exports, "HitlApiClient", { enumerable: true, get: function () { return hitl_api_client_1.HitlApiClient; } });
+// Hrm (codify-careers HRM relay)
+var hrm_api_client_1 = require("./api/hrm-api-client");
+Object.defineProperty(exports, "HrmApiClient", { enumerable: true, get: function () { return hrm_api_client_1.HrmApiClient; } });
+// Lms (Teachify grading webhook)
+var lms_api_client_1 = require("./api/lms-api-client");
+Object.defineProperty(exports, "LmsApiClient", { enumerable: true, get: function () { return lms_api_client_1.LmsApiClient; } });
+// Facilities (CriticalAsset venue / location proxy)
+var facilities_api_client_1 = require("./api/facilities-api-client");
+Object.defineProperty(exports, "FacilitiesApiClient", { enumerable: true, get: function () { return facilities_api_client_1.FacilitiesApiClient; } });
+// -----------------------------------------------------------------------------
 // Gap-fill slice clients (Round 3 follow-up)
 // -----------------------------------------------------------------------------
 // chain
@@ -265,6 +296,18 @@ var codify_domain_api_client_1 = require("./api/codify-domain-api-client");
 Object.defineProperty(exports, "CodifyDomainApiClient", { enumerable: true, get: function () { return codify_domain_api_client_1.CodifyDomainApiClient; } });
 var deal_template_to_mermaid_1 = require("./utils/deal-template-to-mermaid");
 Object.defineProperty(exports, "dealTemplateToMermaid", { enumerable: true, get: function () { return deal_template_to_mermaid_1.dealTemplateToMermaid; } });
+// Codify (codification surface) client — the admin HITL CRUD/approval
+// workflow + public list/kind-render/lookup helpers that the public-read
+// `CodifyDomainApiClient` does not cover. Distinct class name to avoid the
+// existing `CodifyDomainApiClient` collision.
+var codify_api_client_1 = require("./api/codify-api-client");
+Object.defineProperty(exports, "CodifyApiClient", { enumerable: true, get: function () { return codify_api_client_1.CodifyApiClient; } });
+// Integrations (subproject federation) client — the machine-to-machine glue
+// IBD/PHM/MOB/NIO + codify-careers HRM use to write events into P2X. Writes
+// carry the subproject:writer ability + an Idempotency-Key; the two token-
+// mint endpoints (nioFirebaseLogin, mobGuestRegister) are unauthenticated.
+var integrations_api_client_1 = require("./api/integrations-api-client");
+Object.defineProperty(exports, "IntegrationsApiClient", { enumerable: true, get: function () { return integrations_api_client_1.IntegrationsApiClient; } });
 // =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).

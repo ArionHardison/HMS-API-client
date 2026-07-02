@@ -27,6 +27,7 @@
  * subclasses keep working. New behavior is additive.
  */
 import { ApiError } from './api/error-handling';
+import { assertSecureBaseURL } from './api/url-safety';
 // =============================================================================
 // BaseApiClient
 // =============================================================================
@@ -61,6 +62,9 @@ function resolveDefaultBaseURL() {
 }
 export class BaseApiClient {
     constructor(config) {
+        // Refuse a cleartext non-local baseURL (token would travel over http).
+        // String-only check — touches no browser globals, so SSR-safe.
+        assertSecureBaseURL(config.baseURL);
         this.config = config;
         // Stored verbatim — empty/undefined means "resolve per-request" (see
         // `resolveDefaultBaseURL`). We do NOT eager-resolve here because the
@@ -173,9 +177,12 @@ export class BaseApiClient {
             method = 'POST';
         }
         // ---- Header assembly --------------------------------------------------
+        // Per-call `opts.headers` (e.g. Idempotency-Key) win over both the
+        // default headers and any method-derived `init.headers`.
         const headers = {
             ...this.defaultHeaders,
             ...(init.headers || {}),
+            ...(opts.headers || {}),
         };
         // Authorization (unless explicitly opted out).
         if (opts.auth !== false) {

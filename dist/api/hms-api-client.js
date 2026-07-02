@@ -9,8 +9,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mfeApiClient = exports.mktApiClient = exports.govApiClient = exports.hmsApiClient = exports.createMfeApiClient = exports.createMktApiClient = exports.createGovApiClient = exports.createHmsApiClient = exports.DomainApiClient = exports.PaymentApiClient = exports.OrderApiClient = exports.ChallengeApiClient = exports.AssessmentsApiClient = exports.ActivityApiClient = exports.FollowUpsApiClient = exports.NudgeApiClient = exports.StripeApiClient = exports.NotificationApiClient = exports.ChatApiClient = exports.KPIApiClient = exports.ProtocolApiClient = exports.ProgramsApiClient = exports.ItemsApiClient = exports.TeamApiClient = exports.UserApiClient = exports.AuthApiClient = exports.BaseApiClient = exports.ChainStatus = exports.PaymentStatus = exports.RecommendationType = exports.TimelineEventType = exports.FollowUpStatus = exports.FollowUpType = exports.EventStatus = exports.ActivityStatus = exports.ActivityType = exports.QuestionType = exports.AssessmentStatus = exports.TaskStatus = exports.ChallengeStatus = exports.ChallengeType = exports.NudgeStatus = exports.OrderStatus = exports.ProtocolStatus = exports.ProgramStatus = exports.ItemStatus = void 0;
+exports.mfeApiClient = exports.mktApiClient = exports.govApiClient = exports.hmsApiClient = exports.createMfeApiClient = exports.createMktApiClient = exports.createGovApiClient = exports.createHmsApiClient = exports.DomainApiClient = exports.PaymentApiClient = exports.OrderApiClient = exports.ChallengeApiClient = exports.AssessmentsApiClient = exports.ActivityApiClient = exports.FollowUpsApiClient = exports.NudgeApiClient = exports.StripeApiClient = exports.NotificationApiClient = exports.ChatApiClient = exports.KPIApiClient = exports.ProtocolApiClient = exports.ProgramsApiClient = exports.ItemsApiClient = exports.TeamApiClient = exports.UserApiClient = exports.AuthApiClient = exports.BaseApiClient = exports.ChainStatus = exports.PaymentStatus = exports.RecommendationType = exports.TimelineEventType = exports.FollowUpStatus = exports.FollowUpType = exports.EventStatus = exports.ActivityStatus = exports.ActivityType = exports.QuestionType = exports.AssessmentStatus = exports.TaskStatus = exports.ChallengeStatus = exports.ChallengeType = exports.NudgeStatus = exports.OrderStatus = exports.ProtocolStatus = exports.ProgramStatus = exports.ItemStatus = exports.isRetryableRequest = void 0;
 const axios_1 = __importDefault(require("axios"));
+const url_safety_1 = require("./url-safety");
+// =================== BASE TYPES =====================
+/**
+ * Decide whether a failed request may be retried. Only idempotent methods
+ * (GET/HEAD/OPTIONS/DELETE/PUT) are retried automatically; non-idempotent
+ * POST/PATCH are retried ONLY when the caller supplied an `Idempotency-Key`,
+ * so a create/charge is never silently duplicated. A `status` of `undefined`
+ * means a network error (no response).
+ */
+function isRetryableRequest(method, status, hasIdempotencyKey) {
+    const idempotent = ['get', 'head', 'options', 'delete', 'put'].includes((method || '').toLowerCase());
+    const retryableStatus = status === undefined || status >= 500;
+    return retryableStatus && (idempotent || hasIdempotencyKey);
+}
+exports.isRetryableRequest = isRetryableRequest;
 /**
  * Item status enum
  */
@@ -209,10 +224,57 @@ var ChainStatus;
 })(ChainStatus || (exports.ChainStatus = ChainStatus = {}));
 // =================== BASE API CLIENT =====================
 /**
+ * Header names and body keys that must NEVER reach a log sink. Logging the
+ * request headers would leak the live `Authorization: Bearer <token>`; logging
+ * bodies would leak credentials/PII. Both are redacted before any console output.
+ */
+const SENSITIVE_HEADER_NAMES = ['authorization', 'cookie', 'set-cookie', 'x-tenant-id'];
+const SENSITIVE_BODY_KEYS = [
+    'password', 'password_confirmation', 'current_password',
+    'token', 'access_token', 'refresh_token', 'secret', 'client_secret', 'api_key',
+];
+/** True only where NODE_ENV is explicitly `production` (bundler/Node context). */
+function isProductionEnv() {
+    try {
+        return typeof process !== 'undefined' && !!process.env && process.env.NODE_ENV === 'production';
+    }
+    catch {
+        return false;
+    }
+}
+/** Shallow copy of headers with sensitive values masked. */
+function redactHeaders(headers) {
+    if (!headers || typeof headers !== 'object')
+        return headers;
+    const out = {};
+    for (const [k, v] of Object.entries(headers)) {
+        out[k] = SENSITIVE_HEADER_NAMES.includes(k.toLowerCase()) ? '[redacted]' : v;
+    }
+    return out;
+}
+/** Recursively mask sensitive keys in a request/response body (bounded depth). */
+function redactBody(data, depth = 0) {
+    if (depth > 4 || !data || typeof data !== 'object')
+        return data;
+    // Never traverse non-plain objects (FormData, File, Blob, streams).
+    const proto = Object.getPrototypeOf(data);
+    if (!Array.isArray(data) && proto !== Object.prototype && proto !== null)
+        return '[object]';
+    if (Array.isArray(data))
+        return data.map((v) => redactBody(v, depth + 1));
+    const out = {};
+    for (const [k, v] of Object.entries(data)) {
+        out[k] = SENSITIVE_BODY_KEYS.includes(k.toLowerCase()) ? '[redacted]' : redactBody(v, depth + 1);
+    }
+    return out;
+}
+/**
  * Base API Client class
  */
 class BaseApiClient {
     constructor(config) {
+        // Refuse a cleartext non-local baseURL — the bearer token must not travel over http.
+        (0, url_safety_1.assertSecureBaseURL)(config.baseURL);
         this.config = config;
         this.client = axios_1.default.create({
             baseURL: config.baseURL,
@@ -226,14 +288,18 @@ class BaseApiClient {
         });
         this.setupInterceptors();
     }
+    /** Logging is honored only when explicitly enabled AND not in production. */
+    get loggingEnabled() {
+        return !!this.config.enableLogging && !isProductionEnv();
+    }
     /**
      * Setup request and response interceptors
      */
     setupInterceptors() {
         // Request interceptor for authentication and tenant support
         this.client.interceptors.request.use((requestConfig) => {
-            // Add authentication token
-            const token = localStorage.getItem('auth_token');
+            // Add authentication token (SSR-safe: localStorage is absent on the server)
+            const token = typeof localStorage !== 'undefined' ? localStorage.getItem('auth_token') : null;
             if (token) {
                 requestConfig.headers.Authorization = `Bearer ${token}`;
             }
@@ -245,22 +311,23 @@ class BaseApiClient {
             if (this.config.environment) {
                 requestConfig.headers['X-Client-Environment'] = this.config.environment;
             }
-            // Log request if enabled
-            if (this.config.enableLogging) {
+            // Log request if enabled — headers/body are redacted so the bearer
+            // token and credentials never reach the console.
+            if (this.loggingEnabled) {
                 console.log(`[HMS API] ${requestConfig.method?.toUpperCase()} ${requestConfig.url}`, {
-                    headers: requestConfig.headers,
-                    data: requestConfig.data
+                    headers: redactHeaders(requestConfig.headers),
+                    data: redactBody(requestConfig.data)
                 });
             }
             return requestConfig;
         }, (error) => Promise.reject(error));
         // Response interceptor for error handling and retry logic
         this.client.interceptors.response.use((response) => {
-            // Log response if enabled
-            if (this.config.enableLogging) {
+            // Log response if enabled — body redacted (login responses carry the token).
+            if (this.loggingEnabled) {
                 console.log(`[HMS API] Response:`, {
                     status: response.status,
-                    data: response.data
+                    data: redactBody(response.data)
                 });
             }
             return response;
@@ -276,12 +343,12 @@ class BaseApiClient {
             if (this.config.enableRetry && this.shouldRetry(error)) {
                 return this.retryRequest(error);
             }
-            // Log error if enabled
-            if (this.config.enableLogging) {
+            // Log error if enabled — body redacted before output.
+            if (this.loggingEnabled) {
                 console.error(`[HMS API] Error:`, {
                     status: error.response?.status,
                     message: error.message,
-                    data: error.response?.data
+                    data: redactBody(error.response?.data)
                 });
             }
             return Promise.reject(error);
@@ -294,8 +361,11 @@ class BaseApiClient {
         if (!error.config || error.config._retryCount >= (this.config.maxRetries || 3)) {
             return false;
         }
-        // Retry on network errors or 5xx server errors
-        return !error.response || error.response.status >= 500;
+        // Only retry idempotent methods (or non-idempotent ones carrying an
+        // Idempotency-Key) so a POST/PATCH create/charge is never duplicated.
+        const headers = error.config.headers || {};
+        const hasIdempotencyKey = !!(headers['Idempotency-Key'] || headers['idempotency-key']);
+        return isRetryableRequest(error.config.method, error.response?.status, hasIdempotencyKey);
     }
     /**
      * Retry a failed request with exponential backoff

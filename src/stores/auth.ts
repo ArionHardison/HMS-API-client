@@ -11,6 +11,26 @@ import { hmsApiClient } from '../api';
 import { processApiError, getErrorMessage } from '../api/error-handling';
 import type { UserData, AuthData } from '../api/hms-api-client';
 
+// SSR-safe localStorage wrapper. Reading `localStorage` at store-setup time
+// throws during server-side rendering (no `window`); this no-ops instead so the
+// store can be instantiated on the server. Also swallows quota/security errors.
+const safeStorage = {
+  getItem(key: string): string | null {
+    const s: Storage | undefined = typeof globalThis !== 'undefined' ? (globalThis as any).localStorage : undefined;
+    try { return s ? s.getItem(key) : null; } catch { return null; }
+  },
+  setItem(key: string, value: string): void {
+    const s: Storage | undefined = typeof globalThis !== 'undefined' ? (globalThis as any).localStorage : undefined;
+    if (!s) return;
+    try { s.setItem(key, value); } catch { /* ignore quota/security errors */ }
+  },
+  removeItem(key: string): void {
+    const s: Storage | undefined = typeof globalThis !== 'undefined' ? (globalThis as any).localStorage : undefined;
+    if (!s) return;
+    try { s.removeItem(key); } catch { /* ignore */ }
+  },
+};
+
 // Extended user data interface to include permissions
 export interface ExtendedUserData extends UserData {
   permissions?: string[];
@@ -31,11 +51,11 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<ExtendedUserData | null>(null);
   const loading = ref(false);
   const error = ref<string | null>(null);
-  const token = ref<string | null>(localStorage.getItem('auth_token'));
-  const refreshToken = ref<string | null>(localStorage.getItem('refresh_token'));
+  const token = ref<string | null>(safeStorage.getItem('auth_token'));
+  const refreshToken = ref<string | null>(safeStorage.getItem('refresh_token'));
   const sessionExpiry = ref<Date | null>(
-    localStorage.getItem('session_expiry') 
-      ? new Date(localStorage.getItem('session_expiry')!) 
+    safeStorage.getItem('session_expiry') 
+      ? new Date(safeStorage.getItem('session_expiry')!) 
       : null
   );
 
@@ -94,13 +114,13 @@ export const useAuthStore = defineStore('auth', () => {
 
         // Persist to localStorage
         if (token.value) {
-          localStorage.setItem('auth_token', token.value);
+          safeStorage.setItem('auth_token', token.value);
         }
         if (refreshToken.value) {
-          localStorage.setItem('refresh_token', refreshToken.value);
+          safeStorage.setItem('refresh_token', refreshToken.value);
         }
-        localStorage.setItem('session_expiry', sessionExpiry.value.toISOString());
-        localStorage.setItem('user_data', JSON.stringify(user.value));
+        safeStorage.setItem('session_expiry', sessionExpiry.value.toISOString());
+        safeStorage.setItem('user_data', JSON.stringify(user.value));
 
         return { success: true, user: user.value };
       } else {
@@ -150,13 +170,13 @@ export const useAuthStore = defineStore('auth', () => {
 
         // Persist to localStorage
         if (token.value) {
-          localStorage.setItem('auth_token', token.value);
+          safeStorage.setItem('auth_token', token.value);
         }
         if (refreshToken.value) {
-          localStorage.setItem('refresh_token', refreshToken.value);
+          safeStorage.setItem('refresh_token', refreshToken.value);
         }
-        localStorage.setItem('session_expiry', sessionExpiry.value.toISOString());
-        localStorage.setItem('user_data', JSON.stringify(user.value));
+        safeStorage.setItem('session_expiry', sessionExpiry.value.toISOString());
+        safeStorage.setItem('user_data', JSON.stringify(user.value));
 
         return { success: true, user: user.value };
       } else {
@@ -191,10 +211,10 @@ export const useAuthStore = defineStore('auth', () => {
       sessionExpiry.value = null;
       error.value = null;
       
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('session_expiry');
-      localStorage.removeItem('user_data');
+      safeStorage.removeItem('auth_token');
+      safeStorage.removeItem('refresh_token');
+      safeStorage.removeItem('session_expiry');
+      safeStorage.removeItem('user_data');
       
       loading.value = false;
     }
@@ -226,12 +246,12 @@ export const useAuthStore = defineStore('auth', () => {
 
         // Update localStorage
         if (token.value) {
-          localStorage.setItem('auth_token', token.value);
+          safeStorage.setItem('auth_token', token.value);
         }
         if (refreshToken.value) {
-          localStorage.setItem('refresh_token', refreshToken.value);
+          safeStorage.setItem('refresh_token', refreshToken.value);
         }
-        localStorage.setItem('session_expiry', sessionExpiry.value.toISOString());
+        safeStorage.setItem('session_expiry', sessionExpiry.value.toISOString());
 
         return true;
       } else {
@@ -259,7 +279,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       if (response.data.success) {
         user.value = response.data.data;
-        localStorage.setItem('user_data', JSON.stringify(user.value));
+        safeStorage.setItem('user_data', JSON.stringify(user.value));
         return true;
       } else {
         error.value = response.data.message;
@@ -289,7 +309,7 @@ export const useAuthStore = defineStore('auth', () => {
 
       if (response.data.success) {
         user.value = { ...user.value, ...response.data.data };
-        localStorage.setItem('user_data', JSON.stringify(user.value));
+        safeStorage.setItem('user_data', JSON.stringify(user.value));
         return { success: true, user: user.value };
       } else {
         error.value = response.data.message;
@@ -332,7 +352,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // Initialize store from localStorage
   async function initializeAuth() {
-    const storedUser = localStorage.getItem('user_data');
+    const storedUser = safeStorage.getItem('user_data');
     if (storedUser && token.value) {
       try {
         user.value = JSON.parse(storedUser);

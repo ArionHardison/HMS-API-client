@@ -27,7 +27,7 @@ class Probe extends BaseApiClient {
   }
 }
 
-const probe = new Probe({ baseURL: 'http://x' });
+const probe = new Probe({ baseURL: 'https://x' });
 
 describe('hasBinary', () => {
   it('returns false for primitive trees (happy path)', () => {

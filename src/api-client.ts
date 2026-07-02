@@ -28,6 +28,7 @@
  */
 
 import { ApiError } from './api/error-handling';
+import { assertSecureBaseURL } from './api/url-safety';
 
 // =============================================================================
 // Public types
@@ -157,6 +158,9 @@ export class BaseApiClient {
   protected readonly config: ApiClientConfig;
 
   constructor(config: ApiClientConfig) {
+    // Refuse a cleartext non-local baseURL (token would travel over http).
+    // String-only check — touches no browser globals, so SSR-safe.
+    assertSecureBaseURL(config.baseURL);
     this.config = config;
     // Stored verbatim — empty/undefined means "resolve per-request" (see
     // `resolveDefaultBaseURL`). We do NOT eager-resolve here because the

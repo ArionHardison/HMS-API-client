@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://api.project20x.com",
+      "url": "https://api.openyc.org",
       "description": "Production"
     },
     {

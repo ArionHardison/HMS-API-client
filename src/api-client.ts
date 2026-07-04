@@ -62,7 +62,7 @@ export interface ApiClientConfig {
    *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom),
    *      so a deploy at `https://ycaas.ai` issues same-origin requests
    *      that a Vercel rewrite proxies to the API.
-   *   2. `https://api.project20x.com` as the SSR / Node fallback.
+   *   2. `https://api.openyc.org` as the SSR / Node fallback.
    *
    * Resolution is lazy on purpose — the constructor must not touch `window`
    * (see the SSR safety contract test). An explicit value always wins.
@@ -136,7 +136,7 @@ export interface ApiRequestOptions {
  * In a browser context (real or simulated via happy-dom/jsdom) the SDK uses
  * the current page origin, which keeps requests same-origin so cookies and
  * Vercel `vercel.json` rewrites both work without CORS. In Node / SSR there
- * is no window, so the canonical API host `https://api.project20x.com` is
+ * is no window, so the canonical API host `https://api.openyc.org` is
  * used — a reachable, TLS-terminated origin that serves `/api/*`. (The old
  * `https://codify.inc` fallback did NOT serve the API and broke SSR callers
  * such as gov; an explicit `baseURL` still always wins.)
@@ -147,7 +147,7 @@ function resolveDefaultBaseURL(): string {
   const w = (globalThis as { window?: { location?: { origin?: unknown } } }).window;
   const origin = w?.location?.origin;
   if (typeof origin === 'string' && origin.length > 0) return origin;
-  return 'https://api.project20x.com';
+  return 'https://api.openyc.org';
 }
 
 export class BaseApiClient {

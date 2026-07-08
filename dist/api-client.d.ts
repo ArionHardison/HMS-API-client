@@ -52,7 +52,7 @@ export interface ApiClientConfig {
      *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom),
      *      so a deploy at `https://ycaas.ai` issues same-origin requests
      *      that a Vercel rewrite proxies to the API.
-     *   2. `https://api.project20x.com` as the SSR / Node fallback.
+     *   2. `https://api.openyc.org` as the SSR / Node fallback.
      *
      * Resolution is lazy on purpose — the constructor must not touch `window`
      * (see the SSR safety contract test). An explicit value always wins.

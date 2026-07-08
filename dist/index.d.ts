@@ -13,6 +13,11 @@
  */
 export { BaseApiClient, AuthApiClient, ItemsApiClient, createApiClient, } from './api-client';
 export type { ApiResponse, ApiClientConfig, ApiMetaData, ApiRequestOptions, AuthData, LoginData, UserData, ItemData, ItemStatus, ItemCollectionData, FoodData, PaginatedResponse, PaginationData, } from './api-client';
+export { TypedApiClient, createTypedApiClient } from './typed-client';
+export type { TypedOperations, TypedOperationMethod } from './typed-client';
+export type { OperationId, Request, Response, RequestBody, PathParams, QueryParams, HasNoRequiredInput, } from './typed-contract';
+export { operationIndex } from './generated/operation-index';
+export type { OperationMeta, GeneratedOperationId } from './generated/operation-index';
 export { createHmsApiClient, createGovApiClient, createMktApiClient, createMfeApiClient, hmsApiClient, govApiClient, mktApiClient, mfeApiClient, DomainApiClient, UserApiClient, TeamApiClient, ProgramsApiClient, ProtocolApiClient, KPIApiClient, ChatApiClient, NotificationApiClient, StripeApiClient, NudgeApiClient, FollowUpsApiClient, ActivityApiClient, AssessmentsApiClient, ChallengeApiClient, OrderApiClient, PaymentApiClient, } from './api/hms-api-client';
 export type { HmsApiClient, ApiModule, ProgramData, ProtocolData, TeamMemberData, DomainData, } from './api/hms-api-client';
 export { WizardApiClient, WizardStepExecutor, wizardSteps, wizardApiClient } from './api/wizard-api-client';

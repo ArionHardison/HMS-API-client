@@ -1,5 +1,5 @@
 export const OpenAPI = {
-    BASE: 'https://api.project20x.com',
+    BASE: 'https://api.openyc.org',
     VERSION: '0.1.0-spec',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',

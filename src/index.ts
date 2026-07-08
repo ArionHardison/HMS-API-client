@@ -39,6 +39,25 @@ export type {
 } from './api-client';
 
 // =============================================================================
+// Typed contract layer (SRE enforcement) — operationId-keyed client + the
+// generic Request<E> / Response<E> helpers over the generated `operations`
+// map. Compile-time-strict, no `any` on the public surface.
+// =============================================================================
+export { TypedApiClient, createTypedApiClient } from './typed-client';
+export type { TypedOperations, TypedOperationMethod } from './typed-client';
+export type {
+  OperationId,
+  Request,
+  Response,
+  RequestBody,
+  PathParams,
+  QueryParams,
+  HasNoRequiredInput,
+} from './typed-contract';
+export { operationIndex } from './generated/operation-index';
+export type { OperationMeta, GeneratedOperationId } from './generated/operation-index';
+
+// =============================================================================
 // Axios-based HMS suite + domain clients.
 // =============================================================================
 export {

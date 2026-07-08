@@ -46,7 +46,7 @@ import { assertSecureBaseURL } from './api/url-safety';
  * In a browser context (real or simulated via happy-dom/jsdom) the SDK uses
  * the current page origin, which keeps requests same-origin so cookies and
  * Vercel `vercel.json` rewrites both work without CORS. In Node / SSR there
- * is no window, so the canonical API host `https://api.project20x.com` is
+ * is no window, so the canonical API host `https://api.openyc.org` is
  * used — a reachable, TLS-terminated origin that serves `/api/*`. (The old
  * `https://codify.inc` fallback did NOT serve the API and broke SSR callers
  * such as gov; an explicit `baseURL` still always wins.)
@@ -58,7 +58,7 @@ function resolveDefaultBaseURL() {
     const origin = w?.location?.origin;
     if (typeof origin === 'string' && origin.length > 0)
         return origin;
-    return 'https://api.project20x.com';
+    return 'https://api.openyc.org';
 }
 export class BaseApiClient {
     constructor(config) {

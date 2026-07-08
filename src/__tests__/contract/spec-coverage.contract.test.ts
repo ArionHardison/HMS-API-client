@@ -16,6 +16,8 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { TypedApiClient } from '../../typed-client';
+import { operationIndex } from '../../generated/operation-index';
 
 interface EndpointEntry {
   id: string;
@@ -38,18 +40,43 @@ const endpointsPath = resolve(sdkRoot, 'spec/endpoints.json');
 
 const endpoints = JSON.parse(readFileSync(endpointsPath, 'utf8')) as EndpointEntry[];
 
+/**
+ * Extract the operationId set from the GENERATED types themselves
+ * (`src/generated/api-types.ts`), by reading the keys of the top-level
+ * `operations` interface. This is the source of truth the typed layer must
+ * cover — parsed from the file so the count can't silently drift from what
+ * openapi-typescript actually emitted.
+ */
+function generatedOperationIds(): string[] {
+  const typesPath = resolve(sdkRoot, 'src/generated/api-types.ts');
+  const src = readFileSync(typesPath, 'utf8');
+  const start = src.indexOf('export interface operations {');
+  if (start === -1) throw new Error('operations interface not found in api-types.ts');
+  // The `operations` block runs to the next top-level `export` declaration.
+  const rest = src.slice(start + 'export interface operations {'.length);
+  const end = rest.search(/\nexport (?:interface|type) /);
+  const body = end === -1 ? rest : rest.slice(0, end);
+  // Operation keys sit at exactly 2-space indentation: `  "id": {`.
+  const ids = [...body.matchAll(/^ {2}"([^"]+)": \{$/gm)].map(m => m[1]);
+  return ids;
+}
+
+const GENERATED_OP_IDS = generatedOperationIds();
+const GENERATED_OP_COUNT = GENERATED_OP_IDS.length;
+
 describe('spec/endpoints.json — manifest shape lock', () => {
   it('loads as a non-empty array', () => {
     expect(Array.isArray(endpoints)).toBe(true);
     expect(endpoints.length).toBeGreaterThan(0);
   });
 
-  it('contains at least 800 entries (sanity check on manifest scale)', () => {
-    // Manifest README claims 810 entries cross-checked against
-    // `php artisan route:list --json`. Floor at 800 to allow for benign route
-    // pruning without tripping the gate; a real regression would be a much
-    // larger drop than 10.
-    expect(endpoints.length).toBeGreaterThanOrEqual(800);
+  it('matches the generated operation count (rebaselined from the 800 floor)', () => {
+    // Previously a soft `>= 800` floor. Now that the typed layer enforces
+    // 1:1 parity with the generated `operations` map, we rebaseline to the
+    // ACTUAL generated count so any drift (routes added or pruned without
+    // regenerating types) trips this gate.
+    expect(GENERATED_OP_COUNT).toBeGreaterThanOrEqual(810);
+    expect(endpoints.length).toBe(GENERATED_OP_COUNT);
   });
 
   it('every entry carries the required keys (id, module, method, uri, auth, controller)', () => {
@@ -96,9 +123,58 @@ describe('spec/endpoints.json — manifest shape lock', () => {
     expect(dupes).toEqual([]);
   });
 
-  // Placeholder for the next round: module agents will flip this from
-  // `it.todo` into a real assertion once each module's generated client is
-  // wired up. The contract: every endpoint in the manifest must be reachable
-  // via a generated method on the SDK surface.
-  it.todo('every endpoint has a generated client method');
+});
+
+// -----------------------------------------------------------------------------
+// Typed-client coverage — the enforcement contract this file was staged for.
+//
+// Previously an `it.todo`. Now REAL: every operationId in the GENERATED types
+// must (a) exist in the runtime `operationIndex`, and (b) be reachable as a
+// callable method on `TypedApiClient.ops`. `Request<E>` / `Response<E>` cover
+// every operation by construction (they are generic over `keyof operations`),
+// and the concreteness of those types is pinned separately in
+// `typed-contract.test-d.ts`.
+// -----------------------------------------------------------------------------
+describe('typed client — operationId coverage', () => {
+  // SSR-safe instantiation: no baseURL, no browser globals touched.
+  const client = new TypedApiClient();
+  const opsKeys = Object.keys(client.ops);
+  const indexKeys = Object.keys(operationIndex);
+
+  it('the generated types expose a non-trivial operation set', () => {
+    expect(GENERATED_OP_COUNT).toBeGreaterThanOrEqual(810);
+  });
+
+  it('runtime operationIndex exactly mirrors the generated operations map', () => {
+    const generated = new Set(GENERATED_OP_IDS);
+    const index = new Set(indexKeys);
+    const missingFromIndex = [...generated].filter(id => !index.has(id));
+    const extraInIndex = [...index].filter(id => !generated.has(id));
+    expect(missingFromIndex, 'ops in generated types but not in operationIndex').toEqual([]);
+    expect(extraInIndex, 'ops in operationIndex but not in generated types').toEqual([]);
+    expect(indexKeys.length).toBe(GENERATED_OP_COUNT);
+  });
+
+  it('every generated operation has a callable method on client.ops', () => {
+    const missing = GENERATED_OP_IDS.filter(
+      id => typeof (client.ops as Record<string, unknown>)[id] !== 'function',
+    );
+    expect(missing, 'generated operations with no typed-client method').toEqual([]);
+    expect(opsKeys.length).toBe(GENERATED_OP_COUNT);
+  });
+
+  it('exposes no phantom methods beyond the generated operation set', () => {
+    const generated = new Set(GENERATED_OP_IDS);
+    const extra = opsKeys.filter(id => !generated.has(id));
+    expect(extra, 'client.ops methods with no matching generated operation').toEqual([]);
+  });
+
+  it('every operationIndex entry carries a valid method + path template', () => {
+    const VALID = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']);
+    const offenders = indexKeys.filter((id) => {
+      const meta = operationIndex[id as keyof typeof operationIndex];
+      return !VALID.has(meta.method) || !meta.path.startsWith('/');
+    });
+    expect(offenders).toEqual([]);
+  });
 });

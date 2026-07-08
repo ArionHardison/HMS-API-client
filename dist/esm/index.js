@@ -16,6 +16,13 @@
 // =============================================================================
 export { BaseApiClient, AuthApiClient, ItemsApiClient, createApiClient, } from './api-client';
 // =============================================================================
+// Typed contract layer (SRE enforcement) — operationId-keyed client + the
+// generic Request<E> / Response<E> helpers over the generated `operations`
+// map. Compile-time-strict, no `any` on the public surface.
+// =============================================================================
+export { TypedApiClient, createTypedApiClient } from './typed-client';
+export { operationIndex } from './generated/operation-index';
+// =============================================================================
 // Axios-based HMS suite + domain clients.
 // =============================================================================
 export { createHmsApiClient, createGovApiClient, createMktApiClient, createMfeApiClient, hmsApiClient, govApiClient, mktApiClient, mfeApiClient, DomainApiClient, 

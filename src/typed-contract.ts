@@ -146,3 +146,28 @@ export type Response<E extends OperationId> = Op<E> extends {
       : Payload
     : unknown
   : unknown;
+
+/**
+ * The `/api/load` `base_interface` block — the render-at-root contract sys/
+ * mounts inline at `/` (reads `pairs_with`, resolves it through
+ * base-interface-components.ts, renders WITHOUT redirecting). A 5-field subset
+ * of the api's `domain_interfaces` row; `data.base_interface` is
+ * `BaseInterfacePayload | null` (null when no enabled is_base row resolves).
+ *
+ * Hand-authored (not codegen): Scramble types /api/load from live-DB model
+ * reflection and cannot reliably emit this nested block. The shape is LOCKED
+ * on the api side by a Pest resource-contract test (CI-API #2743,
+ * SubprojectBaseInterfaceTest) — SRE #2701-#2708.
+ */
+export interface BaseInterfacePayload {
+  /** domain_interfaces.id (row PK) */
+  id: number;
+  /** manifest entry id, e.g. "sales.sales-dashboard" */
+  interface_id: string;
+  /** sys page route the surface lives at; nullable */
+  page_route: string | null;
+  /** PascalCase component name (domain_interfaces.block_name) sys resolves + mounts at `/`; nullable */
+  pairs_with: string | null;
+  /** always true when present (only enabled is_base rows are emitted) */
+  is_base: true;
+}

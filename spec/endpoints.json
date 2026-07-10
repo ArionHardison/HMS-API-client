@@ -639,7 +639,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": null
+    "summary": "Paginated admin list of statistic items, newest id first. Plain\nJsonResource collection over a paginator → the resource paginated\nenvelope ({data, links, meta})"
   },
   {
     "id": "admin.statistic.show",
@@ -779,8 +779,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -796,8 +795,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -813,8 +811,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -830,8 +827,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -847,8 +843,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3211,8 +3206,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3228,8 +3222,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3245,8 +3238,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3262,8 +3254,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3279,8 +3270,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3296,8 +3286,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3313,8 +3302,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3330,8 +3318,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3347,8 +3334,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3364,8 +3350,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3381,8 +3366,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3398,8 +3382,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3415,8 +3398,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -3432,8 +3414,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -3995,8 +3976,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -4131,7 +4111,7 @@
     },
     "hasPathParams": true,
     "hasBody": false,
-    "summary": "Show a single Path by slug OR primary key. Cross-tenant readable —\nsee class docblock for rationale"
+    "summary": "Show a single Path by slug OR primary key. The public v1 route is\ncross-tenant readable; the authed legacy route is tenant-scoped —\nsee class docblock for rationale"
   },
   {
     "id": "core.path.show_0.get.v1.paths.key",
@@ -4147,7 +4127,7 @@
     },
     "hasPathParams": true,
     "hasBody": false,
-    "summary": "Show a single Path by slug OR primary key. Cross-tenant readable —\nsee class docblock for rationale"
+    "summary": "Show a single Path by slug OR primary key. The public v1 route is\ncross-tenant readable; the authed legacy route is tenant-scoped —\nsee class docblock for rationale"
   },
   {
     "id": "core.program.show_0.get.program.show.program",
@@ -4225,8 +4205,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -4825,8 +4804,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -4842,8 +4820,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -4859,8 +4836,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -4909,8 +4885,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -4926,8 +4901,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -4943,8 +4917,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -4960,8 +4933,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -4977,8 +4949,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -4994,8 +4965,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -5011,8 +4981,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -5080,7 +5049,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": null
+    "summary": "Paginated RAG datasets, newest first, optional ?status= filter. Returns\nthe raw LengthAwarePaginator envelope (response()->json($paginator)) of\nplain Dataset model rows (no Resource)"
   },
   {
     "id": "dataset.show",
@@ -5247,6 +5216,22 @@
     "summary": "GET /api/health/deals/redis — Phase-3 Redis hot-path probe"
   },
   {
+    "id": "deals.public.dispatch",
+    "module": "Modules\\Deals",
+    "method": "GET",
+    "uri": "/api/deal/{guid}/dispatch",
+    "name": "deals.public.dispatch",
+    "controller": "DealStatus",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "COT-GOV #311 — cross-surface dispatch: given a guid (spine key) and the\nsurface the visitor is currently on, decide the NEXT hop. Any surface\n(app, a codify.* system like emr.codify.healthcare, the gov CoT view)\ncan render a `/{guid}/`; only the api decides where to go next"
+  },
+  {
     "id": "deals.public.events",
     "module": "Modules\\Deals",
     "method": "GET",
@@ -5341,6 +5326,70 @@
     },
     "hasPathParams": true,
     "hasBody": true,
+    "summary": null
+  },
+  {
+    "id": "deals.steps.invoice.approve",
+    "module": "Modules\\Deals",
+    "method": "POST",
+    "uri": "/api/deals/{dealId}/steps/{stepIdx}/invoice/approve",
+    "name": "deals.steps.invoice.approve",
+    "controller": "DealStepInvoice",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": null
+  },
+  {
+    "id": "deals.steps.invoice.issue",
+    "module": "Modules\\Deals",
+    "method": "POST",
+    "uri": "/api/deals/{dealId}/steps/{stepIdx}/invoice",
+    "name": "deals.steps.invoice.issue",
+    "controller": "DealStepInvoice",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": true,
+    "summary": null
+  },
+  {
+    "id": "deals.steps.invoice.reject",
+    "module": "Modules\\Deals",
+    "method": "POST",
+    "uri": "/api/deals/{dealId}/steps/{stepIdx}/invoice/reject",
+    "name": "deals.steps.invoice.reject",
+    "controller": "DealStepInvoice",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": true,
+    "summary": null
+  },
+  {
+    "id": "deals.steps.invoice.show",
+    "module": "Modules\\Deals",
+    "method": "GET",
+    "uri": "/api/deals/{dealId}/steps/{stepIdx}/invoice",
+    "name": "deals.steps.invoice.show",
+    "controller": "DealStepInvoice",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
     "summary": null
   },
   {
@@ -5917,8 +5966,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -5950,8 +5998,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -5967,8 +6014,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -5984,8 +6030,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -6017,8 +6062,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -6542,6 +6586,86 @@
     "summary": "Subscriber VERIFICATION handshake. When a subscriber endpoint is\nsaved in the Fitbit dev console, Fitbit sends two unsigned GETs:\none with the configured verification code (must answer 204) and one\nwith a deliberately wrong code (must answer 404). Anything without\na configured code fails closed on 404"
   },
   {
+    "id": "follow-up.destroy",
+    "module": "Modules\\FollowUps",
+    "method": "DELETE",
+    "uri": "/api/follow-up/{followUp}",
+    "name": "follow-up.destroy",
+    "controller": "FollowUps",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "Delete a follow-up meeting"
+  },
+  {
+    "id": "follow-up.index",
+    "module": "Modules\\FollowUps",
+    "method": "GET",
+    "uri": "/api/follow-up",
+    "name": "follow-up.index",
+    "controller": "FollowUps",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "List the authenticated user's follow-up meetings"
+  },
+  {
+    "id": "follow-up.show",
+    "module": "Modules\\FollowUps",
+    "method": "GET",
+    "uri": "/api/follow-up/{followUp}",
+    "name": "follow-up.show",
+    "controller": "FollowUps",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "Show a follow-up meeting"
+  },
+  {
+    "id": "follow-up.store",
+    "module": "Modules\\FollowUps",
+    "method": "POST",
+    "uri": "/api/follow-up",
+    "name": "follow-up.store",
+    "controller": "FollowUps",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "Create a follow-up meeting"
+  },
+  {
+    "id": "follow-up.update",
+    "module": "Modules\\FollowUps",
+    "method": "PUT",
+    "uri": "/api/follow-up/{followUp}",
+    "name": "follow-up.update",
+    "controller": "FollowUps",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "Update a follow-up meeting"
+  },
+  {
     "id": "followUps.finalizeSpeech",
     "module": "Modules\\FollowUps",
     "method": "POST",
@@ -6778,8 +6902,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -6795,8 +6918,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -6817,6 +6939,134 @@
     "hasPathParams": false,
     "hasBody": false,
     "summary": null
+  },
+  {
+    "id": "get.api.load",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/load",
+    "name": "get.api.load",
+    "controller": "SubprojectClient",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/load — wired in routes/subproject.php:7"
+  },
+  {
+    "id": "get.api.v1.l.actions",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/actions",
+    "name": "get.api.v1.l.actions",
+    "controller": "Actions",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/actions?variant=v1 — the action list for one demo variant"
+  },
+  {
+    "id": "get.api.v1.l.datatable",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/datatable",
+    "name": "get.api.v1.l.datatable",
+    "controller": "Datatable",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/datatable?variant=v3&page=1&perPage=10 — one page of\ndatatable rows for one demo variant"
+  },
+  {
+    "id": "get.api.v1.l.list",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/list",
+    "name": "get.api.v1.l.list",
+    "controller": "List",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/list?variant=placeload-3 — the list items for one demo variant"
+  },
+  {
+    "id": "get.api.v1.l.onboarding",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/onboarding",
+    "name": "get.api.v1.l.onboarding",
+    "controller": "Onboarding",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/onboarding?variant=v2 — the onboarding flow for one demo variant"
+  },
+  {
+    "id": "get.api.v1.l.promotion",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/promotion",
+    "name": "get.api.v1.l.promotion",
+    "controller": "Promotion",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/promotion — the promotion/plan copy for /s/l/utility-promotion"
+  },
+  {
+    "id": "get.api.v1.l.search",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/search",
+    "name": "get.api.v1.l.search",
+    "controller": "Search",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/search?q&facets — the faceted search results envelope"
+  },
+  {
+    "id": "get.api.v1.l.users",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/l/users",
+    "name": "get.api.v1.l.users",
+    "controller": "Users",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/users — the user-card list for the /s/l/grid-users-1 demo grid"
   },
   {
     "id": "globalModuleTask.getTask",
@@ -7350,7 +7600,7 @@
     },
     "hasPathParams": true,
     "hasBody": false,
-    "summary": null
+    "summary": "On a valid code the visitor is 302-redirected to the subproject front\ndoor; when there is no redirect target we 200 with the attribution ack\ndescribed below. Invalid/expired → 410, malformed token → 422"
   },
   {
     "id": "gtm.unsubscribe",
@@ -7448,6 +7698,22 @@
     "hasPathParams": true,
     "hasBody": true,
     "summary": "Anonymous public-deal ENGAGEMENT — RESOLVE a pending human-in-the-loop\ngate on a published deal (CROSS-REPO PINNED CONTRACT T3.c)"
+  },
+  {
+    "id": "h5i.deals.investor-update",
+    "module": "Modules\\H5i",
+    "method": "POST",
+    "uri": "/api/h5i/deals/{guid}/update",
+    "name": "h5i.deals.investor-update",
+    "controller": "DealInvestorUpdate",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "30,1"
+    },
+    "hasPathParams": true,
+    "hasBody": true,
+    "summary": null
   },
   {
     "id": "h5i.deals.public-comment",
@@ -7633,6 +7899,22 @@
     "uri": "/api/health/deal-pipeline",
     "name": "health.dealPipelineHealth",
     "controller": "DealPipelineHealth",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "public-status"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": null
+  },
+  {
+    "id": "health.intentProgramCoverageHealth",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/health/intent-program-coverage",
+    "name": "health.intentProgramCoverageHealth",
+    "controller": "IntentProgramCoverageHealth",
     "auth": "public",
     "flags": {
       "tenant_scoped": true,
@@ -7940,8 +8222,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -8015,6 +8296,38 @@
     "hasPathParams": false,
     "hasBody": true,
     "summary": null
+  },
+  {
+    "id": "investmentGoods.basket",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/investment/goods/{goal}/basket",
+    "name": "investmentGoods.basket",
+    "controller": "InvestmentGoods",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "GET /api/v1/investment/goods/{goal}/basket — the ETF basket for one SDG"
+  },
+  {
+    "id": "investmentGoods.index",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/investment/goods",
+    "name": "investmentGoods.index",
+    "controller": "InvestmentGoods",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/investment/goods — the 17-goal picker with per-basket counts"
   },
   {
     "id": "investmentTargets.index",
@@ -8929,8 +9242,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -9475,8 +9787,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -9492,8 +9803,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -9561,6 +9871,22 @@
     },
     "hasPathParams": false,
     "hasBody": true,
+    "summary": null
+  },
+  {
+    "id": "order.deleteItemFromOrder",
+    "module": "Modules\\Order",
+    "method": "DELETE",
+    "uri": "/api/order-item/{item}",
+    "name": "order.deleteItemFromOrder",
+    "controller": "Order",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
     "summary": null
   },
   {
@@ -9770,7 +10096,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": "List Paths the authenticated user is enrolled in"
+    "summary": "List Paths the authenticated user is enrolled in (codify-launch #329)"
   },
   {
     "id": "path.store",
@@ -9900,8 +10226,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -9917,8 +10242,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -9934,8 +10258,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -9951,8 +10274,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -9968,8 +10290,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -10361,6 +10682,38 @@
     "hasPathParams": false,
     "hasBody": false,
     "summary": null
+  },
+  {
+    "id": "post.api.v1.l.actions.item",
+    "module": "core",
+    "method": "POST",
+    "uri": "/api/v1/l/actions/{id}",
+    "name": "post.api.v1.l.actions.item",
+    "controller": "Actions",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "POST /api/v1/l/actions/{id} — act on one action item"
+  },
+  {
+    "id": "post.api.v1.l.onboarding.progress",
+    "module": "core",
+    "method": "POST",
+    "uri": "/api/v1/l/onboarding/progress",
+    "name": "post.api.v1.l.onboarding.progress",
+    "controller": "Onboarding",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/onboarding/progress — record onboarding progress"
   },
   {
     "id": "program-sale.show",
@@ -12596,6 +12949,22 @@
     "summary": "POST /api/gov/ballots/{id}/vote   Body: {choice: yea|nay|abstain}"
   },
   {
+    "id": "publicDealActivity.prospects",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/public/deal-activity/prospects",
+    "name": "publicDealActivity.prospects",
+    "controller": "PublicDealActivity",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "public-feed"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/public/deal-activity/prospects — the tenant-scoped\nprospecting tour behind the app's root map. Answers \"what is this\n     * domain's agent looking into right now\": the tenant's REAL\ncodify_requests from the last 24h (kind 'deal'), padded with\nSYNTHESIZED prospect stops (kind 'prospect') when sparse so the tour\nis never dead"
+  },
+  {
     "id": "publicDealActivity.recent",
     "module": "core",
     "method": "GET",
@@ -13375,8 +13744,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -13508,8 +13876,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -13525,8 +13892,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -13542,8 +13908,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -13559,8 +13924,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -13576,8 +13940,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -13593,8 +13956,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -13781,6 +14143,22 @@
     "hasPathParams": false,
     "hasBody": true,
     "summary": null
+  },
+  {
+    "id": "socialLogin.adminAuthRegistration",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/dashboard/auth/{token}",
+    "name": "socialLogin.adminAuthRegistration",
+    "controller": "SocialLogin",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "Admin auth/registration handoff by token-in-URL"
   },
   {
     "id": "socialLogin.adminLoginBySocialToken",
@@ -14154,8 +14532,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -14171,8 +14548,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -14188,8 +14564,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -14205,8 +14580,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -14222,8 +14596,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -14239,8 +14612,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -14304,8 +14676,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -14321,8 +14692,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -14338,8 +14708,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -14355,8 +14724,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -14372,8 +14740,7 @@
     "auth": "dashboard-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SubprojectAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -14442,22 +14809,6 @@
     "hasPathParams": false,
     "hasBody": false,
     "summary": null
-  },
-  {
-    "id": "subprojectClient.load",
-    "module": "core",
-    "method": "GET",
-    "uri": "/api/load",
-    "name": "subprojectClient.load",
-    "controller": "SubprojectClient",
-    "auth": "public",
-    "flags": {
-      "tenant_scoped": true,
-      "rate_limited": "api"
-    },
-    "hasPathParams": false,
-    "hasBody": false,
-    "summary": "GET /api/load — wired in routes/subproject.php:7"
   },
   {
     "id": "subprojectClient.loadBoard",
@@ -14789,8 +15140,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -14806,8 +15156,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -14823,8 +15172,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -14840,8 +15188,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": true,
@@ -14861,7 +15208,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": null
+    "summary": "Non-paginated JsonResource collection of the grouped role-permission\ncatalogue → {data: PermissionGroup[]}"
   },
   {
     "id": "subprojectSettings.getContent",
@@ -15440,6 +15787,22 @@
     "summary": null
   },
   {
+    "id": "subprojects.getTypes",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/subproject-types",
+    "name": "subprojects.getTypes",
+    "controller": "Subprojects",
+    "auth": "dashboard-admin",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "Option list of subproject organization types"
+  },
+  {
     "id": "subprojects.getWizardStepsInstance",
     "module": "core",
     "method": "GET",
@@ -15778,6 +16141,23 @@
     "summary": null
   },
   {
+    "id": "subscription.getMySubscribers",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/subscription/get/my-subscribers",
+    "name": "subscription.getMySubscribers",
+    "controller": "Subscription",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api",
+      "verified": true
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "Retrieve the authenticated creator's subscribers (paginated) (#1662)"
+  },
+  {
     "id": "subscription.getPaymentMethod",
     "module": "core",
     "method": "GET",
@@ -16038,8 +16418,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "12,1",
-      "rbac": "SuperAdmin"
+      "rate_limited": "12,1"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -16135,8 +16514,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -16152,8 +16530,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": true,
     "hasBody": false,
@@ -16169,8 +16546,7 @@
     "auth": "user-or-admin",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": false,
@@ -17056,6 +17432,23 @@
     "summary": "If role is already assigned then role can be removed from specific user"
   },
   {
+    "id": "users.requestBecomeCreator",
+    "module": "core",
+    "method": "POST",
+    "uri": "/api/users/become-creator/{user}",
+    "name": "users.requestBecomeCreator",
+    "controller": "Users",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api",
+      "verified": true
+    },
+    "hasPathParams": true,
+    "hasBody": true,
+    "summary": "Submit a request for the authenticated user to become a creator (#1567)"
+  },
+  {
     "id": "users.restrictUser",
     "module": "core",
     "method": "POST",
@@ -17099,8 +17492,7 @@
     "auth": "user-sanctum",
     "flags": {
       "tenant_scoped": true,
-      "rate_limited": "api",
-      "rbac": "SuperAdmin"
+      "rate_limited": "api"
     },
     "hasPathParams": false,
     "hasBody": true,
@@ -17239,6 +17631,22 @@
     "hasPathParams": true,
     "hasBody": true,
     "summary": "Update user Profile"
+  },
+  {
+    "id": "v1.investments.mine",
+    "module": "core",
+    "method": "GET",
+    "uri": "/api/v1/investments/mine",
+    "name": "v1.investments.mine",
+    "controller": "Investments",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/investments/mine — the AUTHED buyer's own investment\ntop-ups, each carrying the `deal_guid` of the Deal minted for it\n(OpenYC Compute-ETF Phase 3) so the client can route to the deal's\n`/forums/deal/{guid}` thread. Only INVESTMENT top-ups (those that\nnamed target subprojects → have allocation rows) are returned; a plain\nwallet top-up is not an investment and is omitted"
   },
   {
     "id": "verification.all",
@@ -17900,6 +18308,22 @@
     "hasPathParams": true,
     "hasBody": true,
     "summary": "POST /api/wizard/resource-owner/{listing}/claim — Staffing v2: a\nworker claims a market gig slot. Delegates to GigSlotService::claim,\nwhich mutates the market wizard-invite to {source:'user', expert_id}\n(joinToProgramByToken pattern) and archives the listing; mid-program\nchains additionally get the contract notification rail. Flag-gated:\n404 when staffing v2 is off for the tenant (the listing \"doesn't\n     * exist\" as a claimable gig)"
+  },
+  {
+    "id": "wizard.resource-owner.extract-source",
+    "module": "Modules\\Agents",
+    "method": "POST",
+    "uri": "/api/wizard/resource-owner/extract-source",
+    "name": "wizard.resource-owner.extract-source",
+    "controller": "ResourceOwnerWizard",
+    "auth": "user-sanctum",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "10,1"
+    },
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/wizard/resource-owner/extract-source — E4 (epic #2830):\n\"codify my business from a URL\". Fetches the owner's public page\n(DocumentService::getContentFromUrl — the codify-pipeline URL\nfetcher), runs one temperature-0 structured extraction\n('entity-onboarding-extract'), re-validates everything server-side\n(EntityProfileExtractor — hallucinated onet codes / intent slugs are\ndiscarded) and returns a DRAFT suggestion for the owner to confirm\nin the wizard. Human-confirmed v1: this endpoint NEVER writes a\nResourceListing — store/activate stay the only writers"
   },
   {
     "id": "wizard.resource-owner.store",

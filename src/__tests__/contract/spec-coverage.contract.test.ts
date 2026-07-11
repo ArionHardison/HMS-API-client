@@ -33,7 +33,20 @@ interface EndpointEntry {
 
 const REQUIRED_KEYS = ['id', 'module', 'method', 'uri', 'auth', 'controller'] as const;
 const VALID_METHODS = new Set(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS']);
-const VALID_AUTH = new Set(['api', 'admin', 'sanctum', 'public']);
+// Auth classes are the api's `endpoint-inventory.json` vocabulary (the source
+// of truth `build-endpoints-manifest.mjs` enriches from), not the coarse
+// legacy set. See EndpointsInventoryCommand::authClass in CI-API.
+const VALID_AUTH = new Set([
+  'user-sanctum',
+  'dashboard-admin',
+  'user-or-admin',
+  'optional-auth',
+  'guest-only',
+  'webhook-signed',
+  'signed',
+  'public',
+  'unknown',
+]);
 
 const sdkRoot = resolve(__dirname, '../../..');
 const endpointsPath = resolve(sdkRoot, 'spec/endpoints.json');
@@ -101,7 +114,7 @@ describe('spec/endpoints.json — manifest shape lock', () => {
     expect(offenders.map(o => `${o.id}: ${o.method}`)).toEqual([]);
   });
 
-  it('every auth value is one of api / admin / sanctum / public', () => {
+  it('every auth value is a known api auth class', () => {
     const offenders = endpoints.filter(e => !VALID_AUTH.has(e.auth));
     expect(offenders.map(o => `${o.id}: ${o.auth}`)).toEqual([]);
   });

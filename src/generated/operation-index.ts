@@ -525,6 +525,7 @@ export const operationIndex = {
   "get.api.v1.l.tiles.posts": { method: "GET", path: "/v1/l/tiles/posts", hasPathParams: false, hasBody: false },
   "get.api.v1.l.tiles.users": { method: "GET", path: "/v1/l/tiles/users", hasPathParams: false, hasBody: false },
   "get.api.v1.l.users": { method: "GET", path: "/v1/l/users", hasPathParams: false, hasBody: false },
+  "get.api.v1.l.users.table": { method: "GET", path: "/v1/l/users/table", hasPathParams: false, hasBody: false },
   "globalModuleTask.getTask": { method: "GET", path: "/personal-chain/task/{taskId}", hasPathParams: true, hasBody: false },
   "govDirectory.agencyFooter": { method: "GET", path: "/gov/agency-footer", hasPathParams: false, hasBody: false },
   "govDirectory.cities": { method: "GET", path: "/gov/cities", hasPathParams: false, hasBody: false },

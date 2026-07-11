@@ -7966,6 +7966,19 @@
     "summary": "GET /api/v1/l/users?variant=v2&scope=team — the user-card list for\nthe /s/l/grid-users-{1..4} demo grids"
   },
   {
+    "id": "get.api.v1.l.users.table",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/users/table",
+    "name": "get.api.v1.l.users.table",
+    "controller": "Users",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/users/table?q=&start=&limit=&sort=name:asc — one\nfiltered/sorted/paged slice of the flextable demo catalog\n(SRE CI-MFE #230, /components/flextable/wrapper/async)"
+  },
+  {
     "id": "globalModuleTask.getTask",
     "module": "core",
     "method": "GET",

@@ -78509,6 +78509,90 @@
         }
       }
     },
+    "/v1/l/users/table": {
+      "get": {
+        "operationId": "get.api.v1.l.users.table",
+        "description": "Replaces the demo's dev-only json-server contract\n(`q/_start/_limit/_sort/_order` + the X-Total-Count response\nheader) with the canonical l-namespace one: `total` moves from the\nheader into the BODY, following the /api/v1/l/datatable envelope\nprecedent, because Scramble cannot type response headers and the\nSRE lock is body-shape-only.\n\nPipeline order matches json-server semantics: filter (`q`,\ncase-insensitive substring over name/bio — the demo's searchable\ncolumn filter) → sort (whole filtered catalog, #414 precedent) →\n`total` = the FILTERED count → offset/limit slice.\n\nEnvelope: { data: UserTableRow[], total: int }.",
+        "summary": "GET /api/v1/l/users/table?q=&start=&limit=&sort=name:asc — one\nfiltered/sorted/paged slice of the flextable demo catalog\n(SRE CI-MFE #230, /components/flextable/wrapper/async)",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Optional case-insensitive substring search over name/bio —\nthe wrapper's debounced searchTerm input.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Optional offset/limit pagination — the wrapper emits\nstart = (page - 1)limit.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Optional whole-catalog sort, `field:order` per the wrapper's\nsort model — the demo's three sortable columns.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name:asc",
+                "name:desc",
+                "location:asc",
+                "location:desc",
+                "position:asc",
+                "position:desc"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserTableRowResource"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
     "/v1/l/users": {
       "get": {
         "operationId": "get.api.v1.l.users",
@@ -106299,6 +106383,49 @@
           "country"
         ],
         "title": "UserSearchResultsResource"
+      },
+      "UserTableRowResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "initials": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "pic": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "badge": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "initials",
+          "location",
+          "pic",
+          "badge",
+          "position",
+          "bio"
+        ],
+        "title": "UserTableRowResource"
       },
       "UserTeamAvailableRolesResource": {
         "type": "object",

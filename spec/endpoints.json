@@ -6973,6 +6973,19 @@
     "summary": "GET /api/v1/l/actions?variant=v1 — the action list for one demo variant"
   },
   {
+    "id": "get.api.v1.l.billing",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/billing",
+    "name": "get.api.v1.l.billing",
+    "controller": "Billing",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/billing — the billing overview for /s/l/saas-billing"
+  },
+  {
     "id": "get.api.v1.l.datatable",
     "module": "core",
     "method": "GET",
@@ -7019,6 +7032,19 @@
     "hasPathParams": false,
     "hasBody": false,
     "summary": "GET /api/v1/l/onboarding?variant=v2 — the onboarding flow for one demo variant"
+  },
+  {
+    "id": "get.api.v1.l.profile.settings",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/profile/settings",
+    "name": "get.api.v1.l.profile.settings",
+    "controller": "ProfileSettings",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/profile/settings — the default demo profile settings"
   },
   {
     "id": "get.api.v1.l.promotion",
@@ -10696,7 +10722,7 @@
       "rate_limited": "api"
     },
     "hasPathParams": true,
-    "hasBody": false,
+    "hasBody": true,
     "summary": "POST /api/v1/l/actions/{id} — act on one action item"
   },
   {
@@ -10714,6 +10740,19 @@
     "hasPathParams": false,
     "hasBody": true,
     "summary": "POST /api/v1/l/onboarding/progress — record onboarding progress"
+  },
+  {
+    "id": "post.api.v1.l.profile.settings",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/profile/settings",
+    "name": "post.api.v1.l.profile.settings",
+    "controller": "ProfileSettings",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/profile/settings — save profile settings"
   },
   {
     "id": "program-sale.show",

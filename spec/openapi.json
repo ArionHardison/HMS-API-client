@@ -102,7 +102,7 @@
     "/v1/l/actions/{id}": {
       "post": {
         "operationId": "post.api.v1.l.actions.item",
-        "description": "Stateless demo write: returns the item with its state flipped to\n`done` (nothing is persisted — the catalog is static). 404 when the\nid is not in the catalog.",
+        "description": "Stateless demo write: returns the item with its state flipped to\n`done` (nothing is persisted — the catalog is static). The lookup is\nscoped to one variant's catalog (same optional `variant` param as\nindex, defaulting to v1) — 404 when the id is not in that variant.",
         "summary": "POST /api/v1/l/actions/{id} — act on one action item",
         "tags": [
           "Actions"
@@ -117,6 +117,25 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "variant": {
+                    "type": "string",
+                    "description": "Same optional page-variant filter as index — the acted-on\nitem is resolved from the RIGHT variant's catalog.",
+                    "enum": [
+                      "v1",
+                      "v2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -138,6 +157,9 @@
           },
           "404": {
             "$ref": "#/components/responses/ModelNotFoundException"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
           }
         }
       }
@@ -6212,6 +6234,35 @@
           },
           "422": {
             "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/billing": {
+      "get": {
+        "operationId": "get.api.v1.l.billing",
+        "summary": "GET /api/v1/l/billing — the billing overview for /s/l/saas-billing",
+        "tags": [
+          "Billing"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BillingOverviewResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -41515,6 +41566,130 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/v1/l/profile/settings": {
+      "get": {
+        "operationId": "get.api.v1.l.profile.settings",
+        "summary": "GET /api/v1/l/profile/settings — the default demo profile settings",
+        "tags": [
+          "ProfileSettings"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProfileSettingsResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post.api.v1.l.profile.settings",
+        "description": "Stateless demo write (same pattern as OnboardingController::progress):\nvalidates the posted settings payload — every group and every member\nis optional — and echoes the merged result (defaults ∪ posted)\nwithout persisting anything (the defaults are static).\n422 when a group is not an object, carries an unknown key, or a\nmember has the wrong type.",
+        "summary": "POST /api/v1/l/profile/settings — save profile settings",
+        "tags": [
+          "ProfileSettings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "notifications": {
+                    "type": "object",
+                    "properties": {
+                      "disable_all": {
+                        "type": "boolean"
+                      },
+                      "disable_low_priority": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "disable_all",
+                      "disable_low_priority"
+                    ]
+                  },
+                  "privacy": {
+                    "type": "object",
+                    "properties": {
+                      "partners_emails": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "partners_emails"
+                    ]
+                  },
+                  "security": {
+                    "type": "object",
+                    "properties": {
+                      "two_factor": {
+                        "type": "boolean"
+                      },
+                      "phone_number": {
+                        "type": "string",
+                        "maxLength": 32
+                      }
+                    },
+                    "required": [
+                      "two_factor",
+                      "phone_number"
+                    ]
+                  },
+                  "preferences": {
+                    "type": "object",
+                    "properties": {
+                      "marketing_emails": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "marketing_emails"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProfileSettingsResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
           }
         }
       }
@@ -80139,6 +80314,113 @@
         ],
         "title": "BecomeCreatorRequest"
       },
+      "BillingOverviewResource": {
+        "type": "object",
+        "properties": {
+          "subscription": {
+            "type": "object",
+            "properties": {
+              "plan_id": {
+                "type": "string"
+              },
+              "plan_name": {
+                "type": "string"
+              },
+              "slogan": {
+                "type": "string"
+              },
+              "price_monthly": {
+                "type": "string"
+              },
+              "price_yearly": {
+                "type": "string"
+              },
+              "cycle": {
+                "type": "string"
+              },
+              "renews_at": {
+                "type": "string"
+              },
+              "seats": {
+                "type": "integer"
+              },
+              "seats_remaining": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "plan_id",
+              "plan_name",
+              "slogan",
+              "price_monthly",
+              "price_yearly",
+              "cycle",
+              "renews_at",
+              "seats",
+              "seats_remaining"
+            ]
+          },
+          "payment_method": {
+            "type": "object",
+            "properties": {
+              "brand": {
+                "type": "string"
+              },
+              "last4": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "brand",
+              "last4",
+              "expiry",
+              "name"
+            ]
+          },
+          "invoices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "date",
+                "amount",
+                "status",
+                "url"
+              ]
+            }
+          }
+        },
+        "required": [
+          "subscription",
+          "payment_method",
+          "invoices"
+        ],
+        "title": "BillingOverviewResource"
+      },
       "BroadcastMessageRequest": {
         "type": "object",
         "properties": {
@@ -88719,6 +89001,70 @@
           "account_info"
         ],
         "title": "ProcessAchPaymentRequest"
+      },
+      "ProfileSettingsResource": {
+        "type": "object",
+        "properties": {
+          "notifications": {
+            "type": "object",
+            "properties": {
+              "disable_all": {
+                "type": "boolean"
+              },
+              "disable_low_priority": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "disable_all",
+              "disable_low_priority"
+            ]
+          },
+          "privacy": {
+            "type": "object",
+            "properties": {
+              "partners_emails": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "partners_emails"
+            ]
+          },
+          "security": {
+            "type": "object",
+            "properties": {
+              "two_factor": {
+                "type": "boolean"
+              },
+              "phone_number": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "two_factor",
+              "phone_number"
+            ]
+          },
+          "preferences": {
+            "type": "object",
+            "properties": {
+              "marketing_emails": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "marketing_emails"
+            ]
+          }
+        },
+        "required": [
+          "notifications",
+          "privacy",
+          "security",
+          "preferences"
+        ],
+        "title": "ProfileSettingsResource"
       },
       "ProgramAddTagRequest": {
         "type": "object",

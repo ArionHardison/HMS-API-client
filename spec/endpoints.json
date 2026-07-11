@@ -6226,6 +6226,19 @@
     "summary": "GET /api/facilities/assets — tenant-scoped tracked-asset list for /s/assets"
   },
   {
+    "id": "facilities.buildings.show",
+    "module": "facilities",
+    "method": "GET",
+    "uri": "/api/facilities/buildings/{id}",
+    "name": "facilities.buildings.show",
+    "controller": "Buildings",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "GET /api/facilities/buildings/{id} — tenant-scoped building detail for /building/:id"
+  },
+  {
     "id": "facilities.intake-queue.approve",
     "module": "Modules\\Facilities",
     "method": "POST",
@@ -8582,6 +8595,19 @@
     "hasPathParams": true,
     "hasBody": true,
     "summary": "Anonymous public-deal ENGAGEMENT — RESOLVE a pending human-in-the-loop\ngate on a published deal (CROSS-REPO PINNED CONTRACT T3.c)"
+  },
+  {
+    "id": "h5i.deals.index",
+    "module": "h5i",
+    "method": "GET",
+    "uri": "/api/h5i/deals",
+    "name": "h5i.deals.index",
+    "controller": "DealConversationIndex",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": null
   },
   {
     "id": "h5i.deals.investor-update",

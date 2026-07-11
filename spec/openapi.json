@@ -6616,6 +6616,48 @@
         }
       }
     },
+    "/facilities/buildings/{id}": {
+      "get": {
+        "operationId": "facilities.buildings.show",
+        "summary": "GET /api/facilities/buildings/{id} — tenant-scoped building detail for /building/:id",
+        "tags": [
+          "Buildings"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "building": {
+                      "$ref": "#/components/schemas/BuildingResource"
+                    }
+                  },
+                  "required": [
+                    "building"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundHttpException"
+          }
+        }
+      }
+    },
     "/v1/l/cards": {
       "get": {
         "operationId": "get.api.v1.l.cards",
@@ -12991,6 +13033,47 @@
           },
           "422": {
             "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/h5i/deals": {
+      "get": {
+        "operationId": "h5i.deals.index",
+        "tags": [
+          "DealConversationIndex"
+        ],
+        "parameters": [
+          {
+            "name": "subproject",
+            "in": "query",
+            "description": "?subproject is a cross-check, never an escalation: the mfe store\n always sends it, but a value naming ANOTHER tenant than the one\n the headers/host resolved must not widen the read — collapse to\n the empty envelope (indistinguishable from \"no published deals\").",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deals": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DealConversationSummaryResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "deals"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -83944,6 +84027,77 @@
         ],
         "title": "BroadcastMessageRequest"
       },
+      "BuildingResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The address_uid building key (the route id)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name — location.name off the newest structuring row, else the humanized slug"
+          },
+          "address": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Street address — location.address off the newest structuring row carrying one"
+          },
+          "work_orders": {
+            "type": "array",
+            "description": "This building's OPEN work orders — the facilities.work-orders.index row shape",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "building_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reported_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "confidence_label": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "summary",
+                "status",
+                "building_id",
+                "reported_at",
+                "confidence_label"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "address",
+          "work_orders"
+        ],
+        "title": "BuildingResource"
+      },
       "BuyProgramResource": {
         "type": "object",
         "properties": {
@@ -87668,6 +87822,88 @@
           "requirements"
         ],
         "title": "DatatableRowResource"
+      },
+      "DealConversationSummaryResource": {
+        "type": "object",
+        "properties": {
+          "deal_guid": {
+            "type": "string",
+            "description": "Deal guid (uuid of deal_instances.id) — the mfe's conversation routing key"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Best-effort deal title (problem statement → matched-path title → task label); null when nothing resolves"
+          },
+          "last_message_preview": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Redacted body of the newest message on the deal thread, truncated; null when the thread is empty"
+          },
+          "participants": {
+            "type": "array",
+            "description": "Deal roster mapped from the DealMetaResolver agents block",
+            "items": {
+              "type": "object",
+              "properties": {
+                "agent_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "avatar": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "agent_id",
+                "name",
+                "avatar"
+              ]
+            }
+          },
+          "lifecycle": {
+            "type": "string",
+            "description": "Deal orchestrator state (analyzing → codified → setup → executing → verifying → completed|failed); 'unknown' when no Deal row resolves"
+          },
+          "message_count": {
+            "type": "integer",
+            "description": "Count of h5i messages on the deal:{guid} channel, tenant-scoped"
+          },
+          "avatar": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Reserved per-deal avatar URL (no source yet — the mfe falls back to its placeholder)"
+          },
+          "unreadMessages": {
+            "type": "boolean",
+            "description": "Unread flag — camelCase by mfe contract; always false (anonymous surface has no read cursor)"
+          }
+        },
+        "required": [
+          "deal_guid",
+          "title",
+          "last_message_preview",
+          "participants",
+          "lifecycle",
+          "message_count",
+          "avatar",
+          "unreadMessages"
+        ],
+        "title": "DealConversationSummaryResource"
       },
       "DealEconomicScore": {
         "type": "object",

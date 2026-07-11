@@ -6974,16 +6974,32 @@
   },
   {
     "id": "get.api.v1.l.billing",
-    "module": "get",
+    "module": "core",
     "method": "GET",
     "uri": "/api/v1/l/billing",
     "name": "get.api.v1.l.billing",
     "controller": "Billing",
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/billing — the billing overview for /s/l/saas-billing"
+  },
+  {
+    "id": "get.api.v1.l.cards",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/cards",
+    "name": "get.api.v1.l.cards",
+    "controller": "Cards",
     "auth": "unknown",
     "flags": {},
     "hasPathParams": false,
     "hasBody": false,
-    "summary": "GET /api/v1/l/billing — the billing overview for /s/l/saas-billing"
+    "summary": "GET /api/v1/l/cards?variant=v3 — the project-card grid for one demo variant"
   },
   {
     "id": "get.api.v1.l.datatable",
@@ -6999,7 +7015,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": "GET /api/v1/l/datatable?variant=v3&page=1&perPage=10 — one page of\ndatatable rows for one demo variant"
+    "summary": "GET /api/v1/l/datatable?variant=v3&page=1&perPage=10&sort=title — one\npage of datatable rows for one demo variant, optionally sorted by\ntitle before pagination"
   },
   {
     "id": "get.api.v1.l.list",
@@ -7015,7 +7031,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": "GET /api/v1/l/list?variant=placeload-3 — the list items for one demo variant"
+    "summary": "GET /api/v1/l/list?variant=list-view-4&scope=saved — the list items for one demo variant"
   },
   {
     "id": "get.api.v1.l.onboarding",
@@ -7035,13 +7051,16 @@
   },
   {
     "id": "get.api.v1.l.profile.settings",
-    "module": "get",
+    "module": "core",
     "method": "GET",
     "uri": "/api/v1/l/profile/settings",
     "name": "get.api.v1.l.profile.settings",
     "controller": "ProfileSettings",
-    "auth": "unknown",
-    "flags": {},
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
     "hasPathParams": false,
     "hasBody": false,
     "summary": "GET /api/v1/l/profile/settings — the default demo profile settings"
@@ -7079,6 +7098,45 @@
     "summary": "GET /api/v1/l/search?q&facets — the faceted search results envelope"
   },
   {
+    "id": "get.api.v1.l.tiles.files",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/tiles/files",
+    "name": "get.api.v1.l.tiles.files",
+    "controller": "Tiles",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/tiles/files — the file-tile list for the /s/l/grid-tiles-2 demo grid"
+  },
+  {
+    "id": "get.api.v1.l.tiles.posts",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/tiles/posts",
+    "name": "get.api.v1.l.tiles.posts",
+    "controller": "Tiles",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/tiles/posts — the post-tile list for the /s/l/grid-tiles-3 demo grid"
+  },
+  {
+    "id": "get.api.v1.l.tiles.users",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/tiles/users",
+    "name": "get.api.v1.l.tiles.users",
+    "controller": "Tiles",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/tiles/users — the user-tile list for the /s/l/grid-tiles-1 demo grid"
+  },
+  {
     "id": "get.api.v1.l.users",
     "module": "core",
     "method": "GET",
@@ -7092,7 +7150,7 @@
     },
     "hasPathParams": false,
     "hasBody": false,
-    "summary": "GET /api/v1/l/users — the user-card list for the /s/l/grid-users-1 demo grid"
+    "summary": "GET /api/v1/l/users?variant=v2&scope=team — the user-card list for\nthe /s/l/grid-users-{1..4} demo grids"
   },
   {
     "id": "globalModuleTask.getTask",
@@ -10726,6 +10784,32 @@
     "summary": "POST /api/v1/l/actions/{id} — act on one action item"
   },
   {
+    "id": "post.api.v1.l.forms.item",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/forms/{key}",
+    "name": "post.api.v1.l.forms.item",
+    "controller": "Forms",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/forms/{key} — submit one demo form"
+  },
+  {
+    "id": "post.api.v1.l.onboarding.complete",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/onboarding/complete",
+    "name": "post.api.v1.l.onboarding.complete",
+    "controller": "Onboarding",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/onboarding/complete — mark an onboarding flow completed\n(SRE CI-MFE #412, /s/l/onboarding-welcome)"
+  },
+  {
     "id": "post.api.v1.l.onboarding.progress",
     "module": "core",
     "method": "POST",
@@ -10743,13 +10827,16 @@
   },
   {
     "id": "post.api.v1.l.profile.settings",
-    "module": "post",
+    "module": "core",
     "method": "POST",
     "uri": "/api/v1/l/profile/settings",
     "name": "post.api.v1.l.profile.settings",
     "controller": "ProfileSettings",
-    "auth": "unknown",
-    "flags": {},
+    "auth": "public",
+    "flags": {
+      "tenant_scoped": true,
+      "rate_limited": "api"
+    },
     "hasPathParams": false,
     "hasBody": true,
     "summary": "POST /api/v1/l/profile/settings — save profile settings"

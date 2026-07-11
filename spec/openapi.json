@@ -6267,6 +6267,55 @@
         }
       }
     },
+    "/v1/l/cards": {
+      "get": {
+        "operationId": "get.api.v1.l.cards",
+        "summary": "GET /api/v1/l/cards?variant=v3 — the project-card grid for one demo variant",
+        "tags": [
+          "Cards"
+        ],
+        "parameters": [
+          {
+            "name": "variant",
+            "in": "query",
+            "required": true,
+            "description": "Required page-variant filter — v3 is /s/l/grid-cards-3 (#405),\nthe ONLY variant shipped so far. There is deliberately no\ndefault: the sibling tickets #400 (v1 — /s/l/grid-cards-1),\n#404 (v2 — /s/l/grid-cards-2) and #396 (v4 — /s/l/grid-cards-4)\nextend this `in:` union additively when their catalogs land,\nand a premature default would have to move later (a breaking\nchange). Callers pin their variant explicitly from day one.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "v3"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CardItemResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
     "/public/get-program-shop-categories": {
       "get": {
         "operationId": "category.shopCategories",
@@ -12317,7 +12366,7 @@
       "get": {
         "operationId": "get.api.v1.l.datatable",
         "description": "Envelope is the #423/#422 contract: { data, total, page, perPage }. The\nsdk manifest types the `data` rows (wrapper `paginated` — the\ngenerated schema pins `data` as required); `total`/`page`/`perPage`\nride alongside for the component's pagination widget.",
-        "summary": "GET /api/v1/l/datatable?variant=v3&page=1&perPage=10 — one page of\ndatatable rows for one demo variant",
+        "summary": "GET /api/v1/l/datatable?variant=v3&page=1&perPage=10&sort=title — one\npage of datatable rows for one demo variant, optionally sorted by\ntitle before pagination",
         "tags": [
           "Datatable"
         ],
@@ -12325,10 +12374,11 @@
           {
             "name": "variant",
             "in": "query",
-            "description": "Optional page-variant filter — v3 is /s/l/list-datatable-3\n(#423), v2 is /s/l/list-datatable-2 (#422). The sibling v1\n(#414) registers its variant when it lands. Defaults to v3\n(the variant that shipped the endpoint).",
+            "description": "Optional page-variant filter — v3 is /s/l/list-datatable-3\n(#423), v2 is /s/l/list-datatable-2 (#422), v1 is\n/s/l/list-datatable-1 (#414). Defaults to v3 (the variant\nthat shipped the endpoint).",
             "schema": {
               "type": "string",
               "enum": [
+                "v1",
                 "v2",
                 "v3"
               ]
@@ -12349,6 +12399,18 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 100
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Optional title sort (#414 — the legacy `?sort` phrasing,\nnormalized): `title` asc, `-title` desc. Applied to the whole\ncatalog BEFORE the page slice, so pagination walks the sorted\norder.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "title",
+                "-title"
+              ]
             }
           }
         ],
@@ -23803,6 +23865,74 @@
         }
       }
     },
+    "/v1/l/forms/{key}": {
+      "post": {
+        "operationId": "post.api.v1.l.forms.item",
+        "description": "Accepts a free-form `fields` object (max depth 1 — every value must\nbe a scalar or null; nested arrays/objects 422) and echoes it back:\n`{ data: { key, status: 'received', received_at, fields } }`.",
+        "summary": "POST /api/v1/l/forms/{key} — submit one demo form",
+        "tags": [
+          "Forms"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "description": "Depth 1: each submitted field value must be a scalar (or\nnull — cleared inputs). There is no built-in `scalar` rule,\nso use a closure."
+                    }
+                  }
+                },
+                "required": [
+                  "fields"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FormSubmissionResultResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/ModelNotFoundException"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
     "/v1/forum/track": {
       "post": {
         "operationId": "forumTrack.store",
@@ -32674,7 +32804,7 @@
     "/v1/l/list": {
       "get": {
         "operationId": "get.api.v1.l.list",
-        "summary": "GET /api/v1/l/list?variant=placeload-3 — the list items for one demo variant",
+        "summary": "GET /api/v1/l/list?variant=list-view-4&scope=saved — the list items for one demo variant",
         "tags": [
           "List"
         ],
@@ -32682,12 +32812,29 @@
           {
             "name": "variant",
             "in": "query",
-            "description": "Optional page-variant filter — placeload-3 is /s/l/placeload-3\n(this ticket, #425), placeload-2 is /s/l/placeload-2 (#424).\nDefaults to placeload-3 (the variant that shipped the endpoint).",
+            "description": "Optional page-variant filter — one key per /s/l demo page\n(placeload-1..4 → #413/#424/#425/#409, list-view-2..4 →\n#419/#420/#408). Defaults to placeload-3 (the variant that\nshipped the endpoint).",
             "schema": {
               "type": "string",
               "enum": [
+                "placeload-1",
                 "placeload-2",
-                "placeload-3"
+                "placeload-3",
+                "placeload-4",
+                "list-view-2",
+                "list-view-3",
+                "list-view-4"
+              ]
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "description": "Optional tab scope (#408, /s/l/list-view-4's All|Saved tabs):\n`all` (default) returns the full variant catalog, `saved`\nnarrows it to the SAVED_IDS subset.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "saved"
               ]
             }
           }
@@ -36158,7 +36305,7 @@
           {
             "name": "variant",
             "in": "query",
-            "description": "Optional page-variant filter — v1 is /s/l/onboarding-page-1,\nv2 is /s/l/onboarding-page-2, v3 is /s/l/onboarding-page-3,\nv4 is /s/l/onboarding-page-4, v5 is /s/l/onboarding-page-5.\nDefaults to v1.",
+            "description": "Optional page-variant filter — v1 is /s/l/onboarding-page-1,\nv2 is /s/l/onboarding-page-2, v3 is /s/l/onboarding-page-3,\nv4 is /s/l/onboarding-page-4, v5 is /s/l/onboarding-page-5,\nwelcome is /s/l/onboarding-welcome. Defaults to v1.",
             "schema": {
               "type": "string",
               "enum": [
@@ -36166,11 +36313,67 @@
                 "v2",
                 "v3",
                 "v4",
-                "v5"
+                "v5",
+                "welcome"
               ]
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/OnboardingFlowResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/onboarding/complete": {
+      "post": {
+        "operationId": "post.api.v1.l.onboarding.complete",
+        "description": "Stateless demo write, like progress(): validates the optional\n`variant` and echoes that variant's flow with `current` set to\ncount(steps) — the \"flow completed\" index the progress contract\nalready pins as its inclusive max (nothing is persisted — the\ncatalog is static).",
+        "summary": "POST /api/v1/l/onboarding/complete — mark an onboarding flow completed\n(SRE CI-MFE #412, /s/l/onboarding-welcome)",
+        "tags": [
+          "Onboarding"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "v1",
+                      "v2",
+                      "v3",
+                      "v4",
+                      "v5",
+                      "welcome"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -36217,7 +36420,8 @@
                       "v2",
                       "v3",
                       "v4",
-                      "v5"
+                      "v5",
+                      "welcome"
                     ]
                   }
                 }
@@ -56140,7 +56344,7 @@
     "/v1/l/search": {
       "get": {
         "operationId": "get.api.v1.l.search",
-        "description": "`q` is an optional case-insensitive substring filter over people\n(name/role) and records (name). `facets` is an optional\ncomma-separated list of facet labels — it narrows the RETURNED\n`facets` array (the demo catalog carries no per-item facet tags, so\nit never filters people/records); an unknown label is a 422.\n`total` is people+records after the `q` filter.",
+        "description": "`q` is an optional case-insensitive substring filter over people\n(name/role) and records (name/preview) — absent or empty, the full\nstatic catalog is returned unchanged; a no-match `q` returns empty\n`people`/`records` + `total: 0`, the CI-MFE #410 `/s/l/search-empty`\nempty state. `facets` is an optional\ncomma-separated list of facet labels — it narrows the RETURNED\n`facets` array (the demo catalog carries no per-item facet tags, so\nit never filters people/records); an unknown label is a 422.\n`total` is people+records after the `q` filter.",
         "summary": "GET /api/v1/l/search?q&facets — the faceted search results envelope",
         "tags": [
           "Search"
@@ -70855,6 +71059,102 @@
         }
       }
     },
+    "/v1/l/tiles/users": {
+      "get": {
+        "operationId": "get.api.v1.l.tiles.users",
+        "summary": "GET /api/v1/l/tiles/users — the user-tile list for the /s/l/grid-tiles-1 demo grid",
+        "tags": [
+          "Tiles"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TileUserResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/l/tiles/files": {
+      "get": {
+        "operationId": "get.api.v1.l.tiles.files",
+        "summary": "GET /api/v1/l/tiles/files — the file-tile list for the /s/l/grid-tiles-2 demo grid",
+        "tags": [
+          "Tiles"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TileFileResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/l/tiles/posts": {
+      "get": {
+        "operationId": "get.api.v1.l.tiles.posts",
+        "summary": "GET /api/v1/l/tiles/posts — the post-tile list for the /s/l/grid-tiles-3 demo grid",
+        "tags": [
+          "Tiles"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TilePostResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/twitter/timeline": {
       "get": {
         "operationId": "twitter.timeline",
@@ -75714,9 +76014,38 @@
     "/v1/l/users": {
       "get": {
         "operationId": "get.api.v1.l.users",
-        "summary": "GET /api/v1/l/users — the user-card list for the /s/l/grid-users-1 demo grid",
+        "description": "Both params optional: variant defaults to v1 (byte-identical to the\nwave-1 no-param behavior), scope defaults to all.",
+        "summary": "GET /api/v1/l/users?variant=v2&scope=team — the user-card list for\nthe /s/l/grid-users-{1..4} demo grids",
         "tags": [
           "Users"
+        ],
+        "parameters": [
+          {
+            "name": "variant",
+            "in": "query",
+            "description": "Optional page-variant filter — v1 is /s/l/grid-users-1,\nv2 is /s/l/grid-users-2, v3 is /s/l/grid-users-3,\nv4 is /s/l/grid-users-4. Defaults to v1.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "v1",
+                "v2",
+                "v3",
+                "v4"
+              ]
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "description": "Optional tab-driven filter (the All/Team tabs on\ngrid-users-3): all = full catalog, team = the variant's\ncurated TEAM_IDS subset. Defaults to all.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "team"
+              ]
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -75739,6 +76068,9 @@
                 }
               }
             }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
           }
         }
       }
@@ -80621,6 +80953,80 @@
         ],
         "title": "CaptureAttributionRequest"
       },
+      "CardItemResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "remaining": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "badge": {
+            "type": "string"
+          },
+          "lockable": {
+            "type": "boolean"
+          },
+          "locked": {
+            "type": "boolean"
+          },
+          "team": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "picture": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "initials": {
+                  "type": "string"
+                },
+                "color": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "picture",
+                "initials",
+                "color"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "remaining",
+          "image",
+          "badge",
+          "lockable",
+          "locked",
+          "team"
+        ],
+        "title": "CardItemResource"
+      },
       "CareersUserUpsertRequest": {
         "type": "object",
         "description": "Validation contract for the careers (codify-careers HRM) user upsert —\nthe claim-back leg of the gig pipeline.\n\nWire shape per P2xGigClaimService::upsertFederatedUser in\ncodify-careers/human-resource-management: {source: 'hrm-candidate',\nsource_id: <candidate id>, source_email, name, tenant_domain}. `email`\nis accepted as an alias of `source_email` so generic callers match the\nsibling subproject upserts; at least one of the two is required (the\nP2X User identity is keyed on email).",
@@ -85227,6 +85633,31 @@
         ],
         "title": "FoodCategoryResource"
       },
+      "FormSubmissionResultResource": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "received_at": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": [
+          "key",
+          "status",
+          "received_at",
+          "fields"
+        ],
+        "title": "FormSubmissionResultResource"
+      },
       "FrontendResource": {
         "type": "string",
         "title": "FrontendResource"
@@ -87783,13 +88214,21 @@
           },
           "avatar": {
             "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "meta": {
+            "type": "string"
           }
         },
         "required": [
           "id",
           "title",
           "subtitle",
-          "avatar"
+          "avatar",
+          "status",
+          "meta"
         ],
         "title": "ListItemResource"
       },
@@ -97064,6 +97503,143 @@
       "TagResource": {
         "type": "string",
         "title": "TagResource"
+      },
+      "TileFileResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "updated": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "icon",
+          "name",
+          "updated",
+          "size"
+        ],
+        "title": "TileFileResource"
+      },
+      "TilePostResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "published": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "content": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "initials": {
+                "type": "string"
+              },
+              "color": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "avatar",
+              "name",
+              "initials",
+              "color"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "published",
+          "image",
+          "content",
+          "author"
+        ],
+        "title": "TilePostResource"
+      },
+      "TileUserResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "picture": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "badge": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "initials": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "picture",
+          "badge",
+          "username",
+          "initials",
+          "color",
+          "location",
+          "position",
+          "bio"
+        ],
+        "title": "TileUserResource"
       },
       "TokenAdminAuthResource": {
         "type": "array",

@@ -3917,6 +3917,35 @@
         }
       }
     },
+    "/v1/d/analytics/summary": {
+      "get": {
+        "operationId": "get.api.v1.d.analytics.summary",
+        "summary": "GET /api/v1/d/analytics/summary — the analytics dashboard summary for /s/d/analytics",
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AnalyticsSummaryResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/appeal/run/{appeal}/{chain}": {
       "get": {
         "operationId": "appeal.run",
@@ -7502,6 +7531,38 @@
         }
       }
     },
+    "/v1/d/charts/apex": {
+      "get": {
+        "operationId": "get.api.v1.d.charts.apex",
+        "summary": "GET /api/v1/d/charts/apex — the 22 ApexCharts sampler descriptors for /s/d/charts-apex",
+        "tags": [
+          "Charts"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ChartDescriptorResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/integrations/ci-rlhf/grading": {
       "post": {
         "operationId": "ci-rlhf.grading.store",
@@ -8923,6 +8984,67 @@
           },
           "422": {
             "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/d/company/summary": {
+      "get": {
+        "operationId": "get.api.v1.d.company.summary",
+        "summary": "GET /api/v1/d/company/summary — the KPI/company-card/stat-row summary for /s/d/company",
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CompanySummaryResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/company/tickets": {
+      "get": {
+        "operationId": "get.api.v1.d.company.tickets",
+        "summary": "GET /api/v1/d/company/tickets — the pending-tickets feed for /s/d/company",
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CompanyTicketResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -10976,6 +11098,70 @@
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/CountryResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/course/classes": {
+      "get": {
+        "operationId": "get.api.v1.d.course.classes",
+        "summary": "GET /api/v1/d/course/classes — the week's course cards for /s/d/course",
+        "tags": [
+          "Course"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CourseClassResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/course/students": {
+      "get": {
+        "operationId": "get.api.v1.d.course.students",
+        "summary": "GET /api/v1/d/course/students — the attending-students roster for /s/d/course",
+        "tags": [
+          "Course"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CourseStudentResource"
                       }
                     }
                   },
@@ -23087,6 +23273,102 @@
         }
       }
     },
+    "/v1/l/flex-list/users": {
+      "get": {
+        "operationId": "get.api.v1.l.flex-list.users",
+        "summary": "GET /api/v1/l/flex-list/users — the flex-list user rows for the /s/l/list-flex-1 demo table",
+        "tags": [
+          "FlexList"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlexUserResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/l/flex-list/projects": {
+      "get": {
+        "operationId": "get.api.v1.l.flex-list.projects",
+        "summary": "GET /api/v1/l/flex-list/projects — the flex-list project rows for the /s/l/list-flex-2 demo table ('Active' tab; the 'Closed' tab is a pure client-side empty placeholder)",
+        "tags": [
+          "FlexList"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlexProjectResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/l/flex-list/courses": {
+      "get": {
+        "operationId": "get.api.v1.l.flex-list.courses",
+        "summary": "GET /api/v1/l/flex-list/courses — the flex-list course rows for the /s/l/list-flex-3 demo table ('All' tab; the 'Saved' tab is a pure client-side empty placeholder)",
+        "tags": [
+          "FlexList"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlexCourseResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/follow-up/run/{chain}": {
       "get": {
         "operationId": "followUps.run",
@@ -24031,6 +24313,70 @@
           },
           "401": {
             "$ref": "#/components/responses/AuthenticationException"
+          }
+        }
+      }
+    },
+    "/v1/d/food-delivery/restaurants": {
+      "get": {
+        "operationId": "get.api.v1.d.food-delivery.restaurants",
+        "summary": "GET /api/v1/d/food-delivery/restaurants — the restaurants grid for the /s/d/food-delivery demo",
+        "tags": [
+          "FoodDelivery"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RestaurantResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/food-delivery/categories": {
+      "get": {
+        "operationId": "get.api.v1.d.food-delivery.categories",
+        "summary": "GET /api/v1/d/food-delivery/categories — the food-category pills for the /s/d/food-delivery carousel",
+        "tags": [
+          "FoodDelivery"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FoodCategoryResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -28204,6 +28550,67 @@
         }
       }
     },
+    "/v1/d/hr/summary": {
+      "get": {
+        "operationId": "get.api.v1.d.hr.summary",
+        "summary": "GET /api/v1/d/hr/summary — the welcome-header/candidate-strip/incoming summary for /s/d/human-ressources",
+        "tags": [
+          "Hr"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/HrSummaryResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/hr/rookies": {
+      "get": {
+        "operationId": "get.api.v1.d.hr.rookies",
+        "summary": "GET /api/v1/d/hr/rookies — the Recent Rookies candidate grid for /s/d/human-ressources",
+        "tags": [
+          "Hr"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/HrRookieResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/integrations/hrm/relay": {
       "post": {
         "operationId": "hrm.hrmRelay",
@@ -31480,7 +31887,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Array of `FoodCategoryResource`",
+            "description": "Array of `Modules.Items.Transformers.FoodCategoryResource`",
             "content": {
               "application/json": {
                 "schema": {
@@ -31489,7 +31896,7 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/FoodCategoryResource"
+                        "$ref": "#/components/schemas/Modules.Items.Transformers.FoodCategoryResource"
                       }
                     }
                   },
@@ -32572,6 +32979,67 @@
           },
           "404": {
             "$ref": "#/components/responses/ModelNotFoundException"
+          }
+        }
+      }
+    },
+    "/v1/d/jobs": {
+      "get": {
+        "operationId": "get.api.v1.d.jobs",
+        "summary": "GET /api/v1/d/jobs — the 9-card job-postings catalog for /s/d/jobs",
+        "tags": [
+          "Jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/JobResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/jobs/summary": {
+      "get": {
+        "operationId": "get.api.v1.d.jobs.summary",
+        "summary": "GET /api/v1/d/jobs/summary — the flat toolbar summary for /s/d/jobs",
+        "tags": [
+          "Jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/JobsSummaryResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -35400,6 +35868,38 @@
                   },
                   "required": [
                     "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/maps/markers": {
+      "get": {
+        "operationId": "get.api.v1.d.maps.markers",
+        "summary": "GET /api/v1/d/maps/markers — the geo-marker catalog for /s/maps-2",
+        "tags": [
+          "Maps"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MapMarkerResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
                   ]
                 }
               }
@@ -45509,7 +46009,7 @@
     "/v1/l/projects": {
       "get": {
         "operationId": "get.api.v1.l.projects",
-        "summary": "GET /api/v1/l/projects?variant=v3 — the project grid for one demo variant",
+        "summary": "GET /api/v1/l/projects?variant=v1 — the project grid for one demo variant",
         "tags": [
           "Projects"
         ],
@@ -45517,10 +46017,12 @@
           {
             "name": "variant",
             "in": "query",
-            "description": "Optional page-variant filter. Only v3 (/s/l/projects-projects-3,\nSRE #389) ships from this ticket — the sibling tickets extend\nthe union: v1 = /s/l/projects-projects-1 (#385), v2 =\n/s/l/projects-projects-2 (#388). Defaults to v3 until v1 lands\n(then the default moves to v1, matching the other L\ncontrollers).",
+            "description": "Optional page-variant filter: v1 = /s/l/projects-projects-1\n(SRE #385), v2 = /s/l/projects-projects-2 (#388), v3 =\n/s/l/projects-projects-3 (#389). Defaults to v1, matching the\nother L controllers' \"default = v1\" convention (the default\nmoved from v3 when #385 landed, as the #389 docblock\npre-scripted).",
             "schema": {
               "type": "string",
               "enum": [
+                "v1",
+                "v2",
                 "v3"
               ]
             }
@@ -78069,6 +78571,163 @@
         }
       }
     },
+    "/v1/d/widgets/creative": {
+      "get": {
+        "operationId": "get.api.v1.d.widgets.creative",
+        "summary": "GET /api/v1/d/widgets/creative — the \"Designers\" creative rows for /s/d/widgets-sample-creative",
+        "tags": [
+          "Widgets"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CreativeWidgetResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/widgets/creative/contact": {
+      "get": {
+        "operationId": "get.api.v1.d.widgets.creative.contact",
+        "summary": "GET /api/v1/d/widgets/creative/contact — the ContactWidget card for /s/d/widgets-sample-creative",
+        "tags": [
+          "Widgets"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/WidgetContactResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/widgets/stats": {
+      "get": {
+        "operationId": "get.api.v1.d.widgets.stats",
+        "summary": "GET /api/v1/d/widgets/stats — the flat stat-widget summary rows for /s/d/widgets-sample-stats",
+        "tags": [
+          "Widgets"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StatWidgetResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/widgets/stats/members": {
+      "get": {
+        "operationId": "get.api.v1.d.widgets.stats.members",
+        "summary": "GET /api/v1/d/widgets/stats/members — the Members table rows for /s/d/widgets-sample-stats",
+        "tags": [
+          "Widgets"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/StatMemberResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/widgets/lists": {
+      "get": {
+        "operationId": "get.api.v1.d.widgets.lists",
+        "summary": "GET /api/v1/d/widgets/lists — every list-widget dataset for /s/d/widgets-sample-list, flat + discriminated",
+        "tags": [
+          "Widgets"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ListWidgetItemResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/withings/webhook": {
       "post": {
         "operationId": "withings.getData",
@@ -81294,6 +81953,109 @@
         ],
         "title": "AllProgramsResource"
       },
+      "AnalyticsSummaryResource": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "integer",
+            "description": "Transactions KPI tile count, e.g. 8637 (rendered \"8,637\")"
+          },
+          "transactionsTrend": {
+            "type": "string",
+            "description": "Transactions trend delta as the rendered display string, e.g. \"+6.4%\""
+          },
+          "transactionsTrendDirection": {
+            "type": "string",
+            "description": "Transactions trend direction — \"up\" or \"down\" (drives icon + green/red class)"
+          },
+          "transactionsCaption": {
+            "type": "string",
+            "description": "Transactions tile footer caption, e.g. \"since last month\""
+          },
+          "subscriptions": {
+            "type": "integer",
+            "description": "Subscriptions KPI tile count, e.g. 1378 (rendered \"1,378\")"
+          },
+          "subscriptionsTrend": {
+            "type": "string",
+            "description": "Subscriptions trend delta as the rendered display string, e.g. \"-2.1%\""
+          },
+          "subscriptionsTrendDirection": {
+            "type": "string",
+            "description": "Subscriptions trend direction — \"up\" or \"down\""
+          },
+          "subscriptionsCaption": {
+            "type": "string",
+            "description": "Subscriptions tile footer caption, e.g. \"going down\""
+          },
+          "referrals": {
+            "type": "integer",
+            "description": "Referrals KPI tile count, e.g. 1911 (component copy spells it \"Referals\")"
+          },
+          "referralsTrend": {
+            "type": "string",
+            "description": "Referrals trend delta as the rendered display string, e.g. \"+4.2%\""
+          },
+          "referralsTrendDirection": {
+            "type": "string",
+            "description": "Referrals trend direction — \"up\" or \"down\""
+          },
+          "referralsCaption": {
+            "type": "string",
+            "description": "Referrals tile footer caption, e.g. \"going up\""
+          },
+          "revenueThisMonth": {
+            "type": "string",
+            "description": "Revenue this month as the rendered USD display string, e.g. \"$75,648.43\""
+          },
+          "revenueLastMonth": {
+            "type": "string",
+            "description": "Revenue last month as the rendered USD display string, e.g. \"$91,512.18\""
+          },
+          "goalCompleted": {
+            "type": "integer",
+            "description": "Goal-overview completed count, e.g. 1223 (rendered \"1,223\")"
+          },
+          "goalInProgress": {
+            "type": "integer",
+            "description": "Goal-overview in-progress count, e.g. 467"
+          },
+          "salesProgress": {
+            "type": "integer",
+            "description": "Sales progress percentage 0-100, e.g. 78 (rendered \"78%\" + CProgress value)"
+          },
+          "salesTrend": {
+            "type": "string",
+            "description": "Sales trend delta as the rendered display string, e.g. \"+6.4%\""
+          },
+          "salesCaption": {
+            "type": "string",
+            "description": "Sales progress footer caption, e.g. \"since last month\""
+          }
+        },
+        "required": [
+          "transactions",
+          "transactionsTrend",
+          "transactionsTrendDirection",
+          "transactionsCaption",
+          "subscriptions",
+          "subscriptionsTrend",
+          "subscriptionsTrendDirection",
+          "subscriptionsCaption",
+          "referrals",
+          "referralsTrend",
+          "referralsTrendDirection",
+          "referralsCaption",
+          "revenueThisMonth",
+          "revenueLastMonth",
+          "goalCompleted",
+          "goalInProgress",
+          "salesProgress",
+          "salesTrend",
+          "salesCaption"
+        ],
+        "title": "AnalyticsSummaryResource"
+      },
       "App.Http.Requests.Core.User.SetFeaturedRequest": {
         "type": "object",
         "properties": {
@@ -82326,6 +83088,42 @@
         ],
         "title": "ChangePhotoRequest"
       },
+      "ChartDescriptorResource": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Stable chart slug (the mfe composable's file slug), e.g. \"demo1-line\""
+          },
+          "title": {
+            "type": "string",
+            "description": "The chart's options.title.text verbatim, e.g. \"Line Chart\" (\"\" for the untitled pie)"
+          },
+          "type": {
+            "type": "string",
+            "description": "Apex chart type: line|area|bar|rangeBar|bubble|scatter|pie|donut|radialBar|radar"
+          },
+          "height": {
+            "type": "integer",
+            "description": "Rendered chart height in px, e.g. 280"
+          },
+          "categories": {
+            "type": "array",
+            "description": "Categorical axis / slice labels (options.xaxis.categories or options.labels); empty for numeric-axis charts",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "key",
+          "title",
+          "type",
+          "height",
+          "categories"
+        ],
+        "title": "ChartDescriptorResource"
+      },
       "ChatListAllRoomsResource": {
         "type": "object",
         "properties": {
@@ -82813,6 +83611,142 @@
         "type": "string",
         "title": "CollectionResource"
       },
+      "CompanySummaryResource": {
+        "type": "object",
+        "properties": {
+          "newUsers": {
+            "type": "integer",
+            "description": "KPI tile: new users count"
+          },
+          "dailyIncome": {
+            "type": "string",
+            "description": "KPI tile: daily income as a formatted USD display string, e.g. \"$1,835.41\""
+          },
+          "completedProjects": {
+            "type": "integer",
+            "description": "KPI tile: completed projects count"
+          },
+          "activeTickets": {
+            "type": "integer",
+            "description": "KPI tile: active tickets count"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "Company card display name"
+          },
+          "companyTagline": {
+            "type": "string",
+            "description": "Company card tagline, e.g. \"Online Courses\""
+          },
+          "companyDescription": {
+            "type": "string",
+            "description": "Company card free-text description"
+          },
+          "companyLogo": {
+            "type": "string",
+            "description": "Company logo URL (light mode)"
+          },
+          "companyLogoDark": {
+            "type": "string",
+            "description": "Company logo URL (dark mode)"
+          },
+          "posts": {
+            "type": "integer",
+            "description": "Company card stat: posts count"
+          },
+          "projects": {
+            "type": "integer",
+            "description": "Company card stat: projects count"
+          },
+          "followers": {
+            "type": "string",
+            "description": "Company card stat: followers as the rendered display string, e.g. \"32K\""
+          },
+          "subscriptionsNew": {
+            "type": "integer",
+            "description": "Subscriptions stat row: new subscriptions"
+          },
+          "subscriptionsRenewals": {
+            "type": "integer",
+            "description": "Subscriptions stat row: renewals"
+          },
+          "subscriptionsResigns": {
+            "type": "integer",
+            "description": "Subscriptions stat row: resigns"
+          },
+          "sharesFacebook": {
+            "type": "string",
+            "description": "Social shares stat row: Facebook, rendered display string e.g. \"64K\""
+          },
+          "sharesInstagram": {
+            "type": "string",
+            "description": "Social shares stat row: Instagram, rendered display string e.g. \"78K\""
+          },
+          "sharesTwitter": {
+            "type": "string",
+            "description": "Social shares stat row: Twitter, rendered display string e.g. \"25K\""
+          }
+        },
+        "required": [
+          "newUsers",
+          "dailyIncome",
+          "completedProjects",
+          "activeTickets",
+          "companyName",
+          "companyTagline",
+          "companyDescription",
+          "companyLogo",
+          "companyLogoDark",
+          "posts",
+          "projects",
+          "followers",
+          "subscriptionsNew",
+          "subscriptionsRenewals",
+          "subscriptionsResigns",
+          "sharesFacebook",
+          "sharesInstagram",
+          "sharesTwitter"
+        ],
+        "title": "CompanySummaryResource"
+      },
+      "CompanyTicketResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Ticket list position id (demo catalog ordinal)"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Ticket reference, e.g. \"#45651\""
+          },
+          "title": {
+            "type": "string",
+            "description": "Ticket title (heading text without the reference prefix)"
+          },
+          "excerpt": {
+            "type": "string",
+            "description": "Ticket body excerpt (the CBlock subtitle)"
+          },
+          "updated": {
+            "type": "string",
+            "description": "Last-update display string rendered verbatim, e.g. \"Updated 5 hours ago\""
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Reporter avatar image URL"
+          }
+        },
+        "required": [
+          "id",
+          "reference",
+          "title",
+          "excerpt",
+          "updated",
+          "avatar"
+        ],
+        "title": "CompanyTicketResource"
+      },
       "ComputeTopupIntentRequest": {
         "type": "object",
         "properties": {
@@ -83209,6 +84143,109 @@
       "CountryResource": {
         "type": "string",
         "title": "CountryResource"
+      },
+      "CourseClassResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "participants": {
+            "type": "integer"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "integer"
+          },
+          "week": {
+            "type": "integer"
+          },
+          "actionLabel": {
+            "type": "string"
+          },
+          "actionText": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "title",
+          "summary",
+          "students",
+          "participants",
+          "duration",
+          "comments",
+          "week",
+          "actionLabel",
+          "actionText"
+        ],
+        "title": "CourseClassResource"
+      },
+      "CourseStudentResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "picture": {
+            "type": "string"
+          },
+          "badge": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "attendance": {
+            "type": "string"
+          },
+          "progress": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "position",
+          "picture",
+          "badge",
+          "location",
+          "industry",
+          "status",
+          "attendance",
+          "progress"
+        ],
+        "title": "CourseStudentResource"
       },
       "CreateAgentRequest": {
         "type": "object",
@@ -84705,6 +85742,34 @@
           "title"
         ],
         "title": "CreateVerificationRequest"
+      },
+      "CreativeWidgetResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Row id (0-based, mirrors the mfe catalog)"
+          },
+          "picture": {
+            "type": "string",
+            "description": "Avatar image URL"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name, e.g. \"Courtney W.\""
+          },
+          "color": {
+            "type": "string",
+            "description": "UIWidgetCreativeList color token, e.g. \"orange\""
+          }
+        },
+        "required": [
+          "id",
+          "picture",
+          "name",
+          "color"
+        ],
+        "title": "CreativeWidgetResource"
       },
       "CreatorActivityResource": {
         "type": "string",
@@ -86644,6 +87709,130 @@
         ],
         "title": "FirebaseLoginRequest"
       },
+      "FlexCourseResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "picture": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "difficulty": {
+            "type": "integer"
+          },
+          "price": {
+            "type": "integer"
+          },
+          "skillName": {
+            "type": "string"
+          },
+          "skillIcon": {
+            "type": "string"
+          },
+          "authorUsername": {
+            "type": "string"
+          },
+          "authorAvatar": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "picture",
+          "category",
+          "difficulty",
+          "price",
+          "skillName",
+          "skillIcon",
+          "authorUsername",
+          "authorAvatar"
+        ],
+        "title": "FlexCourseResource"
+      },
+      "FlexProjectResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "customer": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "customer",
+          "duration",
+          "avatar",
+          "industry",
+          "status"
+        ],
+        "title": "FlexProjectResource"
+      },
+      "FlexUserResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "badge": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "industry": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "position",
+          "avatar",
+          "badge",
+          "location",
+          "industry",
+          "status"
+        ],
+        "title": "FlexUserResource"
+      },
       "FollowUpDataResource": {
         "type": "string",
         "title": "FollowUpDataResource"
@@ -86831,15 +88020,20 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
-          "name": {
+          "icon": {
+            "type": "string",
+            "description": "Pill icon path"
+          },
+          "label": {
             "type": "string"
           }
         },
         "required": [
           "id",
-          "name"
+          "icon",
+          "label"
         ],
         "title": "FoodCategoryResource"
       },
@@ -88089,6 +89283,90 @@
           "rating"
         ],
         "title": "HomeFeedbackResource"
+      },
+      "HrRookieResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Rookie grid position id (demo catalog ordinal)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Candidate display name"
+          },
+          "role": {
+            "type": "string",
+            "description": "Candidate role, e.g. \"UI/UX Designer\""
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Candidate avatar image URL"
+          },
+          "badge": {
+            "type": "string",
+            "description": "Avatar badge icon URL (stack/flag SVG)"
+          },
+          "action": {
+            "type": "string",
+            "description": "CTA label rendered verbatim on the card button (\"Hire\" | \"Assess\")"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "role",
+          "avatar",
+          "badge",
+          "action"
+        ],
+        "title": "HrRookieResource"
+      },
+      "HrSummaryResource": {
+        "type": "object",
+        "properties": {
+          "user_name": {
+            "type": "string",
+            "description": "Welcome-header first name, e.g. \"Erik\" (\"Welcome back, Erik.\")"
+          },
+          "user_avatar": {
+            "type": "string",
+            "description": "Welcome-header user avatar URL"
+          },
+          "candidate_avatars": {
+            "type": "array",
+            "description": "New Rookies candidate avatar image URLs, in strip render order",
+            "items": {
+              "type": "string"
+            }
+          },
+          "incoming_messages": {
+            "type": "integer",
+            "description": "Incoming flex-table: messages count"
+          },
+          "incoming_messages_status": {
+            "type": "string",
+            "description": "Incoming flex-table: messages row status, e.g. \"new\""
+          },
+          "incoming_tasks": {
+            "type": "integer",
+            "description": "Incoming flex-table: tasks count"
+          },
+          "incoming_tasks_status": {
+            "type": "string",
+            "description": "Incoming flex-table: tasks row status, e.g. \"pending\""
+          }
+        },
+        "required": [
+          "user_name",
+          "user_avatar",
+          "candidate_avatars",
+          "incoming_messages",
+          "incoming_messages_status",
+          "incoming_tasks",
+          "incoming_tasks_status"
+        ],
+        "title": "HrSummaryResource"
       },
       "HrmRelayRequest": {
         "type": "object",
@@ -89425,6 +90703,59 @@
         ],
         "title": "IssueMachineTokenRequest"
       },
+      "JobResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "logo": {
+            "type": "string",
+            "description": "Employer brand logo image URL"
+          },
+          "title": {
+            "type": "string",
+            "description": "Job posting title, e.g. \"UI / UX Designer\""
+          },
+          "description": {
+            "type": "string",
+            "description": "Short posting description (truncated card copy)"
+          },
+          "categories": {
+            "type": "array",
+            "description": "Category tag labels, e.g. \"Full Time\"",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "logo",
+          "title",
+          "description",
+          "categories"
+        ],
+        "title": "JobResource"
+      },
+      "JobsSummaryResource": {
+        "type": "object",
+        "properties": {
+          "showing": {
+            "type": "integer",
+            "description": "Number of job results the toolbar reports (\"Showing N Jobs\")"
+          },
+          "location": {
+            "type": "string",
+            "description": "Search location display string, e.g. \"Los Angeles, CA\""
+          }
+        },
+        "required": [
+          "showing",
+          "location"
+        ],
+        "title": "JobsSummaryResource"
+      },
       "JsonResource": {
         "type": "string",
         "title": "JsonResource"
@@ -89663,6 +90994,79 @@
         ],
         "title": "ListItemResource"
       },
+      "ListWidgetItemResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Item id — re-keyed api-side, unique across all datasets"
+          },
+          "list": {
+            "type": "string",
+            "description": "Dataset discriminator: users | files-1 | files-2 | todo-1 | todo-2 | todo-3 | todo-4 | timeline"
+          },
+          "kind": {
+            "type": "string",
+            "description": "Item family: user | file | todo | timeline"
+          },
+          "title": {
+            "type": "string",
+            "description": "Primary line — name (users/files) or title (todos/timeline)"
+          },
+          "subtitle": {
+            "type": "string",
+            "description": "Secondary line — position (users), file type (files) or time (todos/timeline)"
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Todo status, e.g. \"Pending\" — null outside the todo family"
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "File svg path (files) or lucide icon name (timeline) — null otherwise"
+          },
+          "picture": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Avatar image URL (users, some timeline entries) — null otherwise"
+          },
+          "progress": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "User progress delta — may be negative (e.g. -12); null outside the user family"
+          },
+          "color": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Timeline color token ('' | primary | info | success | orange | yellow) — null outside the timeline family"
+          }
+        },
+        "required": [
+          "id",
+          "list",
+          "kind",
+          "title",
+          "subtitle",
+          "status",
+          "icon",
+          "picture",
+          "progress",
+          "color"
+        ],
+        "title": "ListWidgetItemResource"
+      },
       "LmsAdapterProxyRequest": {
         "type": "object",
         "description": "Boundary validation for the LMS adapter proxy: the `{adapter}` route\nsegment must be one of the supported `HMS::LMSAdapter` namespaces and\nthe tunnelled HTTP verb must be a plain CRUD method. Unknown adapters\nare a 422 here — never forwarded upstream (issue #81).",
@@ -89821,6 +91225,64 @@
         ],
         "title": "LogsResource"
       },
+      "MapMarkerResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Marker id (demo catalog ordinal, source order)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Place display name, e.g. \"Fast Pizza\""
+          },
+          "logo": {
+            "type": "string",
+            "description": "Place logo asset path, e.g. \"/images/icons/logos/fastpizza.svg\""
+          },
+          "lat": {
+            "type": "number",
+            "description": "Latitude (GeoJSON coordinates[1]), e.g. 38.931567"
+          },
+          "lng": {
+            "type": "number",
+            "description": "Longitude (GeoJSON coordinates[0]), e.g. -77.038659"
+          },
+          "distance": {
+            "type": "number",
+            "description": "Distance from the viewer in miles, e.g. 0.3"
+          },
+          "openingCount": {
+            "type": "string",
+            "description": "Closing time rendered as \"Open until {openingCount}\", e.g. \"6pm\""
+          },
+          "phone": {
+            "type": "string",
+            "description": "Place contact phone, e.g. \"+1 555 456-5659\""
+          },
+          "website": {
+            "type": "string",
+            "description": "Place website URL"
+          },
+          "description": {
+            "type": "string",
+            "description": "Free-text place description"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "logo",
+          "lat",
+          "lng",
+          "distance",
+          "openingCount",
+          "phone",
+          "website",
+          "description"
+        ],
+        "title": "MapMarkerResource"
+      },
       "MobActivityLocationBatchRequest": {
         "type": "object",
         "description": "Validation contract for POST /api/v1/integrations/mob/activity-locations/batch.\n\nMOB (Run Tracker) Flutter app pushes a batch of {run_id, lat, lng,\nrecorded_at} points keyed by a device UUID. CI-API#98 / bucket D3.",
@@ -89976,6 +91438,22 @@
       "ModuleValidationResource": {
         "type": "string",
         "title": "ModuleValidationResource"
+      },
+      "Modules.Items.Transformers.FoodCategoryResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "Modules.Items.Transformers.FoodCategoryResource"
       },
       "MoneyDistributionsResource": {
         "type": "string",
@@ -93533,6 +95011,45 @@
         "type": "string",
         "title": "ResponseResource"
       },
+      "RestaurantResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "picture": {
+            "type": "string"
+          },
+          "deliveryTime": {
+            "type": "integer",
+            "description": "Delivery estimate in minutes"
+          },
+          "category": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Category badge icon path"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Star rating on a 0–5 scale"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "picture",
+          "deliveryTime",
+          "category",
+          "icon",
+          "rating"
+        ],
+        "title": "RestaurantResource"
+      },
       "RestrictUserRequest": {
         "type": "object",
         "properties": {
@@ -96327,6 +97844,105 @@
           "metadata"
         ],
         "title": "StartWizardRequest"
+      },
+      "StatMemberResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Row id (0-based, mirrors the mfe catalog)"
+          },
+          "picture": {
+            "type": "string",
+            "description": "Avatar image URL — '' when the member has no picture (initials fallback)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Member display name"
+          },
+          "initials": {
+            "type": "string",
+            "description": "Avatar-fallback initials, e.g. \"td\""
+          },
+          "color": {
+            "type": "string",
+            "description": "Avatar color token, e.g. \"info\""
+          },
+          "membership": {
+            "type": "string",
+            "description": "Membership start as the rendered display string, e.g. \"Apr 2019\""
+          },
+          "income": {
+            "type": "string",
+            "description": "Income as the rendered display string, e.g. \"7,854.32\""
+          },
+          "skills": {
+            "type": "array",
+            "description": "Skill icons — list of {id:int, icon:string} (deliberately weak in the sdk manifest; key set enforced api-side)",
+            "items": {
+              "type": "object"
+            }
+          },
+          "rating": {
+            "type": "integer",
+            "description": "Star rating, 0–5"
+          },
+          "status": {
+            "type": "string",
+            "description": "Membership status, e.g. \"Approved\""
+          }
+        },
+        "required": [
+          "id",
+          "picture",
+          "name",
+          "initials",
+          "color",
+          "membership",
+          "income",
+          "skills",
+          "rating",
+          "status"
+        ],
+        "title": "StatMemberResource"
+      },
+      "StatWidgetResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Row id (unique across the stats catalog)"
+          },
+          "kind": {
+            "type": "string",
+            "description": "Widget family discriminator: spark | line | grouped | social"
+          },
+          "label": {
+            "type": "string",
+            "description": "Stat label, e.g. \"Total Sales\""
+          },
+          "value": {
+            "type": "string",
+            "description": "Stat value as the rendered display string, e.g. \"$24,273.31\""
+          },
+          "previousLabel": {
+            "type": "string",
+            "description": "Comparison-period label, e.g. \"Last Month\" — '' when the row has no previous pair"
+          },
+          "previousValue": {
+            "type": "string",
+            "description": "Comparison-period value display string — '' when the row has no previous pair"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "label",
+          "value",
+          "previousLabel",
+          "previousValue"
+        ],
+        "title": "StatWidgetResource"
       },
       "StatesSearchResource": {
         "type": "string",
@@ -102982,6 +104598,49 @@
           "ice_servers"
         ],
         "title": "VoiceSessionResource"
+      },
+      "WidgetContactResource": {
+        "type": "object",
+        "properties": {
+          "picture": {
+            "type": "string",
+            "description": "Avatar image URL"
+          },
+          "username": {
+            "type": "string",
+            "description": "Contact display name, e.g. \"Erik K.\""
+          },
+          "email": {
+            "type": "string",
+            "description": "Contact email address"
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "position": {
+            "type": "string",
+            "description": "Job position, e.g. \"Product Manager\""
+          },
+          "location": {
+            "type": "string",
+            "description": "Location, e.g. \"Los Angeles, CA\""
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number as the rendered display string"
+          }
+        },
+        "required": [
+          "picture",
+          "username",
+          "email",
+          "company",
+          "position",
+          "location",
+          "phone"
+        ],
+        "title": "WidgetContactResource"
       },
       "WithingsDeviceResource": {
         "type": "string",

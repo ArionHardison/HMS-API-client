@@ -79,7 +79,7 @@ normalizeSchemas(spec);
 // codify/typed-subproject.ts, the #326 pilot — deployed) pins
 // `Response<'get.api.load'>`; the tarball it was built against carried that
 // id and a regen must never orphan it.
-const SRE_CANONICAL_FAMILIES = [/^\/v1\/l(\/|$)/, /^\/load$/];
+const SRE_CANONICAL_FAMILIES = [/^\/v1\/l(\/|$)/, /^\/v1\/d(\/|$)/, /^\/load$/];
 let canonicalized = 0;
 for (const [path, item] of Object.entries(spec.paths ?? {})) {
   if (!SRE_CANONICAL_FAMILIES.some(re => re.test(path))) continue;

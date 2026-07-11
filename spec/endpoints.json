@@ -6300,6 +6300,19 @@
     "summary": null
   },
   {
+    "id": "facilities.signal-threads.show",
+    "module": "facilities",
+    "method": "GET",
+    "uri": "/api/facilities/signal-threads/{id}",
+    "name": "facilities.signal-threads.show",
+    "controller": "SignalThreads",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "GET /api/facilities/signal-threads/{id} — tenant-scoped signal thread for /signal-thread/:id"
+  },
+  {
     "id": "facilities.themes.signals",
     "module": "Modules\\Facilities",
     "method": "GET",

@@ -409,6 +409,7 @@ export const operationIndex = {
   "facilities.intake-queue.index": { method: "GET", path: "/facilities/intake-queue", hasPathParams: false, hasBody: false },
   "facilities.operator.stats": { method: "GET", path: "/facilities/operator/stats", hasPathParams: false, hasBody: false },
   "facilities.portfolio.rollup": { method: "GET", path: "/facilities/portfolio/rollup", hasPathParams: false, hasBody: false },
+  "facilities.signal-threads.show": { method: "GET", path: "/facilities/signal-threads/{id}", hasPathParams: true, hasBody: false },
   "facilities.themes.signals": { method: "GET", path: "/facilities/themes/{theme}/signals", hasPathParams: true, hasBody: false },
   "facilities.work-orders.index": { method: "GET", path: "/facilities/work-orders", hasPathParams: false, hasBody: false },
   "fail.events.index": { method: "GET", path: "/fail/events", hasPathParams: false, hasBody: false },

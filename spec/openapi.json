@@ -60031,6 +60031,48 @@
         }
       }
     },
+    "/facilities/signal-threads/{id}": {
+      "get": {
+        "operationId": "facilities.signal-threads.show",
+        "summary": "GET /api/facilities/signal-threads/{id} — tenant-scoped signal thread for /signal-thread/:id",
+        "tags": [
+          "SignalThreads"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "thread": {
+                      "$ref": "#/components/schemas/SignalThreadResource"
+                    }
+                  },
+                  "required": [
+                    "thread"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundHttpException"
+          }
+        }
+      }
+    },
     "/v1/d/soccer/matches": {
       "get": {
         "operationId": "get.api.v1.d.soccer.matches",
@@ -100235,6 +100277,79 @@
           "agreed"
         ],
         "title": "SignUpRequest"
+      },
+      "SignalThreadResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Canonical thread id — pipeline_states.id, stringly (the intake-queue row id contract; work-order ids resolve as an alias)"
+          },
+          "title": {
+            "type": "string",
+            "description": "The originating observation text (pipeline_states.task) — the page's h1"
+          },
+          "building_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Building address_uid from the signal's structuring payload"
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "open | in_progress | closed when ticketed (work-orders status union), awaiting_approval while HITL-paused, processing otherwise"
+          },
+          "messages": {
+            "type": "array",
+            "description": "The conversation timeline — observation first, then one message per recognized pipeline step, chronological",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "thread_id": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                },
+                "sender": {
+                  "type": "string"
+                },
+                "ts": {
+                  "type": "string"
+                },
+                "confidence_label": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "thread_id",
+                "body",
+                "sender",
+                "ts",
+                "confidence_label"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "building_id",
+          "status",
+          "messages"
+        ],
+        "title": "SignalThreadResource"
       },
       "SingleGlobalTaskResource": {
         "type": "string",

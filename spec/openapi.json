@@ -5096,6 +5096,41 @@
         }
       }
     },
+    "/facilities/assets": {
+      "get": {
+        "operationId": "facilities.assets.index",
+        "summary": "GET /api/facilities/assets — tenant-scoped tracked-asset list for /s/assets",
+        "tags": [
+          "Assets"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assets": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FacilitiesAssetResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "assets"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundHttpException"
+          }
+        }
+      }
+    },
     "/challenge/set-result/{result}": {
       "post": {
         "operationId": "attachedChallenge.setResult",
@@ -34126,6 +34161,102 @@
         }
       }
     },
+    "/v1/d/lifestyle/activities": {
+      "get": {
+        "operationId": "get.api.v1.d.lifestyle.activities",
+        "summary": "GET /api/v1/d/lifestyle/activities — the Trending Now + Popular Now rows for /s/d/hobbies",
+        "tags": [
+          "Lifestyle"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LifestyleActivityResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/lifestyle/hobbies": {
+      "get": {
+        "operationId": "get.api.v1.d.lifestyle.hobbies",
+        "summary": "GET /api/v1/d/lifestyle/hobbies — the 4 hobby summary cards for /s/d/hobbies",
+        "tags": [
+          "Lifestyle"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LifestyleHobbyResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/d/lifestyle/topics": {
+      "get": {
+        "operationId": "get.api.v1.d.lifestyle.topics",
+        "summary": "GET /api/v1/d/lifestyle/topics — the topic sidebar catalog for /s/d/hobbies",
+        "tags": [
+          "Lifestyle"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LifestyleTopicResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/l/list": {
       "get": {
         "operationId": "get.api.v1.l.list",
@@ -37807,6 +37938,38 @@
           },
           "422": {
             "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/facilities/operator/stats": {
+      "get": {
+        "operationId": "facilities.operator.stats",
+        "summary": "GET /api/facilities/operator/stats — tenant-scoped KPI aggregate for /s/dashboard",
+        "tags": [
+          "OperatorStats"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stats": {
+                      "$ref": "#/components/schemas/OperatorStatsResource"
+                    }
+                  },
+                  "required": [
+                    "stats"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundHttpException"
           }
         }
       }
@@ -43328,6 +43491,145 @@
         }
       }
     },
+    "/v1/l/profile/experience": {
+      "get": {
+        "operationId": "get.api.v1.l.profile.experience",
+        "summary": "GET /api/v1/l/profile/experience — the demo work-experience list for /n/l/profile-edit/experience",
+        "tags": [
+          "ProfileExperience"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProfileExperienceResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post.api.v1.l.profile.experience",
+        "description": "Stateless demo write: validates {company, logo?, position, start,\nend} (422 semantics). Without an `id` it mints max(id)+1 and echoes\nthe new item; with an existing catalog `id` it echoes the catalog\nitem merged with the posted fields (per-field merge, same pattern as\nProfileSettingsController::update). Nothing is persisted — the\ncatalog is static.",
+        "summary": "POST /api/v1/l/profile/experience — save (add or edit) one item",
+        "tags": [
+          "ProfileExperience"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Optional edit target — catalog membership is enforced BELOW\n(imperative 422), NOT via a dynamic `in:` rule: Scramble can't\nstatically resolve `'in:'.implode(...)` and exports an EMPTY\nenum ([\"\"]), which generates invalid TypeScript downstream\n(sdk api-types `id?: ;`). Keep this a plain integer."
+                  },
+                  "company": {
+                    "type": "string",
+                    "description": "Required when adding (no id); optional per-field merge when editing.",
+                    "maxLength": 255
+                  },
+                  "logo": {
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "position": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "start": {
+                    "type": "string",
+                    "maxLength": 64
+                  },
+                  "end": {
+                    "type": "string",
+                    "maxLength": 64
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProfileExperienceResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/profile/experience/{id}/delete": {
+      "post": {
+        "operationId": "post.api.v1.l.profile.experience.item.delete",
+        "description": "Stateless demo write: 404 when the id is not in the catalog, echoes\nthe deleted item otherwise. Nothing is persisted — the catalog is\nstatic (a follow-up GET still returns all 6 items).",
+        "summary": "POST /api/v1/l/profile/experience/{id}/delete — delete one item",
+        "tags": [
+          "ProfileExperience"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProfileExperienceResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/l/profile/notifications": {
       "get": {
         "operationId": "get.api.v1.l.profile.notifications",
@@ -43560,6 +43862,137 @@
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/ProfileSettingsResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/profile/skills": {
+      "get": {
+        "operationId": "get.api.v1.l.profile.skills",
+        "summary": "GET /api/v1/l/profile/skills — the default demo skill groups",
+        "tags": [
+          "ProfileSkills"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProfileSkillsResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post.api.v1.l.profile.skills",
+        "description": "Stateless demo write (same pattern as\nProfileSettingsController::update): validates a deep-partial of the\nGET shape — every group is optional, but a POSTED group REPLACES\nthe default list WHOLESALE (list semantics: a partial per-item\nmerge is meaningless for reorderable lists) — and echoes the merged\n(defaults ∪ posted) result without persisting anything.\n422 when a group is not a list, an item is not an object, carries\nan unknown key, or `name`/`level` is missing or not a string.",
+        "summary": "POST /api/v1/l/profile/skills — save profile skills",
+        "tags": [
+          "ProfileSkills"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "languages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "level": {
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "level"
+                      ]
+                    }
+                  },
+                  "skills": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "level": {
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "level"
+                      ]
+                    }
+                  },
+                  "tools": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "level": {
+                          "type": "string",
+                          "maxLength": 128
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "level"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProfileSkillsResource"
                     }
                   },
                   "required": [
@@ -81316,6 +81749,41 @@
         }
       }
     },
+    "/facilities/work-orders": {
+      "get": {
+        "operationId": "facilities.work-orders.index",
+        "summary": "GET /api/facilities/work-orders — tenant-scoped work-order list for the operator dashboard",
+        "tags": [
+          "WorkOrders"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "work_orders": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FacilitiesWorkOrderResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "work_orders"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundHttpException"
+          }
+        }
+      }
+    },
     "/world-locations/country": {
       "post": {
         "operationId": "worldLocations.findCountry",
@@ -88307,6 +88775,129 @@
         ],
         "title": "ExternalCallbackRequest"
       },
+      "FacilitiesAssetResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "CriticalAsset-side asset id, stringly (sys contract)"
+          },
+          "label": {
+            "type": "string",
+            "description": "Human label, e.g. \"Toilet-2A-1 (wall-mount)\""
+          },
+          "system_group": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "SystemGroup enum value — always within sys's systemGroupChip key set, or null"
+          },
+          "building_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Building address_uid the asset belongs to"
+          },
+          "bbl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "BBL backfilled from the most recent signal that referenced the asset"
+          },
+          "address": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Human street address (null until the CA detail leg lands)"
+          },
+          "confidence_label": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Raw ConfidenceLabel enum value of the most recent referencing signal"
+          },
+          "open_signal_count": {
+            "type": "integer",
+            "description": "Signals still HITL-paused whose candidate list includes this asset"
+          },
+          "open_workorder_count": {
+            "type": "integer",
+            "description": "Non-closed work orders created against this asset"
+          },
+          "last_signal_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "ISO-8601 timestamp of the most recent referencing signal"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "system_group",
+          "building_id",
+          "bbl",
+          "address",
+          "confidence_label",
+          "open_signal_count",
+          "open_workorder_count",
+          "last_signal_at"
+        ],
+        "title": "FacilitiesAssetResource"
+      },
+      "FacilitiesWorkOrderResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Work-order id minted by the terminal pipe, stringly (sys contract)"
+          },
+          "summary": {
+            "type": "string",
+            "description": "The originating observation text (pipeline_states.task)"
+          },
+          "status": {
+            "type": "string",
+            "description": "open | in_progress | closed"
+          },
+          "building_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Building address_uid from the signal's structuring payload"
+          },
+          "reported_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "ISO-8601 timestamp the work order was created (Safari-safe Date.parse)"
+          },
+          "confidence_label": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "certain | likely | possible | unlikely | doubtful | unknown"
+          }
+        },
+        "required": [
+          "id",
+          "summary",
+          "status",
+          "building_id",
+          "reported_at",
+          "confidence_label"
+        ],
+        "title": "FacilitiesWorkOrderResource"
+      },
       "FailEventResource": {
         "type": "object",
         "properties": {
@@ -92423,6 +93014,107 @@
         ],
         "title": "LeaveTeamRequest"
       },
+      "LifestyleActivityResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "list": {
+            "type": "string",
+            "description": "Which CBlock list the row belongs to: \"trending\" or \"popular\""
+          },
+          "title": {
+            "type": "string",
+            "description": "Activity title, e.g. \"Extreme Foot Trekk\""
+          },
+          "date": {
+            "type": "string",
+            "description": "Pre-formatted display date string, e.g. \"Oct 31, 2020\" — rendered verbatim"
+          },
+          "rating": {
+            "type": "integer",
+            "description": "Star rating (1-5)"
+          },
+          "picture": {
+            "type": "string",
+            "description": "Row avatar/photo URL"
+          }
+        },
+        "required": [
+          "id",
+          "list",
+          "title",
+          "date",
+          "rating",
+          "picture"
+        ],
+        "title": "LifestyleActivityResource"
+      },
+      "LifestyleHobbyResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "description": "Hobby name, e.g. \"Foot Trekks\""
+          },
+          "icon": {
+            "type": "string",
+            "description": "Font Awesome icon class, e.g. \"fas fa-running\""
+          },
+          "followers": {
+            "type": "string",
+            "description": "Pre-formatted follower-count display string, e.g. \"28.3K\" — rendered verbatim"
+          },
+          "image": {
+            "type": "string",
+            "description": "Card background image URL"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "icon",
+          "followers",
+          "image"
+        ],
+        "title": "LifestyleHobbyResource"
+      },
+      "LifestyleTopicResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Iconify icon id, e.g. \"fa-solid:biking\""
+          },
+          "color": {
+            "type": "string",
+            "description": "Topic accent color token, e.g. \"yellow\""
+          },
+          "name": {
+            "type": "string",
+            "description": "Topic name, e.g. \"Biking\""
+          },
+          "category": {
+            "type": "string",
+            "description": "Topic category, e.g. \"Sports\""
+          }
+        },
+        "required": [
+          "id",
+          "icon",
+          "color",
+          "name",
+          "category"
+        ],
+        "title": "LifestyleTopicResource"
+      },
       "ListItemResource": {
         "type": "object",
         "properties": {
@@ -93236,6 +93928,34 @@
         ],
         "title": "OnboardingFlowResource"
       },
+      "OperatorStatsResource": {
+        "type": "object",
+        "properties": {
+          "open_signals": {
+            "type": "integer",
+            "description": "Signals currently HITL-paused in the intake queue (same predicate as facilities.intake-queue.index)"
+          },
+          "verified_today": {
+            "type": "integer",
+            "description": "Signals that received a ConfidenceLabelStep verification today"
+          },
+          "asset_coverage_pct": {
+            "type": "integer",
+            "description": "Percent (0-100) of open signals with at least one recorded asset candidate; 0 when the queue is empty"
+          },
+          "evidence_joins_today": {
+            "type": "integer",
+            "description": "Public-evidence enrichment joins (PublicEvidenceEnrichmentStep rows) recorded today"
+          }
+        },
+        "required": [
+          "open_signals",
+          "verified_today",
+          "asset_coverage_pct",
+          "evidence_joins_today"
+        ],
+        "title": "OperatorStatsResource"
+      },
       "OrderDeliveryStartedRequest": {
         "type": "object",
         "properties": {
@@ -93977,6 +94697,44 @@
         ],
         "title": "ProcessAchPaymentRequest"
       },
+      "ProfileExperienceResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The catalog item id (POST save mints max(id)+1 for new items)."
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name — the setting-item heading (e.g. \"Airbnb HQ\")."
+          },
+          "logo": {
+            "type": "string",
+            "description": "Brand logo url (media.cssninja.io/content/photos/brands/*.svg)."
+          },
+          "position": {
+            "type": "string",
+            "description": "Job title line (e.g. \"Product Manager\")."
+          },
+          "start": {
+            "type": "string",
+            "description": "Display period start, pre-formatted (e.g. \"January 2018\") — render verbatim."
+          },
+          "end": {
+            "type": "string",
+            "description": "Display period end, pre-formatted (e.g. \"October 2020\") — render verbatim."
+          }
+        },
+        "required": [
+          "id",
+          "company",
+          "logo",
+          "position",
+          "start",
+          "end"
+        ],
+        "title": "ProfileExperienceResource"
+      },
       "ProfileSettingsResource": {
         "type": "object",
         "properties": {
@@ -94040,6 +94798,74 @@
           "preferences"
         ],
         "title": "ProfileSettingsResource"
+      },
+      "ProfileSkillsResource": {
+        "type": "object",
+        "properties": {
+          "languages": {
+            "type": "array",
+            "description": "The Languages fieldset items",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "level": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "level"
+              ]
+            }
+          },
+          "skills": {
+            "type": "array",
+            "description": "The Skills fieldset items",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "level": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "level"
+              ]
+            }
+          },
+          "tools": {
+            "type": "array",
+            "description": "The Tools fieldset items",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "level": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "level"
+              ]
+            }
+          }
+        },
+        "required": [
+          "languages",
+          "skills",
+          "tools"
+        ],
+        "title": "ProfileSkillsResource"
       },
       "ProgramAddTagRequest": {
         "type": "object",

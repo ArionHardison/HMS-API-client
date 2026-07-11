@@ -6213,6 +6213,19 @@
     "summary": null
   },
   {
+    "id": "facilities.assets.index",
+    "module": "facilities",
+    "method": "GET",
+    "uri": "/api/facilities/assets",
+    "name": "facilities.assets.index",
+    "controller": "Assets",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/facilities/assets — tenant-scoped tracked-asset list for /s/assets"
+  },
+  {
     "id": "facilities.intake-queue.approve",
     "module": "Modules\\Facilities",
     "method": "POST",
@@ -6245,6 +6258,19 @@
     "summary": null
   },
   {
+    "id": "facilities.operator.stats",
+    "module": "facilities",
+    "method": "GET",
+    "uri": "/api/facilities/operator/stats",
+    "name": "facilities.operator.stats",
+    "controller": "OperatorStats",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/facilities/operator/stats — tenant-scoped KPI aggregate for /s/dashboard"
+  },
+  {
     "id": "facilities.portfolio.rollup",
     "module": "Modules\\Facilities",
     "method": "GET",
@@ -6275,6 +6301,19 @@
     "hasPathParams": true,
     "hasBody": false,
     "summary": null
+  },
+  {
+    "id": "facilities.work-orders.index",
+    "module": "facilities",
+    "method": "GET",
+    "uri": "/api/facilities/work-orders",
+    "name": "facilities.work-orders.index",
+    "controller": "WorkOrders",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/facilities/work-orders — tenant-scoped work-order list for the operator dashboard"
   },
   {
     "id": "fail.events.index",
@@ -7282,6 +7321,45 @@
     "summary": "GET /api/v1/d/jobs/summary — the flat toolbar summary for /s/d/jobs"
   },
   {
+    "id": "get.api.v1.d.lifestyle.activities",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/d/lifestyle/activities",
+    "name": "get.api.v1.d.lifestyle.activities",
+    "controller": "Lifestyle",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/d/lifestyle/activities — the Trending Now + Popular Now rows for /s/d/hobbies"
+  },
+  {
+    "id": "get.api.v1.d.lifestyle.hobbies",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/d/lifestyle/hobbies",
+    "name": "get.api.v1.d.lifestyle.hobbies",
+    "controller": "Lifestyle",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/d/lifestyle/hobbies — the 4 hobby summary cards for /s/d/hobbies"
+  },
+  {
+    "id": "get.api.v1.d.lifestyle.topics",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/d/lifestyle/topics",
+    "name": "get.api.v1.d.lifestyle.topics",
+    "controller": "Lifestyle",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/d/lifestyle/topics — the topic sidebar catalog for /s/d/hobbies"
+  },
+  {
     "id": "get.api.v1.d.maps.markers",
     "module": "get",
     "method": "GET",
@@ -7710,6 +7788,19 @@
     "summary": "GET /api/v1/l/profile — the demo user profile"
   },
   {
+    "id": "get.api.v1.l.profile.experience",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/profile/experience",
+    "name": "get.api.v1.l.profile.experience",
+    "controller": "ProfileExperience",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/profile/experience — the demo work-experience list for /n/l/profile-edit/experience"
+  },
+  {
     "id": "get.api.v1.l.profile.notifications",
     "module": "get",
     "method": "GET",
@@ -7734,6 +7825,19 @@
     "hasPathParams": false,
     "hasBody": false,
     "summary": "GET /api/v1/l/profile/settings — the default demo profile settings"
+  },
+  {
+    "id": "get.api.v1.l.profile.skills",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/profile/skills",
+    "name": "get.api.v1.l.profile.skills",
+    "controller": "ProfileSkills",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/profile/skills — the default demo skill groups"
   },
   {
     "id": "get.api.v1.l.projects",
@@ -11561,6 +11665,32 @@
     "summary": "POST /api/v1/l/profile — save the profile"
   },
   {
+    "id": "post.api.v1.l.profile.experience",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/profile/experience",
+    "name": "post.api.v1.l.profile.experience",
+    "controller": "ProfileExperience",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/profile/experience — save (add or edit) one item"
+  },
+  {
+    "id": "post.api.v1.l.profile.experience.item.delete",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/profile/experience/{id}/delete",
+    "name": "post.api.v1.l.profile.experience.item.delete",
+    "controller": "ProfileExperience",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "POST /api/v1/l/profile/experience/{id}/delete — delete one item"
+  },
+  {
     "id": "post.api.v1.l.profile.notifications",
     "module": "post",
     "method": "POST",
@@ -11585,6 +11715,19 @@
     "hasPathParams": false,
     "hasBody": true,
     "summary": "POST /api/v1/l/profile/settings — save profile settings"
+  },
+  {
+    "id": "post.api.v1.l.profile.skills",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/profile/skills",
+    "name": "post.api.v1.l.profile.skills",
+    "controller": "ProfileSkills",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/profile/skills — save profile skills"
   },
   {
     "id": "program-sale.show",

@@ -6974,19 +6974,29 @@
   },
   {
     "id": "get.api.v1.l.billing",
-    "module": "core",
+    "module": "get",
     "method": "GET",
     "uri": "/api/v1/l/billing",
     "name": "get.api.v1.l.billing",
     "controller": "Billing",
-    "auth": "public",
-    "flags": {
-      "tenant_scoped": true,
-      "rate_limited": "api"
-    },
+    "auth": "unknown",
+    "flags": {},
     "hasPathParams": false,
     "hasBody": false,
     "summary": "GET /api/v1/l/billing — the billing overview for /s/l/saas-billing"
+  },
+  {
+    "id": "get.api.v1.l.boards.item",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/boards/{id}",
+    "name": "get.api.v1.l.boards.item",
+    "controller": "Boards",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/boards/{id} — one demo board (columns + cards)"
   },
   {
     "id": "get.api.v1.l.cards",
@@ -6999,7 +7009,7 @@
     "flags": {},
     "hasPathParams": false,
     "hasBody": false,
-    "summary": "GET /api/v1/l/cards?variant=v3 — the project-card grid for one demo variant"
+    "summary": "GET /api/v1/l/cards?variant=v3 — the card grid for one demo variant"
   },
   {
     "id": "get.api.v1.l.datatable",
@@ -7016,6 +7026,32 @@
     "hasPathParams": false,
     "hasBody": false,
     "summary": "GET /api/v1/l/datatable?variant=v3&page=1&perPage=10&sort=title — one\npage of datatable rows for one demo variant, optionally sorted by\ntitle before pagination"
+  },
+  {
+    "id": "get.api.v1.l.forms.item.options",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/forms/{key}/options",
+    "name": "get.api.v1.l.forms.item.options",
+    "controller": "Forms",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/forms/{key}/options — the static option catalog for\none demo form: `{ data: { key, selects } }`. Same stateless-global\nexception, same controller-level allowlist gate as submit(); the\ncatalog is a static literal so the payload is deterministic and the\nsys drift lock (Response<'get.api.v1.l.forms.item.options'>) can pin\nit"
+  },
+  {
+    "id": "get.api.v1.l.invoice",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/invoice",
+    "name": "get.api.v1.l.invoice",
+    "controller": "Invoice",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/invoice — the invoice document for /s/l/utility-invoice"
   },
   {
     "id": "get.api.v1.l.list",
@@ -7050,20 +7086,69 @@
     "summary": "GET /api/v1/l/onboarding?variant=v2 — the onboarding flow for one demo variant"
   },
   {
+    "id": "get.api.v1.l.profile",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/profile",
+    "name": "get.api.v1.l.profile",
+    "controller": "Profile",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/profile — the demo user profile"
+  },
+  {
+    "id": "get.api.v1.l.profile.notifications",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/profile/notifications",
+    "name": "get.api.v1.l.profile.notifications",
+    "controller": "ProfileNotifications",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/profile/notifications — the default demo notification preferences"
+  },
+  {
     "id": "get.api.v1.l.profile.settings",
-    "module": "core",
+    "module": "get",
     "method": "GET",
     "uri": "/api/v1/l/profile/settings",
     "name": "get.api.v1.l.profile.settings",
     "controller": "ProfileSettings",
-    "auth": "public",
-    "flags": {
-      "tenant_scoped": true,
-      "rate_limited": "api"
-    },
+    "auth": "unknown",
+    "flags": {},
     "hasPathParams": false,
     "hasBody": false,
     "summary": "GET /api/v1/l/profile/settings — the default demo profile settings"
+  },
+  {
+    "id": "get.api.v1.l.projects",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/projects",
+    "name": "get.api.v1.l.projects",
+    "controller": "Projects",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/projects?variant=v3 — the project grid for one demo variant"
+  },
+  {
+    "id": "get.api.v1.l.projects.item",
+    "module": "get",
+    "method": "GET",
+    "uri": "/api/v1/l/projects/{id}",
+    "name": "get.api.v1.l.projects.item",
+    "controller": "Projects",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": false,
+    "summary": "GET /api/v1/l/projects/{id} — one project's detail (members, tasks,\nfiles, activity). 404 when the id isn't in the static detail catalog"
   },
   {
     "id": "get.api.v1.l.promotion",
@@ -10784,6 +10869,32 @@
     "summary": "POST /api/v1/l/actions/{id} — act on one action item"
   },
   {
+    "id": "post.api.v1.l.auth.confirm",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/auth/confirm",
+    "name": "post.api.v1.l.auth.confirm",
+    "controller": "AuthConfirm",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/auth/confirm — confirm an account by token"
+  },
+  {
+    "id": "post.api.v1.l.boards.item.cards",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/boards/{id}/cards",
+    "name": "post.api.v1.l.boards.item.cards",
+    "controller": "Boards",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": true,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/boards/{id}/cards — create a card or move one between\ncolumns"
+  },
+  {
     "id": "post.api.v1.l.forms.item",
     "module": "post",
     "method": "POST",
@@ -10826,17 +10937,40 @@
     "summary": "POST /api/v1/l/onboarding/progress — record onboarding progress"
   },
   {
+    "id": "post.api.v1.l.profile",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/profile",
+    "name": "post.api.v1.l.profile",
+    "controller": "Profile",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/profile — save the profile"
+  },
+  {
+    "id": "post.api.v1.l.profile.notifications",
+    "module": "post",
+    "method": "POST",
+    "uri": "/api/v1/l/profile/notifications",
+    "name": "post.api.v1.l.profile.notifications",
+    "controller": "ProfileNotifications",
+    "auth": "unknown",
+    "flags": {},
+    "hasPathParams": false,
+    "hasBody": true,
+    "summary": "POST /api/v1/l/profile/notifications — save notification preferences"
+  },
+  {
     "id": "post.api.v1.l.profile.settings",
-    "module": "core",
+    "module": "post",
     "method": "POST",
     "uri": "/api/v1/l/profile/settings",
     "name": "post.api.v1.l.profile.settings",
     "controller": "ProfileSettings",
-    "auth": "public",
-    "flags": {
-      "tenant_scoped": true,
-      "rate_limited": "api"
-    },
+    "auth": "unknown",
+    "flags": {},
     "hasPathParams": false,
     "hasBody": true,
     "summary": "POST /api/v1/l/profile/settings — save profile settings"

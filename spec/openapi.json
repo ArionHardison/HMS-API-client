@@ -5930,7 +5930,7 @@
                           "type": "object",
                           "properties": {
                             "id": {
-                              "type": "string"
+                              "type": "integer"
                             },
                             "name": {
                               "type": "string"
@@ -5945,7 +5945,10 @@
                               "type": "string"
                             },
                             "email_verified_at": {
-                              "type": "string"
+                              "type": [
+                                "string",
+                                "null"
+                              ]
                             }
                           },
                           "required": [
@@ -6092,7 +6095,7 @@
                           "type": "object",
                           "properties": {
                             "id": {
-                              "type": "string"
+                              "type": "integer"
                             },
                             "name": {
                               "type": "string"
@@ -6104,7 +6107,10 @@
                               "type": "string"
                             },
                             "subproject_id": {
-                              "type": "string"
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
                             },
                             "created_at": {
                               "type": "string"
@@ -6199,6 +6205,59 @@
         }
       }
     },
+    "/v1/l/auth/confirm": {
+      "post": {
+        "operationId": "post.api.v1.l.auth.confirm",
+        "description": "200 always for a well-formed token: `demo-confirm-token` →\n{status:'confirmed', email, confirmed_at}; anything else →\n{status:'invalid', email:null, confirmed_at:null}. 422 only for a\nmalformed body.",
+        "summary": "POST /api/v1/l/auth/confirm — confirm an account by token",
+        "tags": [
+          "AuthConfirm"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "token"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AccountConfirmResultResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
     "/v1/rlhf/autograde": {
       "post": {
         "operationId": "autogradeProxy.store",
@@ -6267,10 +6326,114 @@
         }
       }
     },
+    "/v1/l/boards/{id}": {
+      "get": {
+        "operationId": "get.api.v1.l.boards.item",
+        "summary": "GET /api/v1/l/boards/{id} — one demo board (columns + cards)",
+        "tags": [
+          "Boards"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/KanbanBoardResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/l/boards/{id}/cards": {
+      "post": {
+        "operationId": "post.api.v1.l.boards.item.cards",
+        "description": "Stateless demo write: validates `{action: create|move, card, column_id,\nposition?}` and echoes the board with the mutation applied in-memory\n(nothing is persisted — the board is a static constant, so a\nsubsequent GET serves the pristine catalog again). 404 on an unknown\nboard id, 422 on an unknown action / column_id / card id or a missing\ncard title.",
+        "summary": "POST /api/v1/l/boards/{id}/cards — create a card or move one between\ncolumns",
+        "tags": [
+          "Boards"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "create",
+                      "move"
+                    ]
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/KanbanBoardResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
     "/v1/l/cards": {
       "get": {
         "operationId": "get.api.v1.l.cards",
-        "summary": "GET /api/v1/l/cards?variant=v3 — the project-card grid for one demo variant",
+        "summary": "GET /api/v1/l/cards?variant=v3 — the card grid for one demo variant",
         "tags": [
           "Cards"
         ],
@@ -6279,11 +6442,14 @@
             "name": "variant",
             "in": "query",
             "required": true,
-            "description": "Required page-variant filter — v3 is /s/l/grid-cards-3 (#405),\nthe ONLY variant shipped so far. There is deliberately no\ndefault: the sibling tickets #400 (v1 — /s/l/grid-cards-1),\n#404 (v2 — /s/l/grid-cards-2) and #396 (v4 — /s/l/grid-cards-4)\nextend this `in:` union additively when their catalogs land,\nand a premature default would have to move later (a breaking\nchange). Callers pin their variant explicitly from day one.",
+            "description": "Required page-variant filter — v1 is /s/l/grid-cards-1 (#400),\nv2 is /s/l/grid-cards-2 (#404), v3 is /s/l/grid-cards-3\n(#405), v4 is /s/l/grid-cards-4 (#396). There is deliberately\nstill no default: v3 shipped alone and callers were required\nto pin their variant explicitly from day one, so keeping\n`required` is the non-breaking choice now that the union is\ncomplete.",
             "schema": {
               "type": "string",
               "enum": [
-                "v3"
+                "v1",
+                "v2",
+                "v3",
+                "v4"
               ]
             }
           }
@@ -14742,52 +14908,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -15082,52 +15273,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -16057,52 +16273,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -16289,52 +16530,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -16500,52 +16766,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -16754,52 +17045,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -16986,52 +17302,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -17432,52 +17773,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -17621,52 +17987,77 @@
                       "type": "string"
                     },
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "subproject_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "tld": {
                       "type": "string"
                     },
                     "wizard_step": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "current_step_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "problem": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "solutions": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "selected_solution_idx": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "stakeholders": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "financing": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "expertise": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "pipeline_steps": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {}
                     },
                     "outcome_score": {
-                      "type": "string"
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
                     },
                     "outcome_report": {
-                      "type": "string"
+                      "type": [
+                        "array",
+                        "null"
+                      ],
+                      "items": {}
                     },
                     "ontology_class": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "ontology_version": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "intake": {
                       "type": "string",
@@ -22667,7 +23058,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "string"
+                          "type": "integer"
                         },
                         "device_type": {
                           "type": "string"
@@ -23861,6 +24252,48 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/v1/l/forms/{key}/options": {
+      "get": {
+        "operationId": "get.api.v1.l.forms.item.options",
+        "summary": "GET /api/v1/l/forms/{key}/options — the static option catalog for\none demo form: `{ data: { key, selects } }`. Same stateless-global\nexception, same controller-level allowlist gate as submit(); the\ncatalog is a static literal so the payload is deterministic and the\nsys drift lock (Response<'get.api.v1.l.forms.item.options'>) can pin\nit",
+        "tags": [
+          "Forms"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FormOptionsResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/ModelNotFoundException"
           }
         }
       }
@@ -30481,6 +30914,35 @@
         }
       }
     },
+    "/v1/l/invoice": {
+      "get": {
+        "operationId": "get.api.v1.l.invoice",
+        "summary": "GET /api/v1/l/invoice — the invoice document for /s/l/utility-invoice",
+        "tags": [
+          "Invoice"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/InvoiceResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/issues": {
       "get": {
         "operationId": "issueTopic.index",
@@ -36788,34 +37250,48 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "string"
+                          "type": "integer"
                         },
                         "subproject_id": {
                           "type": "string"
                         },
                         "order_id": {
-                          "type": "string"
+                          "type": "integer"
                         },
                         "url": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "title": {
                           "type": "string"
                         },
                         "image": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "quantity": {
-                          "type": "string"
+                          "type": "integer"
                         },
                         "price": {
-                          "type": "string"
+                          "type": "number"
                         },
                         "created_at": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         },
                         "updated_at": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         }
                       },
                       "required": [
@@ -39814,7 +40290,11 @@
                           ]
                         },
                         "published_at": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         }
                       },
                       "required": [
@@ -40261,7 +40741,11 @@
                           "additionalItems": false
                         },
                         "published_at": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         }
                       },
                       "required": [
@@ -40627,7 +41111,11 @@
                           "additionalItems": false
                         },
                         "published_at": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         },
                         "transition": {
                           "$ref": "#/components/schemas/PolicyStatusTransition"
@@ -41774,6 +42262,242 @@
         }
       }
     },
+    "/v1/l/profile": {
+      "get": {
+        "operationId": "get.api.v1.l.profile",
+        "summary": "GET /api/v1/l/profile — the demo user profile",
+        "tags": [
+          "Profile"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/UserProfileResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post.api.v1.l.profile",
+        "description": "Stateless demo write (same pattern as ProfileSettingsController::\nupdate): validates the posted profile payload — every field is\noptional — and echoes the merged result (defaults ∪ posted) without\npersisting anything (the defaults are static). The merge is\nper-top-level-field: a posted `socials` array REPLACES the default\nlist wholesale (an index-wise merge of two lists would interleave\nunrelated platforms). 422 when a field has the wrong type, a social\ncarries an unknown key, or a social member is missing/invalid.",
+        "summary": "POST /api/v1/l/profile — save the profile",
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "maxLength": 255
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "bio": {
+                    "type": "string",
+                    "maxLength": 2000
+                  },
+                  "location": {
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  "socials": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "platform": {
+                          "type": "string",
+                          "maxLength": 32
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "maxLength": 2048
+                        }
+                      },
+                      "required": [
+                        "platform",
+                        "url"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/UserProfileResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/profile/notifications": {
+      "get": {
+        "operationId": "get.api.v1.l.profile.notifications",
+        "summary": "GET /api/v1/l/profile/notifications — the default demo notification preferences",
+        "tags": [
+          "ProfileNotifications"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/NotificationPreferencesResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post.api.v1.l.profile.notifications",
+        "description": "Stateless demo write (same pattern as ProfileSettingsController::\nupdate): validates the posted preferences payload — every group and\nevery member is optional — and echoes the merged result (defaults ∪\nposted) without persisting anything (the defaults are static).\n422 when a group is not an object, carries an unknown key, or a\nmember has the wrong type.",
+        "summary": "POST /api/v1/l/profile/notifications — save notification preferences",
+        "tags": [
+          "ProfileNotifications"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "projects": {
+                    "type": "object",
+                    "properties": {
+                      "additions": {
+                        "type": "boolean"
+                      },
+                      "member_changes": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "additions",
+                      "member_changes"
+                    ]
+                  },
+                  "tasks": {
+                    "type": "object",
+                    "properties": {
+                      "comments": {
+                        "type": "boolean"
+                      },
+                      "status_changes": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "comments",
+                      "status_changes"
+                    ]
+                  },
+                  "files": {
+                    "type": "object",
+                    "properties": {
+                      "uploads": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "uploads"
+                    ]
+                  },
+                  "mentions": {
+                    "type": "object",
+                    "properties": {
+                      "comments": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "comments"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/NotificationPreferencesResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
     "/v1/l/profile/settings": {
       "get": {
         "operationId": "get.api.v1.l.profile.settings",
@@ -42356,7 +43080,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         ],
@@ -42574,7 +43301,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         ],
@@ -42878,7 +43608,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           },
           {
@@ -42932,7 +43665,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         ],
@@ -43022,7 +43758,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           },
           {
@@ -43591,7 +44330,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         ],
@@ -44550,7 +45292,10 @@
             "required": true,
             "description": "The program uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         ],
@@ -44599,7 +45344,10 @@
             "required": true,
             "description": "The program sale uuid key",
             "schema": {
-              "type": "integer"
+              "type": [
+                "string",
+                "null"
+              ]
             }
           }
         ],
@@ -44754,6 +45502,96 @@
           },
           "422": {
             "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/projects": {
+      "get": {
+        "operationId": "get.api.v1.l.projects",
+        "summary": "GET /api/v1/l/projects?variant=v3 — the project grid for one demo variant",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "variant",
+            "in": "query",
+            "description": "Optional page-variant filter. Only v3 (/s/l/projects-projects-3,\nSRE #389) ships from this ticket — the sibling tickets extend\nthe union: v1 = /s/l/projects-projects-1 (#385), v2 =\n/s/l/projects-projects-2 (#388). Defaults to v3 until v1 lands\n(then the default moves to v1, matching the other L\ncontrollers).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "v3"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProjectResource"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationException"
+          }
+        }
+      }
+    },
+    "/v1/l/projects/{id}": {
+      "get": {
+        "operationId": "get.api.v1.l.projects.item",
+        "summary": "GET /api/v1/l/projects/{id} — one project's detail (members, tasks,\nfiles, activity). 404 when the id isn't in the static detail catalog",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ProjectDetailResource"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/ModelNotFoundException"
           }
         }
       }
@@ -60183,7 +61021,7 @@
                       "type": "object",
                       "properties": {
                         "id": {
-                          "type": "string"
+                          "type": "integer"
                         },
                         "pipeline_variant": {
                           "type": "string"
@@ -73214,10 +74052,10 @@
                   "type": "object",
                   "properties": {
                     "user_id": {
-                      "type": "string"
+                      "type": "integer"
                     },
                     "p2x_user_id": {
-                      "type": "string",
+                      "type": "integer",
                       "description": "P2xGigClaimService reads `p2x_user_id` (or data.p2x_user_id)\noff the response — keep both spellings on the wire."
                     },
                     "source": {
@@ -78016,6 +78854,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -79392,6 +80231,35 @@
         ],
         "title": "AcceptInviteRequest"
       },
+      "AccountConfirmResultResource": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "'confirmed' when the token matched the demo token, 'invalid' otherwise"
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "the confirmed account's email; null when status is 'invalid'"
+          },
+          "confirmed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "ISO-8601 confirmation timestamp; null when status is 'invalid'"
+          }
+        },
+        "required": [
+          "status",
+          "email",
+          "confirmed_at"
+        ],
+        "title": "AccountConfirmResultResource"
+      },
       "ActionItemResource": {
         "type": "object",
         "properties": {
@@ -80443,13 +81311,98 @@
         "title": "AppealResource"
       },
       "Application": {
-        "type": "array",
-        "items": {
-          "type": "string"
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "application_type": {
+            "type": "string"
+          },
+          "requirements": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "review_criteria": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "scoring_rubric": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "deadline": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "version": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "subproject_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
         },
-        "minItems": 0,
-        "maxItems": 0,
-        "additionalItems": false,
+        "required": [
+          "id",
+          "title",
+          "description",
+          "application_type",
+          "requirements",
+          "review_criteria",
+          "scoring_rubric",
+          "deadline",
+          "version",
+          "user_id",
+          "subproject_id",
+          "created_at",
+          "updated_at"
+        ],
         "title": "Application"
       },
       "ApplicationResource": {
@@ -81728,7 +82681,9 @@
         "type": "object",
         "properties": {
           "answer": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
           },
           "question": {
             "type": "string"
@@ -81749,6 +82704,7 @@
           }
         },
         "required": [
+          "answer",
           "question"
         ],
         "title": "CodifyQuestionAnswerRequest"
@@ -84208,13 +85164,98 @@
         "title": "DatatableRowResource"
       },
       "DealEconomicScore": {
-        "type": "array",
-        "items": {
-          "type": "string"
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "deal_id": {
+            "type": "string"
+          },
+          "wizard_step": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "composite_score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "components": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "forecast": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "ic_projection": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "macro_trajectory": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "rationale": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "scored_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
         },
-        "minItems": 0,
-        "maxItems": 0,
-        "additionalItems": false,
+        "required": [
+          "id",
+          "deal_id",
+          "wizard_step",
+          "composite_score",
+          "components",
+          "forecast",
+          "ic_projection",
+          "macro_trajectory",
+          "rationale",
+          "request_id",
+          "scored_at",
+          "created_at",
+          "updated_at"
+        ],
         "title": "DealEconomicScore"
       },
       "DealResource": {
@@ -84224,10 +85265,10 @@
             "type": "string"
           },
           "user_id": {
-            "type": "string"
+            "type": "integer"
           },
           "subproject_id": {
-            "type": "string"
+            "type": "integer"
           },
           "tld": {
             "type": "string"
@@ -84236,43 +85277,68 @@
             "type": "string"
           },
           "wizard_step": {
-            "type": "string"
+            "type": "integer"
           },
           "current_step_idx": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "problem": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "solutions": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "selected_solution_idx": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "stakeholders": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "financing": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "expertise": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "pipeline_steps": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "outcome_score": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "outcome_report": {
-            "type": "string"
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
           },
           "ontology_class": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "ontology_version": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "intake": {
             "type": "string",
@@ -84403,13 +85469,97 @@
         "title": "DetachProgramProtocolResource"
       },
       "Disbursement": {
-        "type": "array",
-        "items": {
-          "type": "string"
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "disbursement_type": {
+            "type": "string"
+          },
+          "amount": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": "string"
+          },
+          "frequency": {
+            "type": "string"
+          },
+          "calculation_method": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "recipient_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "version": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "subproject_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
         },
-        "minItems": 0,
-        "maxItems": 0,
-        "additionalItems": false,
+        "required": [
+          "id",
+          "title",
+          "description",
+          "disbursement_type",
+          "amount",
+          "currency",
+          "frequency",
+          "calculation_method",
+          "recipient_id",
+          "version",
+          "user_id",
+          "subproject_id",
+          "created_at",
+          "updated_at"
+        ],
         "title": "Disbursement"
       },
       "DisbursementResource": {
@@ -84667,10 +85817,10 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
           "subproject_id": {
-            "type": "string"
+            "type": "integer"
           },
           "domain": {
             "type": "string"
@@ -84682,19 +85832,34 @@
             "type": "boolean"
           },
           "page_route": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "page_file": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "block_name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "block_file": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "purpose": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "data_sources": {
             "type": "string"
@@ -84983,40 +86148,71 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
           "subproject_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "user_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "protocol_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "protocol_chain_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "personal_chain_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "step_node_id": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "step_type": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "next_step_condition": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "root_cause_code": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "status": {
             "type": "string"
           },
           "context": {
-            "type": "string"
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
           },
           "occurred_at": {
             "type": "string"
@@ -85053,10 +86249,10 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
           "fail_event_id": {
-            "type": "string"
+            "type": "integer"
           },
           "action_type": {
             "type": "string"
@@ -85065,16 +86261,30 @@
             "type": "string"
           },
           "module_resource": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "module_item_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "parameters": {
-            "type": "string"
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
           },
           "response": {
-            "type": "string"
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
           },
           "executed_at": {
             "type": "string"
@@ -85220,7 +86430,7 @@
           "role": {
             "type": "string",
             "enum": [
-              ""
+              "Politician"
             ]
           },
           "onet_code": {
@@ -85632,6 +86842,40 @@
           "name"
         ],
         "title": "FoodCategoryResource"
+      },
+      "FormOptionsResource": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "selects": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value",
+                  "label"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "key",
+          "selects"
+        ],
+        "title": "FormOptionsResource"
       },
       "FormSubmissionResultResource": {
         "type": "object",
@@ -87477,7 +88721,7 @@
                 "role": {
                   "type": "string",
                   "enum": [
-                    ""
+                    "Politician"
                   ]
                 },
                 "member": {
@@ -87528,9 +88772,13 @@
                 "role",
                 "member"
               ]
-            }
+            },
+            "minItems": 1
           }
         },
+        "required": [
+          "members"
+        ],
         "title": "InviteMembersToPersonalProgramRequest"
       },
       "InviteNetworkMemberRequest": {
@@ -87973,6 +89221,109 @@
         "type": "string",
         "title": "InviteUsersListResource"
       },
+      "InvoiceResource": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string",
+            "description": "Invoice number, e.g. \"FC-456-14\""
+          },
+          "issued_at": {
+            "type": "string",
+            "description": "Issue date as the rendered display string, e.g. \"May 27, 2020\""
+          },
+          "due_at": {
+            "type": "string",
+            "description": "Payment-due date as the rendered display string"
+          },
+          "seller": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Seller display name"
+              },
+              "email": {
+                "type": "string",
+                "description": "Seller contact email"
+              },
+              "phone": {
+                "type": "string",
+                "description": "Seller contact phone"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "Seller avatar image URL"
+              }
+            },
+            "required": [
+              "name",
+              "email",
+              "phone",
+              "avatar"
+            ]
+          },
+          "buyer": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Buyer / customer display name"
+              },
+              "address_line_1": {
+                "type": "string",
+                "description": "First address line (street + city)"
+              },
+              "address_line_2": {
+                "type": "string",
+                "description": "Second address line (region + postal code + country)"
+              },
+              "logo": {
+                "type": "string",
+                "description": "Buyer logo image URL"
+              },
+              "description": {
+                "type": "string",
+                "description": "Free-text invoice description block"
+              }
+            },
+            "required": [
+              "name",
+              "address_line_1",
+              "address_line_2",
+              "logo",
+              "description"
+            ]
+          },
+          "items": {
+            "type": "string"
+          },
+          "subtotal": {
+            "type": "string",
+            "description": "Sum of line amounts as a formatted USD string"
+          },
+          "tax": {
+            "type": "string",
+            "description": "Tax (10% VAT) as a formatted USD string"
+          },
+          "total": {
+            "type": "string",
+            "description": "Grand total (subtotal + tax) as a formatted USD string"
+          }
+        },
+        "required": [
+          "number",
+          "issued_at",
+          "due_at",
+          "seller",
+          "buyer",
+          "items",
+          "subtotal",
+          "tax",
+          "total"
+        ],
+        "title": "InvoiceResource"
+      },
       "InvokePipeRequest": {
         "type": "object",
         "description": "Phase 3.B — POST /api/pipes/invoke Form Request.\n\nValidation layers:\n  1. Structural — pipe_name + subproject_id + domain + params present and\n     the canonical_pipes row exists and is_active.\n  2. Authorization — the authenticated user must belong to the\n     subproject_id being addressed (mirrors how actingAsUserIn() ties\n     User.subproject_id to the request scope). Superadmins bypass.\n  3. Schema — params is JSON-Schema-validated against the canonical\n     pipe's stored input_schema (with subproject_id+domain merged in,\n     since canonical schemas mark those as required at the top level).\n\nDesigned to be additive to api/. Existing pipes / endpoints unaffected.",
@@ -88097,6 +89448,86 @@
       "KPITaskResource": {
         "type": "string",
         "title": "KPITaskResource"
+      },
+      "KanbanBoardResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "integer"
+                },
+                "cards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "avatar": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "due_date": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "title",
+                      "description",
+                      "avatar",
+                      "due_date",
+                      "position"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "position",
+                "cards"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "columns"
+        ],
+        "title": "KanbanBoardResource"
       },
       "KpiSignalRequest": {
         "type": "object",
@@ -88677,6 +90108,70 @@
         ],
         "title": "NioOrderRequest"
       },
+      "NotificationPreferencesResource": {
+        "type": "object",
+        "properties": {
+          "projects": {
+            "type": "object",
+            "properties": {
+              "additions": {
+                "type": "boolean"
+              },
+              "member_changes": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "additions",
+              "member_changes"
+            ]
+          },
+          "tasks": {
+            "type": "object",
+            "properties": {
+              "comments": {
+                "type": "boolean"
+              },
+              "status_changes": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "comments",
+              "status_changes"
+            ]
+          },
+          "files": {
+            "type": "object",
+            "properties": {
+              "uploads": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "uploads"
+            ]
+          },
+          "mentions": {
+            "type": "object",
+            "properties": {
+              "comments": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "comments"
+            ]
+          }
+        },
+        "required": [
+          "projects",
+          "tasks",
+          "files",
+          "mentions"
+        ],
+        "title": "NotificationPreferencesResource"
+      },
       "NotificationResource": {
         "type": "object",
         "properties": {
@@ -88854,22 +90349,35 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
           "subproject_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "protocol_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "step_type": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "rubric_json": {
-            "type": "string"
+            "type": "array",
+            "items": {}
           },
           "created_by": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "created_at": {
             "type": "string"
@@ -89256,7 +90764,10 @@
             "type": "string"
           },
           "description": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "default_order": {
             "type": "integer"
@@ -89661,7 +91172,10 @@
                 "type": "string"
               },
               "profile_picture": {
-                "type": "string"
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "username": {
                 "type": "string"
@@ -90519,6 +92033,108 @@
         },
         "title": "ProgramsFilterRequest"
       },
+      "ProjectDetailResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "activity": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "description",
+          "image",
+          "members",
+          "tasks",
+          "files",
+          "activity"
+        ],
+        "title": "ProjectDetailResource"
+      },
+      "ProjectResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "team": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "remaining": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "status",
+          "description",
+          "tags",
+          "team",
+          "remaining"
+        ],
+        "title": "ProjectResource"
+      },
       "PromotionResource": {
         "type": "object",
         "properties": {
@@ -90648,28 +92264,37 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "integer"
           },
           "subproject_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "protocol_id": {
-            "type": "string"
+            "type": "integer"
           },
           "protocol_chain_id": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "course_id": {
-            "type": "string"
+            "type": "integer"
           },
           "assignment_id": {
-            "type": "string"
+            "type": "integer"
           },
           "lms_domain": {
             "type": "string"
           },
           "created_by": {
-            "type": "string"
+            "type": [
+              "integer",
+              "null"
+            ]
           },
           "created_at": {
             "type": "string"
@@ -91509,13 +93134,79 @@
         "title": "QuestionsListResource"
       },
       "Referral": {
-        "type": "array",
-        "items": {
-          "type": "string"
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "referral_destinations": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "urgency_level": {
+            "type": "string"
+          },
+          "tracking_enabled": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "subproject_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
         },
-        "minItems": 0,
-        "maxItems": 0,
-        "additionalItems": false,
+        "required": [
+          "id",
+          "title",
+          "description",
+          "referral_destinations",
+          "urgency_level",
+          "tracking_enabled",
+          "version",
+          "user_id",
+          "subproject_id",
+          "created_at",
+          "updated_at"
+        ],
         "title": "Referral"
       },
       "ReferralResource": {
@@ -99987,6 +101678,53 @@
         "type": "string",
         "title": "UserProfileDataResource"
       },
+      "UserProfileResource": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "socials": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "platform": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "platform",
+                "url"
+              ]
+            }
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "avatar",
+          "bio",
+          "location",
+          "socials"
+        ],
+        "title": "UserProfileResource"
+      },
       "UserProgramsFeedResource": {
         "type": "string",
         "title": "UserProgramsFeedResource"
@@ -100975,13 +102713,79 @@
         "title": "ValidateUpdateProtocolStepRequest"
       },
       "Verification": {
-        "type": "array",
-        "items": {
-          "type": "string"
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verification_type": {
+            "type": "string"
+          },
+          "criteria": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "passing_threshold": {
+            "type": "integer"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "subproject_id": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
         },
-        "minItems": 0,
-        "maxItems": 0,
-        "additionalItems": false,
+        "required": [
+          "id",
+          "title",
+          "description",
+          "verification_type",
+          "criteria",
+          "passing_threshold",
+          "version",
+          "user_id",
+          "subproject_id",
+          "created_at",
+          "updated_at"
+        ],
         "title": "Verification"
       },
       "VerificationResource": {

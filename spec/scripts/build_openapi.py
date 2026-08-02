@@ -12,7 +12,11 @@ Validates structure to OpenAPI 3.1.0:
 import json, re, os
 from collections import OrderedDict
 
-SPEC = '/Users/arionhardison/Desktop/P2X/sdk/spec'
+# Resolve spec/ relative to this script so the generator keeps working after
+# workspace moves. The old absolute '/Users/arionhardison/Desktop/P2X/sdk/spec'
+# pin silently regenerated the FROZEN legacy archive's spec (P2X was retired
+# July 2026) — the exact class of landmine CI/CLAUDE.md warns about.
+SPEC = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 endpoints = json.load(open(os.path.join(SPEC,'endpoints.json')))
 
 def short(fqn):
@@ -197,8 +201,11 @@ doc['info'] = {
     ),
     'license': {'name': 'Proprietary', 'url': 'https://project20x.com'},
 }
+# Production host is api.openyc.org (commit bf07c62 flipped the committed spec
+# but not this generator, so every regen silently reverted it — generator drift,
+# the exact failure mode the types:check gate exists to catch one layer up).
 doc['servers'] = [
-    {'url':'https://api.project20x.com', 'description':'Production'},
+    {'url':'https://api.openyc.org', 'description':'Production'},
     {'url':'http://localhost:8000', 'description':'Local'},
 ]
 # Build tag list with module-level descriptions where we can write something useful.

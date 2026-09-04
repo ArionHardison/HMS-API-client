@@ -5,6 +5,19 @@ here. Format roughly follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning
 follows SemVer.
 
+## [Unreleased]
+
+### Removed
+
+- **`FacilitiesThemeSignal.session_identifier`** — the api stopped echoing it
+  from `GET /api/facilities/themes/{theme}/signals` in CI-API #5284
+  (`4ca315b60`): `pipeline_states.session_identifier` is the pipeline lane's
+  guest bearer (check-pipeline → `deal_guid`, `POST deal/{guid}/cancel`), so
+  the field no longer exists on the wire and the type no longer promises it.
+  `pipeline_id` is unchanged. Type-only; no runtime change. Pinned at compile
+  time (`src/__tests__/contract/facilities-theme-signal.test-d.ts`) and at
+  runtime (`src/api/__tests__/facilities.test.ts`).
+
 ## [1.4.0] — 2026-05-17
 
 ### Added

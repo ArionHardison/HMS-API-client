@@ -9,6 +9,8 @@
  * `portfolio/rollup` returns a bespoke `{columns, rows}` body; theme signals
  * return a `{data: {...}}` body. An unknown / unseeded theme 404s.
  */
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpResponse } from 'msw';
 import { server } from '../../__tests__/msw/server';
@@ -21,6 +23,7 @@ import { ApiError } from '../error-handling';
 import { FacilitiesApiClient } from '../facilities-api-client';
 import type {
   FacilitiesPortfolioRollupResponse,
+  FacilitiesThemeSignal,
   FacilitiesThemeSignalsResponse,
 } from '../facilities-api-client';
 
@@ -77,13 +80,26 @@ describe('FacilitiesApiClient — Modules/Facilities', () => {
   });
 
   it('getThemeSignals() — GET /api/facilities/themes/{theme}/signals', async () => {
+    // The post-CI-API #5284 wire shape (ThemeSignalsController::signals map):
+    // no `session_identifier` — the pipeline session is the lane's guest bearer.
+    const signal: FacilitiesThemeSignal = {
+      pipeline_id: 1,
+      issue_type: 'leak',
+      asset_kind: 'sink',
+      system_group: 'water_plumbing',
+      building: 'amsterdam-ave-100',
+      urgency: 'urgent',
+      confidence_label: 'Verified',
+      confidence_score: 0.95,
+      observed_at: '2026-06-05T14:23:00Z',
+    };
     server.use(
       mockEndpoint('get', `${BASE}/api/facilities/themes/restroom/signals`, ({ request }) => {
         captured.current = request;
         return {
           data: {
             theme: { slug: 'restroom', name: 'Restroom', title: 'Restroom' },
-            signals: [{ pipeline_id: 1, system_group: 'water_plumbing' }],
+            signals: [signal],
             time_series: [{ bucket: '2026-06-05', signal_count: 1, avg_confidence: 0.9 }],
           },
         };
@@ -97,6 +113,22 @@ describe('FacilitiesApiClient — Modules/Facilities', () => {
     const body: FacilitiesThemeSignalsResponse = res.data;
     expect(body.theme.slug).toBe('restroom');
     expect(body.signals).toHaveLength(1);
+    // Wire pin: the bearer never rides a drill-down row; the integer row id does.
+    expect(Object.keys(body.signals[0])).not.toContain('session_identifier');
+    expect(body.signals[0].pipeline_id).toBe(1);
+  });
+
+  it('FacilitiesThemeSignal declares no session_identifier — the pipeline session is a guest bearer (CI-API #5284), never drill-down metadata', () => {
+    // Source pin over the hand-written type (vitest transpiles without
+    // type-checking, so the compile-time pin in
+    // src/__tests__/contract/facilities-theme-signal.test-d.ts is mirrored here
+    // at runtime). Scoped to the interface BODY so the docblock may cite the
+    // field by name while the member declaration stays forbidden.
+    const source = readFileSync(resolve(__dirname, '../../types/facilities.ts'), 'utf8');
+    const body = source.match(/export interface FacilitiesThemeSignal \{([\s\S]*?)\n\}/)?.[1];
+    expect(body).toBeDefined();
+    expect(body).toMatch(/^\s*pipeline_id: number;/m);
+    expect(body).not.toMatch(/session_identifier/);
   });
 
   it('getThemeSignals() — encodes the theme slug', async () => {

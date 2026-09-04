@@ -34,10 +34,17 @@ export interface FacilitiesPortfolioRollupResponse {
   rows: FacilitiesRollupRow[];
 }
 
-/** One signal in a theme drill-down. */
+/**
+ * One signal in a theme drill-down.
+ *
+ * No `session_identifier`: the api dropped it in CI-API #5284
+ * (`pipeline_states.session_identifier` is the pipeline lane's guest bearer —
+ * check-pipeline → deal_guid, POST deal/{guid}/cancel — never drill-down
+ * metadata; `ThemeSignalsController.php:71`). `pipeline_id` stays: an integer
+ * row id is not a bearer anywhere on the api.
+ */
 export interface FacilitiesThemeSignal {
   pipeline_id: number;
-  session_identifier: string | null;
   issue_type: string | null;
   asset_kind: string | null;
   system_group: string;

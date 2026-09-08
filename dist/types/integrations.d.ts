@@ -205,7 +205,7 @@ export interface NioFirebaseUser {
 }
 /**
  * Response of `POST /api/v1/integrations/nio/firebase-login` — the
- * `{ success, message, data: { user, token } }` envelope the YCaaS Flutter
+ * `{ success, message, data: { user, token } }` envelope the OpenYC Flutter
  * SDK FirebaseSwapClient expects. On a bad token: 401 `{ success: false,
  * message: 'Invalid Firebase ID token' }`.
  */

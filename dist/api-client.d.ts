@@ -50,7 +50,7 @@ export interface ApiClientConfig {
      * base URL lazily per request via:
      *
      *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom),
-     *      so a deploy at `https://ycaas.ai` issues same-origin requests
+     *      so a deploy at `https://openyc.org` issues same-origin requests
      *      that a Vercel rewrite proxies to the API.
      *   2. `https://api.openyc.org` as the SSR / Node fallback.
      *

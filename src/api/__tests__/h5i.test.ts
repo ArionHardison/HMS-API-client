@@ -37,7 +37,7 @@ import type {
 
 const BASE = 'https://api.test.local';
 const TOKEN = 'h5i-tkn-123';
-const DOMAIN = 'ycaas.ai';
+const DOMAIN = 'openyc.org';
 const GUID = '11111111-2222-4333-8444-555566667777';
 
 interface Captured {

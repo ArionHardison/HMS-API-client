@@ -7,6 +7,17 @@ follows SemVer.
 
 ## [Unreleased]
 
+### Changed
+
+- **Brand rename → OpenYC.** Every place the SDK's prose named the legacy
+  brand or its `.ai` tenant host now says **OpenYC** / `openyc.org`: the
+  `ApiClientConfig.baseURL` doc comment, `WizardApiClient.defineDeal()`,
+  `NioFirebaseLoginResponse`, the msw `X-Domain` / same-origin test fixtures,
+  the 1.4.0 `startWizard()` note, and the mirrored comments in the tracked
+  `dist/`. No runtime change — the default host was already
+  `https://api.openyc.org`. Codify is the platform; OpenYC is the
+  startup/tech/dev layer on it.
+
 ### Removed
 
 - **`FacilitiesThemeSignal.session_identifier`** — the api stopped echoing it
@@ -42,7 +53,7 @@ follows SemVer.
   `POST /api/support/error-report`, anonymous error reporting from the
   tenant-error pages.
 - **`WizardSetupApiClient.startWizard()`** — `POST /api/wizard/start`, the
-  canonical entry point for the YCaaS wizard flow.
+  canonical entry point for the OpenYC wizard flow.
 - **`SubprojectApiClient.getCurrentSubprojectSystem()`** —
   `GET /api/v1/subprojects/current/system` + new `SubprojectSystemData`
   interface for the system-config payload.

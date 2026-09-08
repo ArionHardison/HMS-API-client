@@ -201,7 +201,7 @@ class WizardApiClient extends hms_api_client_1.BaseApiClient {
     }
     /**
      * Create a new Deal from a problem statement — the canonical entry point
-     * for the YCaaS apex chat surface (and any other caller that wants to
+     * for the OpenYC apex chat surface (and any other caller that wants to
      * kick off the deal lifecycle from free text). Wraps
      * `POST /api/wizard/deal/define` (Modules\Deals\Http\Controllers\DealWizardController::define).
      *

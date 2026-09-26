@@ -1,0 +1,1 @@
+{"version":3,"file":"SaveUserFeeSettingsRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/SaveUserFeeSettingsRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,0BAA0B,GAAG;IACvC,OAAO,CAAC,EAAE,GAAG,CAAC;IACd,WAAW,EAAE,MAAM,CAAC;IACpB,oBAAoB,EAAE,MAAM,CAAC;IAC7B,aAAa,EAAE,MAAM,CAAC;CACvB,CAAC"}

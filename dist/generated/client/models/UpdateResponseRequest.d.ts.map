@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateResponseRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateResponseRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,qBAAqB,GAAG;IAClC,EAAE,EAAE,MAAM,CAAC;IACX,WAAW,EAAE,MAAM,CAAC;IACpB,SAAS,EAAE,MAAM,CAAC;IAClB,WAAW,EAAE,MAAM,CAAC;CACrB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"ExecuteProtocolRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ExecuteProtocolRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,sBAAsB,GAAG;IACnC,WAAW,CAAC,EAAE,GAAG,CAAC;IAClB,QAAQ,CAAC,EAAE,GAAG,CAAC;IACf,KAAK,CAAC,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;CACpB,CAAC"}

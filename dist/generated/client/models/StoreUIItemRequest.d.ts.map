@@ -1,0 +1,1 @@
+{"version":3,"file":"StoreUIItemRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/StoreUIItemRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,kBAAkB,GAAG;IAC/B,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;IACd,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,CAAC,EAAE,MAAM,CAAC;CACtB,CAAC"}

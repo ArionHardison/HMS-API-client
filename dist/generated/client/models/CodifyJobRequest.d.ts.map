@@ -1,0 +1,1 @@
+{"version":3,"file":"CodifyJobRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/CodifyJobRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,gBAAgB,GAAG;IAC7B,MAAM,CAAC,EAAE,MAAM,CAAC;IAChB,UAAU,CAAC,EAAE,GAAG,CAAC;IACjB,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,IAAI,CAAC,EAAE,GAAG,CAAC;IACX,OAAO,EAAE,MAAM,CAAC;IAChB,QAAQ,EAAE,MAAM,CAAC;CAClB,CAAC"}

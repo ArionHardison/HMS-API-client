@@ -1,0 +1,1 @@
+{"version":3,"file":"UserFeeSettingsResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UserFeeSettingsResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,uBAAuB,GAAG;IACpC,EAAE,EAAE,MAAM,CAAC;IACX,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,GAAG,CAAC;IACV,WAAW,EAAE,GAAG,CAAC;IACjB,oBAAoB,EAAE,GAAG,CAAC;IAC1B,aAAa,EAAE,GAAG,CAAC;CACpB,CAAC"}

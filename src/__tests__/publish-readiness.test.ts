@@ -124,7 +124,12 @@ describe('dist/ — no-missing-deps gate', () => {
 
     const found = new Set<string>();
     for (const file of files) {
-      const src = readFileSync(file, 'utf8');
+      // Strip block comments before scanning: tsc preserves JSDoc in the
+      // emitted .js, and those docstrings can contain example
+      // `import … from '@scope/pkg'` snippets that are NOT real imports.
+      // Scanning them produced false offenders (e.g. the package importing
+      // itself from a usage example in a deprecation-shim docstring).
+      const src = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
       let m: RegExpExecArray | null;
       // eslint-disable-next-line no-cond-assign
       while ((m = importRe.exec(src)) !== null) {

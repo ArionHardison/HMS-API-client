@@ -457,13 +457,13 @@ describe('BaseApiClient — contract', () => {
   // ---------------------------------------------------------------------------
   // Default baseURL resolution
   //
-  // CI-HUB / YCaaS consumes the SDK from the browser at ycaas.ai (and
-  // *.ycaas.ai) without configuring `baseURL`. Same-origin requests are
-  // proxied by Vercel `vercel.json` rewrites to https://codify.inc/api/*.
+  // CI-HUB / OpenYC consumes the SDK from the browser at openyc.org (and
+  // *.openyc.org) without configuring `baseURL`. Same-origin requests are
+  // proxied by Vercel `vercel.json` rewrites to https://api.openyc.org/api/*.
   // When the SDK is instantiated with no baseURL the resolution order is:
   //
   //   1. globalThis.window?.location?.origin  (browser / happy-dom / jsdom)
-  //   2. 'https://codify.inc'                  (Node / SSR fallback)
+  //   2. 'https://api.openyc.org'              (Node / SSR fallback)
   //
   // Resolution is lazy (per request) so the SSR safety contract is preserved
   // — the constructor must not read `window`. An explicit `baseURL` always
@@ -472,10 +472,10 @@ describe('BaseApiClient — contract', () => {
   describe('Default baseURL resolution', () => {
     it('uses window.location.origin when window is present and no baseURL is configured', async () => {
       const originalWindow = (globalThis as any).window;
-      (globalThis as any).window = { location: { origin: 'https://ycaas.ai' } };
+      (globalThis as any).window = { location: { origin: 'https://openyc.org' } };
       try {
         server.use(
-          mockEndpoint('get', 'https://ycaas.ai/api/things', ({ request }) => {
+          mockEndpoint('get', 'https://openyc.org/api/things', ({ request }) => {
             captured.current = request;
             return { success: true, message: '', data: [] };
           }),
@@ -483,7 +483,7 @@ describe('BaseApiClient — contract', () => {
         const client = new TestClient({} as any);
         await client.g('/api/things');
         expect(captured.current).not.toBeNull();
-        expect(captured.current!.url).toBe('https://ycaas.ai/api/things');
+        expect(captured.current!.url).toBe('https://openyc.org/api/things');
       }
       finally {
         if (originalWindow === undefined) delete (globalThis as any).window;
@@ -491,12 +491,12 @@ describe('BaseApiClient — contract', () => {
       }
     });
 
-    it('falls back to https://codify.inc when window is absent (SSR/Node)', async () => {
+    it('falls back to https://api.openyc.org when window is absent (SSR/Node)', async () => {
       const originalWindow = (globalThis as any).window;
       delete (globalThis as any).window;
       try {
         server.use(
-          mockEndpoint('get', 'https://codify.inc/api/load', ({ request }) => {
+          mockEndpoint('get', 'https://api.openyc.org/api/load', ({ request }) => {
             captured.current = request;
             return { success: true, message: '', data: {} };
           }),
@@ -504,7 +504,7 @@ describe('BaseApiClient — contract', () => {
         const client = new TestClient({} as any);
         await client.g('/api/load');
         expect(captured.current).not.toBeNull();
-        expect(captured.current!.url).toBe('https://codify.inc/api/load');
+        expect(captured.current!.url).toBe('https://api.openyc.org/api/load');
       }
       finally {
         if (originalWindow !== undefined) (globalThis as any).window = originalWindow;
@@ -516,15 +516,15 @@ describe('BaseApiClient — contract', () => {
       (globalThis as any).window = { location: { origin: 'https://wrong.example' } };
       try {
         server.use(
-          mockEndpoint('get', 'https://api.codify.inc/api/load', ({ request }) => {
+          mockEndpoint('get', 'https://api.explicit.test/api/load', ({ request }) => {
             captured.current = request;
             return { success: true, message: '', data: {} };
           }),
         );
-        const client = new TestClient({ baseURL: 'https://api.codify.inc' });
+        const client = new TestClient({ baseURL: 'https://api.explicit.test' });
         await client.g('/api/load');
         expect(captured.current).not.toBeNull();
-        expect(captured.current!.url).toBe('https://api.codify.inc/api/load');
+        expect(captured.current!.url).toBe('https://api.explicit.test/api/load');
       }
       finally {
         if (originalWindow === undefined) delete (globalThis as any).window;

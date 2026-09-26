@@ -39,6 +39,25 @@ export type {
 } from './api-client';
 
 // =============================================================================
+// Typed contract layer (SRE enforcement) — operationId-keyed client + the
+// generic Request<E> / Response<E> helpers over the generated `operations`
+// map. Compile-time-strict, no `any` on the public surface.
+// =============================================================================
+export { TypedApiClient, createTypedApiClient } from './typed-client';
+export type { TypedOperations, TypedOperationMethod } from './typed-client';
+export type {
+  OperationId,
+  Request,
+  Response,
+  RequestBody,
+  PathParams,
+  QueryParams,
+  HasNoRequiredInput,
+} from './typed-contract';
+export { operationIndex } from './generated/operation-index';
+export type { OperationMeta, GeneratedOperationId } from './generated/operation-index';
+
+// =============================================================================
 // Axios-based HMS suite + domain clients.
 // =============================================================================
 export {
@@ -90,6 +109,7 @@ export type {
   StepResultData,
   JobStatusData,
   DefineProblemInput,
+  DefineDealInput,
   CodifySolutionInput,
   SetupProgramInput,
   ExecuteProgramInput,
@@ -97,6 +117,44 @@ export type {
   ApiResponseData as WizardApiResponseData,
   VersionComparisonData,
 } from './api/wizard-api-client';
+
+// =============================================================================
+// Deal Runtime Wizard client — route-accurate fetch-based companion covering
+// the 17 `/api/wizard/deal/*` routes (define → verify). Preferred over the
+// legacy `WizardApiClient` for new consumers.
+// =============================================================================
+export { DealWizardApiClient } from './api/deal-wizard-api-client';
+export type {
+  ComputeDepositAmountCents,
+  ComputeDepositRequest,
+  ComputeDepositResponse,
+  DealApplicantType,
+  DealBudgetTier,
+  DealEvent,
+  DealEventsQuery,
+  DealEventsResponse,
+  DealFileResource,
+  DealFileType,
+  DealFinancing,
+  DealMutationResponse,
+  DealPathTier,
+  DealProblem,
+  DealRequiredInfoEntry,
+  DealResource,
+  DealSolution,
+  DealStakeholder,
+  DefineDealRequest,
+  MissingRequiredInfoError,
+  MissingWizardDataError,
+  PatchDetailsRequest,
+  PatchMetadataRequest,
+  PatchPathRequest,
+  RequiredInfoRequest,
+  SelectSolutionRequest,
+  SolutionGenerationError,
+  UploadFileRequest,
+  VerifyOutcomeResponse,
+} from './api/deal-wizard-api-client';
 
 // =============================================================================
 // Error handling — `ApiError` is a class; `processApiError` etc. are helpers.
@@ -838,6 +896,77 @@ export type {
 } from './types/modules-coinbase';
 
 // -----------------------------------------------------------------------------
+// Phase 2 small-module slice clients (one client per Laravel module)
+// -----------------------------------------------------------------------------
+
+// H5i (i5h messaging protocol — deal runtime)
+export { H5iApiClient } from './api/h5i-api-client';
+export type {
+  H5iChannelResponse,
+  H5iMessage,
+  H5iMessageKind,
+  H5iMessagePriority,
+  H5iPublicBroadcastAuthRequest,
+  H5iPublicBroadcastAuthResponse,
+  H5iPublicMessagesResponse,
+  H5iSeedDemoResponse,
+  H5iShowMessageResponse,
+  InboxH5iMessageQuery,
+  InboxH5iMessageResponse,
+  StoreH5iMessageRequest,
+  StoreH5iMessageResponse,
+} from './api/h5i-api-client';
+
+// RLHF (CI-RLHF peer-service proxy)
+export { RlhfApiClient } from './api/rlhf-api-client';
+export type {
+  RlhfGradeRequest,
+  RlhfProxyResponse,
+  RlhfSubmissionRequest,
+} from './api/rlhf-api-client';
+
+// Fail (failure-recovery event log)
+export { FailApiClient } from './api/fail-api-client';
+export type {
+  FailEventResource,
+  FailEventShowResponse,
+  FailEventSummaryResponse,
+  FailEventsListResponse,
+  FailEventsQuery,
+  FailRecoveryActionResource,
+} from './api/fail-api-client';
+
+// Hitl (human-in-the-loop staffing / escalation)
+export { HitlApiClient } from './api/hitl-api-client';
+export type {
+  HitlDecision,
+  HitlRequestedRequest,
+  HitlRequestedResponse,
+  HitlResumeRequest,
+  HitlResumeResponse,
+} from './api/hitl-api-client';
+
+// Hrm (codify-careers HRM relay)
+export { HrmApiClient } from './api/hrm-api-client';
+export type { HrmRelayRequest, HrmRelayResponse } from './api/hrm-api-client';
+
+// Lms (Teachify grading webhook)
+export { LmsApiClient } from './api/lms-api-client';
+export type { LmsGradingResponse, StoreLmsGradingRequest } from './api/lms-api-client';
+
+// Facilities (CriticalAsset venue / location proxy)
+export { FacilitiesApiClient } from './api/facilities-api-client';
+export type {
+  FacilitiesPortfolioRollupResponse,
+  FacilitiesRollupCell,
+  FacilitiesRollupRow,
+  FacilitiesSystemGroup,
+  FacilitiesThemeSignal,
+  FacilitiesThemeSignalsResponse,
+  FacilitiesThemeTimeSeriesBucket,
+} from './api/facilities-api-client';
+
+// -----------------------------------------------------------------------------
 // Gap-fill slice clients (Round 3 follow-up)
 // -----------------------------------------------------------------------------
 
@@ -984,6 +1113,95 @@ export type {
   IntakeStartResponse,
 } from './api/modules-intake-api-client';
 
+// Codify-domain client + types + Mermaid helper. Powers consumers that
+// render the domain → intent → deal-template → comments surface
+// (CI-MYC's /agent/:tld page being the first). dealTemplateToMermaid
+// emits a sequenceDiagram string consumed by any Mermaid-rendering
+// component.
+export { CodifyDomainApiClient } from './api/codify-domain-api-client';
+export type {
+  AgentComment,
+  CodifyDealTemplate,
+  CodifyIntent,
+  CodifyIntentParameter,
+  CreateCommentRequest,
+  CreateCommentResponse,
+  DealTemplateFinancialModel,
+  DealTemplatePipelineStep,
+  DealTemplateStakeholder,
+  DealTemplateSuccessCriterion,
+  DealTemplateSystem,
+  DomainAgentProfile,
+  DomainStakeholder,
+  IntentOutcomeRollup,
+  ListCommentsResponse,
+  ListIntentsResponse,
+} from './types/codify-domain';
+export { dealTemplateToMermaid } from './utils/deal-template-to-mermaid';
+
+// Codify (codification surface) client — the admin HITL CRUD/approval
+// workflow + public list/kind-render/lookup helpers that the public-read
+// `CodifyDomainApiClient` does not cover. Distinct class name to avoid the
+// existing `CodifyDomainApiClient` collision.
+export { CodifyApiClient } from './api/codify-api-client';
+export type {
+  AdminCodifyDomain,
+  AdminCodifyDomainQuery,
+  AdminCodifyIntent,
+  AdminCodifyIntentQuery,
+  AdminListCodifyDomainsResponse,
+  AdminListCodifyIntentsResponse,
+  BulkStoreDealTemplateEntry,
+  BulkStoreDealTemplatesRequest,
+  BulkStoreIntentEntry,
+  BulkStoreIntentsRequest,
+  BulkStoreResponse,
+  CodifyDomainListItem,
+  CodifyDomainShape,
+  CodifyStatus,
+  CreateCodifyDomainRequest,
+  KindRenderQuery,
+  KindRenderResponse,
+  ListCodifyDomainsResponse,
+  LookupQuery,
+  LookupResponse,
+  LookupResponseMeta,
+  LookupResult,
+  UpdateCodifyDomainRequest,
+  UpdateCodifyIntentRequest,
+} from './types/codify';
+
+// Integrations (subproject federation) client — the machine-to-machine glue
+// IBD/PHM/MOB/NIO + codify-careers HRM use to write events into P2X. Writes
+// carry the subproject:writer ability + an Idempotency-Key; the two token-
+// mint endpoints (nioFirebaseLogin, mobGuestRegister) are unauthenticated.
+export { IntegrationsApiClient } from './api/integrations-api-client';
+export type {
+  CareersUserUpsertRequest,
+  CareersUserUpsertResponse,
+  EventLogAcceptedResponse,
+  IbdApplicationRequest,
+  IbdKpiEventRequest,
+  IssuedToken,
+  MobActivityLocationBatchRequest,
+  MobActivityPoint,
+  MobGuestRegisterRequest,
+  MobGuestRegisterResponse,
+  MobGuestUser,
+  MobRunCompleteRequest,
+  NioAssessmentResponseRequest,
+  NioCoinGrantRequest,
+  NioCoinSpendRequest,
+  NioCoinTransactionResponse,
+  NioFirebaseLoginRequest,
+  NioFirebaseLoginResponse,
+  NioFirebaseUser,
+  NioOrderRequest,
+  NioOrderSource,
+  UserUpsertRequest as IntegrationsUserUpsertRequest,
+  UserUpsertResponse,
+} from './types/integrations';
+
 // =============================================================================
 // Examples (runtime-safe; no Vue imports — the Vue snippets are inside
 // JSDoc comment blocks).
@@ -992,3 +1210,4 @@ export * from './examples/programs-example';
 export * from './examples/items-example';
 export * from './examples/auth-example';
 export * from './examples/chat-example';
+export type { BaseInterfacePayload } from './typed-contract';

@@ -1,0 +1,1 @@
+{"version":3,"file":"StripeBalanceResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/StripeBalanceResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,qBAAqB,GAAG;IAClC,MAAM,EAAE,MAAM,CAAC;IACf,QAAQ,EAAE,GAAG,CAAC;IACd,UAAU,EAAE,MAAM,CAAC;IACnB,cAAc,EAAE,GAAG,CAAC;IACpB,WAAW,EAAE,GAAG,CAAC;CAClB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateCollectionRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/CreateCollectionRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,uBAAuB,GAAG;IACpC,IAAI,EAAE,MAAM,CAAC;IACb,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;CACnB,CAAC"}

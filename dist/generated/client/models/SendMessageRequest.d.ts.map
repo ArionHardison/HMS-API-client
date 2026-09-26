@@ -1,0 +1,1 @@
+{"version":3,"file":"SendMessageRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/SendMessageRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,kBAAkB,GAAG;IAC/B,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,WAAW,CAAC,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;IACzB,EAAE,EAAE,MAAM,CAAC;CACZ,CAAC"}

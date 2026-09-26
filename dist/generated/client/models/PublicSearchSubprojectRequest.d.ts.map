@@ -1,0 +1,1 @@
+{"version":3,"file":"PublicSearchSubprojectRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/PublicSearchSubprojectRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,6BAA6B,GAAG;IAC1C,MAAM,CAAC,EAAE,MAAM,CAAC;IAChB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,aAAa,CAAC,EAAE,MAAM,CAAC;CACxB,CAAC"}

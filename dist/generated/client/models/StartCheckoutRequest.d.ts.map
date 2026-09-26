@@ -1,0 +1,1 @@
+{"version":3,"file":"StartCheckoutRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/StartCheckoutRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,oBAAoB,GAAG;IACjC,EAAE,EAAE,MAAM,CAAC;IACX,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,MAAM,CAAC;IACjB,KAAK,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;CACnB,CAAC"}

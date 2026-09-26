@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateReportRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateReportRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,mBAAmB,GAAG;IAChC,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,eAAe,CAAC,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;IAC7B,mBAAmB,CAAC,EAAE,MAAM,CAAC;CAC9B,CAAC"}

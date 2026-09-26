@@ -1,0 +1,1 @@
+{"version":3,"file":"ReserveServiceSlotRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ReserveServiceSlotRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,yBAAyB,GAAG;IACtC,QAAQ,EAAE,MAAM,CAAC;IACjB,MAAM,EAAE,MAAM,CAAC;IACf,OAAO,EAAE,MAAM,CAAC;IAChB,SAAS,EAAE,MAAM,CAAC;IAClB,qBAAqB,EAAE,MAAM,CAAC;CAC/B,CAAC"}

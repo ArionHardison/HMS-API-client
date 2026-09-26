@@ -24,7 +24,7 @@ import type { SystemCatalogEntry } from '../../types/systems';
 
 const BASE = 'https://api.test.local';
 const TOKEN = 'sys-tok-abc';
-const DOMAIN = 'ycaas.ai';
+const DOMAIN = 'openyc.org';
 
 interface Captured {
   current: Request | null;

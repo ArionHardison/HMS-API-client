@@ -1,0 +1,1 @@
+{"version":3,"file":"CollectionItemResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/CollectionItemResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,sBAAsB,GAAG;IACnC,EAAE,EAAE,MAAM,CAAC;IACX,UAAU,EAAE,GAAG,CAAC;IAChB,IAAI,EAAE,GAAG,CAAC;IACV,kBAAkB,EAAE,MAAM,CAAC;IAC3B,SAAS,EAAE,GAAG,CAAC;IACf,MAAM,EAAE,MAAM,CAAC;CAChB,CAAC"}

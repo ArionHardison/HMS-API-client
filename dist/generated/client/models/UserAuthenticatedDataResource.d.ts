@@ -1,0 +1,32 @@
+export type UserAuthenticatedDataResource = {
+    username: any;
+    full_name: any;
+    email: any;
+    phone: any;
+    id: number;
+    profession: any;
+    email_verified_at: string;
+    gender: any;
+    creator: any;
+    birth_date: any;
+    address: any;
+    country: any;
+    state: any;
+    city: any;
+    services_pending: any;
+    timezone: any;
+    unreadMessages: any;
+    unreadNotifications: any;
+    assignedTasks: any;
+    is_temporary: boolean;
+    agent: any;
+    zip: any;
+    language: any;
+    company: any;
+    profile_picture: any;
+    profile_cover: any;
+    payment_methods: any;
+    roles: any;
+    permissions: any;
+};
+//# sourceMappingURL=UserAuthenticatedDataResource.d.ts.map

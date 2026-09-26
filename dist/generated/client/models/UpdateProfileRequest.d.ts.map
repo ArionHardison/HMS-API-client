@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateProfileRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateProfileRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,oBAAoB,GAAG;IACjC,QAAQ,EAAE,MAAM,CAAC;IACjB,SAAS,EAAE,MAAM,CAAC;IAClB,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,UAAU,EAAE,MAAM,CAAC;IACnB,MAAM,EAAE,MAAM,CAAC;IACf,UAAU,CAAC,EAAE,GAAG,CAAC;CAClB,CAAC"}

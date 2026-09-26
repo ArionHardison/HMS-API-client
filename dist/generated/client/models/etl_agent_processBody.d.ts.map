@@ -1,0 +1,1 @@
+{"version":3,"file":"etl_agent_processBody.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/etl_agent_processBody.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,qBAAqB,GAAG;IAClC,QAAQ,EAAE,MAAM,CAAC;IACjB,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,MAAM,CAAC,EAAE,GAAG,CAAC;CACd,CAAC"}

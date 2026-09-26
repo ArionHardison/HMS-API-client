@@ -1,0 +1,1 @@
+{"version":3,"file":"SendMessageToAgentRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/SendMessageToAgentRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,yBAAyB,GAAG;IACtC,KAAK,EAAE,MAAM,CAAC;IACd,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,WAAW,CAAC,EAAE,KAAK,CAAC,GAAG,CAAC,CAAC;CAC1B,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"VoiceRecordRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/VoiceRecordRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,kBAAkB,GAAG;IAC/B,KAAK,EAAE,IAAI,CAAC;IACZ,YAAY,CAAC,EAAE,GAAG,CAAC;IACnB,QAAQ,EAAE,MAAM,CAAC;IACjB,SAAS,EAAE,MAAM,CAAC;CACnB,CAAC"}

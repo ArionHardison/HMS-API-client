@@ -1,0 +1,13 @@
+"use strict";
+/**
+ * Types for `RlhfApiClient` — the CI-RLHF peer-service proxy.
+ *
+ * Source of truth: `Modules/RLHF/Routes/api.php` + the three proxy
+ * controllers in `app/Http/Controllers/RLHF/`. Every controller forwards
+ * the request body verbatim to the upstream Gradescope fork and surfaces the
+ * upstream JSON body + status code unchanged. There is no inner-envelope
+ * validation in api/ (it happens upstream), so request/response bodies are
+ * typed loosely.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=rlhf.js.map

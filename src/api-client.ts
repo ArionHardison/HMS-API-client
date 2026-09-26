@@ -28,6 +28,7 @@
  */
 
 import { ApiError } from './api/error-handling';
+import { assertSecureBaseURL } from './api/url-safety';
 
 // =============================================================================
 // Public types
@@ -59,9 +60,9 @@ export interface ApiClientConfig {
    * base URL lazily per request via:
    *
    *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom),
-   *      so a deploy at `https://ycaas.ai` issues same-origin requests
-   *      that a Vercel rewrite can proxy to `https://codify.inc/api/*`.
-   *   2. `https://codify.inc` as the SSR / Node fallback.
+   *      so a deploy at `https://openyc.org` issues same-origin requests
+   *      that a Vercel rewrite proxies to the API.
+   *   2. `https://api.openyc.org` as the SSR / Node fallback.
    *
    * Resolution is lazy on purpose — the constructor must not touch `window`
    * (see the SSR safety contract test). An explicit value always wins.
@@ -105,6 +106,14 @@ export interface ApiRequestOptions {
   validateStatus?: (status: number) => boolean;
   /** AbortSignal for cancellation. */
   signal?: AbortSignal;
+  /**
+   * Extra request headers merged on top of the default + method-derived
+   * headers (the call's own header wins on collision). The primary use is
+   * the `Idempotency-Key` header that the P2X write endpoints expect on
+   * POST/PUT/PATCH so retries are safe. Purely additive — callers that
+   * omit it keep the legacy behavior.
+   */
+  headers?: Record<string, string>;
 }
 
 
@@ -127,9 +136,10 @@ export interface ApiRequestOptions {
  * In a browser context (real or simulated via happy-dom/jsdom) the SDK uses
  * the current page origin, which keeps requests same-origin so cookies and
  * Vercel `vercel.json` rewrites both work without CORS. In Node / SSR there
- * is no window, so the canonical Laravel host `https://codify.inc` is used
- * (a sibling DNS name, `api.codify.inc`, points at the same install — both
- * routes work).
+ * is no window, so the canonical API host `https://api.openyc.org` is
+ * used — a reachable, TLS-terminated origin that serves `/api/*`. (The old
+ * `https://codify.inc` fallback did NOT serve the API and broke SSR callers
+ * such as gov; an explicit `baseURL` still always wins.)
  *
  * Resolution is lazy / per-request so the SSR safety contract is preserved.
  */
@@ -137,7 +147,7 @@ function resolveDefaultBaseURL(): string {
   const w = (globalThis as { window?: { location?: { origin?: unknown } } }).window;
   const origin = w?.location?.origin;
   if (typeof origin === 'string' && origin.length > 0) return origin;
-  return 'https://codify.inc';
+  return 'https://api.openyc.org';
 }
 
 export class BaseApiClient {
@@ -148,6 +158,9 @@ export class BaseApiClient {
   protected readonly config: ApiClientConfig;
 
   constructor(config: ApiClientConfig) {
+    // Refuse a cleartext non-local baseURL (token would travel over http).
+    // String-only check — touches no browser globals, so SSR-safe.
+    assertSecureBaseURL(config.baseURL);
     this.config = config;
     // Stored verbatim — empty/undefined means "resolve per-request" (see
     // `resolveDefaultBaseURL`). We do NOT eager-resolve here because the
@@ -265,9 +278,12 @@ export class BaseApiClient {
     }
 
     // ---- Header assembly --------------------------------------------------
+    // Per-call `opts.headers` (e.g. Idempotency-Key) win over both the
+    // default headers and any method-derived `init.headers`.
     const headers: Record<string, string> = {
       ...this.defaultHeaders,
       ...((init.headers as Record<string, string>) || {}),
+      ...(opts.headers || {}),
     };
 
     // Authorization (unless explicitly opted out).

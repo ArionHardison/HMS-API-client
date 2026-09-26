@@ -1,0 +1,1 @@
+{"version":3,"file":"ProtocolPersonalChainResource.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/ProtocolPersonalChainResource.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,6BAA6B,GAAG;IAC1C,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,GAAG,CAAC;IACV,aAAa,EAAE,GAAG,CAAC;IACnB,MAAM,EAAE,GAAG,CAAC;IACZ,OAAO,EAAE,GAAG,CAAC;IACb,UAAU,EAAE,MAAM,CAAC;CACpB,CAAC"}

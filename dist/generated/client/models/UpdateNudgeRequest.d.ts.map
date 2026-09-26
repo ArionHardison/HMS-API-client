@@ -1,0 +1,1 @@
+{"version":3,"file":"UpdateNudgeRequest.d.ts","sourceRoot":"","sources":["../../../../src/generated/client/models/UpdateNudgeRequest.ts"],"names":[],"mappings":"AAKA,MAAM,MAAM,kBAAkB,GAAG;IAC/B,MAAM,CAAC,EAAE,OAAO,CAAC;IACjB,KAAK,EAAE,MAAM,CAAC;IACd,YAAY,CAAC,EAAE,MAAM,CAAC;IACtB,aAAa,CAAC,EAAE,GAAG,CAAC;IACpB,cAAc,CAAC,EAAE,MAAM,CAAC;CACzB,CAAC"}

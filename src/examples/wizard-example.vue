@@ -652,6 +652,9 @@ const step4Data = ref({
 });
 
 const step5Data = ref({
+  // Set from the running program's execution instance before Step 5:
+  // the api grades at POST /wizard/deal/{deal}/verify/{execution}.
+  execution_id: undefined as number | string | undefined,
   outcome: {
     verified: true,
     metrics: {}

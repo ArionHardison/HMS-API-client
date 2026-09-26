@@ -236,6 +236,13 @@ export interface ExecuteProgramInput {
 }
 
 export interface VerifyOutcomeInput {
+  /**
+   * The ProgramExecutionInstance id the deal ran under. REQUIRED at runtime:
+   * the api grades Step 5 at `POST /wizard/deal/{deal}/verify/{execution}`
+   * from evidence already recorded in the native systems; there is no
+   * `/step/verify_outcome` route and the request body is not read.
+   */
+  execution_id?: number | string;
   outcome: {
     verified: boolean;
     metrics: Record<string, any>;
@@ -243,6 +250,18 @@ export interface VerifyOutcomeInput {
   payout_status?: PayoutStatus;
   lessons_learned?: string;
   metadata?: Record<string, any>;
+}
+
+/**
+ * Step 5 verification result — the api's own shape (no `{ success, data }`
+ * envelope): `POST /api/wizard/deal/{deal_id}/verify/{execution_id}`.
+ */
+export interface VerifyOutcomeData {
+  deal_id: string;
+  state: string;
+  outcome_score: number | null;
+  outcome_class: string | null;
+  outcome_report: Record<string, any> | null;
 }
 
 /**
@@ -500,12 +519,43 @@ export class WizardApiClient extends BaseApiClient {
   }
   
   /**
-   * Process step 5: Verify Outcome
+   * Process step 5: Verify Outcome.
+   *
+   * The api grades the deal's execution (`DealVerificationController::verify`)
+   * at `POST /wizard/deal/{deal}/verify/{execution}` and returns the report
+   * directly. Until 2026-09-26 this client posted to a `/step/verify_outcome`
+   * route that never existed, so no SDK caller could ever reach Step 5.
    * @param dealId Deal ID
-   * @param data Verify outcome input data
+   * @param data Verify outcome input; `execution_id` is required
    */
-  async verifyOutcome(dealId: string, data: VerifyOutcomeInput): Promise<AxiosResponse<ApiResponse<StepResultData>>> {
-    return this.client.post(`/wizard/deal/${dealId}/step/verify_outcome`, data);
+  async verifyOutcome(dealId: string, data: VerifyOutcomeInput): Promise<AxiosResponse<VerifyOutcomeData>> {
+    const executionId = data?.execution_id;
+    if (executionId === undefined || executionId === null || `${executionId}`.trim() === '') {
+      throw new Error(
+        'verifyOutcome requires execution_id (the ProgramExecutionInstance id): ' +
+        'the api grades Step 5 at POST /wizard/deal/{deal}/verify/{execution}'
+      );
+    }
+    return this.client.post(
+      `/wizard/deal/${encodeURIComponent(dealId)}/verify/${encodeURIComponent(`${executionId}`)}`
+    );
+  }
+
+  /**
+   * Step 5 as a wizard step: verify, then re-read the deal so the generic
+   * step executor gets the `{ success, deal, is_async }` shape it polls on.
+   * Verification is synchronous on the api (no job id).
+   */
+  async verifyOutcomeStep(dealId: string, data: VerifyOutcomeInput): Promise<AxiosResponse<ApiResponse<StepResultData>>> {
+    const verified = await this.verifyOutcome(dealId, data);
+    const dealResponse = await this.getDeal(dealId);
+    const result: StepResultData = {
+      success: true,
+      deal: dealResponse.data.data,
+      is_async: false,
+      message: verified.data?.outcome_class ?? undefined,
+    };
+    return { ...dealResponse, data: { ...dealResponse.data, data: result } };
   }
   
   /**
@@ -734,6 +784,6 @@ export const wizardSteps = {
   
   verifyOutcome: new WizardStepExecutor<VerifyOutcomeInput>(
     wizardApiClient,
-    (dealId, data) => wizardApiClient.verifyOutcome(dealId, data)
+    (dealId, data) => wizardApiClient.verifyOutcomeStep(dealId, data)
   )
 };

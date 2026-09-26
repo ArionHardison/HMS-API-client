@@ -157,8 +157,8 @@ describe('TenancyApiClient', () => {
       // Regression net for the prod incident captured in
       // `fix(wizard-api-client): disable auto WebSocket /ws/jobs on
       // construction` (6467141). The wizard client used to open a WS in
-      // its constructor; sys/ shipped that to ycaas.ai and every wizard
-      // page printed `wss://ycaas.ai/ws/jobs` failures. TenancyApiClient
+      // its constructor; sys/ shipped that to openyc.org and every wizard
+      // page printed `wss://openyc.org/ws/jobs` failures. TenancyApiClient
       // must NOT replicate that mistake — `GET /api/load` is a one-shot
       // boot call, no realtime side effects.
       const RealWebSocket = (globalThis as any).WebSocket;

@@ -1,5 +1,5 @@
 /**
- * `WizardApiClient.defineDeal()` — contract pin for the YCaaS apex chat
+ * `WizardApiClient.defineDeal()` — contract pin for the OpenYC apex chat
  * deal-creation entry point. Wraps the canonical Deals-module endpoint
  * `POST /api/wizard/deal/define` (DealWizardController::define), which
  * runs LLM classification + required_info computation and delegates to
@@ -29,7 +29,7 @@ beforeAll(() => {
 
 const BASE = 'https://api.test.local';
 const TOKEN = 'wiz-tok-define';
-const DOMAIN = 'ycaas.ai';
+const DOMAIN = 'openyc.org';
 
 function makeClient(): WizardApiClient {
   return new WizardApiClient({

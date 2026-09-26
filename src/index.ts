@@ -1210,3 +1210,4 @@ export * from './examples/programs-example';
 export * from './examples/items-example';
 export * from './examples/auth-example';
 export * from './examples/chat-example';
+export type { BaseInterfacePayload } from './typed-contract';

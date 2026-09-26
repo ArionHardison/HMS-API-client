@@ -12,7 +12,10 @@
     "strict": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "lib": ["ES2020", "DOM"],
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
     "rootDir": "src",
     "preserveWatchOutput": true,
     "removeComments": false
@@ -21,11 +24,12 @@
     "src/index.ts",
     "src/api-client.ts",
     "src/api/**/*",
-    "src/generated/**/*"
+    "src/generated/api-types.ts",
+    "src/generated/operation-index.ts"
   ],
   "exclude": [
-    "node_modules", 
-    "**/*.test.ts", 
+    "node_modules",
+    "**/*.test.ts",
     "**/*.spec.ts",
     "dist",
     "src/api/hooks.ts",

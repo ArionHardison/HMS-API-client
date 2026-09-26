@@ -18,4865 +18,6665 @@ export interface OperationMeta {
     readonly hasBody: boolean;
 }
 export declare const operationIndex: {
+    readonly "achPaymentProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/ach/payment";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
     readonly "activity-location.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/activity-location/{activity_location}";
+        readonly path: "/activity-location/{activityLocation}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "activity-location.index": {
         readonly method: "GET";
-        readonly path: "/api/activity-location";
+        readonly path: "/activity-location";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "activity-location.show": {
         readonly method: "GET";
-        readonly path: "/api/activity-location/{activity_location}";
+        readonly path: "/activity-location/{activityLocation}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "activity-location.store": {
         readonly method: "POST";
-        readonly path: "/api/activity-location";
+        readonly path: "/activity-location";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "activity-location.update": {
         readonly method: "PUT";
-        readonly path: "/api/activity-location/{activity_location}";
+        readonly path: "/activity-location/{activityLocation}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "activity.index": {
+        readonly method: "GET";
+        readonly path: "/v1/activity";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "activityItem.show": {
+        readonly method: "GET";
+        readonly path: "/v1/activity/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
     readonly "admin.ai.log.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/ai/log/{log}";
+        readonly path: "/ai/log/{log}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.ai.log.index": {
         readonly method: "GET";
-        readonly path: "/api/ai/log";
+        readonly path: "/ai/log";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.ai.log.show": {
         readonly method: "GET";
-        readonly path: "/api/ai/log/{log}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "admin.ai.log.store": {
-        readonly method: "POST";
-        readonly path: "/api/ai/log";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "admin.ai.log.update": {
-        readonly method: "PUT";
-        readonly path: "/api/ai/log/{log}";
+        readonly path: "/ai/log/{log}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.documentation.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/documentation/{documentation}";
+        readonly path: "/documentation/{documentation}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.documentation.index": {
         readonly method: "GET";
-        readonly path: "/api/documentation";
+        readonly path: "/documentation";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.documentation.show": {
         readonly method: "GET";
-        readonly path: "/api/documentation/{documentation}";
+        readonly path: "/documentation/{documentation}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.documentation.store": {
         readonly method: "POST";
-        readonly path: "/api/documentation";
+        readonly path: "/documentation";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.documentation.update": {
         readonly method: "PUT";
-        readonly path: "/api/documentation/{documentation}";
+        readonly path: "/documentation/{documentation}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "admin.fee.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/fees/fee/{fee}";
+        readonly path: "/fees/fee/{fee}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.fee.index": {
         readonly method: "GET";
-        readonly path: "/api/fees/fee";
+        readonly path: "/fees/fee";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.fee.show": {
         readonly method: "GET";
-        readonly path: "/api/fees/fee/{fee}";
+        readonly path: "/fees/fee/{fee}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.fee.store": {
         readonly method: "POST";
-        readonly path: "/api/fees/fee";
+        readonly path: "/fees/fee";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.fee.update": {
         readonly method: "PUT";
-        readonly path: "/api/fees/fee/{fee}";
+        readonly path: "/fees/fee/{fee}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "admin.program-category.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/program-category/{program_category}";
+        readonly path: "/program-category/{programCategory}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.program-category.index": {
         readonly method: "GET";
-        readonly path: "/api/program-category";
+        readonly path: "/program-category";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.program-category.show": {
         readonly method: "GET";
-        readonly path: "/api/program-category/{program_category}";
+        readonly path: "/program-category/{programCategory}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.program-category.store": {
         readonly method: "POST";
-        readonly path: "/api/program-category";
+        readonly path: "/program-category";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.program-category.update": {
         readonly method: "PUT";
-        readonly path: "/api/program-category/{program_category}";
+        readonly path: "/program-category/{programCategory}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "admin.program-sub-category.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/program-sub-category/{program_sub_category}";
+        readonly path: "/program-sub-category/{programSubCategory}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.program-sub-category.index": {
         readonly method: "GET";
-        readonly path: "/api/program-sub-category";
+        readonly path: "/program-sub-category";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.program-sub-category.show": {
         readonly method: "GET";
-        readonly path: "/api/program-sub-category/{program_sub_category}";
+        readonly path: "/program-sub-category/{programSubCategory}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.program-sub-category.store": {
         readonly method: "POST";
-        readonly path: "/api/program-sub-category";
+        readonly path: "/program-sub-category";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.program-sub-category.update": {
         readonly method: "PUT";
-        readonly path: "/api/program-sub-category/{program_sub_category}";
+        readonly path: "/program-sub-category/{programSubCategory}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "admin.program-tag.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/program-tag/{program_tag}";
+        readonly path: "/program-tag/{programTag}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.program-tag.index": {
         readonly method: "GET";
-        readonly path: "/api/program-tag";
+        readonly path: "/program-tag";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.program-tag.show": {
         readonly method: "GET";
-        readonly path: "/api/program-tag/{program_tag}";
+        readonly path: "/program-tag/{programTag}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.program-tag.store": {
         readonly method: "POST";
-        readonly path: "/api/program-tag";
+        readonly path: "/program-tag";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.program-tag.update": {
         readonly method: "PUT";
-        readonly path: "/api/program-tag/{program_tag}";
+        readonly path: "/program-tag/{programTag}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "admin.provider.index": {
         readonly method: "GET";
-        readonly path: "/api/provider";
+        readonly path: "/provider";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.provider.roles": {
         readonly method: "GET";
-        readonly path: "/api/provider/roles";
+        readonly path: "/provider/roles";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.statistic.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/statistic/{statistic}";
+        readonly path: "/statistic/{statistic}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.statistic.index": {
         readonly method: "GET";
-        readonly path: "/api/statistic";
+        readonly path: "/statistic";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.statistic.show": {
         readonly method: "GET";
-        readonly path: "/api/statistic/{statistic}";
+        readonly path: "/statistic/{statistic}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.statistic.store": {
         readonly method: "POST";
-        readonly path: "/api/statistic";
+        readonly path: "/statistic";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.statistic.update": {
         readonly method: "PUT";
-        readonly path: "/api/statistic/{statistic}";
+        readonly path: "/statistic/{statistic}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "admin.user.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/user/{user}";
+        readonly path: "/user/{user}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.user.index": {
         readonly method: "GET";
-        readonly path: "/api/user";
+        readonly path: "/user";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "admin.user.show": {
         readonly method: "GET";
-        readonly path: "/api/user/{user}";
+        readonly path: "/user/{user}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "admin.user.store": {
         readonly method: "POST";
-        readonly path: "/api/user";
+        readonly path: "/user";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "admin.user.update": {
         readonly method: "PUT";
-        readonly path: "/api/user/{user}";
+        readonly path: "/user/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "adminDomainInterface.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/admin/domain-interfaces/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "adminDomainInterface.index": {
+        readonly method: "GET";
+        readonly path: "/admin/domain-interfaces";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "adminDomainInterface.show": {
+        readonly method: "GET";
+        readonly path: "/admin/domain-interfaces/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "adminDomainInterface.store": {
+        readonly method: "POST";
+        readonly path: "/admin/domain-interfaces";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "adminDomainInterface.update": {
+        readonly method: "PATCH";
+        readonly path: "/admin/domain-interfaces/{id}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "administrator.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/administrator/{administrator}";
+        readonly path: "/administrator/{administrator}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "administrator.show": {
         readonly method: "GET";
-        readonly path: "/api/administrator/{administrator}";
+        readonly path: "/administrator/{administrator}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "administrator.store": {
         readonly method: "POST";
-        readonly path: "/api/administrator";
+        readonly path: "/administrator";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "administrator.update": {
         readonly method: "PUT";
-        readonly path: "/api/administrator/{administrator}";
+        readonly path: "/administrator/{administrator}";
         readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "agent.confirmCode": {
+        readonly method: "POST";
+        readonly path: "/agent/account/{id}/confirm-code";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "agent.finishRegistration": {
+        readonly method: "POST";
+        readonly path: "/agent/account/finish-registration";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "agent.getAccountStatus": {
+        readonly method: "GET";
+        readonly path: "/agent/account/get-status";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "agent.getAgentList": {
+        readonly method: "GET";
+        readonly path: "/agent/list";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "agent.getAgentMessages": {
+        readonly method: "POST";
+        readonly path: "/agent/communicate/{id}/messages";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "agent.getAgentStatus": {
+        readonly method: "GET";
+        readonly path: "/agent/communicate/{id}/get-status";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.getAssignedExperts": {
+        readonly method: "GET";
+        readonly path: "/agent/communicate/{id}/assigned-experts";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.getProgramInvites": {
+        readonly method: "GET";
+        readonly path: "/agent/communicate/{id}/invites";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.getProgramState": {
+        readonly method: "GET";
+        readonly path: "/agent/program-state/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.getProgramStatus": {
+        readonly method: "GET";
+        readonly path: "/agent/program-status/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.initializeAgent": {
+        readonly method: "GET";
+        readonly path: "/agent/communicate/{id}/initialize-agent";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.retryProgramCreation": {
+        readonly method: "GET";
+        readonly path: "/agent/retry-creation/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agent.sendMessage": {
+        readonly method: "POST";
+        readonly path: "/agent/communicate/{id}/send-message";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "agentInterfaceUser.getCode": {
+        readonly method: "GET";
+        readonly path: "/interface/auth/{sessionKey}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agentInterfaceUser.getSms": {
+        readonly method: "POST";
+        readonly path: "/interface/get-sms";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "agentInterfaceUser.getTokenData": {
+        readonly method: "GET";
+        readonly path: "/interface/auth-token/{token}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "agentInterfaceUser.verifySmsCode": {
+        readonly method: "POST";
+        readonly path: "/interface/verify-code";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.activate": {
         readonly method: "POST";
-        readonly path: "/api/agents/{agent}/activate";
+        readonly path: "/agents/{agentId}/activate";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.clone": {
         readonly method: "POST";
-        readonly path: "/api/agents/{agent}/clone";
+        readonly path: "/agents/{agentId}/clone";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "agents.module.deactivate": {
         readonly method: "POST";
-        readonly path: "/api/agents/{agent}/deactivate";
+        readonly path: "/agents/{agentId}/deactivate";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/agents/{agent}";
+        readonly path: "/agents/{agentId}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.execute.protocol": {
         readonly method: "POST";
-        readonly path: "/api/agents/execute-protocol";
+        readonly path: "/agents/execute-protocol";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.execute.resume": {
         readonly method: "POST";
-        readonly path: "/api/agents/resume-execution";
+        readonly path: "/agents/resume-execution";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.executions": {
         readonly method: "GET";
-        readonly path: "/api/agents/{agent}/executions";
+        readonly path: "/agents/{agentId}/executions";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.index": {
         readonly method: "GET";
-        readonly path: "/api/agents";
+        readonly path: "/agents";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "agents.module.intelligent.batch": {
         readonly method: "POST";
-        readonly path: "/api/agents/intelligent/intent/batch";
+        readonly path: "/agents/intelligent/intent/batch";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.intelligent.entity.identify": {
         readonly method: "POST";
-        readonly path: "/api/agents/intelligent/entity/identify";
+        readonly path: "/agents/intelligent/entity/identify";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.intelligent.process": {
         readonly method: "POST";
-        readonly path: "/api/agents/intelligent/intent/process";
+        readonly path: "/agents/intelligent/intent/process";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.intelligent.search": {
         readonly method: "POST";
-        readonly path: "/api/agents/intelligent/search";
+        readonly path: "/agents/intelligent/search";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.intelligent.statistics": {
         readonly method: "GET";
-        readonly path: "/api/agents/intelligent/statistics";
+        readonly path: "/agents/intelligent/statistics";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "agents.module.show": {
         readonly method: "GET";
-        readonly path: "/api/agents/{agent}";
+        readonly path: "/agents/{agentId}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.statistics": {
         readonly method: "GET";
-        readonly path: "/api/agents/{agent}/statistics";
+        readonly path: "/agents/{agentId}/statistics";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.store": {
         readonly method: "POST";
-        readonly path: "/api/agents";
+        readonly path: "/agents";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "agents.module.tools.add": {
         readonly method: "POST";
-        readonly path: "/api/agents/{agent}/tools/{tool}";
+        readonly path: "/agents/{agentId}/tools/{tool}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.tools.remove": {
         readonly method: "DELETE";
-        readonly path: "/api/agents/{agent}/tools/{tool}";
+        readonly path: "/agents/{agentId}/tools/{tool}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "agents.module.update": {
         readonly method: "PUT";
-        readonly path: "/api/agents/{agent}";
+        readonly path: "/agents/{agentId}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "api.verification.resend": {
+    readonly "aiSettings.checkInstallationStatus": {
         readonly method: "GET";
-        readonly path: "/api/resend-verify-email";
+        readonly path: "/ai/installation-status";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.createPrompt": {
+        readonly method: "POST";
+        readonly path: "/ai/prompts/create";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "aiSettings.deleteModel": {
+        readonly method: "POST";
+        readonly path: "/ai/delete-model";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.getListOfInstalledModels": {
+        readonly method: "GET";
+        readonly path: "/ai/get-models-list";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.getListOfModels": {
+        readonly method: "GET";
+        readonly path: "/ai/get-models";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.getPrompt": {
+        readonly method: "GET";
+        readonly path: "/ai/prompts/show/{prompt}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.getPromptKeys": {
+        readonly method: "GET";
+        readonly path: "/ai/prompts/keywords";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.getRequiredList": {
+        readonly method: "GET";
+        readonly path: "/ai/prompts/required-list";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.getSettings": {
+        readonly method: "GET";
+        readonly path: "/ai/get-settings";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.indexPolicies": {
+        readonly method: "GET";
+        readonly path: "/ai/prompts/list-policies";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.indexPrompts": {
+        readonly method: "GET";
+        readonly path: "/ai/prompts/list";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.installModel": {
+        readonly method: "POST";
+        readonly path: "/ai/install-model";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "aiSettings.saveSettings": {
+        readonly method: "POST";
+        readonly path: "/ai/save-settings";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "appeal.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/appeal/all";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "appeal.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/appeal/{appeal}";
+        readonly path: "/appeal/{appeal}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "appeal.index": {
         readonly method: "GET";
-        readonly path: "/api/appeal";
+        readonly path: "/appeal";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "appeal.run": {
+        readonly method: "GET";
+        readonly path: "/appeal/run/{appeal}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "appeal.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/appeal/run-global/{appeal}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "appeal.show": {
         readonly method: "GET";
-        readonly path: "/api/appeal/{appeal}";
+        readonly path: "/appeal/{appeal}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "appeal.store": {
         readonly method: "POST";
-        readonly path: "/api/appeal";
+        readonly path: "/appeal";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "appeal.submit": {
+        readonly method: "POST";
+        readonly path: "/appeal/submit";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "appeal.update": {
         readonly method: "PUT";
-        readonly path: "/api/appeal/{appeal}";
+        readonly path: "/appeal/{appeal}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "application.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/application/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "application.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/application/{application}";
+        readonly path: "/application/{application}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "application.index": {
         readonly method: "GET";
-        readonly path: "/api/application";
+        readonly path: "/application";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "application.run": {
+        readonly method: "GET";
+        readonly path: "/application/run/{application}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "application.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/application/run-global/{application}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "application.show": {
         readonly method: "GET";
-        readonly path: "/api/application/{application}";
+        readonly path: "/application/{application}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "application.store": {
         readonly method: "POST";
-        readonly path: "/api/application";
+        readonly path: "/application";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "application.submit": {
+        readonly method: "POST";
+        readonly path: "/application/submit";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "application.update": {
         readonly method: "PUT";
-        readonly path: "/api/application/{application}";
+        readonly path: "/application/{application}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "assessment.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/assessment/{assessment}";
+        readonly path: "/assessment/{assessment}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "assessment.index": {
         readonly method: "GET";
-        readonly path: "/api/assessment";
+        readonly path: "/assessment";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "assessment.show": {
         readonly method: "GET";
-        readonly path: "/api/assessment/{assessment}";
+        readonly path: "/assessment/{assessment}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "assessment.store": {
         readonly method: "POST";
-        readonly path: "/api/assessment";
+        readonly path: "/assessment";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "assessment.update": {
         readonly method: "PUT";
-        readonly path: "/api/assessment/{assessment}";
+        readonly path: "/assessment/{assessment}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "attachedChallenge.finish": {
+        readonly method: "GET";
+        readonly path: "/challenge/finish/{attached}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "attachedChallenge.get": {
+        readonly method: "GET";
+        readonly path: "/challenge/get-challenge/{challenge}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "attachedChallenge.getGlobalChallenge": {
+        readonly method: "GET";
+        readonly path: "/challenge/get-global-challenge/{challenge}/{task}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "attachedChallenge.getGlobalTasks": {
+        readonly method: "GET";
+        readonly path: "/challenge/get-challenge-global-tasks/{challenge}/{task}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "attachedChallenge.getTasks": {
+        readonly method: "GET";
+        readonly path: "/challenge/get-challenge-tasks/{challenge}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "attachedChallenge.run": {
+        readonly method: "POST";
+        readonly path: "/challenge/run";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "attachedChallenge.runGlobal": {
+        readonly method: "POST";
+        readonly path: "/challenge/run-global";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "attachedChallenge.setResult": {
+        readonly method: "POST";
+        readonly path: "/challenge/set-result/{result}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "attachedChallenge.startTask": {
+        readonly method: "POST";
+        readonly path: "/challenge/start-task";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "attend.all": {
+        readonly method: "GET";
+        readonly path: "/attend/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "attend.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/attend/{attend}";
+        readonly path: "/attend/{attend}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "attend.index": {
         readonly method: "GET";
-        readonly path: "/api/attend";
+        readonly path: "/attend";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "attend.show": {
         readonly method: "GET";
-        readonly path: "/api/attend/{attend}";
+        readonly path: "/attend/{attend}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "attend.store": {
         readonly method: "POST";
-        readonly path: "/api/attend";
+        readonly path: "/attend";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "attend.update": {
         readonly method: "PUT";
-        readonly path: "/api/attend/{attend}";
+        readonly path: "/attend/{attend}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "chain.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/chain/{chain}";
-        readonly hasPathParams: true;
+    readonly "auth.firebaseLogin": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/nio/firebase-login";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "auth.guestRegister": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/mob/guest-register";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "auth.upgrade": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/mob/upgrade";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "autogradeProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/autograde";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "careers.userUpsert": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/careers/users/upsert";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "category.shopCategories": {
+        readonly method: "GET";
+        readonly path: "/public/get-program-shop-categories";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "chain.index": {
-        readonly method: "GET";
-        readonly path: "/api/chain";
-        readonly hasPathParams: false;
+    readonly "chain.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/chain/{chain}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "chain.show": {
         readonly method: "GET";
-        readonly path: "/api/chain/{chain}";
+        readonly path: "/chain/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "chain.store": {
         readonly method: "POST";
-        readonly path: "/api/chain";
+        readonly path: "/chain";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "chain.update": {
         readonly method: "PUT";
-        readonly path: "/api/chain/{chain}";
+        readonly path: "/chain/{chain}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "chains.steps.escalate": {
+        readonly method: "POST";
+        readonly path: "/chains/{chainId}/steps/escalate";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "challenge.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/challenge/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "challenge.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/challenge/{challenge}";
+        readonly path: "/challenge/{challenge}";
         readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "challenge.destroyTask": {
+        readonly method: "DELETE";
+        readonly path: "/challenge/task/destroy/{task}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "challenge.getTypes": {
+        readonly method: "GET";
+        readonly path: "/challenge/get-types";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "challenge.index": {
         readonly method: "GET";
-        readonly path: "/api/challenge";
+        readonly path: "/challenge";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "challenge.show": {
         readonly method: "GET";
-        readonly path: "/api/challenge/{challenge}";
+        readonly path: "/challenge/{challenge}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "challenge.store": {
         readonly method: "POST";
-        readonly path: "/api/challenge";
+        readonly path: "/challenge";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "challenge.update": {
         readonly method: "PUT";
-        readonly path: "/api/challenge/{challenge}";
+        readonly path: "/challenge/{challenge}";
         readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "ci-rlhf.grading.store": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/ci-rlhf/grading";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "cities.index": {
+        readonly method: "GET";
+        readonly path: "/v1/cities";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "clawChat.send": {
+        readonly method: "POST";
+        readonly path: "/codify/{tld}/chat";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "clawFleet.fleet": {
+        readonly method: "GET";
+        readonly path: "/claws/fleet";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "cmeCreditProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/cme/issue";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codify.admin.approve": {
+        readonly method: "POST";
+        readonly path: "/admin/codify-domain/{id}/approve";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.codify-deal-template.bulk-store": {
+        readonly method: "POST";
+        readonly path: "/admin/codify-deal-template";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.codify-intent.approve": {
+        readonly method: "POST";
+        readonly path: "/admin/codify-intent/{id}/approve";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.codify-intent.bulk-store": {
+        readonly method: "POST";
+        readonly path: "/admin/codify-intent";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.codify-intent.index": {
+        readonly method: "GET";
+        readonly path: "/admin/codify-intent";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.codify-intent.show": {
+        readonly method: "GET";
+        readonly path: "/admin/codify-intent/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.codify-intent.update": {
+        readonly method: "PUT";
+        readonly path: "/admin/codify-intent/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.index": {
+        readonly method: "GET";
+        readonly path: "/admin/codify-domain";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.revert": {
+        readonly method: "POST";
+        readonly path: "/admin/codify-domain/{id}/revert";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.show": {
+        readonly method: "GET";
+        readonly path: "/admin/codify-domain/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.store": {
+        readonly method: "POST";
+        readonly path: "/admin/codify-domain";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codify.admin.update": {
+        readonly method: "PUT";
+        readonly path: "/admin/codify-domain/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.lookup": {
+        readonly method: "GET";
+        readonly path: "/codify/lookup/{resolver}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.agent-profile": {
+        readonly method: "GET";
+        readonly path: "/codify-domain/{tld}/agent-profile";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.comments.create": {
+        readonly method: "POST";
+        readonly path: "/codify-domain/{tld}/comments";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codify.public.comments.list": {
+        readonly method: "GET";
+        readonly path: "/codify-domain/{tld}/comments";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.deal-template": {
+        readonly method: "GET";
+        readonly path: "/codify-domain/{tld}/deal-template/{intentSlug}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.index": {
+        readonly method: "GET";
+        readonly path: "/codify-domain";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.intents": {
+        readonly method: "GET";
+        readonly path: "/codify-domain/{tld}/intents";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.kind-render": {
+        readonly method: "GET";
+        readonly path: "/codify-domain/{tld}/kind-render";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codify.public.show": {
+        readonly method: "GET";
+        readonly path: "/codify-domain/by-tld/{tld}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifyAgents.index": {
+        readonly method: "GET";
+        readonly path: "/v1/codify-agents";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codifyPipeline.checkCodifyPipeline": {
+        readonly method: "GET";
+        readonly path: "/workflow/codify-pipeline/check-pipeline/{session}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifyPipeline.recordAudience": {
+        readonly method: "POST";
+        readonly path: "/workflow/codify-pipeline/audience";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifyPipeline.saveFollowupQuestionResponse": {
+        readonly method: "POST";
+        readonly path: "/workflow/codify-pipeline/save-response";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "codifyPipeline.startCodifyPipeline": {
+        readonly method: "POST";
+        readonly path: "/workflow/codify-pipeline/start";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifyPipeline.stopCodifyPipeline": {
+        readonly method: "GET";
+        readonly path: "/workflow/codify-pipeline/stop/{session}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifySubprojects.clawBundle": {
+        readonly method: "GET";
+        readonly path: "/subprojects/{id}/claw-bundle";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifySubprojects.dpgInstances": {
+        readonly method: "GET";
+        readonly path: "/subprojects/{id}/dpg-instances";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeContentStep_0.post.subproject-admin.claim.subproject.subproject.content": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/content";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeContentStep_0.post.subproject-admin.create.subproject.content": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/content";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeDomainsStep_0.post.subproject-admin.claim.subproject.subproject.domains": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/domains";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeDomainsStep_0.post.subproject-admin.create.subproject.domains": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/domains";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeHeroStep_0.post.subproject-admin.claim.subproject.subproject.hero": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/hero";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeHeroStep_0.post.subproject-admin.create.subproject.hero": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/hero";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeLayoutStep_0.post.subproject-admin.claim.subproject.subproject.layout": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/layout";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeLayoutStep_0.post.subproject-admin.create.subproject.layout": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/layout";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeSeoStep_0.post.subproject-admin.claim.subproject.subproject.seo": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/seo";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeSeoStep_0.post.subproject-admin.create.subproject.seo": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/seo";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeTeamStep_0.post.subproject-admin.claim.subproject.subproject.team": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/team";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeTeamStep_0.post.subproject-admin.create.subproject.team": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/team";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeTemplateStep_0.post.subproject-admin.claim.subproject.subproject.template": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/template";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "codifySubprojects.subprojectAdministratorWizardFlow.storeTemplateStep_0.post.subproject-admin.create.subproject.template": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create/subproject/template";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifyWizard.cancelCodifyRequest": {
+        readonly method: "DELETE";
+        readonly path: "/public/codify/cancel/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifyWizard.codify": {
+        readonly method: "POST";
+        readonly path: "/public/codify/run";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifyWizard.getAnswers": {
+        readonly method: "GET";
+        readonly path: "/public/codify/answers/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifyWizard.getRunningCodify": {
+        readonly method: "GET";
+        readonly path: "/public/codify/state/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifyWizard.saveAnswer": {
+        readonly method: "POST";
+        readonly path: "/public/codify/save-answer";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifyWizard.startSession": {
+        readonly method: "POST";
+        readonly path: "/public/codify/start-session";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "codifyWizard.stayOnCurrentSubproject": {
+        readonly method: "POST";
+        readonly path: "/public/codify/stay/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "codifyWizard.voiceFill": {
+        readonly method: "POST";
+        readonly path: "/public/codify/voice-fill";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "coinbase-webhook": {
         readonly method: "POST";
-        readonly path: "/api/coinbase/webhook";
+        readonly path: "/coinbase/webhook";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
+    readonly "coins.grant": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/nio/coins/grant";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "coins.spend": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/nio/coins/spend";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
     readonly "collection.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/collection/{collection}";
+        readonly path: "/collection/{collection}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "collection.index": {
         readonly method: "GET";
-        readonly path: "/api/collection";
+        readonly path: "/collection";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "collection.show": {
         readonly method: "GET";
-        readonly path: "/api/collection/{collection}";
+        readonly path: "/collection/{collection}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "collection.store": {
         readonly method: "POST";
-        readonly path: "/api/collection";
+        readonly path: "/collection";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "collection.update": {
         readonly method: "PUT";
-        readonly path: "/api/collection/{collection}";
+        readonly path: "/collection/{collection}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "compute.meterBeat": {
+        readonly method: "POST";
+        readonly path: "/compute/meter/beat";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "compute.meterStart": {
+        readonly method: "POST";
+        readonly path: "/compute/meter/start";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "compute.meterStatus": {
+        readonly method: "GET";
+        readonly path: "/compute/meter";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "compute.meterStop": {
+        readonly method: "POST";
+        readonly path: "/compute/meter/stop";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "compute.payments": {
+        readonly method: "GET";
+        readonly path: "/compute/payments";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "compute.status": {
+        readonly method: "GET";
+        readonly path: "/compute/status";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "compute.topupIntent": {
+        readonly method: "POST";
+        readonly path: "/compute/topup-intent";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "computePulse.index": {
+        readonly method: "GET";
+        readonly path: "/v1/compute/pulse";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "connector.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/connector/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "connector.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/connector/{connector}";
+        readonly path: "/connector/{connector}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
+    readonly "connector.discover": {
+        readonly method: "GET";
+        readonly path: "/connector/{connector}/discover";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "connector.execute": {
+        readonly method: "POST";
+        readonly path: "/connector/execute";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
     readonly "connector.index": {
         readonly method: "GET";
-        readonly path: "/api/connector";
+        readonly path: "/connector";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "connector.run": {
+        readonly method: "GET";
+        readonly path: "/connector/run/{connector}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "connector.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/connector/run-global/{connector}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "connector.show": {
         readonly method: "GET";
-        readonly path: "/api/connector/{connector}";
+        readonly path: "/connector/{connector}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "connector.store": {
         readonly method: "POST";
-        readonly path: "/api/connector";
+        readonly path: "/connector";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "connector.update": {
         readonly method: "PUT";
-        readonly path: "/api/connector/{connector}";
+        readonly path: "/connector/{connector}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "core.aiSettings.updatePrompt_0": {
+        readonly method: "POST";
+        readonly path: "/ai/prompts/update/{prompt}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "core.aiSettings.updatePrompt_1": {
+        readonly method: "PUT";
+        readonly path: "/ai/prompts/update/{prompt}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "core.category.all_0.get.program-categories": {
+        readonly method: "GET";
+        readonly path: "/program-categories";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.category.all_0.get.program-category.all": {
+        readonly method: "GET";
+        readonly path: "/program-category/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.category.all_0.get.public.get-program-categories": {
+        readonly method: "GET";
+        readonly path: "/public/get-program-categories";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.documentation.show_0": {
+        readonly method: "GET";
+        readonly path: "/public/documentation/show/{documentation}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "core.path.index_0.get.path": {
+        readonly method: "GET";
+        readonly path: "/path";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.path.index_0.get.v1.paths": {
+        readonly method: "GET";
+        readonly path: "/v1/paths";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.path.show_0.get.path.show.key": {
+        readonly method: "GET";
+        readonly path: "/path/show/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "core.path.show_0.get.v1.paths.key": {
+        readonly method: "GET";
+        readonly path: "/v1/paths/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "core.program.show_0.get.program.show.program": {
+        readonly method: "GET";
+        readonly path: "/program/show/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "core.program.show_0.get.public.get-program.program": {
+        readonly method: "GET";
+        readonly path: "/public/get-program/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "core.protocol.index_0": {
+        readonly method: "GET";
+        readonly path: "/protocol/by-category/{category}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "core.roles.all_0.get.roles-to-assign.all": {
+        readonly method: "GET";
+        readonly path: "/roles-to-assign/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.roles.all_0.get.roles.all": {
+        readonly method: "GET";
+        readonly path: "/roles/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.users.changeCover_0.post.user.change-cover.user": {
+        readonly method: "POST";
+        readonly path: "/user/change-cover/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "core.users.changeCover_0.post.users.change-cover.user": {
+        readonly method: "POST";
+        readonly path: "/users/change-cover/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "core.users.changePhoto_0.post.user.change-photo.user": {
+        readonly method: "POST";
+        readonly path: "/user/change-photo/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "core.users.changePhoto_0.post.users.change-photo.user": {
+        readonly method: "POST";
+        readonly path: "/users/change-photo/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "core.users.getCreatorsByFilter_0.post.public.creators.filter": {
+        readonly method: "POST";
+        readonly path: "/public/creators/filter";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "core.users.getCreatorsByFilter_0.post.public.influencers.filter": {
+        readonly method: "POST";
+        readonly path: "/public/influencers/filter";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "core.users.getCreators_0.get.public.creators": {
+        readonly method: "GET";
+        readonly path: "/public/creators";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.users.getCreators_0.get.public.influencers": {
+        readonly method: "GET";
+        readonly path: "/public/influencers";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.users.getRestrictedUsers_0.get.users.get-restricted-users": {
+        readonly method: "GET";
+        readonly path: "/users/get-restricted-users";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "core.users.getRestrictedUsers_0.get.users.remove-restriction.restriction": {
+        readonly method: "GET";
+        readonly path: "/users/remove-restriction/{restriction}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.broadcastMessage": {
+        readonly method: "POST";
+        readonly path: "/chat/broadcast-message";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "coreChat.deleteChat": {
+        readonly method: "DELETE";
+        readonly path: "/chat/delete-сhat/{chat}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.deleteMessage": {
+        readonly method: "DELETE";
+        readonly path: "/chat/delete-message/{message}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.findUserToChat": {
+        readonly method: "GET";
+        readonly path: "/chat/find-user/{search}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.getBroadcastMessagesByType": {
+        readonly method: "GET";
+        readonly path: "/chat/broadcast-messages/{type}/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.getList": {
+        readonly method: "GET";
+        readonly path: "/chat/get-list/{search}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.getMessagesByChat": {
+        readonly method: "GET";
+        readonly path: "/chat/messages/{chat}/{search}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.getNewChat": {
+        readonly method: "GET";
+        readonly path: "/chat/get-new-chat/{room}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.getRoom": {
+        readonly method: "POST";
+        readonly path: "/chat/get-room";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "coreChat.getRoomById": {
+        readonly method: "GET";
+        readonly path: "/chat/get-room-by-id/{room}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "coreChat.sendMessage": {
+        readonly method: "POST";
+        readonly path: "/chat/send-message";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "coreChat.startSpecialChat": {
+        readonly method: "POST";
+        readonly path: "/chat/start";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "countries.find": {
+        readonly method: "GET";
+        readonly path: "/public/countries/{country}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "countries.findAllowed": {
+        readonly method: "GET";
+        readonly path: "/public/countries/find-allowed";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "countries.getUserCountry": {
+        readonly method: "GET";
+        readonly path: "/public/user-country/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
     readonly "creator-activity.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/creator-activity/{creator_activity}";
+        readonly path: "/creator-activity/{creatorActivity}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "creator-activity.index": {
         readonly method: "GET";
-        readonly path: "/api/creator-activity";
+        readonly path: "/creator-activity";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "creator-activity.show": {
         readonly method: "GET";
-        readonly path: "/api/creator-activity/{creator_activity}";
+        readonly path: "/creator-activity/{creatorActivity}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "creator-activity.store": {
         readonly method: "POST";
-        readonly path: "/api/creator-activity";
+        readonly path: "/creator-activity";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "creator-activity.update": {
         readonly method: "PUT";
-        readonly path: "/api/creator-activity/{creator_activity}";
+        readonly path: "/creator-activity/{creatorActivity}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "creator-request.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/creator-request/{creator_request}";
+        readonly path: "/creator-request/{creatorRequest}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "creator-request.index": {
         readonly method: "GET";
-        readonly path: "/api/creator-request";
+        readonly path: "/creator-request";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "creator-request.show": {
         readonly method: "GET";
-        readonly path: "/api/creator-request/{creator_request}";
+        readonly path: "/creator-request/{creatorRequest}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "creator-request.store": {
         readonly method: "POST";
-        readonly path: "/api/creator-request";
+        readonly path: "/creator-request";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "creator-request.update": {
         readonly method: "PUT";
-        readonly path: "/api/creator-request/{creator_request}";
+        readonly path: "/creator-request/{creatorRequest}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "creator.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/creator/{creator}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
     readonly "creator.index": {
         readonly method: "GET";
-        readonly path: "/api/creator";
+        readonly path: "/creator";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "creator.show": {
         readonly method: "GET";
-        readonly path: "/api/creator/{creator}";
+        readonly path: "/creator/{creator}";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "creator.store": {
-        readonly method: "POST";
-        readonly path: "/api/creator";
-        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "creator.update": {
         readonly method: "PUT";
-        readonly path: "/api/creator/{creator}";
+        readonly path: "/creator/{creator}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "dashboard-program.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/dashboard-program/{dashboard_program}";
-        readonly hasPathParams: true;
+    readonly "creatorActivity.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/activity/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "creatorRequest.checkStatus": {
+        readonly method: "GET";
+        readonly path: "/creator-request/status";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "dashboard-program.index": {
         readonly method: "GET";
-        readonly path: "/api/dashboard-program";
+        readonly path: "/dashboard-program";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "dashboard-program.show": {
         readonly method: "GET";
-        readonly path: "/api/dashboard-program/{dashboard_program}";
+        readonly path: "/dashboard-program/{dashboard_program}";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "dashboard-program.store": {
-        readonly method: "POST";
-        readonly path: "/api/dashboard-program";
-        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "dashboard-program.update": {
         readonly method: "PUT";
-        readonly path: "/api/dashboard-program/{dashboard_program}";
+        readonly path: "/dashboard-program/{dashboard_program}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "delete.api.ai.policy-file.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/ai/policy-file/{file}";
+    readonly "dashboardOrders.deliveryStarted": {
+        readonly method: "POST";
+        readonly path: "/orders/delivery-started";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "dashboardOrders.index": {
+        readonly method: "GET";
+        readonly path: "/orders/{status}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "delete.api.ai.policy.item.prompts.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/ai/policy/{policy}/prompts/{prompt}";
+    readonly "dashboardOrders.publishPrice": {
+        readonly method: "POST";
+        readonly path: "/orders/confirm";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "dashboardOrders.show": {
+        readonly method: "GET";
+        readonly path: "/orders/show/{order}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "delete.api.challenge.task.destroy.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/challenge/task/destroy/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.chat.delete-_hat.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/chat/delete-сhat/{chat}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.chat.delete-message.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/chat/delete-message/{message}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.choice.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/choice/{choice}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.collection-item.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/collection-item/{item}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.contacts.delete.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/contacts/delete/{contact}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.domain-interfaces.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/domain-interfaces/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.kpi.remove-rule.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/kpi/remove-rule/{rule}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.notification.delete-notification.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/notification/delete-notification/{notification}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.nudge.image.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/nudge/image/{nudge}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.order-item.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/order-item/{item}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.payment.delete-payment-method.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/payment/delete-payment-method/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.personal-chain.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/personal-chain/{personalChain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.program.program.delete-tag.item.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/program/program/delete-tag/{program}/{tag}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.protocol.delete-intensive.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/protocol/delete-intensive/{global}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.protocol.reset-plan.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/protocol/reset-plan/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.public.codify.cancel.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/public/codify/cancel/{key}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.public.team.reject-invite.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/public/team/reject-invite/{token}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.seo-page.item.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/seo-page/item/{seoPageItem}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.service-location.service.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/service-location/service/{service}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "delete.api.stripe.delete-account": {
-        readonly method: "DELETE";
-        readonly path: "/api/stripe/delete-account";
+    readonly "dashboardSettings.getSettings": {
+        readonly method: "GET";
+        readonly path: "/dashboard-settings/get";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "delete.api.subproject-team.delete-invite.item.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/subproject-team/delete-invite/{id}/{subproject}";
-        readonly hasPathParams: true;
+    readonly "dashboardSettings.saveSettings": {
+        readonly method: "POST";
+        readonly path: "/dashboard-settings/save";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
-    readonly "delete.api.subscription.remove.item": {
+    readonly "dataset.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/subscription/remove/{subscription}";
+        readonly path: "/ai/dataset/{dataset}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "delete.api.users.delete.item": {
-        readonly method: "DELETE";
-        readonly path: "/api/users/delete/{user}";
+    readonly "dataset.index": {
+        readonly method: "GET";
+        readonly path: "/ai/dataset";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "dataset.show": {
+        readonly method: "GET";
+        readonly path: "/ai/dataset/{dataset}";
         readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "dataset.store": {
+        readonly method: "POST";
+        readonly path: "/ai/dataset";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "datasets.reingest": {
+        readonly method: "POST";
+        readonly path: "/ai/dataset/{dataset}/reingest";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "dealScore.run": {
+        readonly method: "POST";
+        readonly path: "/v1/ci-mce/deals/{dealId}/score/run";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "dealScore.show": {
+        readonly method: "GET";
+        readonly path: "/v1/ci-mce/deals/{dealId}/score";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "dealScore.store": {
+        readonly method: "POST";
+        readonly path: "/v1/ci-mce/deals/{dealId}/score";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.external.callback": {
+        readonly method: "POST";
+        readonly path: "/deals/external/callback";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "deals.health.orchestrator": {
+        readonly method: "GET";
+        readonly path: "/health/deals/orchestrator";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "deals.health.outbox": {
+        readonly method: "GET";
+        readonly path: "/health/deals/outbox";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "deals.health.redis": {
+        readonly method: "GET";
+        readonly path: "/health/deals/redis";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "deals.public.events": {
+        readonly method: "GET";
+        readonly path: "/deal/{guid}/events";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.public.launch_intent": {
+        readonly method: "POST";
+        readonly path: "/public/deal/launch-intent";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "deals.public.status": {
+        readonly method: "GET";
+        readonly path: "/deal/{guid}/status";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.steps.claim": {
+        readonly method: "POST";
+        readonly path: "/deals/{dealId}/steps/{stepIdx}/claim";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.steps.escalate": {
+        readonly method: "POST";
+        readonly path: "/deals/{dealId}/steps/{stepIdx}/escalate";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.steps.human_submit": {
+        readonly method: "POST";
+        readonly path: "/deals/{dealId}/steps/{stepIdx}/human-submit";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.steps.release": {
+        readonly method: "POST";
+        readonly path: "/deals/{dealId}/steps/{stepIdx}/release";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.steps.submit": {
+        readonly method: "POST";
+        readonly path: "/deals/{dealId}/steps/{stepIdx}/submit";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.codify": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/codify";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.codify_suggestions": {
+        readonly method: "GET";
+        readonly path: "/wizard/deal/{dealId}/codify-suggestions";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.compute_deposit": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/compute-deposit";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.define": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/define";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.details": {
+        readonly method: "PATCH";
+        readonly path: "/wizard/deal/{dealId}/details";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.events": {
+        readonly method: "GET";
+        readonly path: "/wizard/deal/{dealId}/events";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.files": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/files";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.files.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/wizard/deal/{dealId}/files/{fileId}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.index": {
+        readonly method: "GET";
+        readonly path: "/wizard/deals";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.metadata": {
+        readonly method: "PATCH";
+        readonly path: "/wizard/deal/{dealId}/metadata";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.path": {
+        readonly method: "PATCH";
+        readonly path: "/wizard/deal/{dealId}/path";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.required_info": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/required-info";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.select_solution": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/select-solution";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "deals.wizard.setup": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/setup";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.start": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/start";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.status": {
+        readonly method: "GET";
+        readonly path: "/wizard/deal/{dealId}/status";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.submit": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/submit";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "deals.wizard.verify": {
+        readonly method: "POST";
+        readonly path: "/wizard/deal/{dealId}/verify/{executionId}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "disbursement.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/disbursement/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "disbursement.confirm": {
+        readonly method: "POST";
+        readonly path: "/disbursement/confirm";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "disbursement.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/disbursement/{disbursement}";
+        readonly path: "/disbursement/{disbursement}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "disbursement.index": {
         readonly method: "GET";
-        readonly path: "/api/disbursement";
+        readonly path: "/disbursement";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "disbursement.run": {
+        readonly method: "GET";
+        readonly path: "/disbursement/run/{disbursement}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "disbursement.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/disbursement/run-global/{disbursement}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "disbursement.show": {
         readonly method: "GET";
-        readonly path: "/api/disbursement/{disbursement}";
+        readonly path: "/disbursement/{disbursement}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "disbursement.store": {
         readonly method: "POST";
-        readonly path: "/api/disbursement";
+        readonly path: "/disbursement";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "disbursement.update": {
         readonly method: "PUT";
-        readonly path: "/api/disbursement/{disbursement}";
+        readonly path: "/disbursement/{disbursement}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "discussion.index": {
+        readonly method: "GET";
+        readonly path: "/discussion";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "discussion.list": {
+        readonly method: "POST";
+        readonly path: "/discussions/list";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "discussion.show": {
+        readonly method: "GET";
+        readonly path: "/discussion/{slug}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "discussion.store": {
+        readonly method: "POST";
+        readonly path: "/discussion";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "documentation.search": {
+        readonly method: "GET";
+        readonly path: "/public/documentation/search/{search}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "domainInterface.byDomain": {
+        readonly method: "GET";
+        readonly path: "/domain-interfaces/by-domain/{domain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "domainInterface.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/domain-interfaces/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "domainInterface.index": {
+        readonly method: "GET";
+        readonly path: "/domain-interfaces";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "domainInterface.show": {
+        readonly method: "GET";
+        readonly path: "/domain-interfaces/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "domainInterface.store": {
+        readonly method: "POST";
+        readonly path: "/domain-interfaces";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "domainInterface.update": {
+        readonly method: "PATCH";
+        readonly path: "/domain-interfaces/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "domains.index": {
+        readonly method: "GET";
+        readonly path: "/v1/domains";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "dpgInstanceAdmin.update": {
+        readonly method: "PATCH";
+        readonly path: "/admin/dpg-instances/{id}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "etl.agent.process": {
         readonly method: "POST";
-        readonly path: "/api/v1/etl/agent/process";
+        readonly path: "/v1/etl/agent/process";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "etl.cancel": {
         readonly method: "POST";
-        readonly path: "/api/v1/etl/cancel/{pipelineId}";
+        readonly path: "/v1/etl/cancel/{pipelineId}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "etl.components": {
         readonly method: "GET";
-        readonly path: "/api/v1/etl/components";
+        readonly path: "/v1/etl/components";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "etl.process": {
         readonly method: "POST";
-        readonly path: "/api/v1/etl/process";
+        readonly path: "/v1/etl/process";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "etl.protocol.all": {
         readonly method: "GET";
-        readonly path: "/api/protocol/etl/all";
+        readonly path: "/protocol/etl/all";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "etl.search-analyze": {
         readonly method: "POST";
-        readonly path: "/api/v1/etl/search-analyze";
+        readonly path: "/v1/etl/search-analyze";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "etl.status": {
         readonly method: "GET";
-        readonly path: "/api/v1/etl/status/{pipelineId}";
+        readonly path: "/v1/etl/status/{pipelineId}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "follow-up.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/follow-up/{follow_up}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "follow-up.index": {
+    readonly "externalProgram.showBase": {
         readonly method: "GET";
-        readonly path: "/api/follow-up";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "follow-up.show": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/{follow_up}";
+        readonly path: "/program/external/{uuid}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "follow-up.store": {
+    readonly "externalProgram.showSegment": {
+        readonly method: "GET";
+        readonly path: "/program/external/{uuid}/{segment}/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "facilities.intake-queue.approve": {
         readonly method: "POST";
-        readonly path: "/api/follow-up";
+        readonly path: "/facilities/intake-queue/{signalId}/approve";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "facilities.intake-queue.index": {
+        readonly method: "GET";
+        readonly path: "/facilities/intake-queue";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "follow-up.update": {
+    readonly "facilities.portfolio.rollup": {
+        readonly method: "GET";
+        readonly path: "/facilities/portfolio/rollup";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "facilities.themes.signals": {
+        readonly method: "GET";
+        readonly path: "/facilities/themes/{theme}/signals";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "fail.events.index": {
+        readonly method: "GET";
+        readonly path: "/fail/events";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "fail.events.show": {
+        readonly method: "GET";
+        readonly path: "/fail/events/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "fail.events.summary": {
+        readonly method: "GET";
+        readonly path: "/fail/events/summary";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.protocol-mappings.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/v1/outcomes/protocol-mappings/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.protocol-mappings.index": {
+        readonly method: "GET";
+        readonly path: "/v1/outcomes/protocol-mappings";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.protocol-mappings.show": {
+        readonly method: "GET";
+        readonly path: "/v1/outcomes/protocol-mappings/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.protocol-mappings.store": {
+        readonly method: "POST";
+        readonly path: "/v1/outcomes/protocol-mappings";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "fail.outcomes.rubrics.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/v1/outcomes/rubrics/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.rubrics.index": {
+        readonly method: "GET";
+        readonly path: "/v1/outcomes/rubrics";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.rubrics.show": {
+        readonly method: "GET";
+        readonly path: "/v1/outcomes/rubrics/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "fail.outcomes.rubrics.store": {
+        readonly method: "POST";
+        readonly path: "/v1/outcomes/rubrics";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "fail.outcomes.rubrics.update": {
         readonly method: "PUT";
-        readonly path: "/api/follow-up/{follow_up}";
+        readonly path: "/v1/outcomes/rubrics/{id}";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.booked-events-day.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/booked-events-day/{date}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.booked-events-month.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/booked-events-month/{date}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.expert-finish.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/expert-finish/{booking}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.failed-service.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/failed-service/{booking}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.get-booking-windows.item.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/get-booking-windows/{location}/{service}/{week}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.get-pending-amount": {
-        readonly method: "GET";
-        readonly path: "/api/activity/get-pending-amount";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.get-providers.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/get-providers/{activity}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.activity.user-finish.item": {
-        readonly method: "GET";
-        readonly path: "/api/activity/user-finish/{booking}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.account.get-status": {
-        readonly method: "GET";
-        readonly path: "/api/agent/account/get-status";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.communicate.item.assigned-experts": {
-        readonly method: "GET";
-        readonly path: "/api/agent/communicate/{chain}/assigned-experts";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.communicate.item.get-status": {
-        readonly method: "GET";
-        readonly path: "/api/agent/communicate/{chain}/get-status";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.communicate.item.initialize-agent": {
-        readonly method: "GET";
-        readonly path: "/api/agent/communicate/{chain}/initialize-agent";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.communicate.item.invites": {
-        readonly method: "GET";
-        readonly path: "/api/agent/communicate/{chain}/invites";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.list": {
-        readonly method: "GET";
-        readonly path: "/api/agent/list";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.program-state.item": {
-        readonly method: "GET";
-        readonly path: "/api/agent/program-state/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.program-status.item": {
-        readonly method: "GET";
-        readonly path: "/api/agent/program-status/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.agent.retry-creation.item": {
-        readonly method: "GET";
-        readonly path: "/api/agent/retry-creation/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.get-models": {
-        readonly method: "GET";
-        readonly path: "/api/ai/get-models";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.get-models-list": {
-        readonly method: "GET";
-        readonly path: "/api/ai/get-models-list";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.get-settings": {
-        readonly method: "GET";
-        readonly path: "/api/ai/get-settings";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.installation-status": {
-        readonly method: "GET";
-        readonly path: "/api/ai/installation-status";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.policy-list.item": {
-        readonly method: "GET";
-        readonly path: "/api/ai/policy-list/{prompt}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.prompts.keywords": {
-        readonly method: "GET";
-        readonly path: "/api/ai/prompts/keywords";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.prompts.list": {
-        readonly method: "GET";
-        readonly path: "/api/ai/prompts/list";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.prompts.list-policies": {
-        readonly method: "GET";
-        readonly path: "/api/ai/prompts/list-policies";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.prompts.required-list": {
-        readonly method: "GET";
-        readonly path: "/api/ai/prompts/required-list";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.ai.prompts.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/ai/prompts/show/{prompt}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.appeal.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/appeal/run-global/{appeal}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.appeal.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/appeal/run/{appeal}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.application.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/application/run-global/{application}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.application.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/application/run/{application}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.assessment.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/assessment/run-global/{assessment}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.assessment.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/assessment/run/{assessment}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.attend.all": {
-        readonly method: "GET";
-        readonly path: "/api/attend/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.authenticate-at.item": {
-        readonly method: "GET";
-        readonly path: "/api/authenticate-at/{tenant}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.board": {
-        readonly method: "GET";
-        readonly path: "/api/board";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.challenge.finish.item": {
-        readonly method: "GET";
-        readonly path: "/api/challenge/finish/{attached}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.challenge.get-challenge-global-tasks.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/challenge/get-challenge-global-tasks/{challenge}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.challenge.get-challenge-tasks.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/challenge/get-challenge-tasks/{challenge}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.challenge.get-challenge.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/challenge/get-challenge/{challenge}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.challenge.get-global-challenge.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/challenge/get-global-challenge/{challenge}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.challenge.get-types": {
-        readonly method: "GET";
-        readonly path: "/api/challenge/get-types";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.broadcast-messages.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/chat/broadcast-messages/{type}/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.find-user.item": {
-        readonly method: "GET";
-        readonly path: "/api/chat/find-user/{search}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.get-list.item": {
-        readonly method: "GET";
-        readonly path: "/api/chat/get-list/{search}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.get-new-chat.item": {
-        readonly method: "GET";
-        readonly path: "/api/chat/get-new-chat/{room}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.get-room-by-id.item": {
-        readonly method: "GET";
-        readonly path: "/api/chat/get-room-by-id/{room}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.messages.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/chat/messages/{chat}/{search}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.chat.programs": {
-        readonly method: "GET";
-        readonly path: "/api/chat/programs";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.collection-list": {
-        readonly method: "GET";
-        readonly path: "/api/collection-list";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.connector.item.discover": {
-        readonly method: "GET";
-        readonly path: "/api/connector/{connector}/discover";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.connector.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/connector/run-global/{connector}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.connector.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/connector/run/{connector}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.contacts.has-contacts": {
-        readonly method: "GET";
-        readonly path: "/api/contacts/has-contacts";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.contacts.running-import": {
-        readonly method: "GET";
-        readonly path: "/api/contacts/running-import";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.creator-request.status": {
-        readonly method: "GET";
-        readonly path: "/api/creator-request/status";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.dashboard-settings.get": {
-        readonly method: "GET";
-        readonly path: "/api/dashboard-settings/get";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.dashboard.auth.item": {
-        readonly method: "GET";
-        readonly path: "/api/dashboard/auth/{token}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.dashboard.join.item": {
-        readonly method: "GET";
-        readonly path: "/api/dashboard/join/{token}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.disbursement.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/disbursement/run-global/{disbursement}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.disbursement.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/disbursement/run/{disbursement}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.domain-interfaces": {
-        readonly method: "GET";
-        readonly path: "/api/domain-interfaces";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.domain-interfaces.by-domain.item": {
-        readonly method: "GET";
-        readonly path: "/api/domain-interfaces/by-domain/{domain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.domain-interfaces.item": {
-        readonly method: "GET";
-        readonly path: "/api/domain-interfaces/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.domain-settings.item": {
-        readonly method: "GET";
-        readonly path: "/api/domain-settings/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.fees.get-settings": {
-        readonly method: "GET";
-        readonly path: "/api/fees/get-settings";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.finish.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/finish/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.get-current-followup": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/get-current-followup";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.get-data.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/get-data/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.get-timeline.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/get-timeline/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.handle-recommendation.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/handle-recommendation/{recommendation}/{status}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.payment.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/payment/{followup}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.recommendations.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/recommendations/{followup}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.follow-up.run.item": {
-        readonly method: "GET";
-        readonly path: "/api/follow-up/run/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.frontend.get-frontend": {
-        readonly method: "GET";
-        readonly path: "/api/frontend/get-frontend";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.agency-footer": {
-        readonly method: "GET";
-        readonly path: "/api/gov/agency-footer";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.cities": {
-        readonly method: "GET";
-        readonly path: "/api/gov/cities";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.city-agencies": {
-        readonly method: "GET";
-        readonly path: "/api/gov/city-agencies";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.federal-directory": {
-        readonly method: "GET";
-        readonly path: "/api/gov/federal-directory";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.states": {
-        readonly method: "GET";
-        readonly path: "/api/gov/states";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.subprojects": {
-        readonly method: "GET";
-        readonly path: "/api/gov/subprojects";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.gov.subprojects.by-domain": {
-        readonly method: "GET";
-        readonly path: "/api/gov/subprojects/by-domain";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.home.featured-creators": {
-        readonly method: "GET";
-        readonly path: "/api/home/featured-creators";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.home.featured-programs": {
-        readonly method: "GET";
-        readonly path: "/api/home/featured-programs";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.home.feedback": {
-        readonly method: "GET";
-        readonly path: "/api/home/feedback";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.home.frontend.item": {
-        readonly method: "GET";
-        readonly path: "/api/home/frontend/{items}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.home.most-recent-programs": {
-        readonly method: "GET";
-        readonly path: "/api/home/most-recent-programs";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.home.statistic": {
-        readonly method: "GET";
-        readonly path: "/api/home/statistic";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.interface.auth-token.item": {
-        readonly method: "GET";
-        readonly path: "/api/interface/auth-token/{token}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.interface.auth.item": {
-        readonly method: "GET";
-        readonly path: "/api/interface/auth/{sessionKey}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.interface.load-interface": {
-        readonly method: "GET";
-        readonly path: "/api/interface/load-interface";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.items.find-item.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/items/find-item/{search}/{type}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.items.food-categories": {
-        readonly method: "GET";
-        readonly path: "/api/items/food-categories";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.kpi.get-setup.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/kpi/get-setup/{chain}/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.kpi.get.item": {
-        readonly method: "GET";
-        readonly path: "/api/kpi/get/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.leader": {
-        readonly method: "GET";
-        readonly path: "/api/leader";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.load": {
-        readonly method: "GET";
-        readonly path: "/api/load";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.logout": {
-        readonly method: "GET";
-        readonly path: "/api/logout";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.mcp.connector": {
-        readonly method: "GET";
-        readonly path: "/api/mcp/connector";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.notification.get": {
-        readonly method: "GET";
-        readonly path: "/api/notification/get";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.notification.get-unread": {
-        readonly method: "GET";
-        readonly path: "/api/notification/get-unread";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.nudge.check.item": {
-        readonly method: "GET";
-        readonly path: "/api/nudge/check/{secret}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.onboarding.get.item": {
-        readonly method: "GET";
-        readonly path: "/api/onboarding/get/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.order.get-checkout-items.item": {
-        readonly method: "GET";
-        readonly path: "/api/order/get-checkout-items/{order}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.order.get-order-items.item": {
-        readonly method: "GET";
-        readonly path: "/api/order/get-order-items/{order}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.order.pay.item": {
-        readonly method: "GET";
-        readonly path: "/api/order/pay/{order}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.order.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/order/run-global/{order}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.order.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/order/run/{order}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.orders.item": {
-        readonly method: "GET";
-        readonly path: "/api/orders/{status}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.orders.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/orders/show/{order}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.payment.get-payment-method": {
-        readonly method: "GET";
-        readonly path: "/api/payment/get-payment-method";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.payment.program-purchases": {
-        readonly method: "GET";
-        readonly path: "/api/payment/program-purchases";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.payment.purchased-items": {
-        readonly method: "GET";
-        readonly path: "/api/payment/purchased-items";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.payment.setup-payment-method": {
-        readonly method: "GET";
-        readonly path: "/api/payment/setup-payment-method";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.payment.subscriptions": {
-        readonly method: "GET";
-        readonly path: "/api/payment/subscriptions";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.by-status.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/by-status/{status}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.decline.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/decline/{invite}/{source}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.feedback.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/feedback/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.finished-not-rated": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/finished-not-rated";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.force-defrost.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/force-defrost/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.get-recommended": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/get-recommended";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/{personalChain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.join.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/join/{token}/{source}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.last-chain": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/last-chain";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.task.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/task/{taskId}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.tasks": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/tasks";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.user-join.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/user-join/{invite}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.personal-chain.user-reject.item": {
-        readonly method: "GET";
-        readonly path: "/api/personal-chain/user-reject/{invite}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.politicians-by-domain": {
-        readonly method: "GET";
-        readonly path: "/api/politicians-by-domain";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-categories": {
-        readonly method: "GET";
-        readonly path: "/api/program-categories";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-category.all": {
-        readonly method: "GET";
-        readonly path: "/api/program-category/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-sale.list-by-author.item": {
-        readonly method: "GET";
-        readonly path: "/api/program-sale/list-by-author/{username}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-sale.list.random.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/program-sale/list/random/{username}/{ignore}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-sale.salary.item": {
-        readonly method: "GET";
-        readonly path: "/api/program-sale/salary/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-sale.tags": {
-        readonly method: "GET";
-        readonly path: "/api/program-sale/tags";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-status.get.item": {
-        readonly method: "GET";
-        readonly path: "/api/program-status/get/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-sub-category.all": {
-        readonly method: "GET";
-        readonly path: "/api/program-sub-category/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program-tag.all": {
-        readonly method: "GET";
-        readonly path: "/api/program-tag/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.all": {
-        readonly method: "GET";
-        readonly path: "/api/program/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.chains.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/chains/{program}/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.get-bookmarks": {
-        readonly method: "GET";
-        readonly path: "/api/program/get-bookmarks";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.history": {
-        readonly method: "GET";
-        readonly path: "/api/program/history";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.history.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/history/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.last-purchases": {
-        readonly method: "GET";
-        readonly path: "/api/program/last-purchases";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.program-data.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/program-data/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.publications.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/publications/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/show/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.simulation.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/simulation/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.users-additional-steps.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/users-additional-steps/{program}/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.users-steps.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/users-steps/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.program.users.item": {
-        readonly method: "GET";
-        readonly path: "/api/program/users/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-role.permissions": {
-        readonly method: "GET";
-        readonly path: "/api/project-role/permissions";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-settings.content.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/project-settings/content/show/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-settings.domain-settings.item": {
-        readonly method: "GET";
-        readonly path: "/api/project-settings/domain-settings/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-settings.domains.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/project-settings/domains/show/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-settings.layout.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/project-settings/layout/show/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-settings.seo.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/project-settings/seo/show/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.project-settings.template.show.item": {
-        readonly method: "GET";
-        readonly path: "/api/project-settings/template/show/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol-category.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol-category/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol-category.for-attachment": {
-        readonly method: "GET";
-        readonly path: "/api/protocol-category/for-attachment";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol-event.triggers": {
-        readonly method: "GET";
-        readonly path: "/api/protocol-event/triggers";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.activity.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/activity/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.agents.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/agents/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.ai-request-status.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/ai-request-status/{key}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.appeal.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/appeal/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.application.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/application/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.assessment.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/assessment/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.assessment.item-instances.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/assessment/item-instances/{assessment}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.by-category-all.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/by-category-all/{category}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.by-category.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/by-category/{category}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.chain-item-branch-plan.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/chain-item-branch-plan/{protocol}/{item}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.challenge.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/challenge/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.check-usage.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/check-usage/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.connector.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/connector/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.disbursement.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/disbursement/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.errors.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/errors/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.get-intensive-module-settings.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/get-intensive-module-settings/{protocol}/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.get-plan.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/get-plan/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.protocol.get-steps.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/get-steps/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.get-temporary-user": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/get-temporary-user";
+    readonly "fees.findUsers": {
+        readonly method: "POST";
+        readonly path: "/fees/find-users";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.intensive-module.roles.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/intensive-module/roles/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.list-intensive.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/list-intensive/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.protocol.modules.item": {
+    readonly "fees.getSettings": {
         readonly method: "GET";
-        readonly path: "/api/protocol/modules/{recurring}";
-        readonly hasPathParams: true;
+        readonly path: "/fees/get-settings";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.node-members.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/node-members/{node}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "fees.saveSettings": {
+        readonly method: "POST";
+        readonly path: "/fees/save-settings";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.protocol.nudge.all": {
+    readonly "fitbit.handleCallback": {
         readonly method: "GET";
-        readonly path: "/api/protocol/nudge/all";
+        readonly path: "/fitbit/callback";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.order.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/order/all";
+    readonly "fitbit.notifications": {
+        readonly method: "POST";
+        readonly path: "/fitbit/webhook";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.referral.all": {
+    readonly "fitbit.redirectToFitbit": {
         readonly method: "GET";
-        readonly path: "/api/protocol/referral/all";
+        readonly path: "/fitbit/auth";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.report.all": {
+    readonly "fitbit.verifySubscriber": {
         readonly method: "GET";
-        readonly path: "/api/protocol/report/all";
+        readonly path: "/fitbit/webhook";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.role-qualifications.item": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/role-qualifications/{role}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "followUps.finalizeSpeech": {
+        readonly method: "POST";
+        readonly path: "/follow-up/voice-finalize";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.protocol.roles.item": {
+    readonly "followUps.finishFollowUp": {
         readonly method: "GET";
-        readonly path: "/api/protocol/roles/{type}";
+        readonly path: "/follow-up/finish/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.sale.get.item": {
+    readonly "followUps.getCurrentFollowUp": {
         readonly method: "GET";
-        readonly path: "/api/protocol/sale/get/{protocol}";
-        readonly hasPathParams: true;
+        readonly path: "/follow-up/get-current-followup";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.sale.salaries.item": {
+    readonly "followUps.getData": {
         readonly method: "GET";
-        readonly path: "/api/protocol/sale/salaries/{protocol}";
+        readonly path: "/follow-up/get-data/{chain}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.settings.get.item": {
+    readonly "followUps.getPayment": {
         readonly method: "GET";
-        readonly path: "/api/protocol/settings/get/{protocol}";
+        readonly path: "/follow-up/payment/{followup}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.protocol.show-intensive.item": {
+    readonly "followUps.getTimeline": {
         readonly method: "GET";
-        readonly path: "/api/protocol/show-intensive/{module}";
+        readonly path: "/follow-up/get-timeline/{chain}";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.verification.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/verification/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.protocol.workflow.all": {
-        readonly method: "GET";
-        readonly path: "/api/protocol/workflow/all";
-        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.public.auth.protocol-chain.get-user-by-invite.item.item": {
+    readonly "followUps.handleRecommendation": {
         readonly method: "GET";
-        readonly path: "/api/public/auth/protocol-chain/get-user-by-invite/{token}/{source}";
+        readonly path: "/follow-up/handle-recommendation/{recommendation}/{status}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.codify.answers.item": {
+    readonly "followUps.recommendations": {
         readonly method: "GET";
-        readonly path: "/api/public/codify/answers/{key}";
+        readonly path: "/follow-up/recommendations/{followup}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.codify.state.item": {
+    readonly "followUps.run": {
         readonly method: "GET";
-        readonly path: "/api/public/codify/state/{key}";
+        readonly path: "/follow-up/run/{chain}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.countries.find-allowed": {
-        readonly method: "GET";
-        readonly path: "/api/public/countries/find-allowed";
+    readonly "followUps.storeVoice": {
+        readonly method: "POST";
+        readonly path: "/follow-up/voice-record";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.public.countries.item": {
+    readonly "forecast.show": {
         readonly method: "GET";
-        readonly path: "/api/public/countries/{country}";
+        readonly path: "/v1/ci-mce/forecasts/{stream}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.creators": {
-        readonly method: "GET";
-        readonly path: "/api/public/creators";
+    readonly "forecast.store": {
+        readonly method: "POST";
+        readonly path: "/v1/ci-mce/forecasts";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.public.documentation.random-feedback": {
-        readonly method: "GET";
-        readonly path: "/api/public/documentation/random-feedback";
+    readonly "forumTrack.store": {
+        readonly method: "POST";
+        readonly path: "/v1/forum/track";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.documentation.search.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/documentation/search/{search}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.public.documentation.show.item": {
+    readonly "frontend.items": {
         readonly method: "GET";
-        readonly path: "/api/public/documentation/show/{documentation}";
+        readonly path: "/home/frontend/{items}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.get-program-categories": {
+    readonly "frontend.show": {
         readonly method: "GET";
-        readonly path: "/api/public/get-program-categories";
+        readonly path: "/frontend/get-frontend";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.public.get-program-feedback.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/get-program-feedback/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "frontend.update": {
+        readonly method: "PUT";
+        readonly path: "/frontend/save-frontend";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.public.get-program-shop-categories": {
+    readonly "frontendPages.index": {
         readonly method: "GET";
-        readonly path: "/api/public/get-program-shop-categories";
+        readonly path: "/v1/pages";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.public.get-program.item": {
+    readonly "globalModuleTask.getTask": {
         readonly method: "GET";
-        readonly path: "/api/public/get-program/{program}";
+        readonly path: "/personal-chain/task/{taskId}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.get-programs": {
+    readonly "govDirectory.agencyFooter": {
         readonly method: "GET";
-        readonly path: "/api/public/get-programs";
+        readonly path: "/gov/agency-footer";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.public.get-roles": {
+    readonly "govDirectory.cities": {
         readonly method: "GET";
-        readonly path: "/api/public/get-roles";
+        readonly path: "/gov/cities";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.get-user-featured.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/get-user-featured/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.get-user-feed.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/get-user-feed/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.logo.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/logo/{tenant}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.program-sale.money-distributions": {
+    readonly "govDirectory.cityAgencies": {
         readonly method: "GET";
-        readonly path: "/api/public/program-sale/money-distributions";
+        readonly path: "/gov/city-agencies";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.short-link.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/short-link/{shortLink}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.subprojects": {
+    readonly "govDirectory.federalDirectory": {
         readonly method: "GET";
-        readonly path: "/api/public/subprojects";
+        readonly path: "/gov/federal-directory";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.team.get-invite.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/team/get-invite/{token}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.team.get-invited-data.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/team/get-invited-data/{token}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.public.top-creators": {
+    readonly "govDirectory.politicians": {
         readonly method: "GET";
-        readonly path: "/api/public/top-creators";
+        readonly path: "/gov/politicians";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.public.user-country.item": {
-        readonly method: "GET";
-        readonly path: "/api/public/user-country/{id}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.question.all": {
+    readonly "govDirectory.states": {
         readonly method: "GET";
-        readonly path: "/api/question/all";
+        readonly path: "/gov/states";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.question.by-assessment-full.item": {
-        readonly method: "GET";
-        readonly path: "/api/question/by-assessment-full/{assessment}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.question.by-assessment.item": {
-        readonly method: "GET";
-        readonly path: "/api/question/by-assessment/{assessment}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.referral.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/referral/run-global/{referral}/{task}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.referral.run.item.item": {
+    readonly "govDirectory.subprojectByDomain": {
         readonly method: "GET";
-        readonly path: "/api/referral/run/{referral}/{chain}";
-        readonly hasPathParams: true;
+        readonly path: "/gov/subprojects/by-domain";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.report.run-global.item.item": {
+    readonly "govDirectory.subprojects": {
         readonly method: "GET";
-        readonly path: "/api/report/run-global/{report}/{task}";
-        readonly hasPathParams: true;
+        readonly path: "/gov/subprojects";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.report.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/report/run/{report}/{chain}";
+    readonly "gradeProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/grades/{courseId}/{assignmentId}";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.response.all": {
-        readonly method: "GET";
-        readonly path: "/api/response/all";
-        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.roles-to-assign.all": {
-        readonly method: "GET";
-        readonly path: "/api/roles-to-assign/all";
+    readonly "gtm.attribution.capture": {
+        readonly method: "POST";
+        readonly path: "/gtm/attribution/capture";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.roles.all": {
-        readonly method: "GET";
-        readonly path: "/api/roles/all";
+    readonly "gtm.attribution.convert": {
+        readonly method: "POST";
+        readonly path: "/gtm/attribution/convert";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.search": {
+    readonly "gtm.manage.campaigns.index": {
         readonly method: "GET";
-        readonly path: "/api/search";
+        readonly path: "/gtm/manage/campaigns";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.service-location.item": {
+    readonly "gtm.manage.campaigns.metrics": {
         readonly method: "GET";
-        readonly path: "/api/service-location/{location}";
+        readonly path: "/gtm/manage/campaigns/{id}/metrics";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.service-location.location.item": {
+    readonly "gtm.manage.campaigns.show": {
         readonly method: "GET";
-        readonly path: "/api/service-location/location/{location}";
+        readonly path: "/gtm/manage/campaigns/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.service-location.service.item": {
-        readonly method: "GET";
-        readonly path: "/api/service-location/service/{service}";
+    readonly "gtm.manage.campaigns.status": {
+        readonly method: "POST";
+        readonly path: "/gtm/manage/campaigns/{id}/status";
         readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.showcase.projects": {
-        readonly method: "GET";
-        readonly path: "/api/showcase/projects";
+    readonly "gtm.manage.campaigns.store": {
+        readonly method: "POST";
+        readonly path: "/gtm/manage/campaigns";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.stripe.check-account": {
-        readonly method: "GET";
-        readonly path: "/api/stripe/check-account";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
+    readonly "gtm.manage.campaigns.update": {
+        readonly method: "PUT";
+        readonly path: "/gtm/manage/campaigns/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
     };
-    readonly "get.api.stripe.connect": {
+    readonly "gtm.manage.control-tower.index": {
         readonly method: "GET";
-        readonly path: "/api/stripe/connect";
+        readonly path: "/gtm/manage/control-tower";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.stripe.transactions": {
+    readonly "gtm.manage.conversions.index": {
         readonly method: "GET";
-        readonly path: "/api/stripe/transactions";
+        readonly path: "/gtm/manage/conversions";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.stripe.withdraw": {
+    readonly "gtm.manage.metrics.index": {
         readonly method: "GET";
-        readonly path: "/api/stripe/withdraw";
+        readonly path: "/gtm/manage/metrics";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-admin.account-data": {
+    readonly "gtm.manage.press.campaigns": {
         readonly method: "GET";
-        readonly path: "/api/subproject-admin/account-data";
+        readonly path: "/gtm/manage/press/campaigns";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-admin.claim.subproject.item.wizard-instance": {
+    readonly "gtm.manage.press.campaigns.touches": {
         readonly method: "GET";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/wizard-instance";
+        readonly path: "/gtm/manage/press/campaigns/{id}/touches";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.subproject-admin.create-subscription": {
-        readonly method: "GET";
-        readonly path: "/api/subproject-admin/create-subscription";
-        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-admin.get-allowed-countries": {
+    readonly "gtm.manage.press.summary": {
         readonly method: "GET";
-        readonly path: "/api/subproject-admin/get-allowed-countries";
+        readonly path: "/gtm/manage/press/summary";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-admin.subscription-status": {
+    readonly "gtm.manage.press.touches.email": {
         readonly method: "GET";
-        readonly path: "/api/subproject-admin/subscription-status";
-        readonly hasPathParams: false;
+        readonly path: "/gtm/manage/press/touches/{id}/email";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-settings": {
+    readonly "gtm.manage.runs.index": {
         readonly method: "GET";
-        readonly path: "/api/subproject-settings";
+        readonly path: "/gtm/manage/runs";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-team.get-invites.item": {
-        readonly method: "GET";
-        readonly path: "/api/subproject-team/get-invites/{subproject}";
+    readonly "gtm.manage.suppressions.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/gtm/manage/suppressions/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-types": {
+    readonly "gtm.manage.suppressions.index": {
         readonly method: "GET";
-        readonly path: "/api/subproject-types";
+        readonly path: "/gtm/manage/suppressions";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject-wizard.creation-started": {
-        readonly method: "GET";
-        readonly path: "/api/subproject-wizard/creation-started";
+    readonly "gtm.manage.suppressions.store": {
+        readonly method: "POST";
+        readonly path: "/gtm/manage/suppressions";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.subproject-wizard.get": {
+    readonly "gtm.manage.targets.index": {
         readonly method: "GET";
-        readonly path: "/api/subproject-wizard/get";
+        readonly path: "/gtm/manage/targets";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subproject.all": {
-        readonly method: "GET";
-        readonly path: "/api/subproject/all";
+    readonly "gtm.outreach.dispatch": {
+        readonly method: "POST";
+        readonly path: "/gtm/outreach/dispatch";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.subscription.cancel.item": {
+    readonly "gtm.referral.capture": {
         readonly method: "GET";
-        readonly path: "/api/subscription/cancel/{subscription}";
+        readonly path: "/gtm/r/{code}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.subscription.get.item": {
+    readonly "gtm.unsubscribe": {
         readonly method: "GET";
-        readonly path: "/api/subscription/get/{user}";
+        readonly path: "/gtm/unsubscribe/{token}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.subscription.get.my-subscribers": {
+    readonly "gtm.viral.k-factor": {
         readonly method: "GET";
-        readonly path: "/api/subscription/get/my-subscribers";
+        readonly path: "/gtm/viral/k-factor";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subscription.my-subscription": {
-        readonly method: "GET";
-        readonly path: "/api/subscription/my-subscription";
+    readonly "gtm.webhooks.mailgun": {
+        readonly method: "POST";
+        readonly path: "/gtm/webhooks/mailgun";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.subscription.subscribe.item": {
-        readonly method: "GET";
-        readonly path: "/api/subscription/subscribe/{subscription}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.subscription.subscribers": {
+    readonly "guestDealThread.index": {
         readonly method: "GET";
-        readonly path: "/api/subscription/subscribers";
+        readonly path: "/guest/deals";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.subscription.subscribes": {
-        readonly method: "GET";
-        readonly path: "/api/subscription/subscribes";
+    readonly "h5i.broadcasting.public-auth": {
+        readonly method: "POST";
+        readonly path: "/broadcasting/public-auth";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.team.accept-invite.item": {
-        readonly method: "GET";
-        readonly path: "/api/team/accept-invite/{token}";
+    readonly "h5i.deals.hitl-respond": {
+        readonly method: "POST";
+        readonly path: "/h5i/deals/{guid}/hitl/{slug}/respond";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.team.all": {
-        readonly method: "GET";
-        readonly path: "/api/team/all";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.team.list.item": {
-        readonly method: "GET";
-        readonly path: "/api/team/list/{status}";
+    readonly "h5i.deals.public-comment": {
+        readonly method: "POST";
+        readonly path: "/h5i/deals/{guid}/public-comment";
         readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.team.member.item": {
+    readonly "h5i.deals.public-messages": {
         readonly method: "GET";
-        readonly path: "/api/team/member/{status}";
+        readonly path: "/h5i/deals/{guid}/public-messages";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.team.roles": {
+    readonly "h5i.deals.resolve": {
         readonly method: "GET";
-        readonly path: "/api/team/roles";
+        readonly path: "/h5i/deals/resolve";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.tenant-claim.details.item": {
-        readonly method: "GET";
-        readonly path: "/api/tenant-claim/details/{id}";
+    readonly "h5i.deals.triage": {
+        readonly method: "POST";
+        readonly path: "/h5i/deals/{guid}/triage";
         readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.tenant-claim.my-claim": {
-        readonly method: "GET";
-        readonly path: "/api/tenant-claim/my-claim";
-        readonly hasPathParams: false;
+    readonly "h5i.dev.seed-demo": {
+        readonly method: "POST";
+        readonly path: "/h5i/dev/seed-demo/{guid}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.tenant-claim.search": {
+    readonly "h5i.intro-feed": {
         readonly method: "GET";
-        readonly path: "/api/tenant-claim/search";
+        readonly path: "/h5i/intro-feed";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.tenant-claim.status.item": {
-        readonly method: "GET";
-        readonly path: "/api/tenant-claim/status/{token}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.tenant-interface-block.by-page.item": {
+    readonly "h5i.msg.channel": {
         readonly method: "GET";
-        readonly path: "/api/tenant-interface-block/by-page/{page_id}";
+        readonly path: "/h5i/msg/channel/{channel}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.tenant-interface-page.all.item": {
+    readonly "h5i.msg.inbox": {
         readonly method: "GET";
-        readonly path: "/api/tenant-interface-page/all/{interface_id}";
-        readonly hasPathParams: true;
+        readonly path: "/h5i/msg/inbox";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.tenant-interface-page.interface.item": {
+    readonly "h5i.msg.show": {
         readonly method: "GET";
-        readonly path: "/api/tenant-interface-page/interface/{interface_id}";
+        readonly path: "/h5i/msg/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.tenant-interface.all": {
-        readonly method: "GET";
-        readonly path: "/api/tenant-interface/all";
+    readonly "h5i.msg.store": {
+        readonly method: "POST";
+        readonly path: "/h5i/msg";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.tenant-registration.fees": {
-        readonly method: "GET";
-        readonly path: "/api/tenant-registration/fees";
+    readonly "handoffCode.store": {
+        readonly method: "POST";
+        readonly path: "/v1/auth/handoff-code";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.twitter.timeline": {
+    readonly "health.dealPipelineHealth": {
         readonly method: "GET";
-        readonly path: "/api/twitter/timeline";
+        readonly path: "/health/deal-pipeline";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.user-devices.list": {
-        readonly method: "GET";
-        readonly path: "/api/user-devices/list";
+    readonly "healthKitIngest.ingest": {
+        readonly method: "POST";
+        readonly path: "/v1/devices/healthkit/ingest";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.user.creator-dashboard": {
-        readonly method: "GET";
-        readonly path: "/api/user/creator-dashboard";
+    readonly "healthKitIngest.pair": {
+        readonly method: "POST";
+        readonly path: "/v1/devices/healthkit/pair";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.user.creator-stats": {
+    readonly "heroVideo.show": {
         readonly method: "GET";
-        readonly path: "/api/user/creator-stats";
-        readonly hasPathParams: false;
+        readonly path: "/hero-video/{subproject}/{name}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.user.get-data": {
-        readonly method: "GET";
-        readonly path: "/api/user/get-data";
+    readonly "hitl.hitlRequested": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/hitl/requested";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.user.get-wallet": {
-        readonly method: "GET";
-        readonly path: "/api/user/get-wallet";
+    readonly "hitl.hitlResume": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/hitl/resume";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.assigned-tags.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/assigned-tags/{category}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.can-creator.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/can-creator/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.find.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/find/{searchQuery}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.users.get-available-roles": {
+    readonly "hostSubprojects.index": {
         readonly method: "GET";
-        readonly path: "/api/users/get-available-roles";
+        readonly path: "/v1/host/subprojects";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.users.get-pricing": {
-        readonly method: "GET";
-        readonly path: "/api/users/get-pricing";
+    readonly "hrm.hrmRelay": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/hrm/relay";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.users.get-restricted-users": {
-        readonly method: "GET";
-        readonly path: "/api/users/get-restricted-users";
+    readonly "ibd.application": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/ibd/applications";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.get-role-category.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/get-role-category/{category}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.users.get-roles": {
-        readonly method: "GET";
-        readonly path: "/api/users/get-roles";
+    readonly "ibd.kpiEvent": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/ibd/kpi-events";
         readonly hasPathParams: false;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.users.get-sessions": {
-        readonly method: "GET";
-        readonly path: "/api/users/get-sessions";
+    readonly "ibd.userUpsert": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/ibd/users/upsert";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.id.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/id/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.name.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/name/{username}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.users.referral": {
+    readonly "icMarket.index": {
         readonly method: "GET";
-        readonly path: "/api/users/referral";
+        readonly path: "/v1/ci-mce/ic-market/ticks";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.users.referral.transactions": {
+    readonly "icMarket.state": {
         readonly method: "GET";
-        readonly path: "/api/users/referral/transactions";
+        readonly path: "/v1/ci-mce/ic-market/state";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.users.remove-restriction.item": {
-        readonly method: "GET";
-        readonly path: "/api/users/remove-restriction/{restriction}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.verification.run-global.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/verification/run-global/{verification}/{task}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "icMarket.store": {
+        readonly method: "POST";
+        readonly path: "/v1/ci-mce/ic-market/ticks";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.verification.run.item.item": {
-        readonly method: "GET";
-        readonly path: "/api/verification/run/{verification}/{chain}";
+    readonly "intakeHandoffExchange.exchange": {
+        readonly method: "POST";
+        readonly path: "/v1/intake/handoff/{code}/exchange";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.withings.auth": {
+    readonly "intentTopic.index": {
         readonly method: "GET";
-        readonly path: "/api/withings/auth";
+        readonly path: "/v1/intents";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.withings.callback": {
-        readonly method: "GET";
-        readonly path: "/api/withings/callback";
+    readonly "intentTopic.match": {
+        readonly method: "POST";
+        readonly path: "/v1/intents/match";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.assessment.answers.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/assessment/answers/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.assessment.questions.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/assessment/questions/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.connect-stripe.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/connect-stripe/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.finalization-state.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/finalization-state/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.finances.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/finances/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.get-required-roles.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/get-required-roles/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.get-state.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/get-state/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.api.wizard.program-data.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/program-data/{protocol}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.wizard.public-program-created.item": {
+    readonly "intentTopic.show": {
         readonly method: "GET";
-        readonly path: "/api/wizard/public-program-created/{protocol}";
+        readonly path: "/v1/intents/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.wizard.retry-creation.item": {
+    readonly "interface-catalog": {
         readonly method: "GET";
-        readonly path: "/api/wizard/retry-creation/{protocol}";
-        readonly hasPathParams: true;
+        readonly path: "/v1/interface-catalog";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.wizard.start-program.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/start-program/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "internal.agentPolicyDraft": {
+        readonly method: "POST";
+        readonly path: "/internal/policy-drafts";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.wizard.step-back.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/step-back/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "internal.computeUsage": {
+        readonly method: "POST";
+        readonly path: "/internal/compute/usage";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.wizard.team.roles-to-invite.item": {
+    readonly "internal.policySettings": {
         readonly method: "GET";
-        readonly path: "/api/wizard/team/roles-to-invite/{protocol}";
+        readonly path: "/internal/policy-settings/{subproject}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.wizard.verify-stripe.item": {
-        readonly method: "GET";
-        readonly path: "/api/wizard/verify-stripe/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+    readonly "internal.resolveSubproject": {
+        readonly method: "POST";
+        readonly path: "/internal/resolve-subproject";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
     };
-    readonly "get.api.workflow.codify-pipeline.check-pipeline.item": {
+    readonly "investmentTargets.index": {
         readonly method: "GET";
-        readonly path: "/api/workflow/codify-pipeline/check-pipeline/{session}";
-        readonly hasPathParams: true;
+        readonly path: "/v1/investment-targets";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.workflow.codify-pipeline.stop.item": {
+    readonly "investments.index": {
         readonly method: "GET";
-        readonly path: "/api/workflow/codify-pipeline/stop/{session}";
-        readonly hasPathParams: true;
+        readonly path: "/v1/investments";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.world-locations.city.item": {
+    readonly "investments.investors": {
         readonly method: "GET";
-        readonly path: "/api/world-locations/city/{city}";
+        readonly path: "/v1/investments/{subprojectId}/investors";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "get.api.world-locations.country.item": {
+    readonly "issueTopic.index": {
         readonly method: "GET";
-        readonly path: "/api/world-locations/country/{country}";
-        readonly hasPathParams: true;
+        readonly path: "/v1/issues";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "get.api.world-locations.state.item": {
+    readonly "issueTopic.show": {
         readonly method: "GET";
-        readonly path: "/api/world-locations/state/{state}";
+        readonly path: "/v1/issues/{id}";
         readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "get.broadcasting.auth": {
-        readonly method: "GET";
-        readonly path: "/broadcasting/auth";
-        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "items.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/items/{item}";
+        readonly path: "/items/{id}";
         readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "items.foodCategories": {
+        readonly method: "GET";
+        readonly path: "/items/food-categories";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "items.index": {
         readonly method: "GET";
-        readonly path: "/api/items";
+        readonly path: "/items";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "items.show": {
         readonly method: "GET";
-        readonly path: "/api/items/{item}";
+        readonly path: "/items/{id}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "items.store": {
         readonly method: "POST";
-        readonly path: "/api/items";
+        readonly path: "/items";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "items.update": {
         readonly method: "PUT";
-        readonly path: "/api/items/{item}";
+        readonly path: "/items/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "itemsCollection.addItemToCollection": {
+        readonly method: "POST";
+        readonly path: "/collection-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "itemsCollection.all": {
+        readonly method: "GET";
+        readonly path: "/collection-list";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "itemsCollection.deleteItemFromCollection": {
+        readonly method: "DELETE";
+        readonly path: "/collection-item/{item}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "kPISetup.getSetup": {
+        readonly method: "GET";
+        readonly path: "/kpi/get-setup/{chain}/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "kPISetup.getStepParameters": {
+        readonly method: "GET";
+        readonly path: "/kpi/get/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "kPISetup.removeRule": {
+        readonly method: "DELETE";
+        readonly path: "/kpi/remove-rule/{rule}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "kPISetup.saveChainItemKPISettings": {
+        readonly method: "POST";
+        readonly path: "/kpi/save";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "kPISetup.saveRoundResults": {
+        readonly method: "POST";
+        readonly path: "/kpi/save-round-results";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "kPISetup.saveSetup": {
+        readonly method: "POST";
+        readonly path: "/kpi/save-setup";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "kPISetup.validateParameters": {
+        readonly method: "POST";
+        readonly path: "/kpi/validate-parameters";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "kpi.getOnboarding": {
+        readonly method: "GET";
+        readonly path: "/onboarding/get/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "kpi.storeOnboarding": {
+        readonly method: "POST";
+        readonly path: "/onboarding/save/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "lesson.complete": {
+        readonly method: "POST";
+        readonly path: "/lesson/{lesson}/complete";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "lesson.show": {
+        readonly method: "GET";
+        readonly path: "/lesson/{lesson}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "lms.grading.store": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/lms/grading";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "lmsAdapterProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/lms/{adapter}/proxy/{path}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "locationServiceBooking.confirmBooking": {
+        readonly method: "POST";
+        readonly path: "/activity/confirm-booking";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "locationServiceBooking.failedService": {
+        readonly method: "GET";
+        readonly path: "/activity/failed-service/{booking}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServiceBooking.finishByExpert": {
+        readonly method: "GET";
+        readonly path: "/activity/expert-finish/{booking}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServiceBooking.finishByUser": {
+        readonly method: "GET";
+        readonly path: "/activity/user-finish/{booking}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServiceBooking.handleBookedEvents": {
+        readonly method: "POST";
+        readonly path: "/activity/handle-event";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "locationServiceBooking.resetReservation": {
+        readonly method: "POST";
+        readonly path: "/activity/reset-reservation";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "locationServiceBooking.setReservation": {
+        readonly method: "POST";
+        readonly path: "/activity/set-reservation";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "locationServiceBooking.show": {
+        readonly method: "GET";
+        readonly path: "/activity/get-booking-windows/{location}/{service}/{week}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServiceBooking.showDayBookings": {
+        readonly method: "GET";
+        readonly path: "/activity/booked-events-day/{date}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServiceBooking.showMonthBookings": {
+        readonly method: "GET";
+        readonly path: "/activity/booked-events-month/{date}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.create": {
+        readonly method: "POST";
+        readonly path: "/service-location/create";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "locationServices.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/service-location/service/{service}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.findServices": {
+        readonly method: "POST";
+        readonly path: "/service-location/find";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "locationServices.getPendingRequests": {
+        readonly method: "GET";
+        readonly path: "/activity/get-pending-amount";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.getProviders": {
+        readonly method: "GET";
+        readonly path: "/activity/get-providers/{activity}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.index": {
+        readonly method: "GET";
+        readonly path: "/service-location/{location}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.servicesLocation": {
+        readonly method: "GET";
+        readonly path: "/service-location/location/{location}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.show": {
+        readonly method: "GET";
+        readonly path: "/service-location/service/{service}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "locationServices.update": {
+        readonly method: "PUT";
+        readonly path: "/service-location/update/{service}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "login.adminGetByToken": {
+        readonly method: "GET";
+        readonly path: "/dashboard/join/{token}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "login.adminJoin": {
+        readonly method: "POST";
+        readonly path: "/dashboard/join";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "login.adminLogin": {
+        readonly method: "POST";
+        readonly path: "/dashboard/login";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "login.changeForcedPassword": {
+        readonly method: "POST";
+        readonly path: "/auth/change-forced-password";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "login.echoServerAuth": {
+        readonly method: "POST";
+        readonly path: "/broadcasting/auth";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "login.login": {
+        readonly method: "POST";
+        readonly path: "/public/auth/sign-in";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "login.logout": {
+        readonly method: "GET";
+        readonly path: "/logout";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "login.newPassword": {
+        readonly method: "POST";
+        readonly path: "/public/auth/new-password";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "login.reset": {
+        readonly method: "POST";
+        readonly path: "/public/auth/reset";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "ltiLaunchUrlProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/lti/launch-url";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "machineToken.store": {
+        readonly method: "POST";
+        readonly path: "/v1/auth/machine-tokens";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "measurements.index": {
+        readonly method: "GET";
+        readonly path: "/v1/devices/measurements";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "mob.activityLocationBatch": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/mob/activity-locations/batch";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "mob.runComplete": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/mob/runs/complete";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "mob.userUpsert": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/mob/users/upsert";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "modules.agents.protocolIntegration.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/agents/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "modules.assessments.protocolIntegration.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/assessment/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "modules.assessments.response.store_0": {
+        readonly method: "POST";
+        readonly path: "/response/store";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "modules.order.protocolIntegration.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/order/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "modules.workflow.protocolIntegration.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/workflow/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "mutation.index": {
+        readonly method: "GET";
+        readonly path: "/clinician/mutations";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "nio.assessmentResponse": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/nio/assessments-responses";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "nio.order": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/nio/orders";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "nio.userUpsert": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/nio/users/upsert";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "notification.deleteNotification": {
+        readonly method: "DELETE";
+        readonly path: "/notification/delete-notification/{notification}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "notification.getUnreadNotificationsCount": {
+        readonly method: "GET";
+        readonly path: "/notification/get-unread";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "notification.guestSend": {
+        readonly method: "POST";
+        readonly path: "/guest/notification/send";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "notification.guestThread": {
+        readonly method: "GET";
+        readonly path: "/guest/notification/thread/{officialId}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "notification.index": {
+        readonly method: "GET";
+        readonly path: "/notification/get";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "notification.indexForFromUser": {
+        readonly method: "GET";
+        readonly path: "/notification/thread/{fromUserId}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "notification.markThreadRead": {
+        readonly method: "POST";
+        readonly path: "/notification/thread/{fromUserId}/mark-read";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "notification.sendToCreator": {
+        readonly method: "POST";
+        readonly path: "/notification/send-to-creator";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "notification.startTask": {
+        readonly method: "POST";
+        readonly path: "/notification/start-task";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "nudge.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/nudge/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "nudge.checkInEmail": {
+        readonly method: "POST";
+        readonly path: "/nudge-checkin/email";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "nudge.checkInSms": {
+        readonly method: "POST";
+        readonly path: "/nudge-checkin/sms";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "nudge.checkSecret": {
+        readonly method: "GET";
+        readonly path: "/nudge/check/{secret}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "nudge.deleteImage": {
+        readonly method: "DELETE";
+        readonly path: "/nudge/image/{nudge}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "nudge.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/nudge/{nudge}";
+        readonly path: "/nudge/{nudge}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "nudge.index": {
         readonly method: "GET";
-        readonly path: "/api/nudge";
+        readonly path: "/nudge";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "nudge.show": {
         readonly method: "GET";
-        readonly path: "/api/nudge/{nudge}";
+        readonly path: "/nudge/{nudge}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "nudge.store": {
         readonly method: "POST";
-        readonly path: "/api/nudge";
+        readonly path: "/nudge";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "nudge.update": {
         readonly method: "PUT";
-        readonly path: "/api/nudge/{nudge}";
+        readonly path: "/nudge/{nudge}";
         readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "opsDlq.index": {
+        readonly method: "GET";
+        readonly path: "/admin/ops/dlq";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "opsDlq.retry": {
+        readonly method: "POST";
+        readonly path: "/admin/ops/dlq/{uuid}/retry";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "order.buyItems": {
+        readonly method: "GET";
+        readonly path: "/order/pay/{order}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "order.cancelOrder": {
+        readonly method: "POST";
+        readonly path: "/order/cancel-order";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "order.confirmOrder": {
+        readonly method: "POST";
+        readonly path: "/order/confirm-order";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "order.confirmPayment": {
+        readonly method: "POST";
+        readonly path: "/order/confirm-payment";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "order.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/order/{order}";
+        readonly path: "/order/{order}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
+    readonly "order.getCheckoutItems": {
+        readonly method: "GET";
+        readonly path: "/order/get-checkout-items/{order}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "order.getOrderItems": {
+        readonly method: "GET";
+        readonly path: "/order/get-order-items/{order}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "order.getShopItem": {
+        readonly method: "POST";
+        readonly path: "/order/get-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
     readonly "order.index": {
         readonly method: "GET";
-        readonly path: "/api/order";
+        readonly path: "/order";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "order.runOrder": {
+        readonly method: "GET";
+        readonly path: "/order/run/{order}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "order.runRecurring": {
+        readonly method: "GET";
+        readonly path: "/order/run-global/{order}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "order.show": {
         readonly method: "GET";
-        readonly path: "/api/order/{order}";
+        readonly path: "/order/{order}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
+    readonly "order.startCheckoutProcess": {
+        readonly method: "POST";
+        readonly path: "/order/checkout";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
     readonly "order.store": {
         readonly method: "POST";
-        readonly path: "/api/order";
+        readonly path: "/order";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "order.update": {
         readonly method: "PUT";
-        readonly path: "/api/order/{order}";
+        readonly path: "/order/{order}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "patch.api.domain-interfaces.item": {
-        readonly method: "PATCH";
-        readonly path: "/api/domain-interfaces/{id}";
-        readonly hasPathParams: true;
+    readonly "order.validateOrderItem": {
+        readonly method: "POST";
+        readonly path: "/order/validate-item";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
-    readonly "patch.api.protocol.sale.update.item": {
-        readonly method: "PATCH";
-        readonly path: "/api/protocol/sale/update/{protocol}";
-        readonly hasPathParams: true;
+    readonly "path.mine": {
+        readonly method: "GET";
+        readonly path: "/path/mine";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "path.store": {
+        readonly method: "POST";
+        readonly path: "/v1/paths";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
-    readonly "patch.api.subscription.update.item": {
-        readonly method: "PATCH";
-        readonly path: "/api/subscription/update/{subscription}";
+    readonly "paymentHistory.paymentHistoryProgramPurchases": {
+        readonly method: "GET";
+        readonly path: "/payment/program-purchases";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "paymentHistory.paymentHistorySubscriptions": {
+        readonly method: "GET";
+        readonly path: "/payment/subscriptions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "paymentHistory.retrievePurchasedItems": {
+        readonly method: "GET";
+        readonly path: "/payment/purchased-items";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "phm.userUpsert": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/phm/users/upsert";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "phoneVerification.sendCode": {
+        readonly method: "POST";
+        readonly path: "/auth/phone/send-code";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "phoneVerification.verifyCode": {
+        readonly method: "POST";
+        readonly path: "/auth/phone/verify-code";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "pipelineStep.index": {
+        readonly method: "GET";
+        readonly path: "/admin/pipeline-steps";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "pipelineStep.reorder": {
+        readonly method: "PUT";
+        readonly path: "/admin/pipeline-steps/order";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "pipelineStep.showForSubproject": {
+        readonly method: "GET";
+        readonly path: "/admin/subprojects/{id}/pipeline-steps";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "patch.api.users.update-billing-info": {
-        readonly method: "PATCH";
-        readonly path: "/api/users/update-billing-info";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "patch.api.users.update-password.item": {
-        readonly method: "PATCH";
-        readonly path: "/api/users/update-password/{user}";
+    readonly "pipelineStep.update": {
+        readonly method: "PUT";
+        readonly path: "/admin/pipeline-steps/{key}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "patch.api.users.update-phone": {
-        readonly method: "PATCH";
-        readonly path: "/api/users/update-phone";
+    readonly "pipelineStep.upsertForSubproject": {
+        readonly method: "PUT";
+        readonly path: "/admin/subprojects/{id}/pipeline-steps/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "pipes.invoke": {
+        readonly method: "POST";
+        readonly path: "/pipes/invoke";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
-    readonly "patch.api.users.update.item": {
-        readonly method: "PATCH";
-        readonly path: "/api/users/update/{user}";
+    readonly "policies.agentDrafts": {
+        readonly method: "GET";
+        readonly path: "/ai/policy/agent-drafts";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "policies.attachPrompt": {
+        readonly method: "POST";
+        readonly path: "/ai/policy/{policy}/prompts";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "policies.deleteFile": {
+        readonly method: "DELETE";
+        readonly path: "/ai/policy-file/{file}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.detachPrompt": {
+        readonly method: "DELETE";
+        readonly path: "/ai/policy/{policy}/prompts/{prompt}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.history": {
+        readonly method: "GET";
+        readonly path: "/ai/policy/{policy}/history";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.legislativeStatus": {
+        readonly method: "GET";
+        readonly path: "/ai/policy/{policy}/status";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.listByPrompt": {
+        readonly method: "GET";
+        readonly path: "/ai/policy-list/{prompt}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.promote": {
+        readonly method: "POST";
+        readonly path: "/ai/policy/{policy}/promote";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.reject": {
+        readonly method: "POST";
+        readonly path: "/ai/policy/{policy}/reject";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "policies.restoreRevision": {
+        readonly method: "POST";
+        readonly path: "/ai/policy/{policy}/revisions/{revision}/restore";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policies.transition": {
+        readonly method: "POST";
+        readonly path: "/ai/policy/{policy}/transition";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "policy.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/ai/policy/{policy}";
+        readonly path: "/ai/policy/{policy}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "policy.index": {
         readonly method: "GET";
-        readonly path: "/api/ai/policy";
+        readonly path: "/ai/policy";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "policy.show": {
         readonly method: "GET";
-        readonly path: "/api/ai/policy/{policy}";
+        readonly path: "/ai/policy/{policy}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "policy.store": {
         readonly method: "POST";
-        readonly path: "/api/ai/policy";
+        readonly path: "/ai/policy";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "policy.update": {
         readonly method: "PUT";
-        readonly path: "/api/ai/policy/{policy}";
+        readonly path: "/ai/policy/{policy}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "post.api.activity.confirm-booking": {
-        readonly method: "POST";
-        readonly path: "/api/activity/confirm-booking";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.activity.handle-event": {
-        readonly method: "POST";
-        readonly path: "/api/activity/handle-event";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.activity.reset-reservation": {
-        readonly method: "POST";
-        readonly path: "/api/activity/reset-reservation";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.activity.running": {
-        readonly method: "POST";
-        readonly path: "/api/activity/running";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.activity.set-reservation": {
-        readonly method: "POST";
-        readonly path: "/api/activity/set-reservation";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.admin-search": {
-        readonly method: "POST";
-        readonly path: "/api/admin-search";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.agent.account.finish-registration": {
-        readonly method: "POST";
-        readonly path: "/api/agent/account/finish-registration";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.agent.account.item.confirm-code": {
-        readonly method: "POST";
-        readonly path: "/api/agent/account/{chain}/confirm-code";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.agent.communicate.item.messages": {
-        readonly method: "POST";
-        readonly path: "/api/agent/communicate/{chain}/messages";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.agent.communicate.item.send-message": {
-        readonly method: "POST";
-        readonly path: "/api/agent/communicate/{chain}/send-message";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.ai.delete-model": {
-        readonly method: "POST";
-        readonly path: "/api/ai/delete-model";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.ai.install-model": {
-        readonly method: "POST";
-        readonly path: "/api/ai/install-model";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.ai.policy.item.prompts": {
-        readonly method: "POST";
-        readonly path: "/api/ai/policy/{policy}/prompts";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.ai.prompts.create": {
-        readonly method: "POST";
-        readonly path: "/api/ai/prompts/create";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.ai.prompts.update.item": {
-        readonly method: "POST";
-        readonly path: "/api/ai/prompts/update/{prompt}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.ai.save-settings": {
-        readonly method: "POST";
-        readonly path: "/api/ai/save-settings";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.appeal.submit": {
-        readonly method: "POST";
-        readonly path: "/api/appeal/submit";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.application.submit": {
-        readonly method: "POST";
-        readonly path: "/api/application/submit";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.auth.change-forced-password": {
-        readonly method: "POST";
-        readonly path: "/api/auth/change-forced-password";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.broadcasting.auth": {
-        readonly method: "POST";
-        readonly path: "/api/broadcasting/auth";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.chain.switch-parent.item": {
-        readonly method: "POST";
-        readonly path: "/api/chain/switch-parent/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.challenge.record-video": {
-        readonly method: "POST";
-        readonly path: "/api/challenge/record-video";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.challenge.run": {
-        readonly method: "POST";
-        readonly path: "/api/challenge/run";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.challenge.run-global": {
-        readonly method: "POST";
-        readonly path: "/api/challenge/run-global";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.challenge.set-result.item": {
-        readonly method: "POST";
-        readonly path: "/api/challenge/set-result/{result}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "post.api.challenge.start-task": {
-        readonly method: "POST";
-        readonly path: "/api/challenge/start-task";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.chat.broadcast-message": {
-        readonly method: "POST";
-        readonly path: "/api/chat/broadcast-message";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.chat.get-room": {
-        readonly method: "POST";
-        readonly path: "/api/chat/get-room";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.chat.send-message": {
-        readonly method: "POST";
-        readonly path: "/api/chat/send-message";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.chat.start": {
-        readonly method: "POST";
-        readonly path: "/api/chat/start";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.collection-item": {
-        readonly method: "POST";
-        readonly path: "/api/collection-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.connector.execute": {
-        readonly method: "POST";
-        readonly path: "/api/connector/execute";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.contacts.find.item": {
-        readonly method: "POST";
-        readonly path: "/api/contacts/find/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.contacts.import": {
-        readonly method: "POST";
-        readonly path: "/api/contacts/import";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.contacts.list": {
-        readonly method: "POST";
-        readonly path: "/api/contacts/list";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.contacts.save": {
-        readonly method: "POST";
-        readonly path: "/api/contacts/save";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.dashboard-settings.save": {
-        readonly method: "POST";
-        readonly path: "/api/dashboard-settings/save";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.dashboard.auth-by-social-token": {
-        readonly method: "POST";
-        readonly path: "/api/dashboard/auth-by-social-token";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.dashboard.create-login-transaction": {
-        readonly method: "POST";
-        readonly path: "/api/dashboard/create-login-transaction";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.dashboard.join": {
-        readonly method: "POST";
-        readonly path: "/api/dashboard/join";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.dashboard.login": {
-        readonly method: "POST";
-        readonly path: "/api/dashboard/login";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.disbursement.confirm": {
-        readonly method: "POST";
-        readonly path: "/api/disbursement/confirm";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.domain-interfaces": {
-        readonly method: "POST";
-        readonly path: "/api/domain-interfaces";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.featured.creators": {
-        readonly method: "POST";
-        readonly path: "/api/featured/creators";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.featured.programs": {
-        readonly method: "POST";
-        readonly path: "/api/featured/programs";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.fees.find-users": {
-        readonly method: "POST";
-        readonly path: "/api/fees/find-users";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.fees.save-settings": {
-        readonly method: "POST";
-        readonly path: "/api/fees/save-settings";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.follow-up.voice-finalize": {
-        readonly method: "POST";
-        readonly path: "/api/follow-up/voice-finalize";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.follow-up.voice-record": {
-        readonly method: "POST";
-        readonly path: "/api/follow-up/voice-record";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.interface.get-sms": {
-        readonly method: "POST";
-        readonly path: "/api/interface/get-sms";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.interface.verify-code": {
-        readonly method: "POST";
-        readonly path: "/api/interface/verify-code";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.kpi.save": {
-        readonly method: "POST";
-        readonly path: "/api/kpi/save";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.kpi.save-round-results": {
-        readonly method: "POST";
-        readonly path: "/api/kpi/save-round-results";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.kpi.save-setup": {
-        readonly method: "POST";
-        readonly path: "/api/kpi/save-setup";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.kpi.validate-parameters": {
-        readonly method: "POST";
-        readonly path: "/api/kpi/validate-parameters";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.mcp.connector": {
-        readonly method: "POST";
-        readonly path: "/api/mcp/connector";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.notification.start-task": {
-        readonly method: "POST";
-        readonly path: "/api/notification/start-task";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.nudge-checkin.email": {
-        readonly method: "POST";
-        readonly path: "/api/nudge-checkin/email";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.nudge-checkin.sms": {
-        readonly method: "POST";
-        readonly path: "/api/nudge-checkin/sms";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.onboarding.save.item": {
-        readonly method: "POST";
-        readonly path: "/api/onboarding/save/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.order.cancel-order": {
-        readonly method: "POST";
-        readonly path: "/api/order/cancel-order";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.order.checkout": {
-        readonly method: "POST";
-        readonly path: "/api/order/checkout";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.order.confirm-order": {
-        readonly method: "POST";
-        readonly path: "/api/order/confirm-order";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.order.confirm-payment": {
-        readonly method: "POST";
-        readonly path: "/api/order/confirm-payment";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.order.get-item": {
-        readonly method: "POST";
-        readonly path: "/api/order/get-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.order.validate-item": {
-        readonly method: "POST";
-        readonly path: "/api/order/validate-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.orders.confirm": {
-        readonly method: "POST";
-        readonly path: "/api/orders/confirm";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.orders.delivery-started": {
-        readonly method: "POST";
-        readonly path: "/api/orders/delivery-started";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.payment.save-payment-method": {
-        readonly method: "POST";
-        readonly path: "/api/payment/save-payment-method";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.personal-chain.cancel-invitation": {
-        readonly method: "POST";
-        readonly path: "/api/personal-chain/cancel-invitation";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.personal-chain.feedback.item": {
-        readonly method: "POST";
-        readonly path: "/api/personal-chain/feedback/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.personal-chain.find-users-to-invite": {
-        readonly method: "POST";
-        readonly path: "/api/personal-chain/find-users-to-invite";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.personal-chain.invite": {
-        readonly method: "POST";
-        readonly path: "/api/personal-chain/invite";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.personal-chain.start-program.item": {
-        readonly method: "POST";
-        readonly path: "/api/personal-chain/start-program/{chain}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program-sale.buy": {
-        readonly method: "POST";
-        readonly path: "/api/program-sale/buy";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program-sale.list": {
-        readonly method: "POST";
-        readonly path: "/api/program-sale/list";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program-status.set.item": {
-        readonly method: "POST";
-        readonly path: "/api/program-status/set/{program}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.detach-protocol": {
-        readonly method: "POST";
-        readonly path: "/api/program/detach-protocol";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.program-check": {
-        readonly method: "POST";
-        readonly path: "/api/program/program-check";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.program.add-tag": {
-        readonly method: "POST";
-        readonly path: "/api/program/program/add-tag";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.publish": {
-        readonly method: "POST";
-        readonly path: "/api/program/publish";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.publish.cancel": {
-        readonly method: "POST";
-        readonly path: "/api/program/publish/cancel";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.run-personal": {
-        readonly method: "POST";
-        readonly path: "/api/program/run-personal";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.search": {
-        readonly method: "POST";
-        readonly path: "/api/program/search";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.toggle-bookmark": {
-        readonly method: "POST";
-        readonly path: "/api/program/toggle-bookmark";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.program.validate-additional-protocol": {
-        readonly method: "POST";
-        readonly path: "/api/program/validate-additional-protocol";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.project-settings.content.item": {
-        readonly method: "POST";
-        readonly path: "/api/project-settings/content/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.project-settings.domains.item": {
-        readonly method: "POST";
-        readonly path: "/api/project-settings/domains/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.project-settings.layout.item": {
-        readonly method: "POST";
-        readonly path: "/api/project-settings/layout/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.project-settings.seo.item": {
-        readonly method: "POST";
-        readonly path: "/api/project-settings/seo/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.project-settings.template.item": {
-        readonly method: "POST";
-        readonly path: "/api/project-settings/template/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.add-module-to-branch": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/add-module-to-branch";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.add-module-to-plan": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/add-module-to-plan";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.ai-create": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/ai-create";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.ai-create-branch": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/ai-create-branch";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.ai-whole": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/ai-whole";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.confirm-plan": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/confirm-plan";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.delete-branch-item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/delete-branch-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.delete-plan-item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/delete-plan-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.edit-plan-branch-module": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/edit-plan-branch-module";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.edit-plan-module": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/edit-plan-module";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.move-down-branch-item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/move-down-branch-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.move-down-plan-item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/move-down-plan-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.move-up-branch-item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/move-up-branch-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.move-up-plan-item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/move-up-plan-item";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.sale.set-sale": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/sale/set-sale";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.settings.save": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/settings/save";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.store-intensive": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/store-intensive";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.switch-member": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/switch-member";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.protocol.update-intensive.item": {
-        readonly method: "POST";
-        readonly path: "/api/protocol/update-intensive/{module}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.auth-by-social-token": {
-        readonly method: "POST";
-        readonly path: "/api/public/auth-by-social-token";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.public.auth.finish-social-registration": {
-        readonly method: "POST";
-        readonly path: "/api/public/auth/finish-social-registration";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.auth.new-password": {
-        readonly method: "POST";
-        readonly path: "/api/public/auth/new-password";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.auth.reset": {
-        readonly method: "POST";
-        readonly path: "/api/public/auth/reset";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.auth.sign-in": {
-        readonly method: "POST";
-        readonly path: "/api/public/auth/sign-in";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.auth.sign-up": {
-        readonly method: "POST";
-        readonly path: "/api/public/auth/sign-up";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.codify.run": {
-        readonly method: "POST";
-        readonly path: "/api/public/codify/run";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.codify.save-answer": {
-        readonly method: "POST";
-        readonly path: "/api/public/codify/save-answer";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.codify.start-session": {
-        readonly method: "POST";
-        readonly path: "/api/public/codify/start-session";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.contact": {
-        readonly method: "POST";
-        readonly path: "/api/public/contact";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.create-login-transaction": {
-        readonly method: "POST";
-        readonly path: "/api/public/create-login-transaction";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.creators.filter": {
-        readonly method: "POST";
-        readonly path: "/api/public/creators/filter";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.subprojects.search": {
-        readonly method: "POST";
-        readonly path: "/api/public/subprojects/search";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.public.verify-social-token": {
-        readonly method: "POST";
-        readonly path: "/api/public/verify-social-token";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.referral.confirm": {
-        readonly method: "POST";
-        readonly path: "/api/referral/confirm";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.report.submit": {
-        readonly method: "POST";
-        readonly path: "/api/report/submit";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.response.store": {
-        readonly method: "POST";
-        readonly path: "/api/response/store";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.service-location.create": {
-        readonly method: "POST";
-        readonly path: "/api/service-location/create";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.service-location.find": {
-        readonly method: "POST";
-        readonly path: "/api/service-location/find";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.claim.subproject.item.content": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/content";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.claim.subproject.item.domains": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/domains";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.claim.subproject.item.layout": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/layout";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.claim.subproject.item.seo": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/seo";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.claim.subproject.item.team": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/team";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.claim.subproject.item.template": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/claim/subproject/{subproject}/template";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.confirm-account": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/confirm-account";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create-account": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create-account";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create.subproject.content": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create/subproject/content";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create.subproject.domains": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create/subproject/domains";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create.subproject.layout": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create/subproject/layout";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create.subproject.seo": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create/subproject/seo";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create.subproject.team": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create/subproject/team";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.create.subproject.template": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/create/subproject/template";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.find-claimable": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/find-claimable";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.login": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/login";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.start-claiming.item.claim": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/start-claiming/{subproject}/claim";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-admin.subproject.has-contacts": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-admin/subproject/has-contacts";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.subproject-search": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-search";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-team.renew-token.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-team/renew-token/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-team.send-invites.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-team/send-invites/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-team.update-permissions.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-team/update-permissions/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-wizard.content.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-wizard/content/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-wizard.domains.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-wizard/domains/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-wizard.layout.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-wizard/layout/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-wizard.seo.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-wizard/seo/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-wizard.team.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-wizard/team/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject-wizard.template.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject-wizard/template/{id}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subproject.delete-category.item": {
-        readonly method: "POST";
-        readonly path: "/api/subproject/delete-category/{subproject}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.subscription.create": {
-        readonly method: "POST";
-        readonly path: "/api/subscription/create";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.team-search": {
-        readonly method: "POST";
-        readonly path: "/api/team-search";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.accept": {
-        readonly method: "POST";
-        readonly path: "/api/team/accept";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.handle-role": {
-        readonly method: "POST";
-        readonly path: "/api/team/handle-role";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.invite": {
-        readonly method: "POST";
-        readonly path: "/api/team/invite";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.leave": {
-        readonly method: "POST";
-        readonly path: "/api/team/leave";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.network-invite": {
-        readonly method: "POST";
-        readonly path: "/api/team/network-invite";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.network-invite-potential": {
-        readonly method: "POST";
-        readonly path: "/api/team/network-invite-potential";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.network-search": {
-        readonly method: "POST";
-        readonly path: "/api/team/network-search";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.reject": {
-        readonly method: "POST";
-        readonly path: "/api/team/reject";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.remove": {
-        readonly method: "POST";
-        readonly path: "/api/team/remove";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.remove-potential": {
-        readonly method: "POST";
-        readonly path: "/api/team/remove-potential";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.search-members": {
-        readonly method: "POST";
-        readonly path: "/api/team/search-members";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.team.search-users": {
-        readonly method: "POST";
-        readonly path: "/api/team/search-users";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.tenant-claim.complete": {
-        readonly method: "POST";
-        readonly path: "/api/tenant-claim/complete";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.tenant-claim.initiate": {
-        readonly method: "POST";
-        readonly path: "/api/tenant-claim/initiate";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.tenant-claim.verify": {
-        readonly method: "POST";
-        readonly path: "/api/tenant-claim/verify";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.user.change-cover.item": {
-        readonly method: "POST";
-        readonly path: "/api/user/change-cover/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.user.change-photo.item": {
-        readonly method: "POST";
-        readonly path: "/api/user/change-photo/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.user.finish-codify-registration": {
-        readonly method: "POST";
-        readonly path: "/api/user/finish-codify-registration";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.user.set-timezone": {
-        readonly method: "POST";
-        readonly path: "/api/user/set-timezone";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.become-creator.item": {
-        readonly method: "POST";
-        readonly path: "/api/users/become-creator/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "post.api.users.change-cover.item": {
-        readonly method: "POST";
-        readonly path: "/api/users/change-cover/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.change-photo.item": {
-        readonly method: "POST";
-        readonly path: "/api/users/change-photo/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.delete-role": {
-        readonly method: "POST";
-        readonly path: "/api/users/delete-role";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.get-code": {
-        readonly method: "POST";
-        readonly path: "/api/users/get-code";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.handle-user-tag": {
-        readonly method: "POST";
-        readonly path: "/api/users/handle-user-tag";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.restrict.item": {
-        readonly method: "POST";
-        readonly path: "/api/users/restrict/{user}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.set-role": {
-        readonly method: "POST";
-        readonly path: "/api/users/set-role";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.users.update-pricing": {
-        readonly method: "POST";
-        readonly path: "/api/users/update-pricing";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.v1.services.release": {
-        readonly method: "POST";
-        readonly path: "/api/v1/services/release";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.v1.services.reserve": {
-        readonly method: "POST";
-        readonly path: "/api/v1/services/reserve";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.v1.services.resolve": {
-        readonly method: "POST";
-        readonly path: "/api/v1/services/resolve";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.verification.submit": {
-        readonly method: "POST";
-        readonly path: "/api/verification/submit";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.verify-code": {
-        readonly method: "POST";
-        readonly path: "/api/verify-code";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.webhook.stripe-payment.handle": {
-        readonly method: "POST";
-        readonly path: "/api/webhook/stripe-payment/handle";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.withings.webhook": {
-        readonly method: "POST";
-        readonly path: "/api/withings/webhook";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.wizard.codify.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/codify/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.complete-profile.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/complete-profile/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.confirm-account.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/confirm-account/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.confirm-code.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/confirm-code/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.confirm-preview.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/confirm-preview/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.creator-request.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/creator-request/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.find-members": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/find-members";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.invite-members.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/invite-members/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.invite-users.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/invite-users/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.publish-program.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/publish-program/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.set-agent.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/set-agent/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.set-distribution-type.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/set-distribution-type/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.set-finances.item": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/set-finances/{protocol}";
-        readonly hasPathParams: true;
-        readonly hasBody: true;
-    };
-    readonly "post.api.wizard.validate-email": {
-        readonly method: "POST";
-        readonly path: "/api/wizard/validate-email";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.workflow.codify-pipeline.save-response": {
-        readonly method: "POST";
-        readonly path: "/api/workflow/codify-pipeline/save-response";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "post.api.workflow.codify-pipeline.start": {
-        readonly method: "POST";
-        readonly path: "/api/workflow/codify-pipeline/start";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.world-locations.city": {
-        readonly method: "POST";
-        readonly path: "/api/world-locations/city";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.world-locations.country": {
-        readonly method: "POST";
-        readonly path: "/api/world-locations/country";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "post.api.world-locations.state": {
-        readonly method: "POST";
-        readonly path: "/api/world-locations/state";
-        readonly hasPathParams: false;
-        readonly hasBody: true;
-    };
-    readonly "program-sale.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/program-sale/{program_sale}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "program-sale.index": {
+    readonly "policyWebhookEndpoints.deliveries": {
         readonly method: "GET";
-        readonly path: "/api/program-sale";
+        readonly path: "/ai/policy-webhook-endpoints/{endpoint}/deliveries";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policyWebhookEndpoints.disable": {
+        readonly method: "POST";
+        readonly path: "/ai/policy-webhook-endpoints/{endpoint}/disable";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policyWebhookEndpoints.index": {
+        readonly method: "GET";
+        readonly path: "/ai/policy-webhook-endpoints";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "policyWebhookEndpoints.rotateSecret": {
+        readonly method: "POST";
+        readonly path: "/ai/policy-webhook-endpoints/{endpoint}/rotate-secret";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policyWebhookEndpoints.show": {
+        readonly method: "GET";
+        readonly path: "/ai/policy-webhook-endpoints/{endpoint}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "policyWebhookEndpoints.store": {
+        readonly method: "POST";
+        readonly path: "/ai/policy-webhook-endpoints";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "politician.getByDomain": {
+        readonly method: "GET";
+        readonly path: "/politicians-by-domain";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "program-sale.show": {
         readonly method: "GET";
-        readonly path: "/api/program-sale/{program_sale}";
+        readonly path: "/program-sale/{programSale}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "program-sale.store": {
+    readonly "program.addTag": {
         readonly method: "POST";
-        readonly path: "/api/program-sale";
+        readonly path: "/program/program/add-tag";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.all": {
+        readonly method: "GET";
+        readonly path: "/program/all";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "program-sale.update": {
+    readonly "program.cancel": {
+        readonly method: "POST";
+        readonly path: "/program/publish/cancel";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.checkProgramData": {
+        readonly method: "POST";
+        readonly path: "/program/program-check";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.deleteTag": {
+        readonly method: "DELETE";
+        readonly path: "/program/program/delete-tag/{program}/{tag}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.detachProtocol": {
+        readonly method: "POST";
+        readonly path: "/program/detach-protocol";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.enroll": {
+        readonly method: "POST";
+        readonly path: "/program/{id}/enroll";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.featuredList": {
+        readonly method: "GET";
+        readonly path: "/home/featured-programs";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.getChatPrograms": {
+        readonly method: "GET";
+        readonly path: "/chat/programs";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.getDataToUse": {
+        readonly method: "GET";
+        readonly path: "/program/program-data/{programId}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getFeedback": {
+        readonly method: "GET";
+        readonly path: "/public/get-program-feedback/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getHistoryByChain": {
+        readonly method: "GET";
+        readonly path: "/program/history/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getProgram": {
+        readonly method: "GET";
+        readonly path: "/program/simulation/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getProgramAdditionalUsersSteps": {
+        readonly method: "GET";
+        readonly path: "/program/users-additional-steps/{program}/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getProgramBookmarks": {
+        readonly method: "GET";
+        readonly path: "/program/get-bookmarks";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.getProgramUsers": {
+        readonly method: "GET";
+        readonly path: "/program/users/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getProgramUsersSteps": {
+        readonly method: "GET";
+        readonly path: "/program/users-steps/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getStatus": {
+        readonly method: "GET";
+        readonly path: "/program-status/get/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getUserChains": {
+        readonly method: "GET";
+        readonly path: "/program/chains/{program}/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getUserFeaturedPrograms": {
+        readonly method: "GET";
+        readonly path: "/public/get-user-featured/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.getUserProgramsFeed": {
+        readonly method: "GET";
+        readonly path: "/public/get-user-feed/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.history": {
+        readonly method: "GET";
+        readonly path: "/program/history";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.index": {
+        readonly method: "GET";
+        readonly path: "/program";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.lastPurchases": {
+        readonly method: "GET";
+        readonly path: "/program/last-purchases";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.mostRecentPrograms": {
+        readonly method: "GET";
+        readonly path: "/home/most-recent-programs";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "program.progress": {
+        readonly method: "GET";
+        readonly path: "/program/{id}/progress";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.publications": {
+        readonly method: "GET";
+        readonly path: "/program/publications/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.publish": {
+        readonly method: "POST";
+        readonly path: "/program/publish";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.runPersonalProgram": {
+        readonly method: "POST";
+        readonly path: "/program/run-personal";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.searchPrograms": {
+        readonly method: "POST";
+        readonly path: "/program/search";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.setFeatured": {
+        readonly method: "POST";
+        readonly path: "/featured/programs";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.setStatus": {
+        readonly method: "POST";
+        readonly path: "/program-status/set/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "program.toggleBookmark": {
+        readonly method: "POST";
+        readonly path: "/program/toggle-bookmark";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "program.update": {
         readonly method: "PUT";
-        readonly path: "/api/program-sale/{program_sale}";
+        readonly path: "/program/update-program/{program}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "program.validateAdditionalProtocol": {
+        readonly method: "POST";
+        readonly path: "/program/validate-additional-protocol";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "programFeedback.getRandomFeedback": {
+        readonly method: "GET";
+        readonly path: "/public/documentation/random-feedback";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programFeedback.homeFeedback": {
+        readonly method: "GET";
+        readonly path: "/v1/home-feedback";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programFeedback.index": {
+        readonly method: "GET";
+        readonly path: "/home/feedback";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programFeedback.show": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/feedback/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "programFeedback.store": {
+        readonly method: "POST";
+        readonly path: "/personal-chain/feedback/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "programSale.buy": {
+        readonly method: "POST";
+        readonly path: "/program-sale/buy";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "programSale.createContributionIntent": {
+        readonly method: "POST";
+        readonly path: "/program-payment/contribution-intent";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "programSale.displayAllSales": {
+        readonly method: "POST";
+        readonly path: "/program-sale/list";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "programSale.displayAllSalesByAuthor": {
+        readonly method: "GET";
+        readonly path: "/program-sale/list-by-author/{username}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "programSale.displayRandomAuthorSales": {
+        readonly method: "GET";
+        readonly path: "/program-sale/list/random/{username}/{ignore}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "programSale.getMoneyDistributions": {
+        readonly method: "GET";
+        readonly path: "/public/program-sale/money-distributions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programSale.getRecentPrograms": {
+        readonly method: "GET";
+        readonly path: "/public/get-programs";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programSale.handleWebhook": {
+        readonly method: "POST";
+        readonly path: "/webhook/stripe-payment/handle";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programSale.tags": {
+        readonly method: "GET";
+        readonly path: "/program-sale/tags";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "programSale.teamMembersSalary": {
+        readonly method: "GET";
+        readonly path: "/program-sale/salary/{program}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "project-role.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/project-role/{project_role}";
+        readonly path: "/project-role/{projectRole}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "project-role.index": {
         readonly method: "GET";
-        readonly path: "/api/project-role";
+        readonly path: "/project-role";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "project-role.show": {
         readonly method: "GET";
-        readonly path: "/api/project-role/{project_role}";
+        readonly path: "/project-role/{projectRole}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "project-role.store": {
         readonly method: "POST";
-        readonly path: "/api/project-role";
+        readonly path: "/project-role";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "project-role.update": {
         readonly method: "PUT";
-        readonly path: "/api/project-role/{project_role}";
+        readonly path: "/project-role/{projectRole}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
     readonly "protocol-category.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/protocol-category/{protocol_category}";
+        readonly path: "/protocol-category/{protocolCategory}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "protocol-category.index": {
         readonly method: "GET";
-        readonly path: "/api/protocol-category";
+        readonly path: "/protocol-category";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "protocol-category.show": {
         readonly method: "GET";
-        readonly path: "/api/protocol-category/{protocol_category}";
+        readonly path: "/protocol-category/{protocolCategory}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "protocol-category.store": {
         readonly method: "POST";
-        readonly path: "/api/protocol-category";
+        readonly path: "/protocol-category";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "protocol-category.update": {
         readonly method: "PUT";
-        readonly path: "/api/protocol-category/{protocol_category}";
+        readonly path: "/protocol-category/{protocolCategory}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "protocol.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocol.byCategoryAll": {
+        readonly method: "GET";
+        readonly path: "/protocol/by-category-all/{category}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.checkUsage": {
+        readonly method: "GET";
+        readonly path: "/protocol/check-usage/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
     readonly "protocol.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/protocol/{protocol}";
+        readonly path: "/protocol/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.destroyGlobalModule": {
+        readonly method: "DELETE";
+        readonly path: "/protocol/delete-intensive/{global}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getIntensiveModuleSettings": {
+        readonly method: "GET";
+        readonly path: "/protocol/get-intensive-module-settings/{protocol}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getIntensiveRoles": {
+        readonly method: "GET";
+        readonly path: "/protocol/intensive-module/roles/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getNodeMembers": {
+        readonly method: "GET";
+        readonly path: "/protocol/node-members/{node}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getProtocolErrors": {
+        readonly method: "GET";
+        readonly path: "/protocol/errors/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getProtocolSteps": {
+        readonly method: "GET";
+        readonly path: "/protocol/get-steps/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getQualificationsByRole": {
+        readonly method: "GET";
+        readonly path: "/protocol/role-qualifications/{role}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.getRolesByType": {
+        readonly method: "GET";
+        readonly path: "/protocol/roles/{type}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.globalModuleList": {
+        readonly method: "GET";
+        readonly path: "/protocol/list-intensive/{protocol}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "protocol.index": {
         readonly method: "GET";
-        readonly path: "/api/protocol";
+        readonly path: "/protocol";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocol.modules": {
+        readonly method: "GET";
+        readonly path: "/protocol/modules/{recurring}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "protocol.show": {
         readonly method: "GET";
-        readonly path: "/api/protocol/{protocol}";
+        readonly path: "/protocol/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocol.showGlobalModule": {
+        readonly method: "GET";
+        readonly path: "/protocol/show-intensive/{module}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "protocol.store": {
         readonly method: "POST";
-        readonly path: "/api/protocol";
+        readonly path: "/protocol";
         readonly hasPathParams: false;
         readonly hasBody: true;
+    };
+    readonly "protocol.storeGlobalModule": {
+        readonly method: "POST";
+        readonly path: "/protocol/store-intensive";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocol.switchChainMember": {
+        readonly method: "POST";
+        readonly path: "/protocol/switch-member";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocol.temporaryUserProtocol": {
+        readonly method: "GET";
+        readonly path: "/protocol/get-temporary-user";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
     };
     readonly "protocol.update": {
         readonly method: "PUT";
-        readonly path: "/api/protocol/{protocol}";
+        readonly path: "/protocol/{protocol}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "put.api.ai.prompts.update.item": {
-        readonly method: "PUT";
-        readonly path: "/api/ai/prompts/update/{prompt}";
+    readonly "protocol.updateGlobalModule": {
+        readonly method: "POST";
+        readonly path: "/protocol/update-intensive/{module}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "put.api.frontend.save-frontend": {
-        readonly method: "PUT";
-        readonly path: "/api/frontend/save-frontend";
+    readonly "protocolAIHelper.addModuleToBranch": {
+        readonly method: "POST";
+        readonly path: "/protocol/add-module-to-branch";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
-    readonly "put.api.program.update-program.item": {
-        readonly method: "PUT";
-        readonly path: "/api/program/update-program/{program}";
+    readonly "protocolAIHelper.addModuleToPlan": {
+        readonly method: "POST";
+        readonly path: "/protocol/add-module-to-plan";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.aiRequestStatus": {
+        readonly method: "GET";
+        readonly path: "/protocol/ai-request-status/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolAIHelper.confirmPlan": {
+        readonly method: "POST";
+        readonly path: "/protocol/confirm-plan";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.createBranchPlan": {
+        readonly method: "POST";
+        readonly path: "/protocol/ai-create-branch";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.createItem": {
+        readonly method: "POST";
+        readonly path: "/protocol/ai-create";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.createWhole": {
+        readonly method: "POST";
+        readonly path: "/protocol/ai-whole";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.deleteBranchModule": {
+        readonly method: "POST";
+        readonly path: "/protocol/delete-branch-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.deleteModule": {
+        readonly method: "POST";
+        readonly path: "/protocol/delete-plan-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.editPlanBranchModule": {
+        readonly method: "POST";
+        readonly path: "/protocol/edit-plan-branch-module";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.editPlanModule": {
+        readonly method: "POST";
+        readonly path: "/protocol/edit-plan-module";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.getExistingBranchPlan": {
+        readonly method: "GET";
+        readonly path: "/protocol/chain-item-branch-plan/{protocol}/{item}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolAIHelper.getExistingPlan": {
+        readonly method: "GET";
+        readonly path: "/protocol/get-plan/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolAIHelper.moveBranchModuleDown": {
+        readonly method: "POST";
+        readonly path: "/protocol/move-down-branch-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.moveBranchModuleUp": {
+        readonly method: "POST";
+        readonly path: "/protocol/move-up-branch-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.moveModuleDown": {
+        readonly method: "POST";
+        readonly path: "/protocol/move-down-plan-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.moveModuleUp": {
+        readonly method: "POST";
+        readonly path: "/protocol/move-up-plan-item";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolAIHelper.resetPlan": {
+        readonly method: "DELETE";
+        readonly path: "/protocol/reset-plan/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolCategories.all": {
+        readonly method: "GET";
+        readonly path: "/protocol-category/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolCategories.forAttachment": {
+        readonly method: "GET";
+        readonly path: "/protocol-category/for-attachment";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolChain.switchParent": {
+        readonly method: "POST";
+        readonly path: "/chain/switch-parent/{protocol}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "put.api.service-location.update.item": {
-        readonly method: "PUT";
-        readonly path: "/api/service-location/update/{service}";
+    readonly "protocolEvent.getTriggers": {
+        readonly method: "GET";
+        readonly path: "/protocol-event/triggers";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolIntegration.assessmentInstances": {
+        readonly method: "GET";
+        readonly path: "/protocol/assessment/item-instances/{assessment}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.cancelInvitationUserToPersonalChain": {
+        readonly method: "POST";
+        readonly path: "/personal-chain/cancel-invitation";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolPersonalChain.decline": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/decline/{invite}/{source}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.delete": {
+        readonly method: "DELETE";
+        readonly path: "/personal-chain/{personalChain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.findUsersToInvite": {
+        readonly method: "POST";
+        readonly path: "/personal-chain/find-users-to-invite";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolPersonalChain.finishedNotRated": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/finished-not-rated";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.forceDefrost": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/force-defrost/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.getRecommendation": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/get-recommended";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.getUserByInvite": {
+        readonly method: "GET";
+        readonly path: "/public/auth/protocol-chain/get-user-by-invite/{invite}/{source}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.index": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/by-status/{status}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.inviteUserToPersonalChain": {
+        readonly method: "POST";
+        readonly path: "/personal-chain/invite";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolPersonalChain.join": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/join/{token}/{source}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.joinExistingUser": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/user-join/{invite}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.lastChain": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/last-chain";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.rejectExistingUser": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/user-reject/{invite}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.show": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/{personalChain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPersonalChain.startProgram": {
+        readonly method: "POST";
+        readonly path: "/personal-chain/start-program/{chain}";
         readonly hasPathParams: true;
         readonly hasBody: true;
+    };
+    readonly "protocolPersonalChain.tasks": {
+        readonly method: "GET";
+        readonly path: "/personal-chain/tasks";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "protocolPricing.salaries": {
+        readonly method: "GET";
+        readonly path: "/protocol/sale/salaries/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPricing.show": {
+        readonly method: "GET";
+        readonly path: "/protocol/sale/get/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolPricing.store": {
+        readonly method: "POST";
+        readonly path: "/protocol/sale/set-sale";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "protocolPricing.update": {
+        readonly method: "PATCH";
+        readonly path: "/protocol/sale/update/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "protocolSettings.show": {
+        readonly method: "GET";
+        readonly path: "/protocol/settings/get/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "protocolSettings.store": {
+        readonly method: "POST";
+        readonly path: "/protocol/settings/save";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "publicBallots.index": {
+        readonly method: "GET";
+        readonly path: "/gov/ballots";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "publicBallots.show": {
+        readonly method: "GET";
+        readonly path: "/gov/ballots/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicBallots.vote": {
+        readonly method: "POST";
+        readonly path: "/gov/ballots/{id}/vote";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "publicDealActivity.recent": {
+        readonly method: "GET";
+        readonly path: "/public/deal-activity/recent";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "publicFeed.policies": {
+        readonly method: "GET";
+        readonly path: "/public/feed/{slug}/policies";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicFeed.recent": {
+        readonly method: "GET";
+        readonly path: "/public/feed/{slug}/recent";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicFeedbackLoop.dealImpact": {
+        readonly method: "GET";
+        readonly path: "/gov/policies/{id}/deal-impact";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicFeedbackLoop.index": {
+        readonly method: "GET";
+        readonly path: "/gov/policies/{id}/feedback-loops";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicFeedbackLoop.show": {
+        readonly method: "GET";
+        readonly path: "/gov/feedback-loops/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicPolicies.activity": {
+        readonly method: "GET";
+        readonly path: "/gov/policies/activity";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "publicPolicies.index": {
+        readonly method: "GET";
+        readonly path: "/gov/policies";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "publicPolicies.show": {
+        readonly method: "GET";
+        readonly path: "/gov/policies/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "publicPolicies.suggest": {
+        readonly method: "POST";
+        readonly path: "/gov/policy-suggestions";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "publicVoiceSession.store": {
+        readonly method: "POST";
+        readonly path: "/public/voice/session";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "question.all": {
+        readonly method: "GET";
+        readonly path: "/question/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
     };
     readonly "question.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/question/{question}";
+        readonly path: "/question/{question}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "question.destroyChoice": {
+        readonly method: "DELETE";
+        readonly path: "/choice/{choice}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "question.getByAssessment": {
+        readonly method: "GET";
+        readonly path: "/question/by-assessment/{assessment}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "question.getFullByAssessment": {
+        readonly method: "GET";
+        readonly path: "/question/by-assessment-full/{assessment}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "question.index": {
         readonly method: "GET";
-        readonly path: "/api/question";
+        readonly path: "/question";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "question.show": {
         readonly method: "GET";
-        readonly path: "/api/question/{question}";
+        readonly path: "/question/{question}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "question.store": {
         readonly method: "POST";
-        readonly path: "/api/question";
+        readonly path: "/question";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "question.update": {
         readonly method: "PUT";
-        readonly path: "/api/question/{question}";
+        readonly path: "/question/{question}";
         readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "referral.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/referral/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "referral.confirm": {
+        readonly method: "POST";
+        readonly path: "/referral/confirm";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "referral.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/referral/{referral}";
+        readonly path: "/referral/{referral}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "referral.index": {
         readonly method: "GET";
-        readonly path: "/api/referral";
+        readonly path: "/referral";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "referral.run": {
+        readonly method: "GET";
+        readonly path: "/referral/run/{referral}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "referral.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/referral/run-global/{referral}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "referral.show": {
         readonly method: "GET";
-        readonly path: "/api/referral/{referral}";
+        readonly path: "/referral/{referral}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "referral.store": {
         readonly method: "POST";
-        readonly path: "/api/referral";
+        readonly path: "/referral";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "referral.update": {
         readonly method: "PUT";
-        readonly path: "/api/referral/{referral}";
+        readonly path: "/referral/{referral}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "referralSystem.getReferralData": {
+        readonly method: "GET";
+        readonly path: "/users/referral";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "referralSystem.getReferralTransactions": {
+        readonly method: "GET";
+        readonly path: "/users/referral/transactions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "register.finishSocialRegistration": {
+        readonly method: "POST";
+        readonly path: "/public/auth/finish-social-registration";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "register.register": {
+        readonly method: "POST";
+        readonly path: "/public/auth/sign-up";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "report.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/report/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "report.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/report/{report}";
+        readonly path: "/report/{report}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "report.index": {
         readonly method: "GET";
-        readonly path: "/api/report";
+        readonly path: "/report";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "report.run": {
+        readonly method: "GET";
+        readonly path: "/report/run/{report}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "report.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/report/run-global/{report}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "report.show": {
         readonly method: "GET";
-        readonly path: "/api/report/{report}";
+        readonly path: "/report/{report}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "report.store": {
         readonly method: "POST";
-        readonly path: "/api/report";
+        readonly path: "/report";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "report.submit": {
+        readonly method: "POST";
+        readonly path: "/report/submit";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "report.update": {
         readonly method: "PUT";
-        readonly path: "/api/report/{report}";
+        readonly path: "/report/{report}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "response.all": {
+        readonly method: "GET";
+        readonly path: "/response/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "response.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/response/{response}";
+        readonly path: "/response/{response}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "response.index": {
         readonly method: "GET";
-        readonly path: "/api/response";
+        readonly path: "/response";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "response.show": {
         readonly method: "GET";
-        readonly path: "/api/response/{response}";
+        readonly path: "/response/{response}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "response.store": {
         readonly method: "POST";
-        readonly path: "/api/response";
+        readonly path: "/response";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "response.update": {
         readonly method: "PUT";
-        readonly path: "/api/response/{response}";
+        readonly path: "/response/{response}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
-    readonly "role.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/role/{role}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
     readonly "role.index": {
         readonly method: "GET";
-        readonly path: "/api/role";
+        readonly path: "/role";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "role.show": {
+    readonly "rubricProxy.show": {
         readonly method: "GET";
-        readonly path: "/api/role/{role}";
+        readonly path: "/v1/rlhf/rubrics/{questionId}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
-    readonly "role.store": {
+    readonly "runningServiceLocation.show": {
         readonly method: "POST";
-        readonly path: "/api/role";
+        readonly path: "/activity/running";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "role.update": {
-        readonly method: "PUT";
-        readonly path: "/api/role/{role}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "schedule-call.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/schedule-call/{schedule_call}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
+        readonly hasBody: true;
     };
     readonly "schedule-call.index": {
         readonly method: "GET";
-        readonly path: "/api/schedule-call";
+        readonly path: "/schedule-call";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "schedule-call.show": {
-        readonly method: "GET";
-        readonly path: "/api/schedule-call/{schedule_call}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "schedule-call.store": {
-        readonly method: "POST";
-        readonly path: "/api/schedule-call";
-        readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "schedule-call.update": {
-        readonly method: "PUT";
-        readonly path: "/api/schedule-call/{schedule_call}";
-        readonly hasPathParams: true;
-        readonly hasBody: false;
-    };
-    readonly "schedule.destroy": {
-        readonly method: "DELETE";
-        readonly path: "/api/schedule/{schedule}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "schedule.index": {
         readonly method: "GET";
-        readonly path: "/api/schedule";
+        readonly path: "/schedule";
         readonly hasPathParams: false;
-        readonly hasBody: false;
-    };
-    readonly "schedule.show": {
-        readonly method: "GET";
-        readonly path: "/api/schedule/{schedule}";
-        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "schedule.store": {
         readonly method: "POST";
-        readonly path: "/api/schedule";
+        readonly path: "/schedule";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "search.search": {
+        readonly method: "GET";
+        readonly path: "/search";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
-    readonly "schedule.update": {
-        readonly method: "PUT";
-        readonly path: "/api/schedule/{schedule}";
-        readonly hasPathParams: true;
+    readonly "search.suggestPrograms": {
+        readonly method: "GET";
+        readonly path: "/programs/suggest";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "seo-page.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/seo-page/{seo_page}";
+        readonly path: "/seo-page/{seoPage}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "seo-page.index": {
         readonly method: "GET";
-        readonly path: "/api/seo-page";
+        readonly path: "/seo-page";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "seo-page.show": {
         readonly method: "GET";
-        readonly path: "/api/seo-page/{seo_page}";
+        readonly path: "/seo-page/{seoPage}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "seo-page.store": {
         readonly method: "POST";
-        readonly path: "/api/seo-page";
+        readonly path: "/seo-page";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "seo-page.update": {
         readonly method: "PUT";
-        readonly path: "/api/seo-page/{seo_page}";
+        readonly path: "/seo-page/{seoPage}";
         readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "seoPage.destroyItem": {
+        readonly method: "DELETE";
+        readonly path: "/seo-page/item/{seoPageItem}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "serviceResolver.release": {
+        readonly method: "POST";
+        readonly path: "/v1/services/release";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "serviceResolver.reserve": {
+        readonly method: "POST";
+        readonly path: "/v1/services/reserve";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "serviceResolver.resolve": {
+        readonly method: "POST";
+        readonly path: "/v1/services/resolve";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "showcaseProjects.index": {
+        readonly method: "GET";
+        readonly path: "/showcase/projects";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "sidebar.agentTarget": {
+        readonly method: "GET";
+        readonly path: "/sidebar/agent-target";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "sidebar.agents": {
+        readonly method: "GET";
+        readonly path: "/sidebar/agents";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "sidebar.paths": {
+        readonly method: "GET";
+        readonly path: "/sidebar/paths";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "sidebar.show": {
+        readonly method: "GET";
+        readonly path: "/sidebar";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "signals.eventSignal": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/signals/event";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "signals.identitySignal": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/signals/identity";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "signals.kpiSignal": {
+        readonly method: "POST";
+        readonly path: "/v1/integrations/signals/kpi";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "socialLogin.adminLoginBySocialToken": {
+        readonly method: "POST";
+        readonly path: "/dashboard/auth-by-social-token";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "socialLogin.authByToken": {
+        readonly method: "POST";
+        readonly path: "/public/auth-by-social-token";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "socialLogin.createAdminLoginTransaction": {
+        readonly method: "POST";
+        readonly path: "/dashboard/create-login-transaction";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "socialLogin.createLoginTransaction": {
+        readonly method: "POST";
+        readonly path: "/public/create-login-transaction";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "socialLogin.verifyToken": {
+        readonly method: "POST";
+        readonly path: "/public/verify-social-token";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "statisticItems.list": {
+        readonly method: "GET";
+        readonly path: "/home/statistic";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "stream.index": {
+        readonly method: "GET";
+        readonly path: "/v1/ci-mce/streams";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "stream.show": {
+        readonly method: "GET";
+        readonly path: "/v1/ci-mce/streams/{stream}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "stripeConnect.checkAccount": {
+        readonly method: "GET";
+        readonly path: "/stripe/check-account";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "stripeConnect.connectToStripe": {
+        readonly method: "GET";
+        readonly path: "/stripe/connect";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "stripeConnect.deleteAccount": {
+        readonly method: "DELETE";
+        readonly path: "/stripe/delete-account";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "stripeConnect.getTransactions": {
+        readonly method: "GET";
+        readonly path: "/stripe/transactions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "stripeConnect.withdrawMoney": {
+        readonly method: "GET";
+        readonly path: "/stripe/withdraw";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "structuredData.base": {
+        readonly method: "GET";
+        readonly path: "/v1/structured-data";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "structuredData.program": {
+        readonly method: "GET";
+        readonly path: "/v1/structured-data/program/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subCategory.all": {
+        readonly method: "GET";
+        readonly path: "/program-sub-category/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "submissionProxy.store": {
+        readonly method: "POST";
+        readonly path: "/v1/rlhf/submissions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subproject.create": {
+        readonly method: "POST";
+        readonly path: "/subproject";
+        readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "subproject.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/subproject/{subproject}";
+        readonly path: "/subproject/{subproject}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "subproject.index": {
         readonly method: "GET";
-        readonly path: "/api/subproject";
+        readonly path: "/subproject";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "subproject.show": {
         readonly method: "GET";
-        readonly path: "/api/subproject/{subproject}";
+        readonly path: "/subproject/{subproject}";
         readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subproject.update": {
+        readonly method: "PUT";
+        readonly path: "/subproject/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdminSubscription.billingPortal": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/billing-portal";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdminSubscription.cancel": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/subscription/cancel";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdminSubscription.create": {
+        readonly method: "GET";
+        readonly path: "/subproject-admin/create-subscription";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdminSubscription.status": {
+        readonly method: "GET";
+        readonly path: "/subproject-admin/subscription-status";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdministratorAuth.accountData": {
+        readonly method: "GET";
+        readonly path: "/subproject-admin/account-data";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdministratorAuth.confirmAdministratorAccount": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/confirm-account";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministratorAuth.createAdministratorAccount": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/create-account";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministratorAuth.getAllowedToSignUpCountries": {
+        readonly method: "GET";
+        readonly path: "/subproject-admin/get-allowed-countries";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdministratorAuth.login": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/login";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministratorWizardFlow.findClaimableSubproject": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/find-claimable";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministratorWizardFlow.getWizardInstance": {
+        readonly method: "GET";
+        readonly path: "/subproject-admin/claim/subproject/{subproject}/wizard-instance";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdministratorWizardFlow.hasContacts": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/subproject/has-contacts";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectAdministratorWizardFlow.startClaiming": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/start-claiming/{subproject}/claim";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministratorWizardFlow.updatePipelineVariant": {
+        readonly method: "POST";
+        readonly path: "/subproject-admin/subproject/{subproject}/pipeline-variant";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministrators.search": {
+        readonly method: "POST";
+        readonly path: "/admin-search";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectAdministrators.teamSearch": {
+        readonly method: "POST";
+        readonly path: "/team-search";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectClient.contacts": {
+        readonly method: "GET";
+        readonly path: "/v1/contacts";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectClient.leader": {
+        readonly method: "GET";
+        readonly path: "/leader";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectClient.load": {
+        readonly method: "GET";
+        readonly path: "/load";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectClient.loadBoard": {
+        readonly method: "GET";
+        readonly path: "/board";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectClient.loadInterface": {
+        readonly method: "GET";
+        readonly path: "/interface/load-interface";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectClient.officials": {
+        readonly method: "GET";
+        readonly path: "/officials";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectDealSteps.getOntologies": {
+        readonly method: "GET";
+        readonly path: "/project-settings/deal-steps/ontologies/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectDealSteps.getSteps": {
+        readonly method: "GET";
+        readonly path: "/project-settings/deal-steps/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectDealSteps.saveSteps": {
+        readonly method: "POST";
+        readonly path: "/project-settings/deal-steps/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectGovernance.cancel": {
+        readonly method: "POST";
+        readonly path: "/governance/ballots/{ballot}/cancel";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.electorates": {
+        readonly method: "GET";
+        readonly path: "/governance/electorates";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.finalize": {
+        readonly method: "POST";
+        readonly path: "/governance/ballots/{ballot}/finalize";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.index": {
+        readonly method: "GET";
+        readonly path: "/governance/ballots";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.open": {
+        readonly method: "POST";
+        readonly path: "/governance/ballots/{ballot}/open";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.parameters": {
+        readonly method: "GET";
+        readonly path: "/governance/parameters";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.show": {
+        readonly method: "GET";
+        readonly path: "/governance/ballots/{ballot}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectGovernance.store": {
+        readonly method: "POST";
+        readonly path: "/governance/ballots";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectGovernance.storeElectorate": {
+        readonly method: "POST";
+        readonly path: "/governance/electorates";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectOfficials.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/project-settings/officials/{assignment}/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectOfficials.index": {
+        readonly method: "GET";
+        readonly path: "/project-settings/officials/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectOfficials.store": {
+        readonly method: "POST";
+        readonly path: "/project-settings/officials/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectOfficials.update": {
+        readonly method: "PATCH";
+        readonly path: "/project-settings/officials/{assignment}/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectPdas.index": {
+        readonly method: "GET";
+        readonly path: "/v1/subprojects/{id}/pdas";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectPipeConfig.destroy": {
+        readonly method: "DELETE";
+        readonly path: "/admin/subproject/{subproject}/pipe-config/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectPipeConfig.index": {
+        readonly method: "GET";
+        readonly path: "/admin/subproject/{subproject}/pipe-config";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectPipeConfig.store": {
+        readonly method: "POST";
+        readonly path: "/admin/subproject/{subproject}/pipe-config";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectPipeConfig.update": {
+        readonly method: "PATCH";
+        readonly path: "/admin/subproject/{subproject}/pipe-config/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectRoles.getPermissions": {
+        readonly method: "GET";
+        readonly path: "/project-role/permissions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getContent": {
+        readonly method: "GET";
+        readonly path: "/project-settings/content/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getDealForm": {
+        readonly method: "GET";
+        readonly path: "/project-settings/deal-form/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getDomainSettings": {
+        readonly method: "GET";
+        readonly path: "/project-settings/domain-settings/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getDomains": {
+        readonly method: "GET";
+        readonly path: "/project-settings/domains/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getEntryView": {
+        readonly method: "GET";
+        readonly path: "/project-settings/entry-view/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getHero": {
+        readonly method: "GET";
+        readonly path: "/project-settings/hero/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getIntentOverrides": {
+        readonly method: "GET";
+        readonly path: "/project-settings/intent-overrides/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getLayout": {
+        readonly method: "GET";
+        readonly path: "/project-settings/layout/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getPaymentGate": {
+        readonly method: "GET";
+        readonly path: "/project-settings/payment-gate/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getProfileSurface": {
+        readonly method: "GET";
+        readonly path: "/project-settings/profile-surface/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getSEO": {
+        readonly method: "GET";
+        readonly path: "/project-settings/seo/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getSystems": {
+        readonly method: "GET";
+        readonly path: "/project-settings/systems/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.getTemplate": {
+        readonly method: "GET";
+        readonly path: "/project-settings/template/show/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectSettings.saveContent": {
+        readonly method: "POST";
+        readonly path: "/project-settings/content/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveDealForm": {
+        readonly method: "POST";
+        readonly path: "/project-settings/deal-form/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveDomains": {
+        readonly method: "POST";
+        readonly path: "/project-settings/domains/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveEntryView": {
+        readonly method: "POST";
+        readonly path: "/project-settings/entry-view/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveHero": {
+        readonly method: "POST";
+        readonly path: "/project-settings/hero/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveIntentOverrides": {
+        readonly method: "POST";
+        readonly path: "/project-settings/intent-overrides/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveLayout": {
+        readonly method: "POST";
+        readonly path: "/project-settings/layout/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.savePaymentGate": {
+        readonly method: "POST";
+        readonly path: "/project-settings/payment-gate/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveProfileSurface": {
+        readonly method: "POST";
+        readonly path: "/project-settings/profile-surface/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveSEO": {
+        readonly method: "POST";
+        readonly path: "/project-settings/seo/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveSystems": {
+        readonly method: "POST";
+        readonly path: "/project-settings/systems/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.saveTemplate": {
+        readonly method: "POST";
+        readonly path: "/project-settings/template/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSettings.uploadHeroVideo": {
+        readonly method: "POST";
+        readonly path: "/project-settings/hero/upload-video/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectSystems.show": {
+        readonly method: "GET";
+        readonly path: "/v1/subprojects/current/system";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectTeam.deleteInvite": {
+        readonly method: "DELETE";
+        readonly path: "/subproject-team/delete-invite/{id}/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectTeam.getSubprojectTeamInvites": {
+        readonly method: "GET";
+        readonly path: "/subproject-team/get-invites/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectTeam.renewToken": {
+        readonly method: "POST";
+        readonly path: "/subproject-team/renew-token/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectTeam.sendSubprojectTeamInvites": {
+        readonly method: "POST";
+        readonly path: "/subproject-team/send-invites/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectTeam.updateInvitePermissions": {
+        readonly method: "POST";
+        readonly path: "/subproject-team/update-permissions/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.all": {
+        readonly method: "GET";
+        readonly path: "/subproject/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.deleteCategory": {
+        readonly method: "POST";
+        readonly path: "/subproject/delete-category/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.getSubprojectDomainSettings": {
+        readonly method: "GET";
+        readonly path: "/domain-settings/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.getSubprojectSettings": {
+        readonly method: "GET";
+        readonly path: "/subproject-settings";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.getWizardStepsInstance": {
+        readonly method: "GET";
+        readonly path: "/subproject-wizard/get";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.isWizardStarted": {
+        readonly method: "GET";
+        readonly path: "/subproject-wizard/creation-started";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.publicAgencyTree": {
+        readonly method: "GET";
+        readonly path: "/public/subprojects/agency-tree";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.publicAll": {
+        readonly method: "GET";
+        readonly path: "/public/subprojects";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojects.publicSearch": {
+        readonly method: "POST";
+        readonly path: "/public/subprojects/search";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.search": {
+        readonly method: "POST";
+        readonly path: "/subproject-search";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.storeContentStep": {
+        readonly method: "POST";
+        readonly path: "/subproject-wizard/content/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.storeDomainsStep": {
+        readonly method: "POST";
+        readonly path: "/subproject-wizard/domains/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.storeLayoutStep": {
+        readonly method: "POST";
+        readonly path: "/subproject-wizard/layout/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.storeSeoStep": {
+        readonly method: "POST";
+        readonly path: "/subproject-wizard/seo/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.storeTeamStep": {
+        readonly method: "POST";
+        readonly path: "/subproject-wizard/team/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojects.storeTemplateStep": {
+        readonly method: "POST";
+        readonly path: "/subproject-wizard/template/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectsContacts.deleteContact": {
+        readonly method: "DELETE";
+        readonly path: "/contacts/delete/{contact}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subprojectsContacts.findContacts": {
+        readonly method: "POST";
+        readonly path: "/contacts/find/{subproject}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "subprojectsContacts.getContacts": {
+        readonly method: "GET";
+        readonly path: "/contacts/running-import";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectsContacts.hasContacts": {
+        readonly method: "GET";
+        readonly path: "/contacts/has-contacts";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subprojectsContacts.importContacts": {
+        readonly method: "POST";
+        readonly path: "/contacts/import";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectsContacts.index": {
+        readonly method: "POST";
+        readonly path: "/contacts/list";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subprojectsContacts.saveContacts": {
+        readonly method: "POST";
+        readonly path: "/contacts/save";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subscription.cancelSubscription": {
+        readonly method: "GET";
+        readonly path: "/subscription/cancel/{subscription}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subscription.deletePaymentMethod": {
+        readonly method: "DELETE";
+        readonly path: "/payment/delete-payment-method/{id}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subscription.getPaymentMethod": {
+        readonly method: "GET";
+        readonly path: "/payment/get-payment-method";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subscription.getSubscribedToList": {
+        readonly method: "GET";
+        readonly path: "/subscription/subscribes";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subscription.getUserSubscribers": {
+        readonly method: "GET";
+        readonly path: "/subscription/subscribers";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subscription.getUserSubscription": {
+        readonly method: "GET";
+        readonly path: "/subscription/my-subscription";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subscription.remove": {
+        readonly method: "DELETE";
+        readonly path: "/subscription/remove/{subscription}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subscription.savePaymentMethod": {
+        readonly method: "POST";
+        readonly path: "/payment/save-payment-method";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subscription.setupPaymentMethod": {
+        readonly method: "GET";
+        readonly path: "/payment/setup-payment-method";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "subscription.show": {
+        readonly method: "GET";
+        readonly path: "/subscription/get/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subscription.store": {
+        readonly method: "POST";
+        readonly path: "/subscription/create";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "subscription.subscribe": {
+        readonly method: "GET";
+        readonly path: "/subscription/subscribe/{subscription}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "subscription.update": {
+        readonly method: "PATCH";
+        readonly path: "/subscription/update/{subscription}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "support.errorReport": {
+        readonly method: "POST";
+        readonly path: "/support/error-report";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "surfaces.index": {
+        readonly method: "GET";
+        readonly path: "/v1/surfaces";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "survey.run": {
+        readonly method: "GET";
+        readonly path: "/assessment/run/{assessment}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "survey.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/assessment/run-global/{assessment}/{task}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "systemHealth.show": {
+        readonly method: "GET";
+        readonly path: "/admin/systems/{key}/health";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "systemVerticals.index": {
+        readonly method: "GET";
+        readonly path: "/v1/systems/verticals";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "systems.catalog": {
+        readonly method: "GET";
+        readonly path: "/v1/systems/catalog";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "systems.components": {
+        readonly method: "GET";
+        readonly path: "/v1/systems/{vertical}/components";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "systems.index": {
+        readonly method: "GET";
+        readonly path: "/v1/systems";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "systems.show": {
+        readonly method: "GET";
+        readonly path: "/v1/systems/{vertical}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "systemsRegistry.index": {
+        readonly method: "GET";
+        readonly path: "/admin/systems";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "systemsRegistry.show": {
+        readonly method: "GET";
+        readonly path: "/admin/systems/{key}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "systemsRegistry.verticals": {
+        readonly method: "GET";
+        readonly path: "/admin/systems-verticals";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "tag.all": {
+        readonly method: "GET";
+        readonly path: "/program-tag/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "tenancyDebug.show": {
+        readonly method: "GET";
+        readonly path: "/_internal/tenancy-debug";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "tenantsCatalog.index": {
+        readonly method: "GET";
+        readonly path: "/v1/tenants";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "twitter.timeline": {
+        readonly method: "GET";
+        readonly path: "/twitter/timeline";
+        readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "user-items.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/user-items/{user_item}";
+        readonly path: "/user-items/{userItem}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "user-items.index": {
         readonly method: "GET";
-        readonly path: "/api/user-items";
+        readonly path: "/user-items";
         readonly hasPathParams: false;
         readonly hasBody: false;
     };
     readonly "user-items.show": {
         readonly method: "GET";
-        readonly path: "/api/user-items/{user_item}";
+        readonly path: "/user-items/{userItem}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "user-items.store": {
         readonly method: "POST";
-        readonly path: "/api/user-items";
+        readonly path: "/user-items";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "user-items.update": {
         readonly method: "PUT";
-        readonly path: "/api/user-items/{user_item}";
+        readonly path: "/user-items/{userItem}";
         readonly hasPathParams: true;
         readonly hasBody: true;
     };
+    readonly "userDevice.getUserDevices": {
+        readonly method: "GET";
+        readonly path: "/user-devices/list";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "userItems.search": {
+        readonly method: "GET";
+        readonly path: "/items/find-item/{search}/{type}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.acceptInvite": {
+        readonly method: "POST";
+        readonly path: "/team/accept";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.acceptPotentialInvite": {
+        readonly method: "GET";
+        readonly path: "/team/accept-invite/{token}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.availableRoles": {
+        readonly method: "GET";
+        readonly path: "/team/roles";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.getInviteByToken": {
+        readonly method: "GET";
+        readonly path: "/public/team/get-invite/{token}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.getInviteDataByToken": {
+        readonly method: "GET";
+        readonly path: "/public/team/get-invited-data/{token}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.getMyTeam": {
+        readonly method: "GET";
+        readonly path: "/team/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.handleRole": {
+        readonly method: "POST";
+        readonly path: "/team/handle-role";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.index": {
+        readonly method: "GET";
+        readonly path: "/team/list/{status}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.inviteMember": {
+        readonly method: "POST";
+        readonly path: "/team/invite";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.inviteNetworkMember": {
+        readonly method: "POST";
+        readonly path: "/team/network-invite";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.invitePotentialMember": {
+        readonly method: "POST";
+        readonly path: "/team/network-invite-potential";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.leaveTeam": {
+        readonly method: "POST";
+        readonly path: "/team/leave";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.member": {
+        readonly method: "GET";
+        readonly path: "/team/member/{status}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.networkSearch": {
+        readonly method: "POST";
+        readonly path: "/team/network-search";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.rejectInvite": {
+        readonly method: "POST";
+        readonly path: "/team/reject";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.rejectPotentialInvite": {
+        readonly method: "DELETE";
+        readonly path: "/public/team/reject-invite/{token}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "userTeam.removeMember": {
+        readonly method: "POST";
+        readonly path: "/team/remove";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.removePotentialMember": {
+        readonly method: "POST";
+        readonly path: "/team/remove-potential";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.searchMembers": {
+        readonly method: "POST";
+        readonly path: "/team/search-members";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "userTeam.searchUsers": {
+        readonly method: "POST";
+        readonly path: "/team/search-users";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.accessibleSubprojects": {
+        readonly method: "GET";
+        readonly path: "/me/accessible-subprojects";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.byUserId": {
+        readonly method: "GET";
+        readonly path: "/users/id/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.byUsername": {
+        readonly method: "GET";
+        readonly path: "/users/name/{username}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.canCreator": {
+        readonly method: "GET";
+        readonly path: "/users/can-creator/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.creatorDashboard": {
+        readonly method: "GET";
+        readonly path: "/user/creator-dashboard";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.creatorStats": {
+        readonly method: "GET";
+        readonly path: "/user/creator-stats";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.deleteAccount": {
+        readonly method: "DELETE";
+        readonly path: "/users/delete/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.featuredCreators": {
+        readonly method: "GET";
+        readonly path: "/home/featured-creators";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.findUser": {
+        readonly method: "GET";
+        readonly path: "/users/find/{searchQuery}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.finishCodifyRegistration": {
+        readonly method: "POST";
+        readonly path: "/user/finish-codify-registration";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.getAssignedTags": {
+        readonly method: "GET";
+        readonly path: "/users/assigned-tags/{category}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.getAvailableRoles": {
+        readonly method: "GET";
+        readonly path: "/users/get-available-roles";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.getFinancing": {
+        readonly method: "GET";
+        readonly path: "/users/get-pricing";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.getRoleCategories": {
+        readonly method: "GET";
+        readonly path: "/users/get-role-category/{category}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.getRoles": {
+        readonly method: "GET";
+        readonly path: "/users/get-roles";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.getTopCreators": {
+        readonly method: "GET";
+        readonly path: "/public/top-creators";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.getUserData": {
+        readonly method: "GET";
+        readonly path: "/user/get-data";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.getUserSessions": {
+        readonly method: "GET";
+        readonly path: "/users/get-sessions";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.getUserWalletBalance": {
+        readonly method: "GET";
+        readonly path: "/user/get-wallet";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.handleShortLink": {
+        readonly method: "GET";
+        readonly path: "/public/short-link/{shortLink}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "users.handleUserTag": {
+        readonly method: "POST";
+        readonly path: "/users/handle-user-tag";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.removeRole": {
+        readonly method: "POST";
+        readonly path: "/users/delete-role";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.restrictUser": {
+        readonly method: "POST";
+        readonly path: "/users/restrict/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "users.sendOneTimeCode": {
+        readonly method: "POST";
+        readonly path: "/users/get-code";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.setFeatured": {
+        readonly method: "POST";
+        readonly path: "/featured/creators";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.setRole": {
+        readonly method: "POST";
+        readonly path: "/users/set-role";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.setTimezone": {
+        readonly method: "POST";
+        readonly path: "/user/set-timezone";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.specialistRoles": {
+        readonly method: "GET";
+        readonly path: "/public/get-roles";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.updateBillingInformation": {
+        readonly method: "PATCH";
+        readonly path: "/users/update-billing-info";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.updateInternalModulesPricing": {
+        readonly method: "POST";
+        readonly path: "/users/update-pricing";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "users.updatePassword": {
+        readonly method: "PATCH";
+        readonly path: "/users/update-password/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "users.updatePhone": {
+        readonly method: "PATCH";
+        readonly path: "/users/update-phone";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "users.updateProfile": {
+        readonly method: "PATCH";
+        readonly path: "/users/update/{user}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "verification.all": {
+        readonly method: "GET";
+        readonly path: "/protocol/verification/all";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
     readonly "verification.destroy": {
         readonly method: "DELETE";
-        readonly path: "/api/verification/{verification}";
+        readonly path: "/verification/{verification}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "verification.index": {
         readonly method: "GET";
-        readonly path: "/api/verification";
+        readonly path: "/verification";
         readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "verification.resend": {
+        readonly method: "GET";
+        readonly path: "/resend-verify-email";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "verification.run": {
+        readonly method: "GET";
+        readonly path: "/verification/run/{verification}/{chain}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "verification.runGlobal": {
+        readonly method: "GET";
+        readonly path: "/verification/run-global/{verification}/{task}";
+        readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "verification.show": {
         readonly method: "GET";
-        readonly path: "/api/verification/{verification}";
+        readonly path: "/verification/{verification}";
         readonly hasPathParams: true;
         readonly hasBody: false;
     };
     readonly "verification.store": {
         readonly method: "POST";
-        readonly path: "/api/verification";
+        readonly path: "/verification";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "verification.submit": {
+        readonly method: "POST";
+        readonly path: "/verification/submit";
         readonly hasPathParams: false;
         readonly hasBody: true;
     };
     readonly "verification.update": {
         readonly method: "PUT";
-        readonly path: "/api/verification/{verification}";
+        readonly path: "/verification/{verification}";
         readonly hasPathParams: true;
         readonly hasBody: true;
+    };
+    readonly "verification.verifyCode": {
+        readonly method: "POST";
+        readonly path: "/verify-code";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "voice.voiceInterpret": {
+        readonly method: "POST";
+        readonly path: "/public/voice/interpret";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "voice.voiceSessionResolve": {
+        readonly method: "POST";
+        readonly path: "/voice/session/resolve";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "voiceSession.store": {
+        readonly method: "POST";
+        readonly path: "/voice/session";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "webhooks.sentryWebhook": {
+        readonly method: "POST";
+        readonly path: "/webhook/sentry";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "websiteService.contactUs": {
+        readonly method: "POST";
+        readonly path: "/public/contact";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "withings.getData": {
+        readonly method: "POST";
+        readonly path: "/withings/webhook";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "withings.handleCallback": {
+        readonly method: "GET";
+        readonly path: "/withings/callback";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "withings.redirectToWithings": {
+        readonly method: "GET";
+        readonly path: "/withings/auth";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "wizard.codify": {
+        readonly method: "POST";
+        readonly path: "/wizard/codify/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.completeProfile": {
+        readonly method: "POST";
+        readonly path: "/wizard/complete-profile/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.confirmAccount": {
+        readonly method: "POST";
+        readonly path: "/wizard/confirm-account/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.confirmCode": {
+        readonly method: "POST";
+        readonly path: "/wizard/confirm-code/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.confirmWizardProgramData": {
+        readonly method: "POST";
+        readonly path: "/wizard/confirm-preview/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.connectStripe": {
+        readonly method: "GET";
+        readonly path: "/wizard/connect-stripe/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.findMembersToInvite": {
+        readonly method: "POST";
+        readonly path: "/wizard/find-members";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "wizard.getAssessmentAnswers": {
+        readonly method: "GET";
+        readonly path: "/wizard/assessment/answers/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getAssessmentQuestions": {
+        readonly method: "GET";
+        readonly path: "/wizard/assessment/questions/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getProgramFinalizationState": {
+        readonly method: "GET";
+        readonly path: "/wizard/finalization-state/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getProtocolFinances": {
+        readonly method: "GET";
+        readonly path: "/wizard/finances/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getProtocolRoles": {
+        readonly method: "GET";
+        readonly path: "/wizard/get-required-roles/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getRolesToInvite": {
+        readonly method: "GET";
+        readonly path: "/wizard/team/roles-to-invite/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getWizardProgramData": {
+        readonly method: "GET";
+        readonly path: "/wizard/program-data/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.getWizardState": {
+        readonly method: "GET";
+        readonly path: "/wizard/get-state/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.inviteMembersToPersonalProgram": {
+        readonly method: "POST";
+        readonly path: "/wizard/invite-members/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.inviteUsersToProgram": {
+        readonly method: "POST";
+        readonly path: "/wizard/invite-users/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.publicProgramCreated": {
+        readonly method: "GET";
+        readonly path: "/wizard/public-program-created/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.publishProgramSettings": {
+        readonly method: "POST";
+        readonly path: "/wizard/publish-program/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.resource-owner.activate": {
+        readonly method: "POST";
+        readonly path: "/wizard/resource-owner/{listing}/activate";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.resource-owner.claim": {
+        readonly method: "POST";
+        readonly path: "/wizard/resource-owner/{listing}/claim";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.resource-owner.store": {
+        readonly method: "POST";
+        readonly path: "/wizard/resource-owner";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "wizard.retryCreation": {
+        readonly method: "GET";
+        readonly path: "/wizard/retry-creation/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.sendCreatorRequest": {
+        readonly method: "POST";
+        readonly path: "/wizard/creator-request/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.setProgramAgent": {
+        readonly method: "POST";
+        readonly path: "/wizard/set-agent/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.setProgramDistributionType": {
+        readonly method: "POST";
+        readonly path: "/wizard/set-distribution-type/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.setProgramType": {
+        readonly method: "POST";
+        readonly path: "/wizard/set-type/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: true;
+    };
+    readonly "wizard.setProtocolFinances": {
+        readonly method: "POST";
+        readonly path: "/wizard/set-finances/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.startProgram": {
+        readonly method: "GET";
+        readonly path: "/wizard/start-program/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.stepBack": {
+        readonly method: "GET";
+        readonly path: "/wizard/step-back/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.validateInviteMail": {
+        readonly method: "POST";
+        readonly path: "/wizard/validate-email";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "wizard.verifyStripeConnection": {
+        readonly method: "GET";
+        readonly path: "/wizard/verify-stripe/{protocol}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "wizard.wizardStart": {
+        readonly method: "POST";
+        readonly path: "/wizard/start";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "workflow.mySystems": {
+        readonly method: "GET";
+        readonly path: "/me/systems";
+        readonly hasPathParams: false;
+        readonly hasBody: false;
+    };
+    readonly "worldLocations.findCity": {
+        readonly method: "POST";
+        readonly path: "/world-locations/city";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "worldLocations.findCountry": {
+        readonly method: "POST";
+        readonly path: "/world-locations/country";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "worldLocations.findState": {
+        readonly method: "POST";
+        readonly path: "/world-locations/state";
+        readonly hasPathParams: false;
+        readonly hasBody: true;
+    };
+    readonly "worldLocations.getCity": {
+        readonly method: "GET";
+        readonly path: "/world-locations/city/{city}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "worldLocations.getCountry": {
+        readonly method: "GET";
+        readonly path: "/world-locations/country/{country}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
+    };
+    readonly "worldLocations.getState": {
+        readonly method: "GET";
+        readonly path: "/world-locations/state/{state}";
+        readonly hasPathParams: true;
+        readonly hasBody: false;
     };
 };
 /** Every operationId known to the runtime client (spec-derived). */

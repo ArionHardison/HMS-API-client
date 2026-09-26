@@ -20,7 +20,7 @@ import { TypedApiClient } from '../../typed-client';
 // --- 1. path-param GET -------------------------------------------------------
 // Request carries a required `path`, no `body`.
 expectTypeOf<Request<'activity-location.show'>>().toEqualTypeOf<{
-  path: { activity_location: string };
+  path: { activityLocation: number };
 }>();
 // Response is the concrete 2xx JSON payload (not `any`/`unknown`).
 expectTypeOf<Response<'activity-location.show'>>().toEqualTypeOf<{
@@ -40,8 +40,6 @@ expectTypeOf<Response<'activity-location.store'>>().toEqualTypeOf<{
 expectTypeOf<Request<'activity-location.index'>>().toEqualTypeOf<{}>();
 expectTypeOf<Response<'activity-location.index'>>().toEqualTypeOf<{
   data: components['schemas']['ActivityLocationResource'][];
-  links?: Record<string, never>;
-  meta?: Record<string, never>;
 }>();
 
 // --- Client method signatures are concrete ----------------------------------

@@ -13,23 +13,8 @@ import { WizardApiClient, PayoutStatus, type VerifyOutcomeInput } from '../../ap
 
 const BASE = 'https://api.test.local/api';
 
-// `src/api/hms-api-client.ts` registers a module-level axios request
-// interceptor that reads `localStorage.getItem('auth_token')` unguarded, so
-// any client request under node throws ReferenceError. This test file runs in
-// its own vitest worker; give it a minimal in-memory Storage. (Follow-up for
-// the SDK: guard that interceptor the way api-client.ts guards its fallback.)
-const memory = new Map<string, string>();
-Object.defineProperty(globalThis, 'localStorage', {
-  configurable: true,
-  value: {
-    getItem: (k: string) => memory.get(k) ?? null,
-    setItem: (k: string, v: string) => { memory.set(k, String(v)); },
-    removeItem: (k: string) => { memory.delete(k); },
-    clear: () => memory.clear(),
-    key: () => null,
-    get length() { return memory.size; },
-  },
-});
+// No browser globals are shimmed: the legacy hms-api-client interceptor now
+// guards its localStorage read, so the SDK runs under node as documented.
 
 const input = (executionId?: number | string): VerifyOutcomeInput => ({
   execution_id: executionId,

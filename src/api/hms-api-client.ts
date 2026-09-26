@@ -7,6 +7,15 @@
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+/**
+ * Browser Web Storage when it exists, else null. The SDK is consumed under
+ * node / SSR too (Nuxt server, vitest, workers): a bare `localStorage` there
+ * is a ReferenceError that used to abort EVERY request in the interceptor.
+ */
+const webStorage = (): Storage | null =>
+  typeof localStorage !== 'undefined' ? localStorage : null;
+
+
 // =================== BASE TYPES =====================
 
 /**
@@ -1163,7 +1172,7 @@ export class BaseApiClient {
     this.client.interceptors.request.use(
       (requestConfig) => {
         // Add authentication token
-        const token = localStorage.getItem('auth_token');
+        const token = webStorage()?.getItem('auth_token') ?? null;
         if (token) {
           requestConfig.headers.Authorization = `Bearer ${token}`;
         }
@@ -1276,7 +1285,7 @@ export class AuthApiClient extends BaseApiClient {
     
     if (response.data.success && response.data.data.token) {
       // Store the token
-      localStorage.setItem('auth_token', response.data.data.token);
+      webStorage()?.setItem('auth_token', response.data.data.token);
     }
     
     return response;
@@ -1291,7 +1300,7 @@ export class AuthApiClient extends BaseApiClient {
     
     if (response.data.success && response.data.data.token) {
       // Store the token
-      localStorage.setItem('auth_token', response.data.data.token);
+      webStorage()?.setItem('auth_token', response.data.data.token);
     }
     
     return response;
@@ -1303,11 +1312,11 @@ export class AuthApiClient extends BaseApiClient {
   async logout(): Promise<AxiosResponse<ApiResponse<null>>> {
     try {
       const response = await this.client.get('/logout');
-      localStorage.removeItem('auth_token');
+      webStorage()?.removeItem('auth_token');
       return response;
     } catch (error) {
       // Always remove the token even if the API call fails
-      localStorage.removeItem('auth_token');
+      webStorage()?.removeItem('auth_token');
       throw error;
     }
   }
@@ -1339,7 +1348,7 @@ export class AuthApiClient extends BaseApiClient {
    * Check if the user is authenticated
    */
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('auth_token');
+    return !!webStorage()?.getItem('auth_token');
   }
 }
 

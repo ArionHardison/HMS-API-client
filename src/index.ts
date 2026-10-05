@@ -165,8 +165,16 @@ export {
   handleApiCall,
   createFormErrors,
   getErrorMessage,
+  // Rate-limit contract helpers (plan C10 / WS8): parse `Retry-After`
+  // (seconds or HTTP-date), read the api's refusal body, and decide whether
+  // an error is worth replaying (never a 4xx).
+  parseRetryAfter,
+  bodyRetryAfter,
+  rateLimitInfoFrom,
+  httpStatusOf,
+  isRetryableError,
 } from './api/error-handling';
-export type { ApiErrorInit } from './api/error-handling';
+export type { ApiErrorInit, RateLimitInfo } from './api/error-handling';
 
 // =============================================================================
 // Round 2 + Round 3 slice clients.
@@ -1041,6 +1049,10 @@ export type {
   PublicAuthBySocialTokenBody,
   PublicContactBody,
   PublicCreatorsFilterBody,
+  PublicSubprojectListItem,
+  PublicSubprojectsPage,
+  PublicSubprojectsPageMeta,
+  PublicSubprojectsQuery,
   PublicSubprojectsSearchBody,
   PublicVerifySocialTokenBody,
   SaveFrontendBody,

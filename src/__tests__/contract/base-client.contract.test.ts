@@ -150,6 +150,67 @@ describe('BaseApiClient — contract', () => {
   });
 
   // ---------------------------------------------------------------------------
+  // X-Tenant-Domain — the api's PRIMARY tenant header (WS8). Verified live
+  // 2026-10-05: an X-Domain-only request resolves no tenant on
+  // https://api.project20x.com / https://api.openyc.org and is ignored on
+  // https://openyc.org, while X-Tenant-Domain resolves it on all three. The
+  // SDK sends the ONE getDomain() value under both names, same opt-in.
+  // ---------------------------------------------------------------------------
+  describe('X-Tenant-Domain header (primary tenant header, beside X-Domain)', () => {
+    it('injects X-Tenant-Domain with the same value as X-Domain when getDomain is set', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, ({ request }) => {
+          captured.current = request;
+          return { success: true, message: '', data: {} };
+        }),
+      );
+      const client = new TestClient({ baseURL: BASE, getDomain: () => 'codify.nyc' });
+      await client.g('/api/load');
+      expect(captured.current!.headers.get('x-tenant-domain')).toBe('codify.nyc');
+      expectDomainHeader(captured.current!, 'codify.nyc');
+    });
+
+    it('omits X-Tenant-Domain when getDomain returns null (never defaults)', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, ({ request }) => {
+          captured.current = request;
+          return { success: true, message: '', data: {} };
+        }),
+      );
+      const client = new TestClient({ baseURL: BASE, getDomain: () => null });
+      await client.g('/api/load');
+      expect(captured.current!.headers.get('x-tenant-domain')).toBeNull();
+      expectNoDomainHeader(captured.current!);
+    });
+
+    it('omits X-Tenant-Domain entirely when no getDomain is configured', async () => {
+      server.use(
+        mockEndpoint('get', `${BASE}/api/load`, ({ request }) => {
+          captured.current = request;
+          return { success: true, message: '', data: {} };
+        }),
+      );
+      const client = new TestClient({ baseURL: BASE });
+      await client.g('/api/load');
+      expect(captured.current!.headers.get('x-tenant-domain')).toBeNull();
+      expectNoDomainHeader(captured.current!);
+    });
+
+    it('rides on POST too (the write lanes pin the tenant the same way)', async () => {
+      server.use(
+        mockEndpoint('post', `${BASE}/api/public/codify/start-session`, ({ request }) => {
+          captured.current = request;
+          return { success: true, message: '', data: {} };
+        }),
+      );
+      const client = new TestClient({ baseURL: BASE, getDomain: () => 'new-york.ny.us.codify.city' });
+      await client.p('/api/public/codify/start-session', { codify: 'x' });
+      expect(captured.current!.headers.get('x-tenant-domain')).toBe('new-york.ny.us.codify.city');
+      expectDomainHeader(captured.current!, 'new-york.ny.us.codify.city');
+    });
+  });
+
+  // ---------------------------------------------------------------------------
   // PUT / PATCH method override (Laravel convention)
   // ---------------------------------------------------------------------------
   describe('PUT/PATCH method override', () => {

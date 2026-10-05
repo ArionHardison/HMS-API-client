@@ -10,8 +10,17 @@
  *
  *   - Auth header injection is opt-in via `getToken`. No browser globals are
  *     touched at construction time so the SDK is SSR-safe.
- *   - `X-Domain` header injection is opt-in via `getDomain` and never
- *     defaults to `localhost`.
+ *   - Tenant header injection is opt-in via `getDomain` and never defaults
+ *     to `localhost`. The ONE value goes out as `X-Tenant-Domain` (the api's
+ *     primary, proxy-safe tenant header — SetDomainContext reads it first)
+ *     AND `X-Domain` (the legacy fallback). Verified live 2026-10-05 on the
+ *     Cloudflare-fronted hostnames: an X-Domain-only request resolves NO
+ *     tenant on https://api.project20x.com / https://api.openyc.org
+ *     (`/api/load` → `{error}`) and is ignored in favour of the host on
+ *     https://openyc.org; X-Tenant-Domain resolves the tenant on all three.
+ *     Through the deleted Vercel `/api` rewrite tenancy used to ride
+ *     `X-Forwarded-Host`; calling the api hostname directly, only
+ *     X-Tenant-Domain carries it (WS8).
  *   - PUT/PATCH are sent as POST + `?_method=PUT|PATCH` (Laravel convention).
  *     DELETE stays a real DELETE.
  *   - Payloads carrying a `File`/`Blob` switch to `multipart/form-data` and
@@ -27,7 +36,7 @@
  * subclasses keep working. New behavior is additive.
  */
 
-import { ApiError } from './api/error-handling';
+import { ApiError, bodyRetryAfter, parseRetryAfter, rateLimitInfoFrom } from './api/error-handling';
 import { assertSecureBaseURL } from './api/url-safety';
 
 // =============================================================================
@@ -59,10 +68,19 @@ export interface ApiClientConfig {
    * already include it). Optional. When omitted, the client resolves the
    * base URL lazily per request via:
    *
-   *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom),
-   *      so a deploy at `https://openyc.org` issues same-origin requests
-   *      that a Vercel rewrite proxies to the API.
-   *   2. `https://api.openyc.org` as the SSR / Node fallback.
+   *   1. `globalThis.window.location.origin` (browser / happy-dom / jsdom) —
+   *      same-origin requests. That reaches the api only where the SERVING
+   *      host proxies `/api/*` itself: the app droplet's nginx does, on
+   *      `openyc.org` and every tenant host it serves. Vercel does NOT: the
+   *      gov / sys / www `vercel.json` rewrites that used to proxy `/api` to
+   *      the raw origin are deleted (anti-bulk-exfiltration plan C1 / WS8,
+   *      PLAN-revised §0.2 M2 / D15), so a Vercel-hosted consumer MUST pass
+   *      an absolute, Cloudflare-fronted `baseURL` — `https://api.project20x.com`
+   *      or `https://openyc.org` — and the api's CORS (config/cors.php) admits
+   *      every ecosystem origin (codify.<tld> at any depth, *.openyc.org, the
+   *      owned .dev zones, the gov-* / ci-mfe-project20x-* Vercel deployments).
+   *   2. `https://api.openyc.org` as the SSR / Node fallback — Cloudflare-
+   *      fronted; never the raw droplet IP.
    *
    * Resolution is lazy on purpose — the constructor must not touch `window`
    * (see the SSR safety contract test). An explicit value always wins.
@@ -78,9 +96,11 @@ export interface ApiClientConfig {
    */
   getToken?: () => string | null | undefined;
   /**
-   * Returns the current `X-Domain` value, or null/undefined to omit the
-   * header. The SDK does NOT default this to `localhost` (gov/sys/app each
-   * have their own resolution rules).
+   * Returns the current tenant hostname, or null/undefined to omit the
+   * tenant headers. Sent as BOTH `X-Tenant-Domain` (the api's primary header
+   * — follows the alias chain, survives proxies) and `X-Domain` (legacy
+   * fallback), exactly as `app/` does. The SDK does NOT default this to
+   * `localhost` (gov/sys/app each have their own resolution rules).
    */
   getDomain?: () => string | null | undefined;
   /** Fired exactly once per 401 response. Replaces the old window-event flow. */
@@ -134,12 +154,16 @@ export interface ApiRequestOptions {
  * Default base URL when no `baseURL` is configured.
  *
  * In a browser context (real or simulated via happy-dom/jsdom) the SDK uses
- * the current page origin, which keeps requests same-origin so cookies and
- * Vercel `vercel.json` rewrites both work without CORS. In Node / SSR there
- * is no window, so the canonical API host `https://api.openyc.org` is
- * used — a reachable, TLS-terminated origin that serves `/api/*`. (The old
- * `https://codify.inc` fallback did NOT serve the API and broke SSR callers
- * such as gov; an explicit `baseURL` still always wins.)
+ * the current page origin, which keeps requests same-origin — correct where
+ * the serving host proxies `/api/*` itself (the app droplet's nginx). It is
+ * no longer a Vercel contract: the `/api` rewrites in gov / sys / www are
+ * deleted under WS8 (PLAN.md C1 prerequisites), so a Vercel-hosted consumer
+ * passes an absolute Cloudflare-fronted `baseURL` (see `ApiClientConfig`).
+ * In Node / SSR there is no window, so the canonical API host
+ * `https://api.openyc.org` is used — a Cloudflare-fronted, TLS-terminated
+ * origin that serves `/api/*`. (The old `https://codify.inc` fallback did
+ * NOT serve the API and broke SSR callers such as gov; an explicit `baseURL`
+ * still always wins.)
  *
  * Resolution is lazy / per-request so the SSR safety contract is preserved.
  */
@@ -200,7 +224,7 @@ export class BaseApiClient {
     return null;
   }
 
-  /** Resolve the `X-Domain` value. Null/undefined = omit. Never defaults. */
+  /** Resolve the tenant hostname (`X-Tenant-Domain` + `X-Domain`). Null/undefined = omit. Never defaults. */
   protected resolveDomain(): string | null {
     if (!this.config.getDomain) return null;
     const d = this.config.getDomain();
@@ -292,9 +316,19 @@ export class BaseApiClient {
       if (token) headers.Authorization = `Bearer ${token}`;
     }
 
-    // Tenant header.
+    // Tenant headers — one value, both names. `X-Tenant-Domain` is the api's
+    // PRIMARY tenant header (SetDomainContext reads it before X-Domain, it
+    // follows the alias chain and no proxy overwrites it); `X-Domain` stays
+    // as the legacy fallback every frontend's contract documents. Live
+    // 2026-10-05: X-Domain alone resolves no tenant on the Cloudflare-fronted
+    // api hostnames (see the module header), so without the primary header a
+    // Vercel-hosted consumer calling https://api.project20x.com directly
+    // (WS8) would land on the wrong tenant. Both ride CORS `allowed_headers`.
     const domain = this.resolveDomain();
-    if (domain) headers['X-Domain'] = domain;
+    if (domain) {
+      headers['X-Tenant-Domain'] = domain;
+      headers['X-Domain'] = domain;
+    }
 
     // If the body is FormData, drop Content-Type so the runtime sets the
     // correct multipart boundary.
@@ -386,11 +420,19 @@ export class BaseApiClient {
       const message = (parsed && typeof parsed === 'object' && (parsed as any).message)
         || `HTTP error ${response.status}`;
       const validationErrors = this.extractValidationErrors(parsed);
+      // Rate-limit contract (api anti-bulk-exfiltration plan C5 / §4): a 429
+      // (and a 503 shed) carries `Retry-After` plus a `{ error: 'rate_limited',
+      // scope, limit, window, retry_after }` body, and the api exposes
+      // Retry-After through CORS so a cross-origin consumer can read it. It is
+      // surfaced as a typed field so callers back off instead of replaying.
+      const retryAfter = parseRetryAfter(response.headers.get('retry-after')) ?? bodyRetryAfter(parsed);
       throw new ApiError({
         status: response.status,
         message,
         data: parsed && typeof parsed === 'object' ? (parsed as any).data : parsed,
         validationErrors,
+        retryAfter,
+        rateLimit: rateLimitInfoFrom(response.status, parsed, retryAfter),
         originalError: response,
       });
     }

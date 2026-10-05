@@ -287,6 +287,37 @@ try {
 }
 ```
 
+### Rate limits (429) and retries
+
+The api refuses over-limit traffic with `429` + `Retry-After` and the body
+`{ message, error: 'rate_limited', scope, limit, window, retry_after }` (a
+Redis outage sheds with `503` + `Retry-After` and `error: 'rate_limiter_unavailable'`).
+The SDK surfaces the wait as a typed field on the thrown `ApiError` and never
+replays a 4xx on its own:
+
+```typescript
+import { ApiError, isRetryableError } from '@arionhardison/wizard-api-client';
+
+try {
+  const page = await misc.listPublicSubprojects({ page: 2 });
+  console.log(page.meta.last_page, page.data.length);
+} catch (error) {
+  if (error instanceof ApiError && error.isRateLimitError()) {
+    // `retryAfter` is in SECONDS (Retry-After header, or the body's retry_after);
+    // null when the server sent neither. Schedule the retry yourself — a 429
+    // replayed inside the window only extends the refusal.
+    const wait = error.retryAfter ?? 30;
+    console.warn(`rate limited on ${error.rateLimit?.scope}; retrying in ${wait}s`);
+    setTimeout(() => retryLater(), wait * 1000);
+  } else if (isRetryableError(error)) {
+    // 5xx or a network failure — safe to retry (useApi's `retry` option does this).
+  }
+}
+```
+
+`useApi({ retry, retryDelay })` replays only 5xx and network failures;
+4xx — 429 included — surface at once, with `state.retryAfter` set.
+
 ## Development
 
 ### Building the client

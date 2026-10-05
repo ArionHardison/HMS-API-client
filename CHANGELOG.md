@@ -7,7 +7,61 @@ follows SemVer.
 
 ## [Unreleased]
 
+### Added
+
+- **`Retry-After` on the thrown error (anti-bulk-exfiltration plan C10 /
+  WS8 'sdk').** Every `ApiError` now carries `retryAfter: number | null` —
+  the seconds the server asked the client to wait, parsed from the
+  `Retry-After` header (delta-seconds or an HTTP-date, both normalized to
+  whole seconds from now) with the api's `retry_after` body field as the
+  fallback — plus `rateLimit?: RateLimitInfo` (`{ retryAfter, error, scope,
+  limit, window }`) when the response was a refusal (a 429, or the api's
+  `rate_limited` / `rate_limiter_unavailable` body on a 503 shed) and an
+  `isRateLimitError()` predicate (429). Both the fetch pipeline
+  (`BaseApiClient`) and the legacy axios construction path populate it;
+  `toJSON()` includes `retryAfter`. New root exports: `parseRetryAfter`,
+  `bodyRetryAfter`, `rateLimitInfoFrom`, `httpStatusOf`, `isRetryableError`
+  and the `RateLimitInfo` type. `getErrorMessage()` says "Too many requests.
+  Please try again in N seconds." for a 429.
+- **`MiscCoreApiClient.listPublicSubprojects({ page?, per_page? })`** — the
+  optional query sends `?page=` / `?per_page=` to `GET /api/public/subprojects`,
+  which paginates since CI-API #5959 (WS4). New types
+  `PublicSubprojectsQuery`, `PublicSubprojectsPage`, `PublicSubprojectsPageMeta`,
+  `PublicSubprojectListItem`. The zero-argument call keeps working (page 1).
+- **`useApi` state gains `retryAfter: number | null`**, mirroring the thrown
+  error's value so a view can render "try again in N s" directly.
+- **`X-Tenant-Domain` beside `X-Domain`.** `BaseApiClient` now sends the one
+  `getDomain()` value under BOTH names — `X-Tenant-Domain` is the api's primary,
+  proxy-safe tenant header (`SetDomainContext` reads it first and it follows
+  the alias chain), `X-Domain` the legacy fallback; same opt-in, same omission
+  when `getDomain` is absent or returns null. Verified live 2026-10-05 on the
+  Cloudflare-fronted hostnames WS8 moves browsers to: an X-Domain-only request
+  resolves NO tenant on `https://api.project20x.com` / `https://api.openyc.org`
+  (`/api/load` → `{error}`) and is ignored in favour of the host on
+  `https://openyc.org`, while `X-Tenant-Domain` resolves CodifyNYC on all
+  three. Through the deleted Vercel `/api` rewrite tenancy rode
+  `X-Forwarded-Host`; direct to the api hostname only `X-Tenant-Domain` carries
+  it. Both names are in the api's CORS `allowed_headers`.
+
 ### Changed
+
+- **`useApi` never retries a 4xx.** `executeWithRetry` used to replay ANY
+  error while `retry > 0`, so a 429 was retried at `retryDelay * (n + 1)` ms —
+  inside the server's `Retry-After` window, extending the refusal. It now
+  replays only 5xx and network failures (`isRetryableError`); 4xx — 429
+  included — surface at once with `retryAfter` for the caller to schedule.
+  The 5xx / network ladder is unchanged.
+- **`listPublicSubprojects()` return type** is now `Promise<PublicSubprojectsPage>`
+  (`{ data, meta }`) instead of `Promise<ApiResponse<MiscCoreResponse>>`. The
+  endpoint's wire is a Laravel paginator and never carried `success` /
+  `message`, so the old annotation promised fields that did not exist;
+  `.data` keeps working and is typed as the row array. No known caller.
+- **`ApiClientConfig.baseURL` docs**: the browser default (`window.location.origin`)
+  is documented as same-origin for hosts that proxy `/api/*` themselves (the
+  app droplet's nginx) — NOT a Vercel contract: the gov / sys / www `/api`
+  rewrites are deleted under WS8, so a Vercel-hosted consumer passes an
+  absolute Cloudflare-fronted `baseURL` (`https://api.project20x.com` or
+  `https://openyc.org`). Comment-only; no runtime change.
 
 - **Brand rename → OpenYC.** Every place the SDK's prose named the legacy
   brand or its `.ai` tenant host now says **OpenYC** / `openyc.org`: the
@@ -17,6 +71,14 @@ follows SemVer.
   `dist/`. No runtime change — the default host was already
   `https://api.openyc.org`. Codify is the platform; OpenYC is the
   startup/tech/dev layer on it.
+
+### Fixed
+
+- **Notifications store `apiError()`** — its parameter was named `error`,
+  shadowing the store's own `error()` function, so `useApi`'s default
+  error-notification path (`showErrorNotification: true`) threw
+  `TypeError: error is not a function` instead of toasting. Renamed to `err`;
+  pinned in `src/composables/__tests__/useApi.retry.test.ts`.
 
 ### Removed
 

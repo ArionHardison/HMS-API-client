@@ -281,6 +281,73 @@ export interface PublicCreatorsFilterBody {
   politician_office_status?: string;
 }
 
+/**
+ * GET /api/public/subprojects query params. Both optional —
+ * `listPublicSubprojects()` with no arguments is page 1.
+ */
+export interface PublicSubprojectsQuery {
+  /**
+   * 1-based page number (`?page=`). The api caps it to the real page range:
+   * an absurd `?page=` answers an EMPTY `data`, never page 1 through a
+   * wrapped offset.
+   */
+  page?: number;
+  /**
+   * Requested page size (`?per_page=`). The api clamps it to its fixed size
+   * (50 today — `ratelimit.pagination.public_subprojects_per_page`) and
+   * answers `meta.truncated: true` when it had to; `meta.per_page` is always
+   * the EFFECTIVE size.
+   */
+  per_page?: number;
+}
+
+/**
+ * One row of `GET /api/public/subprojects` — the api's `SubprojectsResource`
+ * (app/Http/Resources/CodifySubprojects/SubprojectsResource.php). Scramble
+ * exports the resource as an opaque string, so the shape is pinned here from
+ * the transformer itself.
+ */
+export interface PublicSubprojectListItem {
+  id: number;
+  name: string;
+  domain: string | null;
+  logo: string | null;
+  team_count: number;
+  /** The subproject's codify tld (NYC → "nyc") or lower-cased acronym; null without metadata. */
+  slug: string | null;
+  /** Only when the api computed it (the search lane sets it); absent on the plain list. */
+  intent_count?: number | null;
+  /** `'pool'` when the row is a child of a ruled city pool, `'tld'` otherwise; absent with `intent_count`. */
+  intent_count_scope?: 'pool' | 'tld';
+  latest_team_member: string | null;
+  latest_team_members: string[] | null;
+}
+
+/** The `meta` block of the paginated `GET /api/public/subprojects` envelope. */
+export interface PublicSubprojectsPageMeta {
+  /** Rows across every page (the whole fleet on the brand apex). */
+  total: number;
+  /** The same number as `current_page` — the plan's clients read ONE name. */
+  page: number;
+  current_page: number;
+  /** The EFFECTIVE page size (fixed 50 today), not the requested one. */
+  per_page: number;
+  last_page: number;
+  /** true when `?per_page` asked above the fixed size and was clamped. */
+  truncated: boolean;
+}
+
+/**
+ * `GET /api/public/subprojects` envelope (CI-API `SubprojectsController::publicAll`,
+ * anti-bulk-exfiltration plan C8 / WS4 #5959): a Laravel paginator —
+ * `{ data, meta }` — NOT the `{ success, message, data }` wrapper most Core
+ * endpoints answer with.
+ */
+export interface PublicSubprojectsPage {
+  data: PublicSubprojectListItem[];
+  meta: PublicSubprojectsPageMeta;
+}
+
 /** POST /api/public/subprojects/search body. */
 export interface PublicSubprojectsSearchBody {
   search?: string;

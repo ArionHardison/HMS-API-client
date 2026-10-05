@@ -34,6 +34,10 @@ import type {
   PublicAuthBySocialTokenBody,
   PublicContactBody,
   PublicCreatorsFilterBody,
+  PublicSubprojectListItem,
+  PublicSubprojectsPage,
+  PublicSubprojectsPageMeta,
+  PublicSubprojectsQuery,
   PublicSubprojectsSearchBody,
   PublicVerifySocialTokenBody,
   SaveFrontendBody,
@@ -80,6 +84,10 @@ export type {
   PublicAuthBySocialTokenBody,
   PublicContactBody,
   PublicCreatorsFilterBody,
+  PublicSubprojectListItem,
+  PublicSubprojectsPage,
+  PublicSubprojectsPageMeta,
+  PublicSubprojectsQuery,
   PublicSubprojectsSearchBody,
   PublicVerifySocialTokenBody,
   SaveFrontendBody,
@@ -909,13 +917,41 @@ export class MiscCoreApiClient extends BaseApiClient {
     );
   }
 
-  /** GET /api/public/subprojects (public). */
-  async listPublicSubprojects(): Promise<ApiResponse<MiscCoreResponse>> {
-    return this.get<MiscCoreResponse>(
+  /**
+   * GET /api/public/subprojects (public) — the paginated public subproject
+   * directory.
+   *
+   * Envelope (CI-API `SubprojectsController::publicAll`, anti-bulk-exfiltration
+   * plan C8 / WS4 #5959): `{ data: SubprojectsResource[], meta: { total, page,
+   * current_page, per_page, last_page, truncated } }` — a Laravel paginator,
+   * NOT the `{ success, message, data }` wrapper. 50 rows per page: `meta.per_page`
+   * is the EFFECTIVE size, a `?per_page` above it is clamped and `meta.truncated`
+   * says so; `meta.page` duplicates `current_page`. On the brand apex the whole
+   * fleet is listable one page at a time (live 2026-10-05: `total` 37,312 /
+   * `last_page` 747); on a tenant host only the tenant's own row + its direct
+   * children; a host that resolves no tenant lists nothing. Tenant-scoped by
+   * `X-Domain` (`getDomain`). Page through `meta.last_page`; stop when `data`
+   * is empty.
+   *
+   * Rate limits: the `public-directory` limiter (120/min) inside the `api`
+   * bucket, plus the daily row budgets. A refusal throws `ApiError` with
+   * `status 429` and `retryAfter` (seconds) — back off for that long;
+   * `isRetryableError()` is false for it, so `useApi` never replays it.
+   *
+   * @param query `{ page?, per_page? }` — optional; `listPublicSubprojects()`
+   *   (the old zero-argument call) still works and returns page 1.
+   */
+  async listPublicSubprojects(
+    query: PublicSubprojectsQuery = {},
+  ): Promise<PublicSubprojectsPage> {
+    // `request()` types every body as the `ApiResponse` wrapper; this wire is
+    // the bare paginator, so the result is re-typed to what actually arrives.
+    const page = await this.get<PublicSubprojectListItem[]>(
       '/api/public/subprojects',
-      undefined,
+      { page: query.page, per_page: query.per_page },
       NO_AUTH,
     );
+    return page as unknown as PublicSubprojectsPage;
   }
 
   /** POST /api/public/subprojects/search (public). */

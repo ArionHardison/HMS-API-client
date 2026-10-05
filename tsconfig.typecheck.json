@@ -11,7 +11,8 @@
     "src/typed-client.ts",
     "src/api-client.ts",
     "src/__tests__/contract/typed-contract.test-d.ts",
-    "src/__tests__/contract/facilities-theme-signal.test-d.ts"
+    "src/__tests__/contract/facilities-theme-signal.test-d.ts",
+    "src/__tests__/contract/public-subprojects-page.test-d.ts"
   ],
   "exclude": [
     "node_modules",

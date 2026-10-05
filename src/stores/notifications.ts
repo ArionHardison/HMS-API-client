@@ -333,13 +333,17 @@ export const useNotificationStore = defineStore('notifications', () => {
     });
   }
 
-  function apiError(error: any, context?: string) {
-    const message = error?.message || error?.toString() || 'An unexpected error occurred';
+  function apiError(err: any, context?: string) {
+    // The parameter used to be named `error`, shadowing the store's own
+    // `error()` above — `useApi`'s default error-notification path threw
+    // `TypeError: error is not a function` instead of toasting. Pinned in
+    // src/composables/__tests__/useApi.retry.test.ts.
+    const message = err?.message || err?.toString() || 'An unexpected error occurred';
     const title = context ? `${context} Failed` : 'Error';
-    
+
     return error(title, message, {
       group: 'api-error',
-      data: { error, context }
+      data: { error: err, context }
     });
   }
 

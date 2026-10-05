@@ -926,12 +926,19 @@ export class MiscCoreApiClient extends BaseApiClient {
    * current_page, per_page, last_page, truncated } }` — a Laravel paginator,
    * NOT the `{ success, message, data }` wrapper. 50 rows per page: `meta.per_page`
    * is the EFFECTIVE size, a `?per_page` above it is clamped and `meta.truncated`
-   * says so; `meta.page` duplicates `current_page`. On the brand apex the whole
-   * fleet is listable one page at a time (live 2026-10-05: `total` 37,312 /
-   * `last_page` 747); on a tenant host only the tenant's own row + its direct
-   * children; a host that resolves no tenant lists nothing. Tenant-scoped by
-   * `X-Domain` (`getDomain`). Page through `meta.last_page`; stop when `data`
-   * is empty.
+   * says so; `meta.page` duplicates `current_page`. Tenant-scoped by the tenant
+   * headers the client sends from `getDomain`: `X-Tenant-Domain` (the one the
+   * api resolves — `SetDomainContext` reads it first) and `X-Domain` beside it
+   * with the same value (the controller's brand-apex check still reads
+   * `X-Domain`). On a tenant host the page lists the tenant's own row + its
+   * direct children; a host that resolves no tenant lists nothing. The
+   * brand-apex FLEET listing (live 2026-10-05: `total` 37,312 / `last_page`
+   * 747) requires `baseURL: 'https://openyc.org'` — the apex's OWN host: on
+   * the api hostnames (`https://api.project20x.com`, `https://api.openyc.org`)
+   * the api's proxy overwrites `X-Domain` with its own Host, the apex check
+   * never sees the apex, and the directory answers the one resolved tenant
+   * (`total` 1). Api follow-up: read the resolved tenant instead of the raw
+   * header. Page through `meta.last_page`; stop when `data` is empty.
    *
    * Rate limits: the `public-directory` limiter (120/min) inside the `api`
    * bucket, plus the daily row budgets. A refusal throws `ApiError` with

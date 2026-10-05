@@ -7,6 +7,14 @@ follows SemVer.
 
 ## [Unreleased]
 
+## [1.21.0] — 2026-10-05
+
+Everything recorded since 1.4.0 ships in this release. Consumers receive it
+from a rebuilt `dist/` — a vendored `npm pack` tarball (how sys consumes the
+SDK; see README → Publishing) or the `v1.21.0` tag's publish workflow. The
+tracked `dist/` on `main` and sys's vendored `1.20.0` tarball do NOT carry the
+`X-Tenant-Domain` header or any other change below.
+
 ### Added
 
 - **`Retry-After` on the thrown error (anti-bulk-exfiltration plan C10 /
@@ -50,7 +58,12 @@ follows SemVer.
   inside the server's `Retry-After` window, extending the refusal. It now
   replays only 5xx and network failures (`isRetryableError`); 4xx — 429
   included — surface at once with `retryAfter` for the caller to schedule.
-  The 5xx / network ladder is unchanged.
+  A 5xx / network replay now waits the LONGER of the linear ladder
+  (`retryDelay * (n + 1)`) and the server's `Retry-After`, capped at
+  `RETRY_AFTER_CAP_SECONDS` = 120 s (plan C10's client cooldown cap) — a 503
+  shed saying `Retry-After: 30` (the api's fail-closed budget store, plan §4)
+  is replayed at 30 s, not 1 s. Without a `Retry-After` the ladder is exactly
+  the old one.
 - **`listPublicSubprojects()` return type** is now `Promise<PublicSubprojectsPage>`
   (`{ data, meta }`) instead of `Promise<ApiResponse<MiscCoreResponse>>`. The
   endpoint's wire is a Laravel paginator and never carried `success` /
@@ -74,6 +87,23 @@ follows SemVer.
 
 ### Fixed
 
+- **`useApi` cache hit clears `retryAfter`.** The cache-hit branch reset
+  `data` / `success` / `error` / `rawError` but not `retryAfter`, so a cached
+  success after a 429 on other arguments reported `success: true` beside a
+  stale cooldown. It is `null` there now (the field mirrors `rawError`).
+- **`listPublicSubprojects()` docblock** named `X-Domain` as the tenant
+  carrier and promised the brand-apex fleet listing on any host. It now names
+  both tenant headers (`X-Tenant-Domain` is the one the api resolves; the
+  controller's apex check still reads `X-Domain`) and states that the fleet
+  listing needs `baseURL: 'https://openyc.org'` — on the api hostnames the
+  proxy overwrites `X-Domain`, so the directory answers the one resolved
+  tenant (`total` 1).
+- **`publish.yml` test job generates the types before it builds.**
+  `src/generated/api-types.ts` is gitignored; `build:lib` (`tsc`) and the
+  coverage contract both read it, so on a clean runner the tag path failed
+  before this (`TS2307` in `src/typed-contract.ts`, `ENOENT` in
+  `spec-coverage.contract.test.ts`). `npm run generate:types` now runs right
+  after `npm ci` — the same order `sre-contract.yml`'s `types:check` uses.
 - **Notifications store `apiError()`** — its parameter was named `error`,
   shadowing the store's own `error()` function, so `useApi`'s default
   error-notification path (`showErrorNotification: true`) threw
@@ -90,6 +120,26 @@ follows SemVer.
   `pipeline_id` is unchanged. Type-only; no runtime change. Pinned at compile
   time (`src/__tests__/contract/facilities-theme-signal.test-d.ts`) and at
   runtime (`src/api/__tests__/facilities.test.ts`).
+
+### Known limitations
+
+- **`useApi` is not shipped by the package root.** The Vue 3 composables and
+  Pinia stores live behind `src/vue3/index.ts`, which neither `tsconfig.json`
+  nor `tsconfig.esm.json` includes, and `package.json` `exports` has only `"."`
+  — so `@arionhardison/wizard-api-client/vue3` does not resolve and no consumer
+  imports `useApi` today (sys / gov / www / app: zero call sites). The no-4xx
+  retry behaviour above is therefore in-repo until a `./vue3` subpath ships;
+  `ApiError.retryAfter` / `rateLimit`, `isRetryableError`,
+  `listPublicSubprojects({ page })` and the `X-Tenant-Domain` header ARE in the
+  built `dist/`.
+- **`WizardApiClient`'s job socket dials same-origin `/ws/jobs`.**
+  `initWebSocket()` (opened only when the first job / deal listener is
+  registered — never at construction) builds `wss://<page host>/ws/jobs`
+  (`localhost:6001` on localhost) and reschedules itself every 5 s on close.
+  Once a Vercel-hosted consumer's `/ws` rewrite to the raw origin is deleted
+  (WS8) that URL 404s there, so the socket is inert on Vercel; no consumer
+  registers a listener today. Follow-up: an opt-in `wsURL` in `ApiClientConfig`
+  (no default dial) and capped reconnects.
 
 ## [1.4.0] — 2026-05-17
 

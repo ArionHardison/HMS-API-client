@@ -5,9 +5,13 @@
  *     `retryDelay * (n + 1)` ms lands inside the server's `Retry-After`
  *     window and extends the refusal. Before this pin `executeWithRetry`
  *     retried ANY error while `retry > 0`.
- *   - a 5xx and a network failure keep the retry ladder exactly as before;
+ *   - a 5xx and a network failure keep the retry ladder as before, except
+ *     that a replay now waits the LONGER of the ladder and the server's
+ *     `Retry-After` (capped at `RETRY_AFTER_CAP_SECONDS` = 120 s, plan C10's
+ *     cooldown cap) — a 503 shed saying 30 is replayed at 30 s, not 1 s;
  *   - the 429's `Retry-After` reaches the caller: `state.retryAfter` and
- *     `rawError.retryAfter` (seconds), so the CALLER schedules the retry.
+ *     `rawError.retryAfter` (seconds), so the CALLER schedules the retry;
+ *   - a cache hit clears `state.retryAfter` (it mirrors `rawError`, null there).
  *
  * Also pins the notifications store's `apiError()` on the composable's
  * DEFAULT error path (`showErrorNotification: true`): its parameter used to
@@ -18,7 +22,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import { ApiError } from '../../api/error-handling';
 import { useNotificationStore } from '../../stores/notifications';
-import { useApi } from '../useApi';
+import { RETRY_AFTER_CAP_SECONDS, useApi } from '../useApi';
 
 const OK = { data: { success: true, message: '', data: { ok: true } } };
 
@@ -134,16 +138,6 @@ describe('useApi — the 5xx / network retry ladder is unchanged', () => {
     expect(api.state.value.retryAfter).toBeNull();
   });
 
-  it('a 503 shed with Retry-After is still replayed (5xx) and, when it keeps refusing, the wait is surfaced', async () => {
-    const apiFn = vi.fn().mockRejectedValue(apiErrorOf(503, { retryAfter: 30, message: 'Rate limiter unavailable.' }));
-    const api = useApi(apiFn, { retry: 1, retryDelay: 0, showErrorNotification: false });
-
-    await expect(api.execute('shed')).resolves.toBeNull();
-
-    expect(apiFn).toHaveBeenCalledTimes(2);
-    expect(api.state.value.retryAfter).toBe(30);
-  });
-
   it('a network failure (no HTTP status) is replayed', async () => {
     const apiFn = vi.fn()
       .mockRejectedValueOnce(new TypeError('fetch failed'))
@@ -173,6 +167,150 @@ describe('useApi — the 5xx / network retry ladder is unchanged', () => {
     expect(apiFn).toHaveBeenCalledTimes(3);
     // 20 ms + 40 ms of waits; a lower bound only, so a slow runner cannot flake it.
     expect(elapsed).toBeGreaterThanOrEqual(50);
+  });
+});
+
+describe('useApi — a 5xx replay waits out the server\'s Retry-After (capped at 120 s)', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('the cap is plan C10\'s 120 s', () => {
+    expect(RETRY_AFTER_CAP_SECONDS).toBe(120);
+  });
+
+  it('a 503 shed with Retry-After: 30 is replayed after 30 s, not after retryDelay', async () => {
+    const apiFn = vi.fn()
+      .mockRejectedValueOnce(apiErrorOf(503, { retryAfter: 30, message: 'Rate limiter unavailable.' }))
+      .mockResolvedValueOnce(OK);
+    const api = useApi(apiFn, { retry: 1, retryDelay: 0, showErrorNotification: false });
+
+    const pending = api.execute('shed-30');
+    await vi.advanceTimersByTimeAsync(29_999);
+    expect(apiFn).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(apiFn).toHaveBeenCalledTimes(2);
+
+    await expect(pending).resolves.toEqual({ ok: true });
+    expect(api.state.value.retryAfter).toBeNull();
+    expect(api.state.value.success).toBe(true);
+  });
+
+  it('a 503 shed that keeps refusing is replayed `retry` times at the server\'s pace and the wait is surfaced', async () => {
+    const apiFn = vi.fn().mockRejectedValue(apiErrorOf(503, { retryAfter: 30, message: 'Rate limiter unavailable.' }));
+    const api = useApi(apiFn, { retry: 1, retryDelay: 0, showErrorNotification: false });
+
+    const pending = api.execute('shed-keeps');
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(apiFn).toHaveBeenCalledTimes(2);
+
+    await expect(pending).resolves.toBeNull();
+    expect(api.state.value.rawError.status).toBe(503);
+    expect(api.state.value.retryAfter).toBe(30);
+  });
+
+  it('a Retry-After beyond the cap waits exactly 120 s, never longer', async () => {
+    const apiFn = vi.fn()
+      .mockRejectedValueOnce(apiErrorOf(503, { retryAfter: 3600 }))
+      .mockResolvedValueOnce(OK);
+    const api = useApi(apiFn, { retry: 1, retryDelay: 0, showErrorNotification: false });
+
+    const pending = api.execute('shed-3600');
+    await vi.advanceTimersByTimeAsync(RETRY_AFTER_CAP_SECONDS * 1000 - 1);
+    expect(apiFn).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(apiFn).toHaveBeenCalledTimes(2);
+
+    await expect(pending).resolves.toEqual({ ok: true });
+  });
+
+  it('the ladder wins when it is longer than Retry-After', async () => {
+    const apiFn = vi.fn()
+      .mockRejectedValueOnce(apiErrorOf(502, { retryAfter: 1 }))
+      .mockResolvedValueOnce(OK);
+    const api = useApi(apiFn, { retry: 1, retryDelay: 5_000, showErrorNotification: false });
+
+    const pending = api.execute('ladder-wins');
+    await vi.advanceTimersByTimeAsync(4_999);
+    expect(apiFn).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(apiFn).toHaveBeenCalledTimes(2);
+
+    await expect(pending).resolves.toEqual({ ok: true });
+  });
+
+  it('without a Retry-After the ladder is exactly the old `retryDelay * (n + 1)`', async () => {
+    const apiFn = vi.fn()
+      .mockRejectedValueOnce(apiErrorOf(500))
+      .mockRejectedValueOnce(apiErrorOf(500))
+      .mockResolvedValueOnce(OK);
+    const api = useApi(apiFn, { retry: 2, retryDelay: 1_000, showErrorNotification: false });
+
+    const pending = api.execute('plain-ladder');
+    await vi.advanceTimersByTimeAsync(999);
+    expect(apiFn).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(1); // 1 000 ms
+    expect(apiFn).toHaveBeenCalledTimes(2);
+    await vi.advanceTimersByTimeAsync(1_999);
+    expect(apiFn).toHaveBeenCalledTimes(2);
+    await vi.advanceTimersByTimeAsync(1); // + 2 000 ms
+    expect(apiFn).toHaveBeenCalledTimes(3);
+
+    await expect(pending).resolves.toEqual({ ok: true });
+  });
+
+  it('a network failure with no Retry-After keeps the ladder too', async () => {
+    const apiFn = vi.fn()
+      .mockRejectedValueOnce(new TypeError('fetch failed'))
+      .mockResolvedValueOnce(OK);
+    const api = useApi(apiFn, { retry: 1, retryDelay: 250, showErrorNotification: false });
+
+    const pending = api.execute('network-ladder');
+    await vi.advanceTimersByTimeAsync(249);
+    expect(apiFn).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(1);
+    expect(apiFn).toHaveBeenCalledTimes(2);
+
+    await expect(pending).resolves.toEqual({ ok: true });
+  });
+
+  it('a 429 is still never replayed, however short its Retry-After', async () => {
+    const apiFn = vi.fn().mockRejectedValue(apiErrorOf(429, { retryAfter: 1 }));
+    const api = useApi(apiFn, { retry: 3, retryDelay: 0, showErrorNotification: false });
+
+    const pending = api.execute('429-short');
+    await vi.advanceTimersByTimeAsync(10_000);
+
+    await expect(pending).resolves.toBeNull();
+    expect(apiFn).toHaveBeenCalledTimes(1);
+    expect(api.state.value.retryAfter).toBe(1);
+  });
+});
+
+describe('useApi — a cache hit clears a stale retryAfter', () => {
+  it('a cached success after a 429 on other arguments reports success with retryAfter null', async () => {
+    const apiFn = vi.fn(async (which: string) => {
+      if (which === 'refused') throw apiErrorOf(429, { retryAfter: 30 });
+      return OK;
+    });
+    const api = useApi<{ ok: boolean }>(apiFn, { cache: true, showErrorNotification: false });
+    api.clearCache();
+
+    await expect(api.execute('cached-ok')).resolves.toEqual({ ok: true }); // fills the cache
+    await expect(api.execute('refused')).resolves.toBeNull();
+    expect(api.state.value.retryAfter).toBe(30);
+    expect(api.state.value.success).toBe(false);
+
+    await expect(api.execute('cached-ok')).resolves.toEqual({ ok: true }); // served from the cache
+    expect(apiFn).toHaveBeenCalledTimes(2);
+    expect(api.state.value.success).toBe(true);
+    expect(api.state.value.rawError).toBeNull();
+    expect(api.state.value.error).toBeNull();
+    expect(api.state.value.retryAfter).toBeNull();
   });
 });
 

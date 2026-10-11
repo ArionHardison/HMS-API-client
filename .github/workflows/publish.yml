@@ -20,6 +20,13 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      # `src/generated/api-types.ts` is gitignored (regenerated from
+      # spec/openapi.json); build:lib (tsc) and the coverage contract both read
+      # it, so a clean runner must generate it first — the same order
+      # sre-contract.yml's types:check uses. Without this step the tag path
+      # failed with TS2307 in src/typed-contract.ts and ENOENT in
+      # spec-coverage.contract.test.ts.
+      - run: npm run generate:types
       - run: npm run build:lib
       - run: npm run test
       - uses: actions/upload-artifact@v4

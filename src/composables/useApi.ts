@@ -8,7 +8,7 @@
 import { ref, computed, watch, onUnmounted } from 'vue';
 import { hmsApiClient } from '../api';
 import { useNotificationStore } from '../stores/notifications';
-import { processApiError, getErrorMessage } from '../api/error-handling';
+import { processApiError, getErrorMessage, isRetryableError } from '../api/error-handling';
 
 interface ApiOptions {
   immediate?: boolean;
@@ -32,10 +32,24 @@ interface ApiState<T> {
   rawError: any;
   success: boolean;
   lastFetch: Date | null;
+  /**
+   * Seconds the server asked us to wait (`Retry-After`) when the last call
+   * was refused — a 429 or a 503 shed. `null` otherwise, including after a
+   * cache hit. Mirrors `rawError.retryAfter` so a view can render "try again
+   * in N s" directly.
+   */
+  retryAfter: number | null;
 }
 
 const cache = new Map<string, { data: any; timestamp: number; expiry: number }>();
 const pendingRequests = new Map<string, Promise<any>>();
+
+/**
+ * Plan C10's client cooldown cap. A server-stated `Retry-After` longer than
+ * this is honoured as 120 s, never as the raw number, so one header cannot
+ * park a view for an hour (app/'s global cooldown carries the same cap).
+ */
+export const RETRY_AFTER_CAP_SECONDS = 120;
 
 export function useApi<T = any>(
   apiFn: (...args: any[]) => Promise<any>,
@@ -65,7 +79,8 @@ export function useApi<T = any>(
     error: null,
     rawError: null,
     success: false,
-    lastFetch: null
+    lastFetch: null,
+    retryAfter: null
   });
 
   // Computed
@@ -100,14 +115,37 @@ export function useApi<T = any>(
     });
   }
 
-  // Execute API call with retry logic
+  // How long to wait before replaying a retryable failure: the linear ladder
+  // (`retryDelay * (n + 1)`) or the server's `Retry-After` (capped at
+  // `RETRY_AFTER_CAP_SECONDS`), whichever is LONGER. A 503 shed that says
+  // `Retry-After: 30` (the api's fail-closed budget store, plan §4) is replayed
+  // at 30 s, not at 1 s — the replay never lands inside the window the server
+  // stated. Without a `Retry-After` the ladder is exactly the old one.
+  function replayWaitMs(error: unknown, attempts: number): number {
+    const ladder = retryDelay * (attempts + 1);
+    const retryAfter = processApiError(error).retryAfter;
+    if (typeof retryAfter === 'number' && retryAfter > 0) {
+      return Math.max(ladder, Math.min(retryAfter, RETRY_AFTER_CAP_SECONDS) * 1000);
+    }
+    return ladder;
+  }
+
+  // Execute API call with retry logic.
+  //
+  // Only a 5xx or a network failure is replayed. A 4xx is NEVER retried
+  // (anti-bulk-exfiltration plan C10, WS8): the request is the client's own
+  // fault — bad input, auth, not found — and a 429 replayed at
+  // `retryDelay * (n + 1)` ms would land inside the server's `Retry-After`
+  // window and extend the refusal. The 429's `retryAfter` rides on the thrown
+  // `ApiError` (and on `state.retryAfter`) so the CALLER schedules the retry.
+  // A 5xx replay waits out the server's `Retry-After` (`replayWaitMs`).
   async function executeWithRetry(args: any[], attempts = 0): Promise<any> {
     try {
       const response = await apiFn(...args);
       return response;
     } catch (error) {
-      if (attempts < retry) {
-        await new Promise(resolve => setTimeout(resolve, retryDelay * (attempts + 1)));
+      if (attempts < retry && isRetryableError(error)) {
+        await new Promise(resolve => setTimeout(resolve, replayWaitMs(error, attempts)));
         return executeWithRetry(args, attempts + 1);
       }
       throw error;
@@ -126,6 +164,9 @@ export function useApi<T = any>(
         state.value.success = true;
         state.value.error = null;
         state.value.rawError = null;
+        // A refusal on another argument set must not leave its cooldown
+        // beside fresh data — the field mirrors `rawError`, which is null here.
+        state.value.retryAfter = null;
         return cached;
       }
     }
@@ -139,6 +180,7 @@ export function useApi<T = any>(
     state.value.error = null;
     state.value.rawError = null;
     state.value.success = false;
+    state.value.retryAfter = null;
 
     const promise = (async () => {
       try {
@@ -178,6 +220,7 @@ export function useApi<T = any>(
         state.value.error = errorMessage;
         state.value.rawError = apiError;
         state.value.success = false;
+        state.value.retryAfter = apiError.retryAfter ?? null;
 
         // Error callback
         if (onError) {
@@ -230,7 +273,8 @@ export function useApi<T = any>(
       error: null,
       rawError: null,
       success: false,
-      lastFetch: null
+      lastFetch: null,
+      retryAfter: null
     };
   }
 

@@ -33,6 +33,111 @@ export interface ApiErrorInit {
    * inspection (status text, raw body, etc).
    */
   originalError?: any;
+  /**
+   * Seconds to wait before retrying, already normalized from `Retry-After`
+   * (delta-seconds or HTTP-date) with the api's `retry_after` body field as
+   * the fallback. `null` / omitted when the response carried neither.
+   */
+  retryAfter?: number | null;
+  /** Rate-limit detail for a refusal (429, or the api's `rate_limited` / `rate_limiter_unavailable` body). */
+  rateLimit?: RateLimitInfo;
+}
+
+// =============================================================================
+// Rate-limit contract (CI-API anti-bulk-exfiltration plan C5 / §4, WS1):
+//   429  { message, error: 'rate_limited', scope, limit, window, retry_after }
+//   503  { message, error: 'rate_limiter_unavailable', scope, retry_after }
+// each with `Retry-After` (+ X-RateLimit-* / RateLimit-Policy). `Retry-After`
+// and `retry_after` are ONE number, >= 1. The api exposes Retry-After through
+// CORS (`exposed_headers`) so a cross-origin browser consumer can read it.
+// =============================================================================
+
+/** Typed rate-limit detail surfaced on `ApiError.rateLimit`. */
+export interface RateLimitInfo {
+  /** Seconds to wait — the same number as `ApiError.retryAfter`. */
+  retryAfter: number | null;
+  /** The api's refusal word: `'rate_limited'` (429) or `'rate_limiter_unavailable'` (503 shed). */
+  error?: string;
+  /** The named limiter / budget scope that refused (`public-directory`, `api`, `daily_rows`, ...). */
+  scope?: string;
+  /** The ceiling of the bucket that refused. */
+  limit?: number;
+  /** `'minute' | 'hour' | 'day' | '<n>m'`. */
+  window?: string;
+}
+
+const RATE_LIMIT_ERROR_WORDS = new Set(['rate_limited', 'rate_limiter_unavailable']);
+
+/**
+ * Parse a `Retry-After` header value into whole seconds from `now`.
+ *
+ * RFC 7231 §7.1.3 allows two forms: delta-seconds (`"30"`) and an HTTP-date
+ * (`"Wed, 21 Oct 2015 07:28:00 GMT"`). Delta-seconds are returned as-is; an
+ * HTTP-date becomes the seconds until that instant (ceil), clamped at 0 when
+ * it is already in the past. Anything else — empty, missing, a bare word, a
+ * fraction — is `null`: the caller falls back to the body or its own default,
+ * never to a guessed number. Only strings carrying a month / day name are
+ * tried as dates so `Date.parse`'s lenient numeric forms cannot leak in.
+ */
+export function parseRetryAfter(
+  value: string | null | undefined,
+  now: number = Date.now(),
+): number | null {
+  if (value == null) return null;
+  const v = String(value).trim();
+  if (v === '') return null;
+  if (/^\d+$/.test(v)) return Number(v);
+  if (!/[A-Za-z]{3}/.test(v)) return null;
+  const at = Date.parse(v);
+  if (Number.isNaN(at)) return null;
+  return Math.max(0, Math.ceil((at - now) / 1000));
+}
+
+/** The api's `retry_after` body field when the body is the plan's refusal envelope; else `null`. */
+export function bodyRetryAfter(body: unknown): number | null {
+  if (!body || typeof body !== 'object') return null;
+  const ra = (body as { retry_after?: unknown }).retry_after;
+  return typeof ra === 'number' && Number.isFinite(ra) && ra >= 0 ? ra : null;
+}
+
+/**
+ * Build the typed `RateLimitInfo` for a refusal. Returns `undefined` unless
+ * the status is 429 or the body carries one of the api's refusal words — a
+ * plain 404 / 500 never grows a `rateLimit` field.
+ */
+export function rateLimitInfoFrom(
+  status: number,
+  body: unknown,
+  retryAfter: number | null,
+): RateLimitInfo | undefined {
+  const b = (body && typeof body === 'object') ? (body as Record<string, unknown>) : {};
+  const word = typeof b.error === 'string' ? b.error : undefined;
+  if (status !== 429 && !(word && RATE_LIMIT_ERROR_WORDS.has(word))) return undefined;
+  const info: RateLimitInfo = { retryAfter };
+  if (word) info.error = word;
+  if (typeof b.scope === 'string') info.scope = b.scope;
+  if (typeof b.limit === 'number') info.limit = b.limit;
+  if (typeof b.window === 'string') info.window = b.window;
+  return info;
+}
+
+/** Read one header off an axios `response.headers` (AxiosHeaders or a plain, lower-cased object). */
+function axiosHeader(headers: unknown, name: string): string | null {
+  if (!headers || typeof headers !== 'object') return null;
+  const h = headers as { get?: (n: string) => unknown } & Record<string, unknown>;
+  if (typeof h.get === 'function') {
+    const got = h.get(name);
+    if (typeof got === 'string') return got;
+    if (got != null) return String(got);
+  }
+  const lower = name.toLowerCase();
+  for (const key of Object.keys(h)) {
+    if (key.toLowerCase() === lower) {
+      const got = h[key];
+      return got == null ? null : String(got);
+    }
+  }
+  return null;
 }
 
 /**
@@ -75,6 +180,17 @@ export class ApiError extends Error {
   readonly validationErrors?: Record<string, string[]>;
   readonly isApiError: boolean = true;
   readonly originalError: any;
+  /**
+   * Seconds the server asked the client to wait before retrying: the
+   * `Retry-After` header (delta-seconds or HTTP-date, normalized to whole
+   * seconds from now) first, the api's `retry_after` body field as the
+   * fallback; `null` when the response carried neither. Present on EVERY
+   * ApiError so a caller can back off a 429 (or a 503 shed) without
+   * re-reading response headers. Never replay a 429 inside this window.
+   */
+  readonly retryAfter: number | null;
+  /** Rate-limit detail when the response was a refusal (429, or the api's `rate_limited` / `rate_limiter_unavailable` body). */
+  readonly rateLimit?: RateLimitInfo;
 
   /**
    * Create a new ApiError. Accepts either an AxiosError (legacy) or a
@@ -107,6 +223,9 @@ export class ApiError extends Error {
       };
       this.status = err.response?.status || 0;
       this.data = err.response?.data?.data;
+      this.retryAfter = parseRetryAfter(axiosHeader(err.response?.headers, 'retry-after'))
+        ?? bodyRetryAfter(err.response?.data);
+      this.rateLimit = rateLimitInfoFrom(this.status, err.response?.data, this.retryAfter);
       // Extract validation errors. Two shapes seen in the wild:
       //   - Wrapped: `{ data: { errors: { field: [...] } } }` (legacy HMS).
       //   - Top-level: `{ errors: { field: [...] } }` (Laravel default).
@@ -123,6 +242,8 @@ export class ApiError extends Error {
       this.originalError = init.originalError ?? init;
       this.status = init.status ?? 0;
       this.data = init.data;
+      this.retryAfter = init.retryAfter ?? null;
+      if (init.rateLimit) this.rateLimit = init.rateLimit;
       if (init.validationErrors) {
         this.errors = init.validationErrors;
         this.validationErrors = init.validationErrors;
@@ -174,6 +295,14 @@ export class ApiError extends Error {
   }
 
   /**
+   * Check if this is a rate-limit refusal (HTTP 429). Back off for
+   * `retryAfter` seconds; never replay the request inside that window.
+   */
+  isRateLimitError(): boolean {
+    return this.status === 429;
+  }
+
+  /**
    * Get all validation errors
    */
   getValidationErrors(): Record<string, string[]> {
@@ -217,6 +346,7 @@ export class ApiError extends Error {
       name: this.name,
       message: this.message,
       status: this.status,
+      retryAfter: this.retryAfter,
       validationErrors: this.validationErrors,
     };
   }
@@ -243,6 +373,31 @@ export function processApiError(error: any): ApiError {
     message: error?.message ?? 'Unknown error',
     originalError: error,
   });
+}
+
+/**
+ * HTTP status of a thrown error across the SDK's error shapes — `ApiError`
+ * (fetch pipeline), an AxiosError (legacy axios clients), or anything else.
+ * `null` when there is no HTTP status: a network failure, an abort, a
+ * programmer error.
+ */
+export function httpStatusOf(error: unknown): number | null {
+  if (!error || typeof error !== 'object') return null;
+  const e = error as { isApiError?: unknown; status?: unknown; response?: { status?: unknown } | null };
+  const status = e.isApiError === true ? e.status : (e.response?.status ?? e.status);
+  return typeof status === 'number' && status > 0 ? status : null;
+}
+
+/**
+ * Whether replaying the SAME request can help. A 4xx is the client's own
+ * fault — bad input (400/422), auth (401/403), a missing row (404), a lock
+ * (423) or a rate-limit refusal (429) — so an unchanged replay can only lose,
+ * and a 429 replayed inside `Retry-After` extends the ban (plan C10: the sdk
+ * never retries 4xx). 5xx and network failures (no status) stay retryable.
+ */
+export function isRetryableError(error: unknown): boolean {
+  const status = httpStatusOf(error);
+  return status === null || status >= 500;
 }
 
 /**
@@ -303,6 +458,14 @@ export function getErrorMessage(error: any): string {
     return 'The requested resource was not found.';
   }
   
+  // Rate-limit refusals — say how long to wait when the server said so.
+  if (apiError.isRateLimitError()) {
+    const wait = apiError.retryAfter;
+    return wait == null
+      ? 'Too many requests. Please try again shortly.'
+      : `Too many requests. Please try again in ${wait} second${wait === 1 ? '' : 's'}.`;
+  }
+
   // Server errors
   if (apiError.isServerError()) {
     return 'A server error occurred. Please try again later.';

@@ -140,6 +140,14 @@ const removeListener = wizardApiClient.addJobListener(
 removeListener();
 ```
 
+> **Hosting note.** The job socket opens only when the first listener is
+> registered (never at construction) and dials the SAME-ORIGIN
+> `wss://<page host>/ws/jobs` (`ws://localhost:6001/ws/jobs` on localhost),
+> reconnecting every 5 s on close. Only a host that terminates that path itself
+> can serve it; a Vercel-hosted consumer cannot once its `/ws` rewrite to the
+> raw origin is deleted (WS8) — there the socket is inert, and today no consumer
+> registers a listener. An opt-in `wsURL` with capped reconnects is a follow-up.
+
 ## Version Management
 
 The client provides full support for the versioning system:
@@ -287,6 +295,56 @@ try {
 }
 ```
 
+### Rate limits (429) and retries
+
+The api refuses over-limit traffic with `429` + `Retry-After` and the body
+`{ message, error: 'rate_limited', scope, limit, window, retry_after }` (a
+Redis outage sheds with `503` + `Retry-After` and `error: 'rate_limiter_unavailable'`).
+The SDK surfaces the wait as a typed field on the thrown `ApiError` and never
+replays a 4xx on its own:
+
+```typescript
+import { ApiError, MiscCoreApiClient, isRetryableError } from '@arionhardison/wizard-api-client';
+
+// A Vercel-hosted consumer passes an absolute, Cloudflare-fronted baseURL (no
+// trailing /api); the hostname the page is served from is the tenant.
+const misc = new MiscCoreApiClient({
+  baseURL: 'https://api.project20x.com',
+  getDomain: () => window.location.hostname,
+});
+
+try {
+  const page = await misc.listPublicSubprojects({ page: 2 });
+  console.log(page.meta.last_page, page.data.length);
+} catch (error) {
+  if (error instanceof ApiError && error.isRateLimitError()) {
+    // `retryAfter` is in SECONDS (Retry-After header, or the body's retry_after);
+    // null when the server sent neither. Schedule the retry yourself — a 429
+    // replayed inside the window only extends the refusal.
+    const wait = error.retryAfter ?? 30;
+    console.warn(`rate limited on ${error.rateLimit?.scope}; retrying in ${wait}s`);
+    setTimeout(() => retryLater(), wait * 1000);
+  } else if (isRetryableError(error)) {
+    // 5xx or a network failure — safe to retry (useApi's `retry` option does this).
+  }
+}
+```
+
+`useApi({ retry, retryDelay })` replays only 5xx and network failures, waiting
+the LONGER of its linear ladder (`retryDelay * (n + 1)`) and the server's
+`Retry-After` (capped at 120 s — plan C10's cooldown cap), so a `503` shed that
+says `Retry-After: 30` is replayed at 30 s, not 1 s; 4xx — 429 included —
+surface at once, with `state.retryAfter` set.
+
+> **Packaging note.** `useApi` (and the other Vue 3 composables / Pinia stores
+> behind `src/vue3/`) is NOT shipped by the package's root entry today:
+> `exports` has only `"."`, `tsconfig.json` builds `src/index.ts` + `src/api/**`
+> only, and no consumer imports it (sys / gov / www / app: zero call sites).
+> Everything else in this section — `ApiError.retryAfter` / `rateLimit`,
+> `isRetryableError`, `listPublicSubprojects({ page })`, the `X-Tenant-Domain`
+> header — IS in the built `dist/`. Shipping a `./vue3` subpath is a separate
+> packaging change.
+
 ## Development
 
 ### Building the client
@@ -328,9 +386,14 @@ Publishes are driven by `.github/workflows/publish.yml` and fire on either:
 - A tag push matching `v*.*.*` (the canonical path)
 - `workflow_dispatch` — manual ad-hoc rerun via the Actions tab
 
-The workflow runs `npm ci`, `npm run test`, `npm run build`, then publishes to
-`https://npm.pkg.github.com` using the built-in `GITHUB_TOKEN` — no extra
-secrets to configure on the repo.
+The workflow's `test` job runs `npm ci`, `npm run generate:types` (the
+gitignored `src/generated/api-types.ts` that `build:lib` and the coverage
+contract read — a clean runner has to generate it first), `npm run build:lib`,
+`npm run test`; the `publish` job then runs `npm publish` (its `prepublishOnly`
+rebuilds) against `https://npm.pkg.github.com` using the built-in
+`GITHUB_TOKEN` — no extra secrets to configure on the repo. `package.json`'s
+`publishConfig.registry` names npmjs.org, but `setup-node`'s `registry-url`
+wins in CI, so the effective target is GitHub Packages.
 
 ### Cutting a release
 
@@ -350,6 +413,27 @@ git push origin main --tags
 
 The tag push triggers the workflow; on success the new version appears at
 `https://github.com/ArionHardison/HMS-API-client/packages`.
+
+### Vendoring a tarball (how sys consumes the SDK)
+
+HardisonCo/CI-MFE (`sys/`) reads no registry: it pins
+`"@arionhardison/wizard-api-client": "file:vendor/arionhardison-wizard-api-client-<version>.tgz"`
+with that tarball's integrity in its lockfile. To hand it a release:
+
+```bash
+# in this repo, at the release commit (version already bumped)
+npm ci
+npm run build          # prebuild: rm -rf dist + generate:types; then cjs + esm + vite bundles
+npm pack               # → arionhardison-wizard-api-client-<version>.tgz
+
+# in sys/
+cp ../HMS-API-client/arionhardison-wizard-api-client-<version>.tgz vendor/
+#   point package.json's file: entry at the new name, then refresh the lockfile:
+npm install            # `npm ci` against a swapped tarball of the SAME name fails EINTEGRITY
+```
+
+Bump the version first: a rebuilt tarball under an old file name collides with
+the lockfile's integrity for that name.
 
 ### Consuming the package
 

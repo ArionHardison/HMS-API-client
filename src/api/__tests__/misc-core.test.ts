@@ -1204,19 +1204,80 @@ describe('MiscCoreApiClient — long-tail Core endpoints', () => {
     expectNoAuthHeader(captured.current!);
   });
 
-  it('listPublicSubprojects() — GET /api/public/subprojects', async () => {
+  // GET /api/public/subprojects answers a Laravel paginator (CI-API
+  // SubprojectsController::publicAll, anti-bulk-exfiltration plan C8 / WS4
+  // #5959) — `{ data, meta }`, no `success` / `message`. This fixture is the
+  // live wire of 2026-10-05 trimmed to two rows.
+  const PUBLIC_SUBPROJECTS_PAGE = {
+    data: [
+      { id: 18602, name: 'Police Department', domain: 'lapd.codify.la', logo: null, team_count: 0, slug: 'lapd', latest_team_member: null, latest_team_members: null },
+      { id: 18603, name: 'Fire Department', domain: 'lafd.codify.la', logo: null, team_count: 0, slug: 'lafd', latest_team_member: null, latest_team_members: null },
+    ],
+    meta: { total: 37312, page: 1, current_page: 1, per_page: 50, last_page: 747, truncated: false },
+  };
+
+  it('listPublicSubprojects() — GET /api/public/subprojects: the old zero-arg call is page 1 and decodes the paginated envelope', async () => {
     server.use(
       mockEndpoint(
         'get',
         `${BASE}/api/public/subprojects`,
         ({ request }) => {
           captured.current = request;
-          return { success: true, message: '', data: [] };
+          return PUBLIC_SUBPROJECTS_PAGE;
         },
       ),
     );
-    await makeClient().listPublicSubprojects();
+    const page = await makeClient().listPublicSubprojects();
     expectNoAuthHeader(captured.current!);
+    expectDomainHeader(captured.current!, DOMAIN);
+    expect(new URL(captured.current!.url).search).toBe('');
+    expect(page.meta).toEqual(PUBLIC_SUBPROJECTS_PAGE.meta);
+    expect(page.meta.truncated).toBe(false);
+    expect(page.data).toHaveLength(2);
+    expect(page.data[0].slug).toBe('lapd');
+    expect(page.data[1].domain).toBe('lafd.codify.la');
+    // The wire never carried the generic wrapper — the type says so now.
+    expect((page as unknown as { success?: unknown }).success).toBeUndefined();
+  });
+
+  it('listPublicSubprojects({ page }) — sends ?page= (WS4 #5959 pagination)', async () => {
+    server.use(
+      mockEndpoint(
+        'get',
+        `${BASE}/api/public/subprojects`,
+        ({ request }) => {
+          captured.current = request;
+          return { ...PUBLIC_SUBPROJECTS_PAGE, meta: { ...PUBLIC_SUBPROJECTS_PAGE.meta, page: 2, current_page: 2 } };
+        },
+      ),
+    );
+    const page = await makeClient().listPublicSubprojects({ page: 2 });
+    const url = new URL(captured.current!.url);
+    expect(url.pathname).toBe('/api/public/subprojects');
+    expect(url.searchParams.get('page')).toBe('2');
+    expect(url.searchParams.has('per_page')).toBe(false);
+    expectNoAuthHeader(captured.current!);
+    expect(page.meta.page).toBe(2);
+    expect(page.meta.current_page).toBe(2);
+  });
+
+  it('listPublicSubprojects({ page, per_page }) — sends both; the api clamps per_page and says so in meta.truncated', async () => {
+    server.use(
+      mockEndpoint(
+        'get',
+        `${BASE}/api/public/subprojects`,
+        ({ request }) => {
+          captured.current = request;
+          return { ...PUBLIC_SUBPROJECTS_PAGE, meta: { ...PUBLIC_SUBPROJECTS_PAGE.meta, page: 3, current_page: 3, per_page: 50, truncated: true } };
+        },
+      ),
+    );
+    const page = await makeClient().listPublicSubprojects({ page: 3, per_page: 100 });
+    const url = new URL(captured.current!.url);
+    expect(url.searchParams.get('page')).toBe('3');
+    expect(url.searchParams.get('per_page')).toBe('100');
+    expect(page.meta.per_page).toBe(50);
+    expect(page.meta.truncated).toBe(true);
   });
 
   it('searchPublicSubprojects() — POST /api/public/subprojects/search', async () => {
